@@ -8,12 +8,12 @@ Dataset.query(
   id,
   paginate = FALSE,
   use_field_titles = TRUE,
-  env = solvebio:::.solveEnv,
+  env = quartzbio.edp:::.config,
   ...
 )
 }
 \arguments{
-\item{id}{The ID of a SolveBio dataset, or a Dataset object.}
+\item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}
 
 \item{paginate}{When set to TRUE, retrieves all records (memory permitting).}
 
@@ -24,7 +24,7 @@ Dataset.query(
 \item{...}{(optional) Additional query parameters (e.g. filters, limit, offset).}
 }
 \description{
-Queries a SolveBio dataset and returns an R data frame containing all records.
+Queries a QuartzBio EDP dataset and returns an R data frame containing all records.
 Returns a single page of results otherwise (default).
 }
 \examples{

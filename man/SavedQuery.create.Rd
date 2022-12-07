@@ -4,7 +4,7 @@
 \alias{SavedQuery.create}
 \title{SavedQuery.create}
 \usage{
-SavedQuery.create(env = solvebio:::.solveEnv, ...)
+SavedQuery.create(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ SavedQuery.create(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Saved query attributes.}
 }
 \description{
-Create a SolveBio saved query.
+Create a QuartzBio EDP saved query.
 }
 \examples{
 \dontrun{

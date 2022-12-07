@@ -1,4 +1,4 @@
-SolveBio R Examples
+QuartzBio EDP R Examples
 ===================
 
 This directory contains a few examples for using the `solvebio` R package.

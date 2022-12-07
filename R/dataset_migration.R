@@ -1,6 +1,6 @@
 #' DatasetMigration.all
 #'
-#' Retrieves the metadata about all dataset migrations on SolveBio.
+#' Retrieves the metadata about all dataset migrations on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. page).
@@ -13,16 +13,16 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetMigration.all <- function(env = solvebio:::.solveEnv, ...) {
+DatasetMigration.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/dataset_migrations", query=list(...), env=env)
 }
 
 
 #' DatasetMigration.retrieve
 #'
-#' Retrieves the metadata about a specific dataset migration on SolveBio.
+#' Retrieves the metadata about a specific dataset migration on QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset migration.
+#' @param id String The ID of a QuartzBio EDP dataset migration.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -33,7 +33,7 @@ DatasetMigration.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetMigration.retrieve <- function(id, env = solvebio:::.solveEnv) {
+DatasetMigration.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset migration ID is required.")
     }
@@ -45,9 +45,9 @@ DatasetMigration.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' DatasetMigration.delete
 #'
-#' Deletes specific dataset migration on SolveBio.
+#' Deletes specific dataset migration on QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset migration.
+#' @param id String The ID of a QuartzBio EDP dataset migration.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -58,7 +58,7 @@ DatasetMigration.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetMigration.delete <- function(id, env = solvebio:::.solveEnv) {
+DatasetMigration.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset migration ID is required.")
     }
@@ -96,7 +96,7 @@ DatasetMigration.create <- function(
                                     source_params=NULL,
                                     target_fields=NULL,
                                     include_errors=FALSE,
-                                    env = solvebio:::.solveEnv,
+                                    env = quartzbio.edp:::.config,
                                     ...) {
     if (missing(source_id)) {
         stop("A source dataset ID is required.")

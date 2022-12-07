@@ -9,7 +9,7 @@ Object.create(
   parent_object_id,
   object_type,
   filename,
-  env = solvebio:::.solveEnv,
+  env = quartzbio.edp:::.config,
   ...
 )
 }
@@ -27,7 +27,7 @@ Object.create(
 \item{...}{(optional) Additional object attributes.}
 }
 \description{
-Create a SolveBio object.
+Create a QuartzBio EDP object.
 }
 \examples{
 \dontrun{

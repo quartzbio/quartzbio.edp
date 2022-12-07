@@ -4,15 +4,15 @@
 \alias{DatasetCommit.delete}
 \title{DatasetCommit.delete}
 \usage{
-DatasetCommit.delete(id, env = solvebio:::.solveEnv)
+DatasetCommit.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID or full name of a SolveBio dataset commit.}
+\item{id}{String The ID or full name of a QuartzBio EDP dataset commit.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Deletes a specific dataset commit on SolveBio.
+Deletes a specific dataset commit on QuartzBio EDP.
 }
 \examples{
 \dontrun{

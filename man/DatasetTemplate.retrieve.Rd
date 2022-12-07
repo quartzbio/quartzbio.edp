@@ -4,15 +4,15 @@
 \alias{DatasetTemplate.retrieve}
 \title{DatasetTemplate.retrieve}
 \usage{
-DatasetTemplate.retrieve(id, env = solvebio:::.solveEnv)
+DatasetTemplate.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset template.}
+\item{id}{String The ID of a QuartzBio EDP dataset template.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific dataset template on SolveBio.
+Retrieves the metadata about a specific dataset template on QuartzBio EDP.
 }
 \examples{
 \dontrun{

@@ -4,7 +4,7 @@
 \alias{Application.create}
 \title{Application.create}
 \usage{
-Application.create(name, redirect_uris, env = solvebio:::.solveEnv, ...)
+Application.create(name, redirect_uris, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{name}{The name of the application.}
@@ -16,7 +16,7 @@ Application.create(name, redirect_uris, env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional application attributes.}
 }
 \description{
-Create a new SolveBio application.
+Create a new QuartzBio EDP application.
 }
 \examples{
 \dontrun{

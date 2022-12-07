@@ -1,6 +1,6 @@
 #' DatasetImport.all
 #'
-#' Retrieves the metadata about all dataset imports on SolveBio.
+#' Retrieves the metadata about all dataset imports on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. page).
@@ -13,16 +13,16 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetImport.all <- function(env = solvebio:::.solveEnv, ...) {
+DatasetImport.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/dataset_imports", query=list(...), env=env)
 }
 
 
 #' DatasetImport.retrieve
 #'
-#' Retrieves the metadata about a specific dataset import on SolveBio.
+#' Retrieves the metadata about a specific dataset import on QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset import.
+#' @param id String The ID of a QuartzBio EDP dataset import.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -33,7 +33,7 @@ DatasetImport.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetImport.retrieve <- function(id, env = solvebio:::.solveEnv) {
+DatasetImport.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset import ID is required.")
     }
@@ -45,9 +45,9 @@ DatasetImport.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' DatasetImport.delete
 #'
-#' Deletes a specific dataset import on SolveBio.
+#' Deletes a specific dataset import on QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset import.
+#' @param id String The ID of a QuartzBio EDP dataset import.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -58,7 +58,7 @@ DatasetImport.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetImport.delete <- function(id, env = solvebio:::.solveEnv) {
+DatasetImport.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset import ID is required.")
     }
@@ -88,7 +88,7 @@ DatasetImport.delete <- function(id, env = solvebio:::.solveEnv) {
 DatasetImport.create <- function(
                                  dataset_id,
                                  commit_mode = 'append',
-                                 env = solvebio:::.solveEnv,
+                                 env = quartzbio.edp:::.config,
                                  ...) {
     if (missing(dataset_id)) {
         stop("A dataset ID is required.")

@@ -4,15 +4,15 @@
 \alias{DatasetImport.delete}
 \title{DatasetImport.delete}
 \usage{
-DatasetImport.delete(id, env = solvebio:::.solveEnv)
+DatasetImport.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset import.}
+\item{id}{String The ID of a QuartzBio EDP dataset import.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Deletes a specific dataset import on SolveBio.
+Deletes a specific dataset import on QuartzBio EDP.
 }
 \examples{
 \dontrun{

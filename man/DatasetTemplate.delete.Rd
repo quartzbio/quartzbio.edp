@@ -4,15 +4,15 @@
 \alias{DatasetTemplate.delete}
 \title{DatasetTemplate.delete}
 \usage{
-DatasetTemplate.delete(id, env = solvebio:::.solveEnv)
+DatasetTemplate.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID or full name of a SolveBio dataset template.}
+\item{id}{String The ID or full name of a QuartzBio EDP dataset template.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Deletes a specific dataset template on SolveBio.
+Deletes a specific dataset template on QuartzBio EDP.
 }
 \examples{
 \dontrun{

@@ -4,7 +4,7 @@
 \alias{Dataset.all}
 \title{Dataset.all}
 \usage{
-Dataset.all(env = solvebio:::.solveEnv, ...)
+Dataset.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ Dataset.all(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters (e.g. page).}
 }
 \description{
-Retrieves the metadata about datasets on SolveBio.
+Retrieves the metadata about datasets on QuartzBio EDP.
 }
 \examples{
 \dontrun{

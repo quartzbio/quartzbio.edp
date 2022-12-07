@@ -4,7 +4,7 @@
 \alias{Application.retrieve}
 \title{Application.retrieve}
 \usage{
-Application.retrieve(client_id, env = solvebio:::.solveEnv)
+Application.retrieve(client_id, env = quartzbio.edp:::.config)
 }
 \arguments{
 \item{client_id}{The client ID for the application.}
@@ -12,7 +12,7 @@ Application.retrieve(client_id, env = solvebio:::.solveEnv)
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific application SolveBio.
+Retrieves the metadata about a specific application QuartzBio EDP.
 }
 \examples{
 \dontrun{

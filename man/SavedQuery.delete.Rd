@@ -4,15 +4,15 @@
 \alias{SavedQuery.delete}
 \title{SavedQuery.delete}
 \usage{
-SavedQuery.delete(id, env = solvebio:::.solveEnv)
+SavedQuery.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of the SolveBio saved query.}
+\item{id}{String The ID of the QuartzBio EDP saved query.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Deletes a specific saved query on SolveBio.
+Deletes a specific saved query on QuartzBio EDP.
 }
 \examples{
 \dontrun{

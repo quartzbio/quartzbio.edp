@@ -20,18 +20,18 @@
 #' @export
 protectedServer <- function(server, client_id, client_secret=NULL, base_url="https://my.solvebio.com") {
     if (!requireNamespace("shiny", quietly = TRUE)) {
-        stop("Shiny is required to use solvebio::protectedServer()")
+        stop("Shiny is required to use quartzbio.edp::protectedServer()")
     }
 
-    # Initialize the server session using a SolveBio token.
-    # Sets up the SolveBio env and current user.
+    # Initialize the server session using a QuartzBio EDP token.
+    # Sets up the QuartzBio EDP env and current user.
     .initializeSession <- function(session, token, token_type="Bearer") {
         if (is.null(token)) {
             env <- NULL
             user <- NULL
         }
         else {
-            env <- solvebio::createEnv(token=token, token_type=token_type)
+            env <- quartzbio.edp::createEnv(token=token, token_type=token_type)
             user <- User.retrieve(env=env)
         }
 
@@ -63,10 +63,10 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
     .showLoginModal <- function(session) {
         onclick <- sprintf("window.location = '%s'", .makeAuthorizationURL(session))
         modal <- shiny::modalDialog(
-                                    shiny::tags$span('Please log in with SolveBio before proceeding.'),
+                                    shiny::tags$span('Please log in with QuartzBio EDP before proceeding.'),
                                     footer = shiny::tagList(
                                                             shiny::actionButton(inputId='login-button',
-                                                                                label="Log in with SolveBio",
+                                                                                label="Log in with QuartzBio EDP",
                                                                                 onclick=onclick)
                                                             ),
                                     easyClose = FALSE
@@ -124,7 +124,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
                 }
             }
             else {
-                warning("WARNING: SolveBio OAuth2 tokens will not be encrypted in cookies. Set client_secret to encrypt tokens.")
+                warning("WARNING: QuartzBio EDP OAuth2 tokens will not be encrypted in cookies. Set client_secret to encrypt tokens.")
             }
 
             shiny::observe({
@@ -157,7 +157,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
                                 })
         }
         else {
-            warning("WARNING: SolveBio cookie-based token storage is disabled.")
+            warning("WARNING: QuartzBio EDP cookie-based token storage is disabled.")
         }
 
         shiny::observeEvent(session$clientData$url_search, {
@@ -184,10 +184,10 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
                                                  path="v1/oauth2/token",
                                                  query=NULL,
                                                  body=oauth_params,
-                                                 env=solvebio::createEnv(token=''),
+                                                 env=quartzbio.edp::createEnv(token=''),
                                                  content_type="application/x-www-form-urlencoded")
                                     }, error = function(e) {
-                                        stop(sprintf("ERROR: Unable to retrieve SolveBio OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n", e))
+                                        stop(sprintf("ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n", e))
                                     })
 
                                     # Set an auth cookie using a JS cookie library
@@ -206,11 +206,11 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
                                     # If the global env is set (via environment variables), use that.
                                     # This can be used for local development or automated tests to bypass
                                     # the login modal.
-                                    if (.solveEnv$token != '') {
+                                    if (.config$token != '') {
                                         warning("WARNING: Found credentials in global environment, will not show login modal.")
                                         .initializeSession(session,
-                                                           token=.solveEnv$token,
-                                                           token_type=.solveEnv$token_type)
+                                                           token=.config$token,
+                                                           token_type=.config$token_type)
                                         # Run the wrapped server
                                         server(input, output, session, ...)
                                     }
@@ -236,7 +236,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
 #'         shiny::tags$script(src = jscookie_src)
 #'     ),
 #'     useShinyjs(),
-#'     extendShinyjs(text = solvebio::protectedServerJS(),
+#'     extendShinyjs(text = quartzbio.edp::protectedServerJS(),
 #'                   functions = c("enableCookieAuth", "getCookie", "setCookie", "rmCookie"))
 #' )
 #' }
@@ -247,7 +247,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
 #' @export
 protectedServerJS <- function() {
     if (!requireNamespace("shinyjs", quietly = TRUE)) {
-        stop("ShinyJS is required to use solvebio::protectedServerJS()")
+        stop("ShinyJS is required to use quartzbio.edp::protectedServerJS()")
     }
 
     return ('

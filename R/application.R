@@ -1,6 +1,6 @@
 #' Application.all
 #'
-#' Retrieves the metadata about all application on SolveBio available to the current user.
+#' Retrieves the metadata about all application on QuartzBio EDP available to the current user.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters.
@@ -13,14 +13,14 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Application.all <- function(env = solvebio:::.solveEnv, ...) {
+Application.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/applications", query=list(...), env=env)
 }
 
 
 #' Application.retrieve
 #'
-#' Retrieves the metadata about a specific application SolveBio.
+#' Retrieves the metadata about a specific application QuartzBio EDP.
 #'
 #' @param client_id The client ID for the application.
 #' @param env (optional) Custom client environment.
@@ -33,7 +33,7 @@ Application.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Application.retrieve <- function(client_id, env = solvebio:::.solveEnv) {
+Application.retrieve <- function(client_id, env = quartzbio.edp:::.config) {
     if (missing(client_id)) {
         stop("A client ID is required.")
     }
@@ -62,7 +62,7 @@ Application.retrieve <- function(client_id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Application.update <- function(client_id, env = solvebio:::.solveEnv, ...) {
+Application.update <- function(client_id, env = quartzbio.edp:::.config, ...) {
     if (missing(client_id)) {
         stop("A client ID is required.")
     }
@@ -76,7 +76,7 @@ Application.update <- function(client_id, env = solvebio:::.solveEnv, ...) {
 
 #' Application.delete
 #'
-#' Delete a specific application from SolveBio.
+#' Delete a specific application from QuartzBio EDP.
 #'
 #' @param client_id The client ID for the application.
 #' @param env (optional) Custom client environment.
@@ -89,7 +89,7 @@ Application.update <- function(client_id, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Application.delete <- function(client_id, env = solvebio:::.solveEnv) {
+Application.delete <- function(client_id, env = quartzbio.edp:::.config) {
     if (missing(client_id)) {
         stop("A client ID is required.")
     }
@@ -101,7 +101,7 @@ Application.delete <- function(client_id, env = solvebio:::.solveEnv) {
 
 #' Application.create
 #'
-#' Create a new SolveBio application.
+#' Create a new QuartzBio EDP application.
 #'
 #' @param name The name of the application.
 #' @param redirect_uris A list of space-separated OAuth2 redirect URIs.
@@ -119,7 +119,7 @@ Application.delete <- function(client_id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Application.create <- function(name, redirect_uris, env = solvebio:::.solveEnv, ...) {
+Application.create <- function(name, redirect_uris, env = quartzbio.edp:::.config, ...) {
     if (missing(name)) {
         stop("A name is required.")
     }

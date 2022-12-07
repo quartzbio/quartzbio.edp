@@ -4,10 +4,10 @@
 \alias{Object.data}
 \title{Object.data}
 \usage{
-Object.data(id, filters, col.names = NULL, env = solvebio:::.solveEnv, ...)
+Object.data(id, filters, col.names = NULL, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{id}{The ID of a SolveBio file (vault object).}
+\item{id}{The ID of a QuartzBio EDP file (vault object).}
 
 \item{filters}{(optional) Query filters.}
 
@@ -18,7 +18,7 @@ Object.data(id, filters, col.names = NULL, env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters (e.g. limit, offset).}
 }
 \description{
-Returns one page of documents from a SolveBio file (object) and processes the response.
+Returns one page of documents from a QuartzBio EDP file (object) and processes the response.
 }
 \examples{
 \dontrun{

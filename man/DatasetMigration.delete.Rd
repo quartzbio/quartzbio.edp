@@ -4,15 +4,15 @@
 \alias{DatasetMigration.delete}
 \title{DatasetMigration.delete}
 \usage{
-DatasetMigration.delete(id, env = solvebio:::.solveEnv)
+DatasetMigration.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset migration.}
+\item{id}{String The ID of a QuartzBio EDP dataset migration.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Deletes specific dataset migration on SolveBio.
+Deletes specific dataset migration on QuartzBio EDP.
 }
 \examples{
 \dontrun{

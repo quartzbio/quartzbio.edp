@@ -4,10 +4,10 @@
 \alias{Vault.get_or_create_by_full_path}
 \title{Vault.get_or_create_by_full_path}
 \usage{
-Vault.get_or_create_by_full_path(full_path, env = solvebio:::.solveEnv, ...)
+Vault.get_or_create_by_full_path(full_path, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{full_path}{The full path of a SolveBio vault.}
+\item{full_path}{The full path of a QuartzBio EDP vault.}
 
 \item{env}{(optional) Custom client environment.}
 

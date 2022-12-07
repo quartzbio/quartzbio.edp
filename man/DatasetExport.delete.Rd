@@ -4,15 +4,15 @@
 \alias{DatasetExport.delete}
 \title{DatasetExport.delete}
 \usage{
-DatasetExport.delete(id, env = solvebio:::.solveEnv)
+DatasetExport.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset export.}
+\item{id}{String The ID of a QuartzBio EDP dataset export.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Deletes a specific dataset export on SolveBio.
+Deletes a specific dataset export on QuartzBio EDP.
 }
 \examples{
 \dontrun{

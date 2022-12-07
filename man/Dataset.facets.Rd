@@ -4,10 +4,10 @@
 \alias{Dataset.facets}
 \title{Dataset.facets}
 \usage{
-Dataset.facets(id, facets, env = solvebio:::.solveEnv, ...)
+Dataset.facets(id, facets, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{id}{The ID of a SolveBio dataset, or a Dataset object.}
+\item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}
 
 \item{facets}{A list of one or more field facets.}
 
@@ -16,7 +16,7 @@ Dataset.facets(id, facets, env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters (e.g. filters, limit, offset).}
 }
 \description{
-Retrieves aggregated statistics or term counts for one or more fields in a SolveBio dataset. Returns a list of data frames, one for each requested facet.
+Retrieves aggregated statistics or term counts for one or more fields in a QuartzBio EDP dataset. Returns a list of data frames, one for each requested facet.
 }
 \examples{
 \dontrun{

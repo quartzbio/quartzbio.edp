@@ -1,6 +1,6 @@
 #' SavedQuery.all
 #'
-#' Retrieves the all saved queries on SolveBio.
+#' Retrieves the all saved queries on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. page).
@@ -13,16 +13,16 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.all <- function(env = solvebio:::.solveEnv, ...) {
+SavedQuery.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/saved_queries", query=list(...), env=env)
 }
 
 
 #' SavedQuery.retrieve
 #'
-#' Retrieves a specific saved query on SolveBio by ID.
+#' Retrieves a specific saved query on QuartzBio EDP by ID.
 #'
-#' @param id String The ID of a SolveBio saved query.
+#' @param id String The ID of a QuartzBio EDP saved query.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -33,7 +33,7 @@ SavedQuery.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.retrieve <- function(id, env = solvebio:::.solveEnv) {
+SavedQuery.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A saved query ID is required.")
     }
@@ -45,9 +45,9 @@ SavedQuery.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' SavedQuery.delete
 #'
-#' Deletes a specific saved query on SolveBio.
+#' Deletes a specific saved query on QuartzBio EDP.
 #'
-#' @param id String The ID of the SolveBio saved query.
+#' @param id String The ID of the QuartzBio EDP saved query.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -58,7 +58,7 @@ SavedQuery.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.delete <- function(id, env = solvebio:::.solveEnv) {
+SavedQuery.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A saved query ID is required.")
     }
@@ -70,7 +70,7 @@ SavedQuery.delete <- function(id, env = solvebio:::.solveEnv) {
 
 #' SavedQuery.create
 #'
-#' Create a SolveBio saved query.
+#' Create a QuartzBio EDP saved query.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Saved query attributes.
 #'
@@ -82,7 +82,7 @@ SavedQuery.delete <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.create <- function(env = solvebio:::.solveEnv, ...) {
+SavedQuery.create <- function(env = quartzbio.edp:::.config, ...) {
     .request('POST', path='v2/saved_queries', query=NULL, body=list(...), env=env)
 }
 
@@ -106,7 +106,7 @@ SavedQuery.create <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.update <- function(id, env = solvebio:::.solveEnv, ...) {
+SavedQuery.update <- function(id, env = quartzbio.edp:::.config, ...) {
     if (missing(id)) {
         stop("A saved query ID is required.")
     }

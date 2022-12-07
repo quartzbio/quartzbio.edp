@@ -1,7 +1,7 @@
 # Example: Secure Shiny App
 
-In this example we create a simple Shiny app wrapped by SolveBio's "protected server".
-This requires users to authorize the app (with their SolveBio account) before interacting with it.
+In this example we create a simple Shiny app wrapped by QuartzBio EDP's "protected server".
+This requires users to authorize the app (with their QuartzBio EDP account) before interacting with it.
 
 
 ## Install Dependencies
@@ -17,7 +17,7 @@ If you are a developer working on solvebio-r, make sure to override your local i
 
 ## Run Locally
 
-Obtain a SolveBio client ID and create an `.Renviron` file in the app's directory with the following:
+Obtain a QuartzBio EDP client ID and create an `.Renviron` file in the app's directory with the following:
 
     CLIENT_ID=your-client-id
 
@@ -33,7 +33,7 @@ Open [http://127.0.0.1:3838](http://127.0.0.1:3838) in your browser.
 
 First, [create a shinyapps account](https://www.shinyapps.io/admin/#/signup). Follow the instructions to install `rsconnect` and log in with your credentials.
 
-Make sure you create your SolveBio app and set up your `.Renviron` file (see the section above) before deploying.
+Make sure you create your QuartzBio EDP app and set up your `.Renviron` file (see the section above) before deploying.
 
 To deploy, open R in the app's directory and run:
 

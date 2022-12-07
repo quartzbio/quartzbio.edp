@@ -4,7 +4,7 @@
 \alias{Task.retrieve}
 \title{Task.retrieve}
 \usage{
-Task.retrieve(id, env = solvebio:::.solveEnv)
+Task.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
 \item{id}{The ID of a task.}
@@ -12,7 +12,7 @@ Task.retrieve(id, env = solvebio:::.solveEnv)
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific task on SolveBio.
+Retrieves the metadata about a specific task on QuartzBio EDP.
 }
 \examples{
 \dontrun{

@@ -4,15 +4,15 @@
 \alias{Vault.delete}
 \title{Vault.delete}
 \usage{
-Vault.delete(id, env = solvebio:::.solveEnv)
+Vault.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio vault.}
+\item{id}{String The ID of a QuartzBio EDP vault.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Delete a specific vault from SolveBio. This operation cannot be undone.
+Delete a specific vault from QuartzBio EDP. This operation cannot be undone.
 }
 \examples{
 \dontrun{

@@ -4,7 +4,7 @@
 \alias{DatasetTemplate.create}
 \title{DatasetTemplate.create}
 \usage{
-DatasetTemplate.create(env = solvebio:::.solveEnv, ...)
+DatasetTemplate.create(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ DatasetTemplate.create(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Dataset template attributes.}
 }
 \description{
-Create a SolveBio dataset template.
+Create a QuartzBio EDP dataset template.
 }
 \examples{
 \dontrun{

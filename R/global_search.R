@@ -25,7 +25,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.search <- function(paginate=FALSE, env = solvebio:::.solveEnv, ...) {
+GlobalSearch.search <- function(paginate=FALSE, env = quartzbio.edp:::.config, ...) {
   params <- list(...)
   params$env <- env
 
@@ -71,7 +71,7 @@ GlobalSearch.search <- function(paginate=FALSE, env = solvebio:::.solveEnv, ...)
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.facets <- function(facets, env = solvebio:::.solveEnv, ...) {
+GlobalSearch.facets <- function(facets, env = quartzbio.edp:::.config, ...) {
     if (missing(facets) || is.null(facets) || facets == "") {
         stop("A list of one or more facets is required.")
     }
@@ -111,7 +111,7 @@ GlobalSearch.facets <- function(facets, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.subjects <- function(env = solvebio:::.solveEnv, ...) {
+GlobalSearch.subjects <- function(env = quartzbio.edp:::.config, ...) {
   params <- list(...)
   params$limit = 0
   params$include_subjects = TRUE
@@ -138,7 +138,7 @@ GlobalSearch.subjects <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.subjects_count <- function(env = solvebio:::.solveEnv, ...) {
+GlobalSearch.subjects_count <- function(env = quartzbio.edp:::.config, ...) {
   params <- list(...)
   params$limit = 0
   params$env <- env
@@ -194,7 +194,7 @@ GlobalSearch.subjects_count <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.request <- function(query=NULL, filters, entities, env = solvebio:::.solveEnv, ...) {
+GlobalSearch.request <- function(query=NULL, filters, entities, env = quartzbio.edp:::.config, ...) {
   body = list(...)
 
   # Advanced search query
@@ -229,7 +229,7 @@ GlobalSearch.request <- function(query=NULL, filters, entities, env = solvebio::
 
   tryCatch({
     res <- .request('POST', path="v2/search", body=body, env=env)
-    res <- formatSolveBioQueryResponse(res)
+    res <- formatEDPQueryResponse(res)
 
     return(res)
   }, error = function(e) {

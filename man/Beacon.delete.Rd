@@ -4,7 +4,7 @@
 \alias{Beacon.delete}
 \title{Beacon.delete}
 \usage{
-Beacon.delete(id, env = solvebio:::.solveEnv)
+Beacon.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
 \item{id}{The ID of the beacon.}
@@ -12,7 +12,7 @@ Beacon.delete(id, env = solvebio:::.solveEnv)
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Delete a specific beacon from SolveBio.
+Delete a specific beacon from QuartzBio EDP.
 }
 \examples{
 \dontrun{

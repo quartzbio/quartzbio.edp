@@ -1,6 +1,6 @@
 #' Object.all
 #'
-#' Retrieves the metadata about all objects on SolveBio accessible to the current user.
+#' Retrieves the metadata about all objects on QuartzBio EDP accessible to the current user.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters.
@@ -13,13 +13,13 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.all <- function(env = solvebio:::.solveEnv, ...) {
+Object.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/objects", query=list(...), env=env)
 }
 
 #' Object.retrieve
 #'
-#' Retrieves the metadata about a specific object on SolveBio.
+#' Retrieves the metadata about a specific object on QuartzBio EDP.
 #'
 #' @param id The ID of the object.
 #' @param env (optional) Custom client environment.
@@ -32,7 +32,7 @@ Object.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.retrieve <- function(id, env = solvebio:::.solveEnv) {
+Object.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A object ID is required.")
     }
@@ -44,7 +44,7 @@ Object.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' Object.delete
 #'
-#' Delete a specific object from SolveBio.
+#' Delete a specific object from QuartzBio EDP.
 #'
 #' @param id The ID of the object.
 #' @param env (optional) Custom client environment.
@@ -57,7 +57,7 @@ Object.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.delete <- function(id, env = solvebio:::.solveEnv) {
+Object.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A object ID is required.")
     }
@@ -69,7 +69,7 @@ Object.delete <- function(id, env = solvebio:::.solveEnv) {
 
 #' Object.create
 #'
-#' Create a SolveBio object.
+#' Create a QuartzBio EDP object.
 #'
 #' @param vault_id The target vault ID.
 #' @param parent_object_id The ID of the parent object (folder) or NULL for the vault root.
@@ -91,7 +91,7 @@ Object.delete <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.create <- function(vault_id, parent_object_id, object_type, filename, env = solvebio:::.solveEnv, ...) {
+Object.create <- function(vault_id, parent_object_id, object_type, filename, env = quartzbio.edp:::.config, ...) {
     if (missing(vault_id)) {
         stop("A vault ID is required.")
     }
@@ -138,7 +138,7 @@ Object.create <- function(vault_id, parent_object_id, object_type, filename, env
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.update <- function(id, env = solvebio:::.solveEnv, ...) {
+Object.update <- function(id, env = quartzbio.edp:::.config, ...) {
     if (missing(id)) {
         stop("An object ID is required.")
     }
@@ -152,7 +152,7 @@ Object.update <- function(id, env = solvebio:::.solveEnv, ...) {
 
 #' Object.get_by_full_path
 #'
-#' A helper function to get an object on SolveBio by its full path.
+#' A helper function to get an object on QuartzBio EDP by its full path.
 #'
 #' @param full_path The full path to the object.
 #' @param env (optional) Custom client environment.
@@ -166,7 +166,7 @@ Object.update <- function(id, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.get_by_full_path <- function(full_path, env = solvebio:::.solveEnv, ...) {
+Object.get_by_full_path <- function(full_path, env = quartzbio.edp:::.config, ...) {
     params = list(
                   full_path=full_path,
                   ...
@@ -186,7 +186,7 @@ Object.get_by_full_path <- function(full_path, env = solvebio:::.solveEnv, ...) 
 
 #' Object.get_by_path
 #'
-#' A helper function to get an object on SolveBio by its path. Used as a pass-through function from some Vault methods.
+#' A helper function to get an object on QuartzBio EDP by its path. Used as a pass-through function from some Vault methods.
 #'
 #' @param path The path to the object, relative to a vault.
 #' @param env (optional) Custom client environment.
@@ -200,7 +200,7 @@ Object.get_by_full_path <- function(full_path, env = solvebio:::.solveEnv, ...) 
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.get_by_path <- function(path, env = solvebio:::.solveEnv, ...) {
+Object.get_by_path <- function(path, env = quartzbio.edp:::.config, ...) {
     # Remove trailing backslash from vault_path
     path = sub("/$", "", path)
 
@@ -232,7 +232,7 @@ Object.get_by_path <- function(path, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.get_download_url <- function(id, env = solvebio:::.solveEnv) {
+Object.get_download_url <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A object ID is required.")
     }
@@ -246,10 +246,10 @@ Object.get_download_url <- function(id, env = solvebio:::.solveEnv) {
 
 #' Object.upload_file
 #'
-#' Upload a local file to a vault on SolveBio. The vault path provided is the parent directory for uploaded file.
+#' Upload a local file to a vault on QuartzBio EDP. The vault path provided is the parent directory for uploaded file.
 #'
 #' @param local_path The path to the local file
-#' @param vault_id The SolveBio vault ID
+#' @param vault_id The QuartzBio EDP vault ID
 #' @param vault_path The remote path in the vault
 #' @param filename (optional) The filename for the uploaded file in the vault (default: the basename of the local_path)
 #' @param env (optional) Custom client environment.
@@ -262,7 +262,7 @@ Object.get_download_url <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.upload_file <- function(local_path, vault_id, vault_path, filename, env = solvebio:::.solveEnv) {
+Object.upload_file <- function(local_path, vault_id, vault_path, filename, env = quartzbio.edp:::.config) {
     if (missing(local_path) || !file.exists(local_path)) {
         stop("A valid path to a local file is required.")
     }
@@ -332,10 +332,10 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
 
 #' Object.get_or_upload_file
 #'
-#' Upload a local file to a vault on SolveBio only if it does not yet exist (by name, at the provided path). The vault path provided is the parent directory for uploaded file. Accepts the same arguments as `Object.upload_file`.
+#' Upload a local file to a vault on QuartzBio EDP only if it does not yet exist (by name, at the provided path). The vault path provided is the parent directory for uploaded file. Accepts the same arguments as `Object.upload_file`.
 #'
 #' @param local_path The path to the local file
-#' @param vault_id The SolveBio vault ID
+#' @param vault_id The QuartzBio EDP vault ID
 #' @param vault_path The remote path in the vault
 #' @param filename (optional) The filename for the uploaded file in the vault (default: the basename of the local_path)
 #' @param env (optional) Custom client environment.
@@ -348,7 +348,7 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename, env = solvebio:::.solveEnv) {
+Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename, env = quartzbio.edp:::.config) {
     if (missing(local_path) || !file.exists(local_path)) {
         stop("A valid path to a local file is required.")
     }
@@ -377,8 +377,8 @@ Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename
 
 #' Object.data
 #'
-#' Returns one page of documents from a SolveBio file (object) and processes the response.
-#' @param id The ID of a SolveBio file (vault object).
+#' Returns one page of documents from a QuartzBio EDP file (object) and processes the response.
+#' @param id The ID of a QuartzBio EDP file (vault object).
 #' @param filters (optional) Query filters.
 #' @param col.names (optional) Force data frame column name ordering.
 #' @param env (optional) Custom client environment.
@@ -392,7 +392,7 @@ Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.data <- function(id, filters, col.names = NULL, env = solvebio:::.solveEnv, ...) {
+Object.data <- function(id, filters, col.names = NULL, env = quartzbio.edp:::.config, ...) {
     if (missing(id) || !(class(id) %in% c("Object", "numeric", "integer", "character"))) {
         stop("An object ID is required.")
     }
@@ -422,7 +422,7 @@ Object.data <- function(id, filters, col.names = NULL, env = solvebio:::.solveEn
 
     tryCatch({
         res <- .request('POST', path=path, body=body, env=env)
-        return(formatSolveBioQueryResponse(res, col.names = col.names))
+        return(formatEDPQueryResponse(res, col.names = col.names))
     }, error = function(e) {
         cat(sprintf("Query failed: %s\n", e$message))
     })
@@ -431,10 +431,10 @@ Object.data <- function(id, filters, col.names = NULL, env = solvebio:::.solveEn
 
 #' Object.query
 #'
-#' Queries a SolveBio file (vault object) and returns an R data frame containing all records.
+#' Queries a QuartzBio EDP file (vault object) and returns an R data frame containing all records.
 #' Returns a single page of results otherwise (default).
 #'
-#' @param id The ID of a SolveBio file (vault object).
+#' @param id The ID of a QuartzBio EDP file (vault object).
 #' @param paginate When set to TRUE, retrieves all records (memory permitting).
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. filters, limit, offset).
@@ -447,7 +447,7 @@ Object.data <- function(id, filters, col.names = NULL, env = solvebio:::.solveEn
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.query <- function(id, paginate=FALSE, env = solvebio:::.solveEnv, ...) {
+Object.query <- function(id, paginate=FALSE, env = quartzbio.edp:::.config, ...) {
     params <- list(...)
     params$id <- id
     params$env <- env
@@ -483,7 +483,7 @@ Object.query <- function(id, paginate=FALSE, env = solvebio:::.solveEnv, ...) {
 #'
 #' Retrieves the list of fields for a file (JSON, CSV, or TSV).
 #'
-#' @param id The ID of a SolveBio file (vault object).
+#' @param id The ID of a QuartzBio EDP file (vault object).
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. limit, offset).
 #'
@@ -495,7 +495,7 @@ Object.query <- function(id, paginate=FALSE, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.fields <- function(id, env = solvebio:::.solveEnv, ...) {
+Object.fields <- function(id, env = quartzbio.edp:::.config, ...) {
     if (inherits(id, "numeric")) {
         warning("Please use string IDs instead of numeric IDs.")
     }
@@ -517,7 +517,7 @@ Object.fields <- function(id, env = solvebio:::.solveEnv, ...) {
 #'
 #' Retrieves the global beacon status for the specified dataset.
 #'
-#' @param id The ID of a SolveBio dataset.
+#' @param id The ID of a QuartzBio EDP dataset.
 #' @param raise_on_disabled Whether to raise an exception if Global Beacon is disabled or to return NULL.
 #' @param env (optional) Custom client environment.
 #'
@@ -530,7 +530,7 @@ Object.fields <- function(id, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = solvebio:::.solveEnv) {
+Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -557,7 +557,7 @@ Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env =
 #'
 #' Enables Global Beacon for the specified dataset.
 #'
-#' @param id The ID of a SolveBio dataset.
+#' @param id The ID of a QuartzBio EDP dataset.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -568,7 +568,7 @@ Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env =
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.enable_global_beacon <- function(id, env = solvebio:::.solveEnv) {
+Object.enable_global_beacon <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -582,7 +582,7 @@ Object.enable_global_beacon <- function(id, env = solvebio:::.solveEnv) {
 #'
 #' Disables Global Beacon for the specified dataset.
 #'
-#' @param id The ID of a SolveBio dataset.
+#' @param id The ID of a QuartzBio EDP dataset.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -593,7 +593,7 @@ Object.enable_global_beacon <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Object.disable_global_beacon <- function(id, env = solvebio:::.solveEnv) {
+Object.disable_global_beacon <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }

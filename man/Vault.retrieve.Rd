@@ -4,15 +4,15 @@
 \alias{Vault.retrieve}
 \title{Vault.retrieve}
 \usage{
-Vault.retrieve(id, env = solvebio:::.solveEnv)
+Vault.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio vault}
+\item{id}{String The ID of a QuartzBio EDP vault}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific SolveBio vault.
+Retrieves the metadata about a specific QuartzBio EDP vault.
 }
 \examples{
 \dontrun{

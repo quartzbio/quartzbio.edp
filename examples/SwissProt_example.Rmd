@@ -3,7 +3,7 @@ title: "SwissProt"
 output: rmarkdown::html_document
 ---
 
-SolveBio presents SwissProt as readily usable tables that can go
+QuartzBio EDP presents SwissProt as readily usable tables that can go
 straight into R data frames. With simple commands, users can query and
 filter SwissProt without having to download all of SwissProt onto their
 computer. In this example, we show how easy it is to quickly extract
@@ -16,7 +16,7 @@ library(solvebio)
 library(data.table)
 ```
 
-login to SolveBio:
+login to QuartzBio EDP:
 
 ```{r eval=FALSE}
 login(api_key="<api_key>", api_host="<api_host>")
@@ -81,7 +81,7 @@ dim(swissprot_q)
 
     ## [1]  1 26
 
-SwissProt provides extensive protein annotation information. SolveBio
+SwissProt provides extensive protein annotation information. QuartzBio EDP
 enables easy access and usability of this key information by extracting
 it into its own 'Features' dataset, where each feature is keyed by
 swissprot_q\_id. For our example, let's extract the "DOMAIN" features for
@@ -152,7 +152,7 @@ swissprot_features_q[, domain_sequence:=substr(sequence, start_value, stop_value
     ## 1: QDRKIFRGLEICCYGPFTNMPTDQLEWMVQLCGASVVKELSSFTLGTGVHPIVVVQPDAWTEDNGFHAIGQMCEAPVVTREWVLDSVALYQCQELDTYLI
     ## 2:      STERVNKRMSMVVSGLTPEEFMLVYKFARKHHITLTNLITEETTHVVMKTDAEFVCERTLKYFLGIAGGKWVVSYFWVTQSIKERKMLNEHDFEV
 
-SolveBio extracts RefSeq transcript IDs to the main SwissProt database,
+QuartzBio EDP extracts RefSeq transcript IDs to the main SwissProt database,
 so it is easy to quickly find genomic sequence references for the
 proteins.
 
@@ -166,7 +166,7 @@ swissprot_q$refseq_nm_id
 SwissProt provides a comprehensive cross-reference list for its entries
 which enable easy mapping of its entries to other databases. Let's look
 at a summary of the top 10 databses which have cross references for
-BRCA1. We will use SolveBio's facets to do this.
+BRCA1. We will use QuartzBio EDP's facets to do this.
 
 ```{r}
 crossreference_filter <- list(list('swissprot_id', paste(swissprot_q$swissprot_id)))

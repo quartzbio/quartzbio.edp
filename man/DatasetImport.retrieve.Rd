@@ -4,15 +4,15 @@
 \alias{DatasetImport.retrieve}
 \title{DatasetImport.retrieve}
 \usage{
-DatasetImport.retrieve(id, env = solvebio:::.solveEnv)
+DatasetImport.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset import.}
+\item{id}{String The ID of a QuartzBio EDP dataset import.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific dataset import on SolveBio.
+Retrieves the metadata about a specific dataset import on QuartzBio EDP.
 }
 \examples{
 \dontrun{

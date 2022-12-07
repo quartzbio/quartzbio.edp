@@ -16,7 +16,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Annotator.annotate <- function(records, fields, include_errors=FALSE, raw=FALSE, env = solvebio:::.solveEnv) {
+Annotator.annotate <- function(records, fields, include_errors=FALSE, raw=FALSE, env = quartzbio.edp:::.config) {
     if (missing(records) || missing(fields)) {
         stop("A data table/frame and fields are both required.")
     }
@@ -38,9 +38,9 @@ Annotator.annotate <- function(records, fields, include_errors=FALSE, raw=FALSE,
 
 #' Expression.evaluate
 #'
-#' Evaluate a SolveBio expression.
+#' Evaluate a QuartzBio EDP expression.
 #'
-#' @param expression The SolveBio expression string.
+#' @param expression The QuartzBio EDP expression string.
 #' @param data_type The data type to cast the expression result (default: string).
 #' @param is_list Set to TRUE if the result is expected to be a list (default: FALSE).
 #' @param data Variables used in the expression (default: NULL).
@@ -55,9 +55,9 @@ Annotator.annotate <- function(records, fields, include_errors=FALSE, raw=FALSE,
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Expression.evaluate <- function(expression, data_type="string", is_list=FALSE, data=NULL, raw=FALSE, env = solvebio:::.solveEnv) {
+Expression.evaluate <- function(expression, data_type="string", is_list=FALSE, data=NULL, raw=FALSE, env = quartzbio.edp:::.config) {
     if (missing(expression)) {
-        stop("A SolveBio expression is required.")
+        stop("A QuartzBio EDP expression is required.")
     }
 
     params <- list(

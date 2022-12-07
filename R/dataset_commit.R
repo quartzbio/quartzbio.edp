@@ -1,6 +1,6 @@
 #' DatasetCommit.all
 #'
-#' Retrieves the metadata about all dataset commits on SolveBio.
+#' Retrieves the metadata about all dataset commits on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. page).
@@ -13,16 +13,16 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetCommit.all <- function(env = solvebio:::.solveEnv, ...) {
+DatasetCommit.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/dataset_commits", query=list(...), env=env)
 }
 
 
 #' DatasetCommit.retrieve
 #'
-#' Retrieves the metadata about a specific dataset commit on SolveBio.
+#' Retrieves the metadata about a specific dataset commit on QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset commit.
+#' @param id String The ID of a QuartzBio EDP dataset commit.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -33,7 +33,7 @@ DatasetCommit.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetCommit.retrieve <- function(id, env = solvebio:::.solveEnv) {
+DatasetCommit.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset commit ID is required.")
     }
@@ -45,9 +45,9 @@ DatasetCommit.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' DatasetCommit.delete
 #'
-#' Deletes a specific dataset commit on SolveBio.
+#' Deletes a specific dataset commit on QuartzBio EDP.
 #'
-#' @param id String The ID or full name of a SolveBio dataset commit.
+#' @param id String The ID or full name of a QuartzBio EDP dataset commit.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -58,7 +58,7 @@ DatasetCommit.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetCommit.delete <- function(id, env = solvebio:::.solveEnv) {
+DatasetCommit.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset commit ID is required.")
     }

@@ -5,7 +5,7 @@ library(DT)
 library(tidyverse)
 library(solvebio)
 
-CLIENT_ID <- Sys.getenv('CLIENT_ID', unset='your SolveBio app client ID')
+CLIENT_ID <- Sys.getenv('CLIENT_ID', unset='your QuartzBio EDP app client ID')
 # Client secret is optional
 CLIENT_SECRET <- Sys.getenv('CLIENT_SECRET')
 
@@ -24,9 +24,9 @@ server <- function(input, output, session) {
         data <- retrieveDatasets()
         # Only show a few columns in the table.
         data <- data[,c("id", "path", "filename", "description", "dataset_documents_count", "created_at", "updated_at")]
-        # Add a link to SolveBio web
+        # Add a link to QuartzBio EDP web
         data <- data %>%
-            mutate(url = paste0('<a href="https://my.solvebio.com/data/', id, '" target="_blank">Open on SolveBio</a>')) %>%
+            mutate(url = paste0('<a href="https://my.solvebio.com/data/', id, '" target="_blank">Open on QuartzBio EDP</a>')) %>%
             select(id, path, filename, description, url, dataset_documents_count, created_at, updated_at)
 
         DT::datatable(data,
@@ -62,7 +62,7 @@ server <- function(input, output, session) {
 }
 
 ui <- dashboardPage(
-                    dashboardHeader(title="SolveBio Shiny App Example"),
+                    dashboardHeader(title="QuartzBio EDP Shiny App Example"),
                     dashboardSidebar(disable=TRUE),
                     dashboardBody(
                                   # Optional code for token cookie support
@@ -70,7 +70,7 @@ ui <- dashboardPage(
                                                    shiny::tags$script(src = "https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.js")
                                                    ),
                                   useShinyjs(),
-                                  extendShinyjs(text = solvebio::protectedServerJS(),
+                                  extendShinyjs(text = quartzbio.edp::protectedServerJS(),
                                                 functions = c("enableCookieAuth", "getCookie", "setCookie", "rmCookie")),
                                   fluidPage(
                                             fluidRow(
@@ -90,7 +90,7 @@ ui <- dashboardPage(
 
 
 # Wrap your base server and return a new protected server function
-protected_server <- solvebio::protectedServer(server, client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+protected_server <- quartzbio.edp::protectedServer(server, client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 
 options(shiny.port = 3838)
 shinyApp(ui = ui, server = protected_server)

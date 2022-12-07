@@ -1,5 +1,5 @@
 ---
-title: "SolveBio R Tutorial"
+title: "QuartzBio EDP R Tutorial"
 output: html_document
 ---
 
@@ -16,7 +16,7 @@ Load the solvebio package:
 library(solvebio)
 ```
 
-Login to SolveBio:
+Login to QuartzBio EDP:
 
 ```{r eval=FALSE}
 login(api_key="<api_key>", api_host="<api_host>")

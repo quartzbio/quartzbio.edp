@@ -4,15 +4,15 @@
 \alias{SavedQuery.retrieve}
 \title{SavedQuery.retrieve}
 \usage{
-SavedQuery.retrieve(id, env = solvebio:::.solveEnv)
+SavedQuery.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio saved query.}
+\item{id}{String The ID of a QuartzBio EDP saved query.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves a specific saved query on SolveBio by ID.
+Retrieves a specific saved query on QuartzBio EDP by ID.
 }
 \examples{
 \dontrun{

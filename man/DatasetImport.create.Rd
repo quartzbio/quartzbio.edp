@@ -7,7 +7,7 @@
 DatasetImport.create(
   dataset_id,
   commit_mode = "append",
-  env = solvebio:::.solveEnv,
+  env = quartzbio.edp:::.config,
   ...
 )
 }

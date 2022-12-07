@@ -4,7 +4,7 @@
 \alias{Application.delete}
 \title{Application.delete}
 \usage{
-Application.delete(client_id, env = solvebio:::.solveEnv)
+Application.delete(client_id, env = quartzbio.edp:::.config)
 }
 \arguments{
 \item{client_id}{The client ID for the application.}
@@ -12,7 +12,7 @@ Application.delete(client_id, env = solvebio:::.solveEnv)
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Delete a specific application from SolveBio.
+Delete a specific application from QuartzBio EDP.
 }
 \examples{
 \dontrun{

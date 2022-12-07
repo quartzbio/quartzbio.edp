@@ -12,7 +12,7 @@ output:
 Global Beacon lets anyone in your organization find datasets based on the entities it contains (i.e. variants, genets, targets). Only datasets that contain entities can be indexed.
 
 ```{r}
-# Login to SolveBio via API key
+# Login to QuartzBio EDP via API key
 library("solvebio")
 #login(api_key="YOUR_API_KEY")
 ```
@@ -45,7 +45,7 @@ Similarly to `enabling` Global Beacon for the datasets, you may also `disable` i
 ## Global Search
 
 Global Search allows you to search for vaults, files, folders, and datasets by name, tags, user, date, and other metadata which can be customized.
-Global Search is available on SolveBio Mesh. For more information about Global Search please look at [SolveBio docs](https://docs.solvebio.com/search/).
+Global Search is available on QuartzBio EDP Mesh. For more information about Global Search please look at [QuartzBio EDP docs](https://docs.solvebio.com/search/).
 
 Similarly to Global Search on the web application, the search functionality is available through solvebio R client as well.
 

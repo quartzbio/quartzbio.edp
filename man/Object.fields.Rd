@@ -4,10 +4,10 @@
 \alias{Object.fields}
 \title{Object.fields}
 \usage{
-Object.fields(id, env = solvebio:::.solveEnv, ...)
+Object.fields(id, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{id}{The ID of a SolveBio file (vault object).}
+\item{id}{The ID of a QuartzBio EDP file (vault object).}
 
 \item{env}{(optional) Custom client environment.}
 

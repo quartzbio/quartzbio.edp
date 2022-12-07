@@ -4,10 +4,10 @@
 \alias{Dataset.data}
 \title{Dataset.data}
 \usage{
-Dataset.data(id, filters, env = solvebio:::.solveEnv, ...)
+Dataset.data(id, filters, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{id}{The ID of a SolveBio dataset, or a Dataset object.}
+\item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}
 
 \item{filters}{(optional) Query filters.}
 
@@ -16,7 +16,7 @@ Dataset.data(id, filters, env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters (e.g. limit, offset).}
 }
 \description{
-Returns one page of documents from a SolveBio dataset and processes the response.
+Returns one page of documents from a QuartzBio EDP dataset and processes the response.
 }
 \examples{
 \dontrun{

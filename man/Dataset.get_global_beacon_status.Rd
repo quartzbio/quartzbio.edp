@@ -7,11 +7,11 @@
 Dataset.get_global_beacon_status(
   id,
   raise_on_disabled = FALSE,
-  env = solvebio:::.solveEnv
+  env = quartzbio.edp:::.config
 )
 }
 \arguments{
-\item{id}{The ID of a SolveBio dataset.}
+\item{id}{The ID of a QuartzBio EDP dataset.}
 
 \item{raise_on_disabled}{Whether to raise an exception if Global Beacon is disabled or to return NULL.}
 

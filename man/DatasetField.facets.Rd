@@ -4,7 +4,7 @@
 \alias{DatasetField.facets}
 \title{DatasetField.facets}
 \usage{
-DatasetField.facets(id, env = solvebio:::.solveEnv, ...)
+DatasetField.facets(id, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{id}{String The ID of a dataset field.}

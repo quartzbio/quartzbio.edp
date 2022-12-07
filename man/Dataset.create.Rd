@@ -8,7 +8,7 @@ Dataset.create(
   vault_id,
   vault_parent_object_id,
   name,
-  env = solvebio:::.solveEnv,
+  env = quartzbio.edp:::.config,
   ...
 )
 }
@@ -24,7 +24,7 @@ Dataset.create(
 \item{...}{(optional) Additional dataset attributes.}
 }
 \description{
-Create an empty SolveBio dataset.
+Create an empty QuartzBio EDP dataset.
 }
 \examples{
 \dontrun{

@@ -4,17 +4,17 @@
 \alias{Dataset.count}
 \title{Dataset.count}
 \usage{
-Dataset.count(id, env = solvebio:::.solveEnv, ...)
+Dataset.count(id, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{id}{The ID of a SolveBio dataset, or a Dataset object.}
+\item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}
 
 \item{env}{(optional) Custom client environment.}
 
 \item{...}{(optional) Additional query parameters (e.g. filters, limit, offset).}
 }
 \description{
-Returns the total number of records for a given SolveBio dataset.
+Returns the total number of records for a given QuartzBio EDP dataset.
 }
 \examples{
 \dontrun{

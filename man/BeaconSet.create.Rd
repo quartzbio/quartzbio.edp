@@ -8,7 +8,7 @@ BeaconSet.create(
   title,
   description,
   is_shared = FALSE,
-  env = solvebio:::.solveEnv,
+  env = quartzbio.edp:::.config,
   ...
 )
 }

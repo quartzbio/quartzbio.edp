@@ -4,7 +4,7 @@
 \alias{SavedQuery.all}
 \title{SavedQuery.all}
 \usage{
-SavedQuery.all(env = solvebio:::.solveEnv, ...)
+SavedQuery.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ SavedQuery.all(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters (e.g. page).}
 }
 \description{
-Retrieves the all saved queries on SolveBio.
+Retrieves the all saved queries on QuartzBio EDP.
 }
 \examples{
 \dontrun{

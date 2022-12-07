@@ -4,15 +4,15 @@
 \alias{Dataset.delete}
 \title{Dataset.delete}
 \usage{
-Dataset.delete(id, env = solvebio:::.solveEnv)
+Dataset.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset}
+\item{id}{String The ID of a QuartzBio EDP dataset}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Delete a specific dataset from SolveBio.
+Delete a specific dataset from QuartzBio EDP.
 }
 \examples{
 \dontrun{

@@ -4,15 +4,15 @@
 \alias{DatasetExport.retrieve}
 \title{DatasetExport.retrieve}
 \usage{
-DatasetExport.retrieve(id, env = solvebio:::.solveEnv)
+DatasetExport.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset export.}
+\item{id}{String The ID of a QuartzBio EDP dataset export.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific dataset export on SolveBio.
+Retrieves the metadata about a specific dataset export on QuartzBio EDP.
 }
 \examples{
 \dontrun{

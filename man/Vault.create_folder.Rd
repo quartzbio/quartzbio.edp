@@ -8,7 +8,7 @@ Vault.create_folder(
   id,
   path,
   recursive = FALSE,
-  env = solvebio:::.solveEnv,
+  env = quartzbio.edp:::.config,
   ...
 )
 }

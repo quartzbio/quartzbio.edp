@@ -4,10 +4,14 @@
 \alias{Vault.get_by_full_path}
 \title{Vault.get_by_full_path}
 \usage{
-Vault.get_by_full_path(full_path, verbose = TRUE, env = solvebio:::.solveEnv)
+Vault.get_by_full_path(
+  full_path,
+  verbose = TRUE,
+  env = quartzbio.edp:::.config
+)
 }
 \arguments{
-\item{full_path}{The full path of a SolveBio vault.}
+\item{full_path}{The full path of a QuartzBio EDP vault.}
 
 \item{verbose}{Print warning/error messages (default: TRUE).}
 
@@ -18,7 +22,7 @@ Retrieves a specific vault by its full path (domain:vault).
 }
 \examples{
 \dontrun{
-Vault.get_by_full_path("SolveBio:Public")
+Vault.get_by_full_path("QuartzBio EDP:Public")
 }
 
 }

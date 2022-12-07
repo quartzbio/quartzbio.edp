@@ -1,6 +1,6 @@
 #' @importFrom utils modifyList packageVersion
 
-formatSolveBioResponse <- function (res, raw = FALSE) {
+formatEDPResponse <- function (res, raw = FALSE) {
     url = res$url
     body = httr::content(res, as="text", encoding="UTF-8")
     if (raw) {
@@ -20,8 +20,8 @@ formatSolveBioResponse <- function (res, raw = FALSE) {
 
 }
 
-formatSolveBioQueryResponse <- function (res, raw = FALSE, col.names = NULL) {
-    # res will be the output of formatSolveBioResponse
+formatEDPQueryResponse <- function (res, raw = FALSE, col.names = NULL) {
+    # res will be the output of formatEDPResponse
     if (!raw & is.data.frame(res$results) & !is.null(col.names)) {
         res$results <- as.data.frame(res$results, col.names = col.names)
     }

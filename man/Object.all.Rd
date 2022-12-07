@@ -4,7 +4,7 @@
 \alias{Object.all}
 \title{Object.all}
 \usage{
-Object.all(env = solvebio:::.solveEnv, ...)
+Object.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ Object.all(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters.}
 }
 \description{
-Retrieves the metadata about all objects on SolveBio accessible to the current user.
+Retrieves the metadata about all objects on QuartzBio EDP accessible to the current user.
 }
 \examples{
 \dontrun{

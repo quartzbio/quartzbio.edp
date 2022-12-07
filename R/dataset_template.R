@@ -1,6 +1,6 @@
 #' DatasetTemplate.all
 #'
-#' Retrieves the metadata about all dataset templates on SolveBio.
+#' Retrieves the metadata about all dataset templates on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. page).
@@ -13,16 +13,16 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.all <- function(env = solvebio:::.solveEnv, ...) {
+DatasetTemplate.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/dataset_templates", query=list(...), env=env)
 }
 
 
 #' DatasetTemplate.retrieve
 #'
-#' Retrieves the metadata about a specific dataset template on SolveBio.
+#' Retrieves the metadata about a specific dataset template on QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset template.
+#' @param id String The ID of a QuartzBio EDP dataset template.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -33,7 +33,7 @@ DatasetTemplate.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.retrieve <- function(id, env = solvebio:::.solveEnv) {
+DatasetTemplate.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset template ID is required.")
     }
@@ -45,9 +45,9 @@ DatasetTemplate.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' DatasetTemplate.delete
 #'
-#' Deletes a specific dataset template on SolveBio.
+#' Deletes a specific dataset template on QuartzBio EDP.
 #'
-#' @param id String The ID or full name of a SolveBio dataset template.
+#' @param id String The ID or full name of a QuartzBio EDP dataset template.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -58,7 +58,7 @@ DatasetTemplate.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.delete <- function(id, env = solvebio:::.solveEnv) {
+DatasetTemplate.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset template ID is required.")
     }
@@ -70,7 +70,7 @@ DatasetTemplate.delete <- function(id, env = solvebio:::.solveEnv) {
 
 #' DatasetTemplate.create
 #'
-#' Create a SolveBio dataset template.
+#' Create a QuartzBio EDP dataset template.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Dataset template attributes.
 #'
@@ -82,7 +82,7 @@ DatasetTemplate.delete <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.create <- function(env = solvebio:::.solveEnv, ...) {
+DatasetTemplate.create <- function(env = quartzbio.edp:::.config, ...) {
     .request('POST', path='v2/dataset_templates', query=NULL, body=list(...), env=env)
 }
 
@@ -106,7 +106,7 @@ DatasetTemplate.create <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.update <- function(id, env = solvebio:::.solveEnv, ...) {
+DatasetTemplate.update <- function(id, env = quartzbio.edp:::.config, ...) {
     if (missing(id)) {
         stop("A dataset template ID is required.")
     }

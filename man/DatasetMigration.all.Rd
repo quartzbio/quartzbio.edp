@@ -4,7 +4,7 @@
 \alias{DatasetMigration.all}
 \title{DatasetMigration.all}
 \usage{
-DatasetMigration.all(env = solvebio:::.solveEnv, ...)
+DatasetMigration.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ DatasetMigration.all(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters (e.g. page).}
 }
 \description{
-Retrieves the metadata about all dataset migrations on SolveBio.
+Retrieves the metadata about all dataset migrations on QuartzBio EDP.
 }
 \examples{
 \dontrun{

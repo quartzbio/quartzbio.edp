@@ -4,10 +4,10 @@
 \alias{Dataset.disable_global_beacon}
 \title{Dataset.disable_global_beacon}
 \usage{
-Dataset.disable_global_beacon(id, env = solvebio:::.solveEnv)
+Dataset.disable_global_beacon(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{The ID of a SolveBio dataset.}
+\item{id}{The ID of a QuartzBio EDP dataset.}
 
 \item{env}{(optional) Custom client environment.}
 }

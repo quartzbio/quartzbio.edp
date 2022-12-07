@@ -10,11 +10,11 @@ Expression.evaluate(
   is_list = FALSE,
   data = NULL,
   raw = FALSE,
-  env = solvebio:::.solveEnv
+  env = quartzbio.edp:::.config
 )
 }
 \arguments{
-\item{expression}{The SolveBio expression string.}
+\item{expression}{The QuartzBio EDP expression string.}
 
 \item{data_type}{The data type to cast the expression result (default: string).}
 
@@ -27,7 +27,7 @@ Expression.evaluate(
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Evaluate a SolveBio expression.
+Evaluate a QuartzBio EDP expression.
 }
 \examples{
 \dontrun{

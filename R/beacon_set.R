@@ -1,6 +1,6 @@
 #' BeaconSet.all
 #'
-#' Retrieves the metadata about all beacon sets on SolveBio accessible to the current user.
+#' Retrieves the metadata about all beacon sets on QuartzBio EDP accessible to the current user.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters.
@@ -13,13 +13,13 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.all <- function(env = solvebio:::.solveEnv, ...) {
+BeaconSet.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/beacon_sets", query=list(...), env=env)
 }
 
 #' BeaconSet.retrieve
 #'
-#' Retrieves the metadata about a specific beacon set on SolveBio.
+#' Retrieves the metadata about a specific beacon set on QuartzBio EDP.
 #'
 #' @param id The ID of the beacon set.
 #' @param env (optional) Custom client environment.
@@ -32,7 +32,7 @@ BeaconSet.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.retrieve <- function(id, env = solvebio:::.solveEnv) {
+BeaconSet.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A beacon set ID is required.")
     }
@@ -61,7 +61,7 @@ BeaconSet.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.update <- function(id, env = solvebio:::.solveEnv, ...) {
+BeaconSet.update <- function(id, env = quartzbio.edp:::.config, ...) {
     if (missing(id)) {
         stop("A beacon set ID is required.")
     }
@@ -75,7 +75,7 @@ BeaconSet.update <- function(id, env = solvebio:::.solveEnv, ...) {
 
 #' BeaconSet.delete
 #'
-#' Delete a specific beacon set (including all its beacons) from SolveBio.
+#' Delete a specific beacon set (including all its beacons) from QuartzBio EDP.
 #'
 #' @param id The ID of the beacon set.
 #' @param env (optional) Custom client environment.
@@ -88,7 +88,7 @@ BeaconSet.update <- function(id, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.delete <- function(id, env = solvebio:::.solveEnv) {
+BeaconSet.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A beacon set ID is required.")
     }
@@ -118,7 +118,7 @@ BeaconSet.delete <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.create <- function(title, description, is_shared=FALSE, env = solvebio:::.solveEnv, ...) {
+BeaconSet.create <- function(title, description, is_shared=FALSE, env = quartzbio.edp:::.config, ...) {
     if (missing(title)) {
         stop("A title is required.")
     }
@@ -143,7 +143,7 @@ BeaconSet.create <- function(title, description, is_shared=FALSE, env = solvebio
 #'
 #' @param id The ID of the beacon set.
 #' @param query The entity ID or query string.
-#' @param entity_type (optional) A valid SolveBio entity type.
+#' @param entity_type (optional) A valid QuartzBio EDP entity type.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters.
 #'
@@ -159,7 +159,7 @@ BeaconSet.create <- function(title, description, is_shared=FALSE, env = solvebio
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.query <- function(id, query, entity_type, env = solvebio:::.solveEnv, ...) {
+BeaconSet.query <- function(id, query, entity_type, env = quartzbio.edp:::.config, ...) {
     if (missing(id)) {
         stop("A beacon set ID is required.")
     }

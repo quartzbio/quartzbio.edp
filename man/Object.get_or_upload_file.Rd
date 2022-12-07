@@ -9,13 +9,13 @@ Object.get_or_upload_file(
   vault_id,
   vault_path,
   filename,
-  env = solvebio:::.solveEnv
+  env = quartzbio.edp:::.config
 )
 }
 \arguments{
 \item{local_path}{The path to the local file}
 
-\item{vault_id}{The SolveBio vault ID}
+\item{vault_id}{The QuartzBio EDP vault ID}
 
 \item{vault_path}{The remote path in the vault}
 
@@ -24,7 +24,7 @@ Object.get_or_upload_file(
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Upload a local file to a vault on SolveBio only if it does not yet exist (by name, at the provided path). The vault path provided is the parent directory for uploaded file. Accepts the same arguments as `Object.upload_file`.
+Upload a local file to a vault on QuartzBio EDP only if it does not yet exist (by name, at the provided path). The vault path provided is the parent directory for uploaded file. Accepts the same arguments as `Object.upload_file`.
 }
 \examples{
 \dontrun{

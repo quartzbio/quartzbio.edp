@@ -6,7 +6,7 @@ login(api_key="<api_key>", api_host="<api_host>")
 # Define a gene symbol filter to extract only the EGFR mutations reported in 3D HotSpots:
 genes_filter <- list(list('gene_symbol', paste("EGFR")))
 
-# download EGFR signficiant residues from 3D HotSpots on SolveBio:
+# download EGFR signficiant residues from 3D HotSpots on QuartzBio EDP:
 HotSpots <- Dataset.get_by_full_path("solveBio:public:/3DHotSpots/1.0.0-2017-01/SignificantResidues-GRCh37")
 EGFR_sig_res <- as.data.table(Dataset.query(id = HotSpots$id,
                                             filters = genes_filter, 
@@ -19,7 +19,7 @@ head(subset(EGFR_sig_res, select = -variant_sbid))
 dim(EGFR_sig_res)
 
 # Add SwissProt ID to the EGFR_sig_res data tabel to enable protein features lookups:
-# download EGFR swissprot record from SolveBio
+# download EGFR swissprot record from QuartzBio EDP
 SwissProt <- Dataset.get_by_full_path("solveBio:public:/SwissProt/1.0.0-2017-02/SwissProt")
 EGFR_swissprot <- as.data.table(Dataset.query(id = SwissProt$id,
                                               filters=genes_filter, 
@@ -60,7 +60,7 @@ dim(EGFR_sig_res)
 # Unique SwissProt Features that were found for the 3D HotSpots EGFR mutations:
 unique(unlist(EGFR_sig_res$feature))
 
-# From 3DHotSpots variant information, which includes gene and amino acid position and change, SolveBio generates a variant ID in genomic coordinates. This enables look up of data from genomics data sources, such as SolveBio's ClinVar/Combined dataset.
+# From 3DHotSpots variant information, which includes gene and amino acid position and change, QuartzBio EDP generates a variant ID in genomic coordinates. This enables look up of data from genomics data sources, such as QuartzBio EDP's ClinVar/Combined dataset.
 # download the ClinVar/Combined dataset for EGFR:
 ClinVar_Combined <- Dataset.get_by_full_path("solveBio:public:/ClinVar/3.7.4-2017-01-30/Combined-GRCh37")
 cv_comb <- as.data.table(Dataset.query(id = ClinVar_Combined$id,

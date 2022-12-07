@@ -1,6 +1,6 @@
 #' Task.all
 #'
-#' Retrieves the metadata about all tasks on SolveBio accessible to the current user.
+#' Retrieves the metadata about all tasks on QuartzBio EDP accessible to the current user.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters.
@@ -13,13 +13,13 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Task.all <- function(env = solvebio:::.solveEnv, ...) {
+Task.all <- function(env = quartzbio.edp:::.config, ...) {
     .request("GET", "v2/tasks", query = list(...), env = env)
 }
 
 #' Task.retrieve
 #'
-#' Retrieves the metadata about a specific task on SolveBio.
+#' Retrieves the metadata about a specific task on QuartzBio EDP.
 #'
 #' @param id The ID of a task.
 #' @param env (optional) Custom client environment.
@@ -32,7 +32,7 @@ Task.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Task.retrieve <- function(id, env = solvebio:::.solveEnv) {
+Task.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A task ID is required.")
     }
@@ -59,7 +59,7 @@ Task.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Task.follow <- function(id, env = solvebio:::.solveEnv, interval = 2) {
+Task.follow <- function(id, env = quartzbio.edp:::.config, interval = 2) {
     imp <- Task.retrieve(id, env)
     while (imp$status == "pending" || imp$status == "queued" || imp$status == "running") {
         imp <- Task.retrieve(id, env)

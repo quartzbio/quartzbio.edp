@@ -4,7 +4,7 @@
 \alias{BeaconSet.delete}
 \title{BeaconSet.delete}
 \usage{
-BeaconSet.delete(id, env = solvebio:::.solveEnv)
+BeaconSet.delete(id, env = quartzbio.edp:::.config)
 }
 \arguments{
 \item{id}{The ID of the beacon set.}
@@ -12,7 +12,7 @@ BeaconSet.delete(id, env = solvebio:::.solveEnv)
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Delete a specific beacon set (including all its beacons) from SolveBio.
+Delete a specific beacon set (including all its beacons) from QuartzBio EDP.
 }
 \examples{
 \dontrun{

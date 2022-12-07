@@ -4,10 +4,10 @@
 \alias{Dataset.template}
 \title{Dataset.template}
 \usage{
-Dataset.template(id, env = solvebio:::.solveEnv)
+Dataset.template(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset}
+\item{id}{String The ID of a QuartzBio EDP dataset}
 
 \item{env}{(optional) Custom client environment.}
 }

@@ -4,14 +4,14 @@
 \alias{BeaconSet.query}
 \title{BeaconSet.query}
 \usage{
-BeaconSet.query(id, query, entity_type, env = solvebio:::.solveEnv, ...)
+BeaconSet.query(id, query, entity_type, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{id}{The ID of the beacon set.}
 
 \item{query}{The entity ID or query string.}
 
-\item{entity_type}{(optional) A valid SolveBio entity type.}
+\item{entity_type}{(optional) A valid QuartzBio EDP entity type.}
 
 \item{env}{(optional) Custom client environment.}
 

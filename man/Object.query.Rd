@@ -4,10 +4,10 @@
 \alias{Object.query}
 \title{Object.query}
 \usage{
-Object.query(id, paginate = FALSE, env = solvebio:::.solveEnv, ...)
+Object.query(id, paginate = FALSE, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{id}{The ID of a SolveBio file (vault object).}
+\item{id}{The ID of a QuartzBio EDP file (vault object).}
 
 \item{paginate}{When set to TRUE, retrieves all records (memory permitting).}
 
@@ -16,7 +16,7 @@ Object.query(id, paginate = FALSE, env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters (e.g. filters, limit, offset).}
 }
 \description{
-Queries a SolveBio file (vault object) and returns an R data frame containing all records.
+Queries a QuartzBio EDP file (vault object) and returns an R data frame containing all records.
 Returns a single page of results otherwise (default).
 }
 \examples{

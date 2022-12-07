@@ -7,7 +7,7 @@ In this example we will calculate the number of variants per gene_symbol, clinic
 
 ```{r}
 library(solvebio)
-# log into SolveBio
+# log into QuartzBio EDP
 login(api_host = 'https://api.solvebio.com', api_key = 'your_key_here')
 
 # get the Clinvar dataset

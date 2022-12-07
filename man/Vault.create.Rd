@@ -4,7 +4,7 @@
 \alias{Vault.create}
 \title{Vault.create}
 \usage{
-Vault.create(name, env = solvebio:::.solveEnv, ...)
+Vault.create(name, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{name}{The unique name of the vault.}
@@ -14,7 +14,7 @@ Vault.create(name, env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional vault attributes.}
 }
 \description{
-Create a new SolveBio vault.
+Create a new QuartzBio EDP vault.
 }
 \examples{
 \dontrun{

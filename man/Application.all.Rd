@@ -4,7 +4,7 @@
 \alias{Application.all}
 \title{Application.all}
 \usage{
-Application.all(env = solvebio:::.solveEnv, ...)
+Application.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ Application.all(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters.}
 }
 \description{
-Retrieves the metadata about all application on SolveBio available to the current user.
+Retrieves the metadata about all application on QuartzBio EDP available to the current user.
 }
 \examples{
 \dontrun{

@@ -4,7 +4,7 @@
 \alias{Object.retrieve}
 \title{Object.retrieve}
 \usage{
-Object.retrieve(id, env = solvebio:::.solveEnv)
+Object.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
 \item{id}{The ID of the object.}
@@ -12,7 +12,7 @@ Object.retrieve(id, env = solvebio:::.solveEnv)
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific object on SolveBio.
+Retrieves the metadata about a specific object on QuartzBio EDP.
 }
 \examples{
 \dontrun{

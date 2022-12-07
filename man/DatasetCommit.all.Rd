@@ -4,7 +4,7 @@
 \alias{DatasetCommit.all}
 \title{DatasetCommit.all}
 \usage{
-DatasetCommit.all(env = solvebio:::.solveEnv, ...)
+DatasetCommit.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ DatasetCommit.all(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters (e.g. page).}
 }
 \description{
-Retrieves the metadata about all dataset commits on SolveBio.
+Retrieves the metadata about all dataset commits on QuartzBio EDP.
 }
 \examples{
 \dontrun{

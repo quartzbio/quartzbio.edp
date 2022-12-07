@@ -4,7 +4,7 @@
 \alias{Dataset.update}
 \title{Dataset.update}
 \usage{
-Dataset.update(id, env = solvebio:::.solveEnv, ...)
+Dataset.update(id, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{id}{The ID of the dataset to update.}

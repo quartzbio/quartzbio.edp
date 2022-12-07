@@ -1,8 +1,8 @@
-# Basic SolveBio R Demo
+# Basic QuartzBio EDP R Demo
 # Requires the solvebio R package
 library(solvebio)
 
-# log into your SolveBio account
+# log into your QuartzBio EDP account
 login()
 
 # Retrieve and access data about a dataset

@@ -4,7 +4,7 @@
 \alias{BeaconSet.retrieve}
 \title{BeaconSet.retrieve}
 \usage{
-BeaconSet.retrieve(id, env = solvebio:::.solveEnv)
+BeaconSet.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
 \item{id}{The ID of the beacon set.}
@@ -12,7 +12,7 @@ BeaconSet.retrieve(id, env = solvebio:::.solveEnv)
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific beacon set on SolveBio.
+Retrieves the metadata about a specific beacon set on QuartzBio EDP.
 }
 \examples{
 \dontrun{

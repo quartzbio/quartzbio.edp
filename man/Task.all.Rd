@@ -4,7 +4,7 @@
 \alias{Task.all}
 \title{Task.all}
 \usage{
-Task.all(env = solvebio:::.solveEnv, ...)
+Task.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ Task.all(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters.}
 }
 \description{
-Retrieves the metadata about all tasks on SolveBio accessible to the current user.
+Retrieves the metadata about all tasks on QuartzBio EDP accessible to the current user.
 }
 \examples{
 \dontrun{

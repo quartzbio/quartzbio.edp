@@ -8,7 +8,7 @@ GlobalSearch.request(
   query = NULL,
   filters,
   entities,
-  env = solvebio:::.solveEnv,
+  env = quartzbio.edp:::.config,
   ...
 )
 }

@@ -1,6 +1,6 @@
 #' Dataset.all
 #'
-#' Retrieves the metadata about datasets on SolveBio.
+#' Retrieves the metadata about datasets on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. page).
@@ -13,16 +13,16 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.all <- function(env = solvebio:::.solveEnv, ...) {
+Dataset.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/datasets", query=list(...), env=env)
 }
 
 
 #' Dataset.retrieve
 #'
-#' Retrieves the metadata about a specific dataset from SolveBio.
+#' Retrieves the metadata about a specific dataset from QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset
+#' @param id String The ID of a QuartzBio EDP dataset
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -33,7 +33,7 @@ Dataset.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.retrieve <- function(id, env = solvebio:::.solveEnv) {
+Dataset.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -45,9 +45,9 @@ Dataset.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' Dataset.delete
 #'
-#' Delete a specific dataset from SolveBio.
+#' Delete a specific dataset from QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset
+#' @param id String The ID of a QuartzBio EDP dataset
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -58,7 +58,7 @@ Dataset.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.delete <- function(id, env = solvebio:::.solveEnv) {
+Dataset.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -72,7 +72,7 @@ Dataset.delete <- function(id, env = solvebio:::.solveEnv) {
 #'
 #' Retrieves the template for a dataset.
 #'
-#' @param id String The ID of a SolveBio dataset
+#' @param id String The ID of a QuartzBio EDP dataset
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -83,7 +83,7 @@ Dataset.delete <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.template <- function(id, env = solvebio:::.solveEnv) {
+Dataset.template <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -95,8 +95,8 @@ Dataset.template <- function(id, env = solvebio:::.solveEnv) {
 
 #' Dataset.data
 #'
-#' Returns one page of documents from a SolveBio dataset and processes the response.
-#' @param id The ID of a SolveBio dataset, or a Dataset object.
+#' Returns one page of documents from a QuartzBio EDP dataset and processes the response.
+#' @param id The ID of a QuartzBio EDP dataset, or a Dataset object.
 #' @param filters (optional) Query filters.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. limit, offset).
@@ -109,7 +109,7 @@ Dataset.template <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.data <- function(id, filters,  env = solvebio:::.solveEnv, ...) {
+Dataset.data <- function(id, filters,  env = quartzbio.edp:::.config, ...) {
     if (missing(id) || !(class(id) %in% c("Dataset", "numeric", "integer", "character"))) {
         stop("A dataset ID (or object) is required.")
     }
@@ -134,7 +134,7 @@ Dataset.data <- function(id, filters,  env = solvebio:::.solveEnv, ...) {
 
     tryCatch({
         res <- .request('POST', path=path, body=body, env=env)
-        res <- formatSolveBioQueryResponse(res)
+        res <- formatEDPQueryResponse(res)
 
         return(res)
     }, error = function(e) {
@@ -145,10 +145,10 @@ Dataset.data <- function(id, filters,  env = solvebio:::.solveEnv, ...) {
 
 #' Dataset.query
 #'
-#' Queries a SolveBio dataset and returns an R data frame containing all records.
+#' Queries a QuartzBio EDP dataset and returns an R data frame containing all records.
 #' Returns a single page of results otherwise (default).
 #'
-#' @param id The ID of a SolveBio dataset, or a Dataset object.
+#' @param id The ID of a QuartzBio EDP dataset, or a Dataset object.
 #' @param paginate When set to TRUE, retrieves all records (memory permitting).
 #' @param env (optional) Custom client environment.
 #' @param use_field_titles (optional) Use field title instead of field name for query.
@@ -162,7 +162,7 @@ Dataset.data <- function(id, filters,  env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = solvebio:::.solveEnv, ...) {
+Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = quartzbio.edp:::.config, ...) {
     params <- list(...)
     params$id <- id
     params$env <- env
@@ -199,7 +199,7 @@ Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = solve
 #'
 #' Retrieves the list of fields and field metadata for a dataset.
 #'
-#' @param id The ID of a SolveBio dataset, or a Dataset object.
+#' @param id The ID of a QuartzBio EDP dataset, or a Dataset object.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. limit, offset).
 #'
@@ -211,7 +211,7 @@ Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = solve
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.fields <- function(id, env = solvebio:::.solveEnv, ...) {
+Dataset.fields <- function(id, env = quartzbio.edp:::.config, ...) {
     if (inherits(id, "numeric")) {
         warning("Please use string IDs instead of numeric IDs.")
     }
@@ -231,9 +231,9 @@ Dataset.fields <- function(id, env = solvebio:::.solveEnv, ...) {
 
 #' Dataset.facets
 #'
-#' Retrieves aggregated statistics or term counts for one or more fields in a SolveBio dataset. Returns a list of data frames, one for each requested facet.
+#' Retrieves aggregated statistics or term counts for one or more fields in a QuartzBio EDP dataset. Returns a list of data frames, one for each requested facet.
 #'
-#' @param id The ID of a SolveBio dataset, or a Dataset object.
+#' @param id The ID of a QuartzBio EDP dataset, or a Dataset object.
 #' @param facets A list of one or more field facets.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. filters, limit, offset).
@@ -246,7 +246,7 @@ Dataset.fields <- function(id, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.facets <- function(id, facets, env = solvebio:::.solveEnv, ...) {
+Dataset.facets <- function(id, facets, env = quartzbio.edp:::.config, ...) {
     if (missing(facets) || is.null(facets) || facets == "") {
         stop("A list of one or more facets is required.")
     }
@@ -276,8 +276,8 @@ Dataset.facets <- function(id, facets, env = solvebio:::.solveEnv, ...) {
 
 #' Dataset.count
 #'
-#' Returns the total number of records for a given SolveBio dataset.
-#' @param id The ID of a SolveBio dataset, or a Dataset object.
+#' Returns the total number of records for a given QuartzBio EDP dataset.
+#' @param id The ID of a QuartzBio EDP dataset, or a Dataset object.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. filters, limit, offset).
 #'
@@ -291,7 +291,7 @@ Dataset.facets <- function(id, facets, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.count <- function(id, env = solvebio:::.solveEnv, ...) {
+Dataset.count <- function(id, env = quartzbio.edp:::.config, ...) {
     params <- list(...)
     # Count queries should not return results
     params$limit <- 0
@@ -306,7 +306,7 @@ Dataset.count <- function(id, env = solvebio:::.solveEnv, ...) {
 
 #' Dataset.create
 #'
-#' Create an empty SolveBio dataset.
+#' Create an empty QuartzBio EDP dataset.
 #' @param vault_id The ID of the vault.
 #' @param vault_parent_object_id The parent object (folder) ID in the vault.
 #' @param name The name of the dataset in the parent folder.
@@ -321,7 +321,7 @@ Dataset.count <- function(id, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.create <- function(vault_id, vault_parent_object_id, name, env = solvebio:::.solveEnv, ...) {
+Dataset.create <- function(vault_id, vault_parent_object_id, name, env = quartzbio.edp:::.config, ...) {
     if (missing(vault_id)) {
         stop("A vault ID is required.")
     }
@@ -365,7 +365,7 @@ Dataset.create <- function(vault_id, vault_parent_object_id, name, env = solvebi
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.update <- function(id, env = solvebio:::.solveEnv, ...) {
+Dataset.update <- function(id, env = quartzbio.edp:::.config, ...) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -392,7 +392,7 @@ Dataset.update <- function(id, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.get_by_full_path <- function(full_path, env = solvebio:::.solveEnv) {
+Dataset.get_by_full_path <- function(full_path, env = quartzbio.edp:::.config) {
     object = Object.get_by_full_path(full_path, env=env)
 
     dataset = do.call(Dataset.retrieve, list(id=object$dataset_id, env=env))
@@ -416,7 +416,7 @@ Dataset.get_by_full_path <- function(full_path, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.get_or_create_by_full_path <- function(full_path, env = solvebio:::.solveEnv, ...) {
+Dataset.get_or_create_by_full_path <- function(full_path, env = quartzbio.edp:::.config, ...) {
     dataset = NULL
     tryCatch({
         dataset <- Dataset.get_by_full_path(full_path=full_path, env=env)
@@ -482,7 +482,7 @@ Dataset.get_or_create_by_full_path <- function(full_path, env = solvebio:::.solv
 #'
 #' A helper function to get or follow the current activity on a dataset.
 #'
-#' @param id String The ID of a SolveBio dataset
+#' @param id String The ID of a QuartzBio EDP dataset
 #' @param follow Follow active tasks until they complete.
 #' @param env (optional) Custom client environment.
 #'
@@ -494,7 +494,7 @@ Dataset.get_or_create_by_full_path <- function(full_path, env = solvebio:::.solv
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.activity <- function(id, follow=TRUE, env = solvebio:::.solveEnv) {
+Dataset.activity <- function(id, follow=TRUE, env = quartzbio.edp:::.config) {
     status <- paste('running', 'queued', 'pending', sep=',')
     tasks <- Task.all(target_object_id=id, status=status, env=env)$data
 
@@ -519,7 +519,7 @@ Dataset.activity <- function(id, follow=TRUE, env = solvebio:::.solveEnv) {
 #'
 #' Retrieves the global beacon status for the dataset.
 #'
-#' @param id The ID of a SolveBio dataset.
+#' @param id The ID of a QuartzBio EDP dataset.
 #' @param raise_on_disabled Whether to raise an exception if Global Beacon is disabled or to return NULL.
 #' @param env (optional) Custom client environment.
 #'
@@ -531,7 +531,7 @@ Dataset.activity <- function(id, follow=TRUE, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = solvebio:::.solveEnv) {
+Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -544,7 +544,7 @@ Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env 
 #'
 #' Enables Global Beacon for the the dataset.
 #'
-#' @param id The ID of a SolveBio dataset.
+#' @param id The ID of a QuartzBio EDP dataset.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -555,7 +555,7 @@ Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env 
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.enable_global_beacon <- function(id, env = solvebio:::.solveEnv) {
+Dataset.enable_global_beacon <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -568,7 +568,7 @@ Dataset.enable_global_beacon <- function(id, env = solvebio:::.solveEnv) {
 #'
 #' Disables Global Beacon for the dataset.
 #'
-#' @param id The ID of a SolveBio dataset.
+#' @param id The ID of a QuartzBio EDP dataset.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -579,7 +579,7 @@ Dataset.enable_global_beacon <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.disable_global_beacon <- function(id, env = solvebio:::.solveEnv) {
+Dataset.disable_global_beacon <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }

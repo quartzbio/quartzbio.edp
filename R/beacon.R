@@ -1,6 +1,6 @@
 #' Beacon.all
 #'
-#' Retrieves the metadata about all beacons on SolveBio accessible to the current user.
+#' Retrieves the metadata about all beacons on QuartzBio EDP accessible to the current user.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters.
@@ -13,13 +13,13 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Beacon.all <- function(env = solvebio:::.solveEnv, ...) {
+Beacon.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/beacons", query=list(...), env=env)
 }
 
 #' Beacon.retrieve
 #'
-#' Retrieves the metadata about a specific beacon on SolveBio.
+#' Retrieves the metadata about a specific beacon on QuartzBio EDP.
 #'
 #' @param id The ID of the beacon.
 #' @param env (optional) Custom client environment.
@@ -32,7 +32,7 @@ Beacon.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Beacon.retrieve <- function(id, env = solvebio:::.solveEnv) {
+Beacon.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A beacon ID is required.")
     }
@@ -44,7 +44,7 @@ Beacon.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' Beacon.delete
 #'
-#' Delete a specific beacon from SolveBio.
+#' Delete a specific beacon from QuartzBio EDP.
 #'
 #' @param id The ID of the beacon.
 #' @param env (optional) Custom client environment.
@@ -57,7 +57,7 @@ Beacon.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Beacon.delete <- function(id, env = solvebio:::.solveEnv) {
+Beacon.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A beacon ID is required.")
     }
@@ -89,7 +89,7 @@ Beacon.delete <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Beacon.create <- function(beacon_set_id, vault_object_id, title, env = solvebio:::.solveEnv, ...) {
+Beacon.create <- function(beacon_set_id, vault_object_id, title, env = quartzbio.edp:::.config, ...) {
     if (missing(beacon_set_id)) {
         stop("A beacon set ID is required.")
     }
@@ -130,7 +130,7 @@ Beacon.create <- function(beacon_set_id, vault_object_id, title, env = solvebio:
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Beacon.update <- function(id, env = solvebio:::.solveEnv, ...) {
+Beacon.update <- function(id, env = quartzbio.edp:::.config, ...) {
     if (missing(id)) {
         stop("A beacon ID is required.")
     }
@@ -148,7 +148,7 @@ Beacon.update <- function(id, env = solvebio:::.solveEnv, ...) {
 #'
 #' @param id The ID of the beacon.
 #' @param query The entity ID or query string.
-#' @param entity_type (optional) A valid SolveBio entity type.
+#' @param entity_type (optional) A valid QuartzBio EDP entity type.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters.
 #'
@@ -164,7 +164,7 @@ Beacon.update <- function(id, env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Beacon.query <- function(id, query, entity_type, env = solvebio:::.solveEnv, ...) {
+Beacon.query <- function(id, query, entity_type, env = quartzbio.edp:::.config, ...) {
     if (missing(id)) {
         stop("A beacon ID is required.")
     }

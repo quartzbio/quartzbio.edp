@@ -4,10 +4,10 @@
 \alias{Dataset.fields}
 \title{Dataset.fields}
 \usage{
-Dataset.fields(id, env = solvebio:::.solveEnv, ...)
+Dataset.fields(id, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{id}{The ID of a SolveBio dataset, or a Dataset object.}
+\item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}
 
 \item{env}{(optional) Custom client environment.}
 

@@ -8,7 +8,7 @@ Beacon.create(
   beacon_set_id,
   vault_object_id,
   title,
-  env = solvebio:::.solveEnv,
+  env = quartzbio.edp:::.config,
   ...
 )
 }

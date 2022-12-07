@@ -4,7 +4,7 @@
 \alias{Object.get_by_full_path}
 \title{Object.get_by_full_path}
 \usage{
-Object.get_by_full_path(full_path, env = solvebio:::.solveEnv, ...)
+Object.get_by_full_path(full_path, env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{full_path}{The full path to the object.}
@@ -14,7 +14,7 @@ Object.get_by_full_path(full_path, env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters.}
 }
 \description{
-A helper function to get an object on SolveBio by its full path.
+A helper function to get an object on QuartzBio EDP by its full path.
 }
 \examples{
 \dontrun{

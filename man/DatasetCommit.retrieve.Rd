@@ -4,15 +4,15 @@
 \alias{DatasetCommit.retrieve}
 \title{DatasetCommit.retrieve}
 \usage{
-DatasetCommit.retrieve(id, env = solvebio:::.solveEnv)
+DatasetCommit.retrieve(id, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset commit.}
+\item{id}{String The ID of a QuartzBio EDP dataset commit.}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific dataset commit on SolveBio.
+Retrieves the metadata about a specific dataset commit on QuartzBio EDP.
 }
 \examples{
 \dontrun{

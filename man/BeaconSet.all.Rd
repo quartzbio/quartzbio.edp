@@ -4,7 +4,7 @@
 \alias{BeaconSet.all}
 \title{BeaconSet.all}
 \usage{
-BeaconSet.all(env = solvebio:::.solveEnv, ...)
+BeaconSet.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
@@ -12,7 +12,7 @@ BeaconSet.all(env = solvebio:::.solveEnv, ...)
 \item{...}{(optional) Additional query parameters.}
 }
 \description{
-Retrieves the metadata about all beacon sets on SolveBio accessible to the current user.
+Retrieves the metadata about all beacon sets on QuartzBio EDP accessible to the current user.
 }
 \examples{
 \dontrun{

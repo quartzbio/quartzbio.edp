@@ -1,5 +1,5 @@
 # In this example we will analyze the `nycflights13` dataset using
-# nested aggregation queries on SolveBio.
+# nested aggregation queries on QuartzBio EDP.
 
 # Dependencies:
 # install.packages("nycflights13")
@@ -10,9 +10,9 @@ library(nycflights13)
 library(jsonlite)
 library(solvebio)
 
-solvebio::login()
+quartzbio.edp::login()
 
-# Set up the flights dataset on SolveBio:
+# Set up the flights dataset on QuartzBio EDP:
 vault <- Vault.get_personal_vault()
 dataset_full_path <- paste(vault$full_path, "/flights", sep=":")
 dataset <- Dataset.get_or_create_by_full_path(dataset_full_path)

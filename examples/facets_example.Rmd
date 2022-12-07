@@ -2,14 +2,14 @@
 title: "Facets Examples"
 output: html_document
 ---
-Facets allows the user to see different types of summaries. For example, facets of a string fields, such as "gene_symbol" returns the 10 most common gene_symbols in the dataset and their counts. Facets, may be used to return percentiles, histograms and statistics depending on the queried field. These are a few examples of how facets can be used in SolveBio.
+Facets allows the user to see different types of summaries. For example, facets of a string fields, such as "gene_symbol" returns the 10 most common gene_symbols in the dataset and their counts. Facets, may be used to return percentiles, histograms and statistics depending on the queried field. These are a few examples of how facets can be used in QuartzBio EDP.
 
 ```{r, message = FALSE, warning=FALSE}
 library(solvebio)
 library(data.table)
 ```
 
-login to SolveBio:
+login to QuartzBio EDP:
 ```{r eval=FALSE}
 login(api_key="<api_key>", api_host="<api_host>")
 ```

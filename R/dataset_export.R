@@ -1,6 +1,6 @@
 #' DatasetExport.all
 #'
-#' Retrieves the metadata about all dataset exports on SolveBio.
+#' Retrieves the metadata about all dataset exports on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional query parameters (e.g. page).
@@ -13,15 +13,15 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetExport.all <- function(env = solvebio:::.solveEnv, ...) {
+DatasetExport.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/dataset_exports", query=list(...), env=env)
 }
 
 #' DatasetExport.retrieve
 #'
-#' Retrieves the metadata about a specific dataset export on SolveBio.
+#' Retrieves the metadata about a specific dataset export on QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset export.
+#' @param id String The ID of a QuartzBio EDP dataset export.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -32,7 +32,7 @@ DatasetExport.all <- function(env = solvebio:::.solveEnv, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetExport.retrieve <- function(id, env = solvebio:::.solveEnv) {
+DatasetExport.retrieve <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset export ID is required.")
     }
@@ -44,9 +44,9 @@ DatasetExport.retrieve <- function(id, env = solvebio:::.solveEnv) {
 
 #' DatasetExport.delete
 #'
-#' Deletes a specific dataset export on SolveBio.
+#' Deletes a specific dataset export on QuartzBio EDP.
 #'
-#' @param id String The ID of a SolveBio dataset export.
+#' @param id String The ID of a QuartzBio EDP dataset export.
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -57,7 +57,7 @@ DatasetExport.retrieve <- function(id, env = solvebio:::.solveEnv) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetExport.delete <- function(id, env = solvebio:::.solveEnv) {
+DatasetExport.delete <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset export ID is required.")
     }
@@ -91,7 +91,7 @@ DatasetExport.create <- function(
                                  format = 'json',
                                  params = list(),
                                  follow = FALSE,
-                                 env = solvebio:::.solveEnv,
+                                 env = quartzbio.edp:::.config,
                                  ...) {
     if (missing(dataset_id)) {
         stop("A dataset ID is required.")
@@ -129,7 +129,7 @@ DatasetExport.create <- function(
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetExport.get_download_url <- function(id, env = solvebio:::.solveEnv) {
+DatasetExport.get_download_url <- function(id, env = quartzbio.edp:::.config) {
     if (missing(id)) {
         stop("A dataset export ID is required.")
     }

@@ -4,10 +4,10 @@
 \alias{Dataset.activity}
 \title{Dataset.activity}
 \usage{
-Dataset.activity(id, follow = TRUE, env = solvebio:::.solveEnv)
+Dataset.activity(id, follow = TRUE, env = quartzbio.edp:::.config)
 }
 \arguments{
-\item{id}{String The ID of a SolveBio dataset}
+\item{id}{String The ID of a QuartzBio EDP dataset}
 
 \item{follow}{Follow active tasks until they complete.}
 
