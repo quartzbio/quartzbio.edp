@@ -4,7 +4,11 @@
 \alias{createEnv}
 \title{createEnv}
 \usage{
-createEnv(token, token_type = "Token", host = .config$host)
+createEnv(
+  token,
+  token_type = "Token",
+  host = Sys.getenv("SOLVEBIO_API_HOST", EDP_DEFAULT_API_HOST)
+)
 }
 \arguments{
 \item{token}{A QuartzBio EDP API key or OAuth2 token}

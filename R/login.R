@@ -3,9 +3,11 @@
 
 # Store the QuartzBio EDP config in an environment
 # The default environment uses an API key (token type: "Token").
+
+EDP_DEFAULT_API_HOST <- "https://sandbox.api.edp.aws.quartz.bio"
+
 .config <- new.env()
-.config$host <- Sys.getenv('SOLVEBIO_API_HOST',
-                             unset='https://api.solvebio.com')
+.config$host <- EDP_DEFAULT_API_HOST
 .config$token <- Sys.getenv('SOLVEBIO_API_KEY', unset='')
 .config$token_type <- 'Token'
 
@@ -83,7 +85,7 @@ login <- function(api_key, api_host, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-createEnv <- function(token, token_type="Token", host=.config$host) {
+createEnv <- function(token, token_type="Token", host=Sys.getenv('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)) {
     newEnv <- new.env()
     newEnv$token <- token
     newEnv$token_type <- token_type
