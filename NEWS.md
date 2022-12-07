@@ -133,7 +133,7 @@
 * Adds a few "update" methods for PATCH requests (editing objects)
 * Adds a few new examples for aggregations
 * Raises "stop" errors when Objects cannot be found by full path (previously returned NULL)
-* Adds support for custom client environments (solvebio::createEnv)
+* Adds support for custom client environments (quartzbio.edp::createEnv)
 * Removes deprecated Upload methods
 
 
@@ -168,4 +168,4 @@
 
 # solvebio 0.1.0
 
-* First alpha release, basic SolveBio API support for querying datasets
+* First alpha release, basic QuartzBio EDP API support for querying datasets

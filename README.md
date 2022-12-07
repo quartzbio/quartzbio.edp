@@ -1,22 +1,22 @@
-# SolveBio for R
+# QuartzBio EDP for R
 
-**This version of SolveBio for R is compatible with Vault-based datasets only (released on July 28th, 2017).**
+**This version of QuartzBio EDP for R is compatible with Vault-based datasets only (released on July 28th, 2017).**
 
 
 [![Build Status](https://github.com/solvebio/solvebio-r/workflows/R/badge.svg)](https://github.com/solvebio/solvebio-r/actions) 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/solvebio)](https://cran.r-project.org/package=solvebio)
 
-This package contains the SolveBio R language bindings. SolveBio makes it easy
+This package contains the QuartzBio EDP R language bindings. QuartzBio EDP makes it easy
 to access genomic reference data.
 
 Features of this package include:
 
-* Authentication with SolveBio's API
+* Authentication with QuartzBio EDP's API
 * REST API query support
-* S3 object system for SolveBio API resources
+* S3 object system for QuartzBio EDP API resources
 * Portability between most platforms: Linux, Windows, OS X.
 
-Please see the SolveBio [documentation](https://docs.solvebio.com) for more
+Please see the QuartzBio EDP [documentation](https://docs.solvebio.com) for more
 information about the platform.
 
 
@@ -64,9 +64,9 @@ results
 
 ## Shiny
 
-To use SolveBio in your Shiny app, refer to the docs on [Developing Applications with R Shiny and SolveBio](https://docs.solvebio.com/applications/developing/#r-shiny-and-solvebio).
+To use QuartzBio EDP in your Shiny app, refer to the docs on [Developing Applications with R Shiny and QuartzBio EDP](https://docs.solvebio.com/applications/developing/#r-shiny-and-solvebio).
 
-This package provides a Shiny server wrapper called `solvebio::protectedServer()` which requires users to authenticate with SolveBio and authorize the app before proceeding. In addition, you may enable token cookie storage by installing [ShinyJS](https://deanattali.com/shinyjs/) and adding JS code (`solvebio::protectedServerJS()`) to your Shiny UI.
+This package provides a Shiny server wrapper called `quartzbio.edp::protectedServer()` which requires users to authenticate with QuartzBio EDP and authorize the app before proceeding. In addition, you may enable token cookie storage by installing [ShinyJS](https://deanattali.com/shinyjs/) and adding JS code (`quartzbio.edp::protectedServerJS()`) to your Shiny UI.
 
 An example app is available in the [solvebio-shiny-example](https://github.com/solvebio/solvebio-shiny-example) GitHub repository.
 
