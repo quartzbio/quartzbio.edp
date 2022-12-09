@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotation.R
 \name{Annotator.annotate}
 \alias{Annotator.annotate}
-\title{Annotator.annotate}
+\title{Annotate a data table/frame with additional fields.}
 \usage{
 Annotator.annotate(
   records,
@@ -13,25 +13,16 @@ Annotator.annotate(
 )
 }
 \arguments{
-\item{records}{The data table or data frame to annotate.}
+\item{records}{The data to annotate as a data frame.}
 
 \item{fields}{The fields to add.}
 
-\item{include_errors}{Set to TRUE to include errors in the output (default: FALSE).}
+\item{include_errors}{whether to include errors in the output.}
 
-\item{raw}{Set to TRUE to return the raw response (default: FALSE).}
+\item{raw}{whether to return the raw response.}
 
-\item{env}{(optional) Custom client environment.}
+\item{env}{Custom client environment.}
 }
 \description{
 Annotate a data table/frame with additional fields.
-}
-\examples{
-\dontrun{
-Annotator.annotate(records=tbl, fields=fields)
-}
-
-}
-\references{
-\url{https://docs.solvebio.com/}
 }

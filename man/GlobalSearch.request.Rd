@@ -25,8 +25,8 @@ GlobalSearch.request(
 }
 \description{
 Performs a single Global Search API request with the provided filters, queries and entities.
-A single request will only retrieve one page of results (based on the `limit` parameter).
-Use `GlobalSearch.search()` to retrieve all pages of results.
+A single request will only retrieve one page of results (based on the \code{limit} parameter).
+Use \code{GlobalSearch.search()} to retrieve all pages of results.
 Returns the full API response (containing attributes: results, vaults, subjects, subjects_count, total)
 }
 \examples{

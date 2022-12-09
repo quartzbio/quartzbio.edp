@@ -11,7 +11,9 @@ Task.follow(id, env = quartzbio.edp:::.config, interval = 2)
 
 \item{env}{(optional) Custom client environment.}
 
-\item{interval}{2. Delay in seconds between each completion status query}
+\item{interval}{\enumerate{
+\item Delay in seconds between each completion status query
+}}
 }
 \value{
 the task object

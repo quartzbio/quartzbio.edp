@@ -1,45 +1,21 @@
-#' Application.all
+#' Retrieve the metadata about all application on QuartzBio EDP available to the current user.
 #'
-#' Retrieves the metadata about all application on QuartzBio EDP available to the current user.
-#'
-#' @param env (optional) Custom client environment.
-#' @param ... (optional) Additional query parameters.
-#'
-#' @examples \dontrun{
-#' Application.all()
-#' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
+#' @inheritParams params
+#' @examples \dontrun{ Application.all() }
 #' @export
 Application.all <- function(env = quartzbio.edp:::.config, ...) {
-    .request('GET', "v2/applications", query=list(...), env=env)
+  .request('GET', "v2/applications", query=list(...), env = env)  
 }
 
 
-#' Application.retrieve
+#' Retrieve the metadata about a specific application QuartzBio EDP.
 #'
-#' Retrieves the metadata about a specific application QuartzBio EDP.
-#'
-#' @param client_id The client ID for the application.
-#' @param env (optional) Custom client environment.
-#'
-#' @examples \dontrun{
-#' Application.retrieve("abcd1234")
-#' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
+#' @inheritParams params
+#' @examples \dontrun{  Application.retrieve("abcd1234") }
 #' @export
 Application.retrieve <- function(client_id, env = quartzbio.edp:::.config) {
-    if (missing(client_id)) {
-        stop("A client ID is required.")
-    }
-
-    path <- paste("v2/applications", paste(client_id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/applications", client_id, sep="/")
+  .request('GET', path = path, env = env)
 }
 
 

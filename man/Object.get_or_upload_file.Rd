@@ -24,7 +24,7 @@ Object.get_or_upload_file(
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Upload a local file to a vault on QuartzBio EDP only if it does not yet exist (by name, at the provided path). The vault path provided is the parent directory for uploaded file. Accepts the same arguments as `Object.upload_file`.
+Upload a local file to a vault on QuartzBio EDP only if it does not yet exist (by name, at the provided path). The vault path provided is the parent directory for uploaded file. Accepts the same arguments as \code{Object.upload_file}.
 }
 \examples{
 \dontrun{

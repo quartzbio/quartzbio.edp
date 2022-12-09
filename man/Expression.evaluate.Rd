@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotation.R
 \name{Expression.evaluate}
 \alias{Expression.evaluate}
-\title{Expression.evaluate}
+\title{Evaluate a QuartzBio EDP expression.}
 \usage{
 Expression.evaluate(
   expression,
@@ -14,27 +14,21 @@ Expression.evaluate(
 )
 }
 \arguments{
-\item{expression}{The QuartzBio EDP expression string.}
+\item{expression}{The EDP expression string.}
 
-\item{data_type}{The data type to cast the expression result (default: string).}
+\item{data_type}{The data type to cast the expression result.}
 
-\item{is_list}{Set to TRUE if the result is expected to be a list (default: FALSE).}
+\item{is_list}{whether the result is expected to be a list.}
 
-\item{data}{Variables used in the expression (default: NULL).}
+\item{raw}{whether to return the raw response.}
 
-\item{raw}{Set to TRUE to return the raw response (default: FALSE).}
-
-\item{env}{(optional) Custom client environment.}
+\item{env}{Custom client environment.}
 }
 \description{
 Evaluate a QuartzBio EDP expression.
 }
 \examples{
 \dontrun{
-Expression.evaluate("1 + 1", data_type="integer", is_list=FALSE)
+Expression.evaluate("1 + 1", data_type = "integer", is_list = FALSE)
 }
-
-}
-\references{
-\url{https://docs.solvebio.com/}
 }

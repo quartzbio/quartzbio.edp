@@ -1,6 +1,6 @@
 #' @importFrom utils modifyList packageVersion
 
-formatEDPResponse <- function (res, raw = FALSE) {
+formatEDPResponse <- function(res, raw = FALSE) {
     url = res$url
     body = httr::content(res, as="text", encoding="UTF-8")
     if (raw) {

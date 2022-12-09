@@ -2,24 +2,18 @@
 % Please edit documentation in R/application.R
 \name{Application.all}
 \alias{Application.all}
-\title{Application.all}
+\title{Retrieve the metadata about all application on QuartzBio EDP available to the current user.}
 \usage{
 Application.all(env = quartzbio.edp:::.config, ...)
 }
 \arguments{
-\item{env}{(optional) Custom client environment.}
+\item{env}{Custom client environment.}
 
-\item{...}{(optional) Additional query parameters.}
+\item{...}{Additional query parameters, passed to .request().}
 }
 \description{
-Retrieves the metadata about all application on QuartzBio EDP available to the current user.
+Retrieve the metadata about all application on QuartzBio EDP available to the current user.
 }
 \examples{
-\dontrun{
-Application.all()
-}
-
-}
-\references{
-\url{https://docs.solvebio.com/}
+\dontrun{ Application.all() }
 }

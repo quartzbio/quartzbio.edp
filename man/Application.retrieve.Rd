@@ -2,24 +2,18 @@
 % Please edit documentation in R/application.R
 \name{Application.retrieve}
 \alias{Application.retrieve}
-\title{Application.retrieve}
+\title{Retrieve the metadata about a specific application QuartzBio EDP.}
 \usage{
 Application.retrieve(client_id, env = quartzbio.edp:::.config)
 }
 \arguments{
 \item{client_id}{The client ID for the application.}
 
-\item{env}{(optional) Custom client environment.}
+\item{env}{Custom client environment.}
 }
 \description{
-Retrieves the metadata about a specific application QuartzBio EDP.
+Retrieve the metadata about a specific application QuartzBio EDP.
 }
 \examples{
-\dontrun{
-Application.retrieve("abcd1234")
-}
-
-}
-\references{
-\url{https://docs.solvebio.com/}
+\dontrun{  Application.retrieve("abcd1234") }
 }
