@@ -1,10 +1,6 @@
-# QuartzBio EDP for R
+QuartzBio EDP for R
+=========================
 
-**This version of QuartzBio EDP for R is compatible with Vault-based datasets only (released on July 28th, 2017).**
-
-
-[![Build Status](https://github.com/solvebio/solvebio-r/workflows/R/badge.svg)](https://github.com/solvebio/solvebio-r/actions) 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/solvebio)](https://cran.r-project.org/package=solvebio)
 
 This package contains the QuartzBio EDP R language bindings. QuartzBio EDP makes it easy
 to access genomic reference data.
@@ -30,6 +26,59 @@ library(solvebio)
 ```
 
 ## Usage
+
+### connection/authentication
+
+```R
+# assume that key holds an API key, and token an API token, and secret either a key or a token, 
+# and host an API host
+
+# implicit
+conn <- connect(key)
+conn <- connect(token)
+conn <- connect(secret)
+conn <- connect(key, api_host = host)
+
+# explicit
+conn <- connect(api_key = key)
+conn <- connect(api_token = token, api_host = host)
+
+# equivalently using a list
+conn <- connect(list(api_secret = secret  , api_host = host))
+
+# using env vars: any of EDP_SECRET, SOLVEBIO_API_KEY or SOLVEBIO_API_TOKEN containing a secret
+# with priority of EDP_SECRET > SOLVEBIO_API_TOKEN > SOLVEBIO_API_KEY
+# and EDP_HOST > SOLVEBIO_API_HOST the API host
+
+conn <- connect()
+
+###### profiles
+# use default path (~/qb/edp.json) and default profile ("default")
+conn <- connect_with_profile()
+conn <- connect_with_profile("testing")
+conn <- connect_with_profile(profile = "testing", path = "toto.json")
+
+
+what about using env vars EDP_PROFILE and EDP_CONFIG_PATH ? 
+Should they work also with `connect()` 
+
+
+### default connection
+# all API functions will have a conn = get_connection() param
+`get_connection()` will:
+- if not connection is set, set it using `set_connection(connect())`
+- otherwise just return the default connection
+
+
+
+
+
+
+```
+
+
+
+
 
 ```R
 # By default it will look for a key in the $SOLVEBIO_API_KEY environment variable.
