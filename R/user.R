@@ -1,17 +1,13 @@
-#' User.retrieve
-#'
-#' Retrieves information about the current user.
-#'
-#' @param env (optional) Custom client environment.
-#'
-#' @examples \dontrun{
-#' User.retrieve()
-#' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
+#' Retrieves information about the current user
+#' @inheritParams old_params
 #' @export
-User.retrieve <- function(env = quartzbio.edp:::.config) {
-    .request('GET', "v1/user", env=env)
+User.retrieve <- function(env = get_connection()) {
+  user(conn = env)
+}
+
+#' @inherit User.retrieve
+#' @inheritParams params
+#' @export
+user <- function(conn = get_connection()) {
+  request_edp_api('GET', "v1/user", conn = conn)
 }

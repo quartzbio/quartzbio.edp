@@ -1,21 +1,18 @@
-#' Object.all
+#' Retrieves the metadata about all objects on EDP accessible to the current user.
 #'
-#' Retrieves the metadata about all objects on QuartzBio EDP accessible to the current user.
-#'
-#' @param env (optional) Custom client environment.
-#' @param ... (optional) Additional query parameters.
-#'
-#' @examples \dontrun{
-#' Object.all()
-#' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
+#' @inheritParams old_params
 #' @export
-Object.all <- function(env = quartzbio.edp:::.config, ...) {
-    .request('GET', "v2/objects", query=list(...), env=env)
+Object.all <- function(env = get_connection(), ...) {
+  .request('GET', "v2/objects", query=list(...), env = env)
 }
+
+#' @inherit Object.all
+#' @inheritParams params
+#' @export
+objects <- function(conn = get_connection(), limit = NULL, as_data_frame = FALSE, ...) {
+  request_edp_api('GET', "v2/objects", conn = conn, query = list(...))
+}
+
 
 #' Object.retrieve
 #'

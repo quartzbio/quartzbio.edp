@@ -2,22 +2,13 @@
 % Please edit documentation in R/user.R
 \name{User.retrieve}
 \alias{User.retrieve}
-\title{User.retrieve}
+\title{Retrieves information about the current user}
 \usage{
-User.retrieve(env = quartzbio.edp:::.config)
+User.retrieve(env = get_connection())
 }
 \arguments{
-\item{env}{(optional) Custom client environment.}
+\item{env}{Custom client environment.}
 }
 \description{
-Retrieves information about the current user.
-}
-\examples{
-\dontrun{
-User.retrieve()
-}
-
-}
-\references{
-\url{https://docs.solvebio.com/}
+Retrieves information about the current user
 }

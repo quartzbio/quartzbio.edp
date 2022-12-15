@@ -37,16 +37,16 @@ formatEDPQueryResponse <- function (res, raw = FALSE, col.names = NULL) {
 }
 
 
-prepareArgs <- function (args) {
-    if (!is.null(args) && length(args) > 0) {
-        args = args[!sapply(args, is.null)]
-        rapply(args, function (x) {
-                   ifelse(is.logical(x), x * 1, x)
-                                 }, how="replace")
-    } else {
-        NULL
-    }
-}
+# prepareArgs <- function (args) {
+#     if (!is.null(args) && length(args) > 0) {
+#         args = args[!sapply(args, is.null)]
+#         rapply(args, function (x) {
+#                    ifelse(is.logical(x), x * 1, x)
+#                                  }, how="replace")
+#     } else {
+#         NULL
+#     }
+# }
 
 formatQueryColumns <- function (id, env, res, use_field_titles) {
     # Retrieve the list of ordered fields

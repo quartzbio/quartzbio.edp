@@ -1,34 +1,93 @@
-format_auth_header <- function(conn) {
-  token_type <- if (conn$is_key) 'Token' else 'Bearer'
-  c(Authorization = paste(token_type, conn$secret, sep = " "))
+format_auth_header <- function(secret) {
+  token_type <- if (looks_like_api_key(secret)) 'Token' else 'Bearer'
+  c(Authorization = paste(token_type, secret, sep = " "))
 }
 
+# try to parse some details about an API error, as provided by the API in the response
+get_api_response_error_message <- function(res, default_message = '') {
+  parsed <- try(httr::content(res), silent = TRUE)
+  if (.is_error(parsed)) return('Error parsing API response')
+  if (!length(parsed)) return(default_message)
+
+  msg <- default_message
+  if ("details" %in% names(parsed)) {
+    msg <- parsed$details
+  } else {
+    # backwards compatibility
+    msg <- paste0(unlist(parsed), collapse = ', ')
+  }
+  
+  msg
+}
+
+
+# Error Code 	Meaning 	Description
+# 400 	Bad Request 	Your request was malformed
+# 401 	Unauthorized 	Your API key or token is invalid
+# 403 	Forbidden 	Your API key or token is not valid for this type of request
+# 404 	Not Found 	The specified resource could not be found
+# 405 	Method Not Allowed 	Your request used an invalid method
+# 429 	Too Many Requests 	You have reached the rate limit
+# 500 	Internal Server Error 	We had a problem with our server
+# 503 	Service Unavailable 	We are temporarily offline for maintenance
+check_httr_response_error <- function(res) {
+  status <- res$status
+
+  if (status >= 200 && status < 400) # no error
+    return()
+
+  .die_if(status == 429, 
+    "API error: Too many requests, please retry in %i seconds", res$header$"retry-after")
+
+  .die_if(status == 401, 
+    "Unauthorized: %s (error %s)", get_api_response_error_message(res), status)
+
+  .die_if(status == 400, "API error: %s", get_api_response_error_message(res))
+
+  .die("Uknown API error %s: %s", status,  get_api_response_error_message(res))
+}
+
+
 # Private API request method.
-request_edp_api <- function(method, path, query, body,
+request_edp_api <- function(method, path, query = list(), body = list(),
                             conn,
                             content_type = "application/json",
-                            raw = TRUE,
-                            ...) {
-  # Set defaults
-  headers <- c(
-    "Accept" = "application/json",
-    "Accept-Encoding" = "gzip,deflate",
-    "Content-Type" = content_type
-  )
+                            # raw = TRUE,
+                            params = list(),
+                            limit = NULL, 
+                            page = NULL,
+                            as_data_frame = FALSE,
+                            ...) 
+{
+  JSON <- "application/json"
 
-  if (!is.null(env$token) && nchar(env$token) != 0) {
-    headers <- c(
-      headers,
-      Authorization = paste(env$token_type, env$token, sep = " ")
-    )
+  ### params
+  if (length(limit)) params$limit <- limit
+  if (length(page)) params$page <- page
+
+  if (length(params)) {
+    if (method == 'GET') {
+      query <- modifyList(query, params)
+    } else {
+      body <- modifyList(body, params)
+    }
   }
 
-  # Slice of beginning slash
+  ### headers
+  headers <- c(
+    "Accept" = JSON,
+    "Accept-Encoding" = "gzip,deflate",
+    "Content-Type" = content_type,
+    c(format_auth_header(conn$secret))
+  )
+
+  ### URI
   if (substring(path, 1, 1) == "/") {
     path <- substring(path, 2)
   }
+  uri <- file.path(conn$host, path)
 
-  uri <- httr::modify_url(env$host, "path" = path)
+  ### User Agent
   useragent <- sprintf(
     "QuartzBio EDP R Client %s [%s %s]",
     packageVersion("quartzbio.edp"),
@@ -36,122 +95,64 @@ request_edp_api <- function(method, path, query, body,
     R.version$platform
   )
   config <- httr::config(useragent = useragent)
-  encode <- "form"
 
-  if (content_type == "application/json") {
-    if (!missing(body) && !is.null(body) && length(body) > 0) {
+  ### encoding
+  encode <- "form"
+  if (content_type == JSON) {
+    if (length(body) > 0) {
       body <- jsonlite::toJSON(body, auto_unbox = TRUE, null = "null")
       encode <- "json"
     }
   }
 
-  if (missing(query)) {
-    query <- NULL
-  }
-
-  switch(method,
-    GET = {
-      res <- httr::GET(
-        uri,
-        httr::add_headers(headers),
-        config = config,
-        query = query,
-        # httr::verbose(),
-        ...
-      )
-    },
-    POST = {
-      res <- httr::POST(
-        uri,
-        httr::add_headers(headers),
-        config = config,
-        body = body,
-        query = query,
-        encode = encode,
-        # httr::verbose(),
-        ...
-      )
-    },
-    PUT = {
-      res <- httr::PUT(
-        uri,
-        httr::add_headers(headers),
-        config = config,
-        body = body,
-        query = query,
-        encode = encode,
-        # httr::verbose(),
-        ...
-      )
-    },
-    PATCH = {
-      res <- httr::PATCH(
-        uri,
-        httr::add_headers(headers),
-        config = config,
-        body = body,
-        query = query,
-        encode = encode,
-        # httr::verbose(),
-        ...
-      )
-    },
-    DELETE = {
-      res <- httr::DELETE(
-        uri,
-        httr::add_headers(headers),
-        config = config,
-        query = query,
-        # httr::verbose(),
-        ...
-      )
-    },
-    {
-      stop("Invalid request method!")
-    }
+  ### actual API request
+  res <- httr::VERB(
+    method,
+    uri,
+    httr::add_headers(headers),
+    config = config,
+    body = body,
+    query = query,
+    encode = encode,
+    ...
   )
 
+  check_httr_response_error(res)
 
-  if (res$status < 200 | res$status >= 400) {
-    if (res$status == 429) {
-      stop(sprintf("API error: Too many requests, please retry in %i seconds\n", res$header$"retry-after"))
-    }
-    if (res$status == 400) {
-      tryCatch(
-        {
-          content <- formatEDPResponse(res, raw = FALSE)
-          if (!is.null(content$detail)) {
-            stop(sprintf("API error: %s\n", content$detail))
-          } else {
-            stop(sprintf("API error: %s\n", content))
-          }
-        },
-        error = function(e) {
-          cat(sprintf("Error parsing API response\n"))
-          stop(res)
-        }
-      )
-    }
-    if (res$status == 401) {
-      stop(sprintf("Unauthorized: %s (error %s)\n", httr::content(res, as = "parsed")$detail, res$status))
-    }
-
-    content <- httr::content(res, as = "text", encoding = "UTF-8")
-    stop(sprintf("API error %s %s\n", res$status, content))
-  }
-
-  if (res$status == 204 | res$status == 301 | res$status == 302) {
+  status <- res$status
+  # 204: no content, 301: moved permanently, 302: Moved Temporarily
+  if (status == 204 || status == 301 || status == 302) {
     return(res)
   }
 
-  res <- formatEDPResponse(res, raw = FALSE)
+  content <- httr::content(res)
+  # if (raw) return(content)
 
-  if (!is.null(res$class_name)) {
-    # Classify the result object
-    res <- structure(res, class = res$class_name)
+  # if (!.is_nz_string(content$class_name)) {
+  #   class(content) <- content$class_name
+  # }
+
+  if (as_data_frame) {
+    df <- convert_edp_list_data_to_df(content)
+    if (length(df)) return(df)
+      warning('Could not convert to data frame')
   }
 
-  if (!raw) res <- res$results
+  content
+}
 
-  res
+convert_edp_list_data_to_df <- function(res) {
+  if (!'data' %in% names(res)) return(NULL)
+  lst <- res$data
+  df <- as.data.frame(do.call(rbind,  lst), stringsAsFactors = FALSE)
+
+  # N.B: use the first row to infer types
+  row1 <- lst[[1]]
+
+  for (col in seq_along(df)) {
+    # only if all scalars
+    if (all(lengths(df[[col]]) == 1)) 
+      df[[col]] <- as(df[[col]], class(row1[[col]]))
+  }
+  df
 }

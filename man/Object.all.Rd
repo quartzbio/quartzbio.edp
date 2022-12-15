@@ -2,24 +2,15 @@
 % Please edit documentation in R/object.R
 \name{Object.all}
 \alias{Object.all}
-\title{Object.all}
+\title{Retrieves the metadata about all objects on EDP accessible to the current user.}
 \usage{
-Object.all(env = quartzbio.edp:::.config, ...)
+Object.all(env = get_connection(), ...)
 }
 \arguments{
-\item{env}{(optional) Custom client environment.}
+\item{env}{Custom client environment.}
 
-\item{...}{(optional) Additional query parameters.}
+\item{...}{Additional query parameters, passed to .request().}
 }
 \description{
-Retrieves the metadata about all objects on QuartzBio EDP accessible to the current user.
-}
-\examples{
-\dontrun{
-Object.all()
-}
-
-}
-\references{
-\url{https://docs.solvebio.com/}
+Retrieves the metadata about all objects on EDP accessible to the current user.
 }
