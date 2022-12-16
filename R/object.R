@@ -9,9 +9,74 @@ Object.all <- function(env = get_connection(), ...) {
 #' @inherit Object.all
 #' @inheritParams params
 #' @export
-objects <- function(conn = get_connection(), limit = NULL, as_data_frame = FALSE, ...) {
-  request_edp_api('GET', "v2/objects", conn = conn, query = list(...))
+objects <- function(conn = get_connection(), limit = NULL, page = NULL, ...) {
+  request_edp_api('GET', "v2/objects", conn = conn, limit = limit, page = page, params = list(...))
 }
+
+#' @inherit Object.retrieve
+#' @inheritParams params
+#' @export
+object <- function(id = NULL, full_path = NULL, path = NULL, conn = get_connection(), ...) {
+  o <- NULL
+  if (.is_nz_string(id)) {
+    path <- paste("v2/objects", paste(id), sep="/")
+    o <- request_edp_api('GET', path, conn = conn,  params = list(...))
+  }
+
+  .die_unless(.is_nz_string(full_path) || .is_nz_string(path), 
+    "you need exactly one among id, full_path and path")
+
+  .die_if(.is_nz_string(full_path) && .is_nz_string(path), 
+    "you can not give both full_path and path")
+
+  if (.is_nz_string(full_path)) {
+    o <- request_edp_api('GET', "v2/objects", conn = conn,  params = list(full_path = full_path))[[1]]
+  }
+  if (.is_nz_string(path)) {
+    o <- request_edp_api('GET', "v2/objects", conn = conn,  params = list(path = path))[[1]]
+  }
+
+  o
+}
+
+
+
+
+#' @export
+fetch.ObjectId <- function(x,  conn = get_connection()) {
+  object(id = x, conn = conn)
+}
+
+
+#### Object methods
+#' @export
+print.Object <- function(x, ...) {
+  msg <- sprintf('Object "%s" user:%s last accessed:%s', 
+    x$full_path, x$user$full_name, x$last_accessed)
+  cat(msg, '\n')
+}
+
+# decorate.Object <- function(x, ...) {
+#   # look for ids
+#   id_names <- grep('_id$', names(x), value = TRUE)
+#   for (name in id_names) {
+#     if (length(x[[name]])) {
+#       class_name <- head(tail(strsplit(name, '_')[[1]], 2), 1)
+#       class_name  <- paste0(toupper(substring(class_name, 1, 1)), substring(class_name, 2))
+#       class_name <- paste0(class_name, 'Id')
+#       class(x[[name]]) <- class_name
+
+#       x
+#     }
+#   }
+
+#   x
+# }
+
+# as.data.frame.Object <- function(x, row.names = NULL, optional = FALSE, ...) {
+#   convert_edp_list_data_to_df(x)
+# }
+
 
 
 #' Object.retrieve

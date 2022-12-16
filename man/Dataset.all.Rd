@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataset.R
 \name{Dataset.all}
 \alias{Dataset.all}
-\title{Dataset.all}
+\title{Retrieves the metadata about datasets on QuartzBio EDP.}
 \usage{
 Dataset.all(env = quartzbio.edp:::.config, ...)
 }

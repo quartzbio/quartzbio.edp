@@ -1,5 +1,3 @@
-#' Dataset.all
-#'
 #' Retrieves the metadata about datasets on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
@@ -16,6 +14,34 @@
 Dataset.all <- function(env = quartzbio.edp:::.config, ...) {
     .request('GET', "v2/datasets", query=list(...), env=env)
 }
+
+#' @inherit Dataset.all
+#' @inheritParams params
+#' @export
+datasets <- function(conn = get_connection(), limit = NULL, page = NULL,  ...) {
+  request_edp_api('GET', "v2/datasets", conn = conn, limit = limit, page = page, params = list(...))
+}
+
+#' @inherit Dataset.retrieve
+#' @inheritParams params
+#' @export
+dataset <- function(id, conn = get_connection(),  ...) {
+  path <- paste("v2/datasets", paste(id), sep="/")
+  request_edp_api('GET', path, conn = conn,  params = list(...))
+}
+
+#' @export
+print.Dataset <- function(x, ...) {
+  msg <- sprintf('Dataset "%s", %i documents, updated at:%s', 
+    x$full_path, x$documents_count, x$updated_at)
+  cat(msg, '\n')
+}
+
+#' @export
+fetch.DatasetId <- function(x,  conn = get_connection()) {
+  dataset(x, conn = conn)
+}
+
 
 
 #' Dataset.retrieve

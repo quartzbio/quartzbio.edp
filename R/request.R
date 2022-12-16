@@ -56,7 +56,7 @@ request_edp_api <- function(method, path, query = list(), body = list(),
                             params = list(),
                             limit = NULL, 
                             page = NULL,
-                            as_data_frame = FALSE,
+                            postprocess = TRUE,
                             ...) 
 {
   JSON <- "application/json"
@@ -131,19 +131,57 @@ request_edp_api <- function(method, path, query = list(), body = list(),
   # if (!.is_nz_string(content$class_name)) {
   #   class(content) <- content$class_name
   # }
-
-  if (as_data_frame) {
-    df <- convert_edp_list_data_to_df(content)
-    if (length(df)) return(df)
-      warning('Could not convert to data frame')
+  if (postprocess) {
+    content <- postprocess_response(content)
   }
+
 
   content
 }
 
-convert_edp_list_data_to_df <- function(res) {
-  if (!'data' %in% names(res)) return(NULL)
-  lst <- res$data
+# set types (class)
+postprocess_response <- function(res) {
+    .classify <- function(x) {
+      class_name <- x$class_name
+      if (.is_nz_string(class_name) && class_name != 'list')
+        class(x) <- class_name
+      x
+    }
+  # is the content an object or a list of objects...
+  # a list of objects should have the $total key and have a class_name=='list'
+  if (!'total' %in% names(res) && res$class_name != 'list') {
+    # consider it is an object
+    res <- .classify(res)
+    res <- decorate(res)
+    return(res)
+  }
+
+  ### results are either in $data or $results
+  key <- NULL
+  if ('data' %in% names(res) && length(res$data)) {
+    key <- 'data' 
+  } else if ('results' %in% names(res) && length(res$data)) {
+    key <- 'results' 
+  }
+
+  if (!length(key)) return(res)
+
+  lst <- res[[key]]
+
+  lst <- lapply(lst, .classify)
+
+  # decorate objects
+  lst <- lapply(lst, decorate)
+
+
+  # store other items as attributes
+  items <- setdiff(names(res), key)
+  attributes(lst) <- res[items]
+
+  lst
+}
+
+convert_edp_list_data_to_df <- function(lst) {
   df <- as.data.frame(do.call(rbind,  lst), stringsAsFactors = FALSE)
 
   # N.B: use the first row to infer types
