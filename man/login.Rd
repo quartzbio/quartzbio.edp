@@ -4,7 +4,12 @@
 \alias{login}
 \title{login}
 \usage{
-login(api_key, api_host, env = quartzbio.edp:::.config)
+login(
+  api_key = Sys.getenv("SOLVEBIO_API_KEY"),
+  api_token = Sys.getenv("SOLVEBIO_ACCESS_TOKEN"),
+  api_host = Sys.getenv("SOLVEBIO_API_HOST"),
+  env = quartzbio.edp:::.config
+)
 }
 \arguments{
 \item{api_key}{Your QuartzBio EDP API key}
