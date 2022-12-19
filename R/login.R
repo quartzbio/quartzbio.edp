@@ -6,10 +6,10 @@
 
 
 
-# .config <- new.env()
+.config <- new.env()
 # .config$host <- EDP_DEFAULT_API_HOST
-# .config$token <- Sys.getenv('SOLVEBIO_API_KEY', unset='')
-# .config$token_type <- 'Token'
+.config$token <- Sys.getenv('SOLVEBIO_API_KEY', unset='')
+.config$token_type <- 'Token'
 
 # if (nchar(.config$token) == 0L) {
 #     # No API key, look for access token

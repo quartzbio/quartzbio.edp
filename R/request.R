@@ -57,8 +57,13 @@ request_edp_api <- function(method, path, query = list(), body = list(),
                             limit = NULL, 
                             page = NULL,
                             postprocess = TRUE,
+                            verbose = TRUE,
                             ...) 
 {
+  if (verbose) {
+    msg <- sprintf('%s %s...', method, path)
+    message(msg)
+  }
   JSON <- "application/json"
 
   ### params
@@ -144,7 +149,7 @@ postprocess_response <- function(res) {
     .classify <- function(x) {
       class_name <- x$class_name
       if (.is_nz_string(class_name) && class_name != 'list')
-        class(x) <- class_name
+        class(x) <- c(class_name, class(x))
       x
     }
   # is the content an object or a list of objects...
@@ -178,6 +183,15 @@ postprocess_response <- function(res) {
   items <- setdiff(names(res), key)
   attributes(lst) <- res[items]
 
+  class(lst) <- c('edplist', 'list')
+
+  # check what kind of objects are in the list
+  if (length(lst)) {
+    class_obj <- class(lst[[1]])[1]
+    if (.is_nz_string(class_obj))
+      class(lst) <- c(paste0(class_obj, 'List'), class(lst))
+  }
+
   lst
 }
 
@@ -190,7 +204,7 @@ convert_edp_list_data_to_df <- function(lst) {
   for (col in seq_along(df)) {
     # only if all scalars
     if (all(lengths(df[[col]]) == 1)) 
-      df[[col]] <- as(df[[col]], class(row1[[col]]))
+      df[[col]] <- as(df[[col]], typeof(row1[[col]]))
   }
   df
 }

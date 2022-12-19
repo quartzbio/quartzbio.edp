@@ -13,3 +13,6 @@
 .qbdev
 .qbdev_devmode
 .qbrocker_bash_history
+
+# temporary during dev
+tests/testthat/CAPTURES/

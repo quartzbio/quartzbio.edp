@@ -42,25 +42,6 @@ Vault.retrieve <- function(id, env = quartzbio.edp:::.config) {
     .request("GET", path=path, env=env)
 }
 
-#' @inherit Vault.retrieve
-#' @inheritParams params
-#' @export
-vault <- function(id, conn = get_connection(),  ...) {
-  path <- paste("v2/vaults", paste(id), sep="/")
-  request_edp_api('GET', path, conn = conn,  params = list(...))
-}
-
-#' @export
-print.Vault <- function(x, ...) {
-  msg <- sprintf('Vault "%s" @ %s (%s), user:%s updated at:%s', 
-    x$name, x$url, x$vault_type, x$user$full_name,x$updated_at)
-  cat(msg, '\n')
-}
-
-#' @export
-fetch.VaultId <- function(x,  conn = get_connection()) {
-  vault(x, conn = conn)
-}
 
 
 

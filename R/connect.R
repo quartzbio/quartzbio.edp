@@ -26,6 +26,10 @@ check_connection <- function(conn) {
     'connection secret does not look like an API key or token')
 }
 
+env_2_connection <- function(env) {
+  list(secret = env$token, host = env$host)
+}
+
 #' test a connection
 #' 
 #' may die on bad connection

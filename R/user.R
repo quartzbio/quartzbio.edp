@@ -2,12 +2,5 @@
 #' @inheritParams old_params
 #' @export
 User.retrieve <- function(env = get_connection()) {
-  user(conn = env)
-}
-
-#' @inherit User.retrieve
-#' @inheritParams params
-#' @export
-user <- function(conn = get_connection()) {
-  request_edp_api('GET', "v1/user", conn = conn)
+  user(conn = env_2_connection(env))
 }
