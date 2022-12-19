@@ -36,30 +36,52 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-login <- function(api_key, api_host, env = quartzbio.edp:::.config) {
-    if (!missing(api_key)) {
-        assign('token', api_key, envir=env)
+login <- function(
+    api_key = Sys.getenv('SOLVEBIO_API_KEY'), 
+    api_token = Sys.getenv('SOLVEBIO_ACCESS_TOKEN'),
+    api_host = Sys.getenv('SOLVEBIO_API_HOST'), 
+    env = quartzbio.edp:::.config) 
+  {
+    .is_nzs <- function(x) { length(x) == 1 && !is.na(x) && is.character(x) && nzchar(x)  }
+    token <- NULL
+    token_type <- NULL
+    if (.is_nzs(api_key)) {
+      token <- api_key
+      token_type <- 'Token'
     }
-    .config$token <- Sys.getenv('SOLVEBIO_API_KEY', unset='')
-    .config$token_type <- 'Token'
+      
+    if (.is_nzs( api_token)) {
+      token <- api_token
+      token_type <- 'Bearer'
+    }
 
-    if(nchar(env$token) == 0L) {
-        # No API key, look for access token
-        .config$token <- Sys.getenv('SOLVEBIO_ACCESS_TOKEN', unset='')
-        if (nchar(.config$token) > 0L) {
-            .config$token_type <- 'Bearer'
-        }
-        else {
-            stop("No Access Token or API key found. Learn more: https://docs.solvebio.com/#authenticating-with-r")
-        }
+    if (!.is_nzs(token)) {
+      stop("No Access Token or API key found. Learn more: https://docs.solvebio.com/#authenticating-with-r")
     }
-    if (!missing(api_host)) {
-        assign('host', api_host, envir=env)
-    }
+
+    assign('token', token, envir = env)
+    assign('token_type', token_type, envir = env)
+    assign('host', api_host, envir = env)
+
+
+
+    # if(nchar(env$token) == 0L) {
+    #     # No API key, look for access token
+    #     .config$token <- Sys.getenv('SOLVEBIO_ACCESS_TOKEN', unset='')
+    #     if (nchar(.config$token) > 0L) {
+    #         .config$token_type <- 'Bearer'
+    #     }
+    #     else {
+    #         stop("No Access Token or API key found. Learn more: https://docs.solvebio.com/#authenticating-with-r")
+    #     }
+    # }
+    # if (!missing(api_host)) {
+    #     assign('host', api_host, envir=env)
+    # }
 
     # Test the login
     tryCatch({
-        user <- User.retrieve(env=env)
+        user <- User.retrieve(env = env)
         cat(sprintf("Logged-in to %s as %s.\n", env$host, user$email))
         return(invisible(user))
     }, error = function(e) {
