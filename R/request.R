@@ -57,6 +57,9 @@ request_edp_api <- function(method, path, query = list(), body = list(),
                             limit = NULL, 
                             page = NULL,
                             postprocess = TRUE,
+                            as = NULL,
+                            encoding = "UTF-8",
+                            simplifyDataFrame = FALSE,
                             verbose = TRUE,
                             ...) 
 {
@@ -130,7 +133,7 @@ request_edp_api <- function(method, path, query = list(), body = list(),
     return(res)
   }
 
-  content <- httr::content(res)
+  content <- httr::content(res, as = as, encoding = encoding, simplifyDataFrame = simplifyDataFrame)
   # if (raw) return(content)
 
   # if (!.is_nz_string(content$class_name)) {
@@ -152,6 +155,7 @@ postprocess_response <- function(res) {
         class(x) <- c(class_name, class(x))
       x
     }
+
   # is the content an object or a list of objects...
   # a list of objects should have the $total key and have a class_name=='list'
   if (!'total' %in% names(res) && res$class_name != 'list') {
@@ -165,46 +169,54 @@ postprocess_response <- function(res) {
   key <- NULL
   if ('data' %in% names(res) && length(res$data)) {
     key <- 'data' 
-  } else if ('results' %in% names(res) && length(res$data)) {
+  } else if ('results' %in% names(res) && length(res$results)) {
     key <- 'results' 
   }
 
+  # no data
   if (!length(key)) return(res)
 
-  lst <- res[[key]]
+  data <- res[[key]]
+   # store other items as attributes
+  items <- setdiff(names(res), c(key))
+  for (attr in items) 
+    attr(data, attr) <- res[[attr]]
+  
+  if (is.data.frame(data)) {
+    # nothing cyrrently to do
+    class(data) <- c('edpdf', 'data.frame')
+  } else {
+ 
+    data <- lapply(data, .classify)
+      # decorate objects
+    data <- lapply(data, decorate)
 
-  lst <- lapply(lst, .classify)
+      # check what kind of objects are in the list
+    class(data) <- c('edplist', 'list')
+    if (length(data)) {
+      class_obj <- class(data[[1]])[1]
+      if (.is_nz_string(class_obj))
+        class(data) <- c(paste0(class_obj, 'List'), class(data))
+    }
 
-  # decorate objects
-  lst <- lapply(lst, decorate)
-
-
-  # store other items as attributes
-  items <- setdiff(names(res), key)
-  attributes(lst) <- res[items]
-
-  class(lst) <- c('edplist', 'list')
-
-  # check what kind of objects are in the list
-  if (length(lst)) {
-    class_obj <- class(lst[[1]])[1]
-    if (.is_nz_string(class_obj))
-      class(lst) <- c(paste0(class_obj, 'List'), class(lst))
   }
 
-  lst
+  data
 }
 
 convert_edp_list_data_to_df <- function(lst) {
   df <- as.data.frame(do.call(rbind,  lst), stringsAsFactors = FALSE)
 
-  # N.B: use the first row to infer types
-  row1 <- lst[[1]]
+  if (length(lst)) {
+    # N.B: use the first row to infer types
+    row1 <- lst[[1]]
 
-  for (col in seq_along(df)) {
-    # only if all scalars
-    if (all(lengths(df[[col]]) == 1)) 
-      df[[col]] <- as(df[[col]], typeof(row1[[col]]))
+    for (col in seq_along(df)) {
+      # only if all scalars
+      if (all(lengths(df[[col]]) == 1)) 
+        df[[col]] <- as(df[[col]], typeof(row1[[col]]))
+    }
   }
+
   df
 }

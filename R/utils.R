@@ -1,5 +1,10 @@
-#' @importFrom utils modifyList packageVersion
 
+path_make_absolute <- function(path) {
+  if (!.is_nz_string(path)) return('/')
+  if (substring(path, 1, 1) != '/') 
+    path <- file.path('', path)
+  path
+}
 
 
 formatEDPResponse <- function(res, raw = FALSE) {

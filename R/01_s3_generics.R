@@ -35,7 +35,22 @@ decorate.default <- function(x, ...) {
 
 
 
-#' fetch an object from its ID
+#' delete an object from EDP
+#' 
+#' @docType methods
+#' @param x the object to delete
+#' @export
+#' @rdname generics
+delete <- function(x, conn = get_connection()) {
+  UseMethod('delete')
+}
+
+#' @export
+delete.default <- function(x,  conn = get_connection()) {
+  stop('Not yet implemented')
+}
+
+#' fetch an object using its ID
 #' 
 #' @docType methods
 #' @return the decorated object
@@ -50,3 +65,17 @@ fetch.default <- function(x,  conn = get_connection()) {
   stop('Not yet implemented')
 }
 
+#' fetch the vault related to an object
+#' 
+#' @docType methods
+#' @return the vault, or NULL if  not applicable
+#' @export
+#' @rdname generics
+fetch_vaults <- function(x, conn = get_connection()) {
+  UseMethod('fetch_vaults')
+}
+
+#' @export
+fetch_vaults.default <- function(x,  conn = get_connection()) {
+  NULL
+}

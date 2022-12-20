@@ -43,14 +43,33 @@ test_connection <- function(conn) {
   res <- try(request_edp_api('GET', "v1/user", conn = conn))
   if (.is_error(res)) {
     warning(paste('got error connecting:', .get_error_msg(res)))
-    return(FALSE)
+    stop(.get_error(res))
   }
 
   type <- if (looks_like_api_key(conn$secret)) 'Key' else 'Token'
   msg <- sprintf('Connected to %s with user "%s" using an API %s', conn$host, res$full_name, type)
   message(msg)
 
-  TRUE
+  invisible()
+}
+
+.DEFAULTS <- new.env()
+
+#' set a connection as the default one
+#' 
+#' may die on bad connection
+#' @inheritParams params
+#' @export
+set_connection <- function(conn) {
+  test_connection(conn)
+  assign('connection', conn, envir = .DEFAULTS)
+}
+
+#' get the default connection if any
+#' 
+#' @export
+get_connection <- function() {
+  .DEFAULTS$connection
 }
 
 
