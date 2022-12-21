@@ -65,6 +65,16 @@ fetch.default <- function(x,  conn = get_connection()) {
   stop('Not yet implemented')
 }
 
+#' fetch the next one
+#' 
+#' @docType methods
+#' @return the decorated object
+#' @export
+#' @rdname generics
+fetch_next <- function(x) {
+  UseMethod('fetch_next')
+}
+
 #' fetch the vault related to an object
 #' 
 #' @docType methods

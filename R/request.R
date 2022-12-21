@@ -125,13 +125,15 @@ request_edp_api <- function(method, path, query = list(), body = list(),
     ...
   )
 
-  check_httr_response_error(res)
-
   status <- res$status
   # 204: no content, 301: moved permanently, 302: Moved Temporarily
   if (status == 204 || status == 301 || status == 302) {
     return(res)
   }
+  if (status == 404) # Not found
+    return(NULL)
+
+  check_httr_response_error(res)
 
   content <- httr::content(res, as = as, encoding = encoding, simplifyDataFrame = simplifyDataFrame)
   # if (raw) return(content)
@@ -143,6 +145,7 @@ request_edp_api <- function(method, path, query = list(), body = list(),
     content <- postprocess_response(content)
   }
 
+  attr(content, 'connection') <- as.environment(conn)
 
   content
 }
@@ -174,19 +177,20 @@ postprocess_response <- function(res) {
   }
 
   # no data
-  if (!length(key)) return(res)
+  data <- list()
+  if (length(key)) {
+    data <- res[[key]]
+  }
 
-  data <- res[[key]]
    # store other items as attributes
   items <- setdiff(names(res), c(key))
   for (attr in items) 
     attr(data, attr) <- res[[attr]]
-  
+
   if (is.data.frame(data)) {
     # nothing cyrrently to do
     class(data) <- c('edpdf', 'data.frame')
   } else {
- 
     data <- lapply(data, .classify)
       # decorate objects
     data <- lapply(data, decorate)
@@ -198,7 +202,6 @@ postprocess_response <- function(res) {
       if (.is_nz_string(class_obj))
         class(data) <- c(paste0(class_obj, 'List'), class(data))
     }
-
   }
 
   data
