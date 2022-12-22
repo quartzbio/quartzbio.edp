@@ -11,12 +11,12 @@ Folders <- function(vault_id = NULL, ...) {
 #' @inheritParams params
 #' @export
 Folder <- function(id = NULL, full_path = NULL, path = NULL, vault_id = NULL, 
-  conn = get_connection(), ...) 
+  conn = get_connection()) 
 {
-  if (length(id)) return(Object(id = id, conn = get_connection(), ...))
+  if (length(id)) return(Object(id = id, conn = get_connection()))
 
   lst <- Objects(object_type = 'folder', vault_id = vault_id, vault_full_path = full_path, 
-    path = path, ...)
+    path = path)
 
   if (!length(lst)) return(NULL) # no result / not found
   .die_if(length(lst) > 1, 'ERROR, found multiple results') # should not happen
@@ -26,7 +26,7 @@ Folder <- function(id = NULL, full_path = NULL, path = NULL, vault_id = NULL,
 
 #' create folder
 #' @export
-Folder_create <- function(vault_id, path, recursive = TRUE, parent_folder_id = NULL, ...,
+Folder_create <- function(vault_id, path, recursive = TRUE, parent_folder_id = NULL, 
   conn = get_connection()) 
 {
   path <- path_make_absolute(path)
@@ -36,12 +36,12 @@ Folder_create <- function(vault_id, path, recursive = TRUE, parent_folder_id = N
     parent <- Folder(path = parent_path, vault_id = vault_id, conn = conn)
     .die_if(!length(parent) && !recursive, 'not allowed to create parent folder (recursive == FALSE)')
     if (!length(parent)) {
-      parent <- Folder_create(vault_id, parent_path, recursive = recursive, conn = conn, ...)
+      parent <- Folder_create(vault_id, parent_path, recursive = recursive, conn = conn)
     }
     parent_folder_id <- parent$id
   }
   Object_create(vault_id = vault_id, filename = basename(path), object_type = 'folder', 
-    parent_object_id = parent_folder_id, ..., conn = conn)
+    parent_object_id = parent_folder_id, conn = conn)
 }
 
 ### 
@@ -56,47 +56,34 @@ Files <- function(vault_id = NULL, ...) {
 #' @inheritParams params
 #' @export
 File <- function(id = NULL, full_path = NULL, path = NULL, vault_id = NULL, 
-  conn = get_connection(), ...) 
+  conn = get_connection()) 
 {
   Object(object_type = 'file', id = id, full_path = full_path, path = path, 
-    vault_id = vault_id, conn = conn, ...)
+    vault_id = vault_id, conn = conn)
 }
 
 
 #' @export
 File_upload <- function(vault_id, local_path, vault_path, 
   mimetype = mime::guess_type(local_path),
-  conn = get_connection(), ...) 
+  conn = get_connection()) 
 {
   vault_path <- path_make_absolute(vault_path)
   filename <- basename(vault_path)
   .die_unless(.is_nz_string(filename), 'bad vault_path "%s"', vault_path)
-  .die_unless(file.exists(local_path), 'bad vault_path "%s"', vault_path)
+  .die_unless(file.exists(local_path), 'bad local_path "%s"', local_path)
   size <- file.size(local_path)
   force(mimetype)
 
-  parent_path <- dirname(vault_path)
-  parent_folder_id <- NULL
-  if (parent_path != '/') {
-    # must get a folder
-      browser()
-    fo <- Folder(path = parent_path, vault_id = vault_id, conn = conn)
-    if (!length(fo)) {
-      # no parent --> create it
-
-      fo <- Folder_create(vault_id, parent_path, conn = conn)
-    }
-    parent_folder_id <- fo$id
-  }
+  fo <- Folder_get_or_create_for_object_path(vault_id, vault_path, conn = conn)
 
   # create object for the file
-  
   obj <- Object_create(vault_id, filename, 
     object_type = 'file', 
-    parent_object_id = parent_folder_id,
+    parent_object_id = fo$id,
     size = size, 
     mimetype = mimetype, 
-    conn = conn, ...)
+    conn = conn)
   
   res <- try(File_upload_content(obj$upload_url, local_path, size = size, mimetype = mimetype, 
     conn = conn))
@@ -114,6 +101,24 @@ File_upload <- function(vault_id, local_path, vault_path,
   obj
 }
 
+# create folder if needed for file/dataset path
+# can return NULL if no folder is needed (root file)
+Folder_get_or_create_for_object_path <- function(vault_id, path, conn = get_connection()) {
+  parent_path <- dirname(path)
+  if (parent_path == '/') return(NULL)
+
+  parent_folder_id <- NULL
+  # must get a folder
+  fo <- Folder(path = parent_path, vault_id = vault_id, conn = conn)
+  if (!length(fo)) {
+    # no parent --> create it
+    fo <- Folder_create(vault_id, parent_path, conn = conn)
+  }
+
+  fo
+}
+
+
 File_upload_content <- function(upload_url, path, size, mimetype, conn) {
   message('uploading file', path, '...') 
   headers <- c('Content-Type' = mimetype, 'Content-Length' = size)
@@ -121,14 +126,14 @@ File_upload_content <- function(upload_url, path, size, mimetype, conn) {
 }
 
 #' @export
-File_read <- function(id, filters = NULL, limit = NULL, offset = 0, conn = get_connection(), ...) {
+File_read <- function(id, filters = NULL, limit = NULL, offset = 0, conn = get_connection()) {
   params <- list(filters = filters, offset = offset)
   df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 
       simplifyDataFrame = TRUE, conn = conn, limit = limit)
   
   if (length(df) && nrow(df))
     attr(df, 'next') <- function() { File_read(id, filters = filters, limit = limit, 
-      offset + nrow(df), conn = conn, ...) }
+      offset + nrow(df), conn = conn) }
 
   df
 }
@@ -187,27 +192,27 @@ Vaults <- function(
   tag = NULL,
   user_id = NULL,
   storage_class = NULL,
-  limit = NULL, page = NULL, conn = get_connection(), ...) 
+  limit = NULL, page = NULL, conn = get_connection()) 
 {
   params  <- list()
   if (.is_nz_string(vault_type)) params$vault_type <- vault_type
   if (.is_nz_string(tag)) params$tags <- tag
   if (length(user_id)) params$user_id <- user_id
   if (.is_nz_string(storage_class)) params$storage_class <- storage_class
-  request_edp_api('GET', "v2/vaults", conn = conn, limit = limit, page = page, params = params, ...)
+  request_edp_api('GET', "v2/vaults", conn = conn, limit = limit, page = page, params = params)
 }
 
 
 #' @inheritParams params
 #' @export
-Vault <- function(id = NULL, full_path = NULL, name = NULL,  conn = get_connection(), ...) 
+Vault <- function(id = NULL, full_path = NULL, name = NULL,  conn = get_connection()) 
 {
   by <- list(id = id, full_path = full_path, name = name)
   # no arg ==> fetch personal vault
   if (all(lengths(by) == 0)) {
-    return(vault_fetch_personal(conn = conn, ...))
+    return(vault_fetch_personal(conn = conn))
   }
-  lst <- get_by("v2/vaults", by = by, conn = conn, ...)
+  lst <- get_by("v2/vaults", by = by, conn = conn)
 
   .die_if(class(lst) != 'Vault' && length(lst) > 1, 'returned multiple vaults')
   if (!length(lst)) lst <- NULL
@@ -222,11 +227,10 @@ Vault_create <- function(name,
   metadata = NULL,
   tags = NULL,
   default_storage_class = NULL,
-  conn = get_connection(), 
-  ...) 
+  conn = get_connection()) 
 {
   params <- preprocess_api_params()
-  request_edp_api('POST', "v2/vaults", conn = conn, params = params, ...)
+  request_edp_api('POST', "v2/vaults", conn = conn, params = params)
 }
 
 #' @export
@@ -236,11 +240,10 @@ Vault_update <- function(id,
   metadata = NULL,
   tags = NULL,
   default_storage_class = NULL,
-  conn = get_connection(), 
-  ...) 
+  conn = get_connection()) 
 {
   params <- preprocess_api_params()
-  request_edp_api('PUT', file.path("v2/vaults", id), conn = conn, params = params, ...)
+  request_edp_api('PUT', file.path("v2/vaults", id), conn = conn, params = params)
 }
 
 # vault_create_or_update <- function(id = NULL, name = NULL, description = NULL,
@@ -272,14 +275,14 @@ Vault_update <- function(id,
 
 
 
-vault_fetch_personal <- function(conn = get_connection(), ...) {
-  userid <- user(conn = conn)$id
+vault_fetch_personal <- function(conn = get_connection()) {
+  userid <- User(conn = conn)$id
   params <- list(name = paste("user", userid, sep = "-"), vault_type = "user")
-  request_edp_api('GET', "v2/vaults", conn = conn, params = params, ...)[[1]]
+  request_edp_api('GET', "v2/vaults", conn = conn, params = params)[[1]]
 }
 
-Vault_delete <- function(id, conn = get_connection(), ...) {
-  request_edp_api('DELETE', file.path("v2/vaults", id), conn = conn, ...)
+Vault_delete <- function(id, conn = get_connection()) {
+  request_edp_api('DELETE', file.path("v2/vaults", id), conn = conn)
 }
 
 #' @export
@@ -310,17 +313,16 @@ print.Vault <- function(x, ...) {
 }
 
 #' @export
-print.VaultList <- function(x, short = TRUE, ...) {
-  if (short) cat('abbreviated ')
+print.VaultList <- function(x, ...) {
   cat('EDP List of' , length(x), 'Vaults\n')
   df <- as.data.frame(x)
   df$user_name <- sapply(df$user, getElement, 'full_name', USE.NAMES = FALSE)
 
   cols <- c('id', 'name', 'full_path', 'user_name', 'vault_type', 'created_at')
-  if (short) {
-    cols <- intersect(cols, names(df))
-    df <- df[cols]
-  }
+
+  cols <- intersect(cols, names(df))
+  df <- df[cols]
+  
 
   print(df)
 }
@@ -351,15 +353,16 @@ Objects <- function(
   min_distance = NULL,
   tag = NULL,
   storage_class = NULL,
-  conn = get_connection(), limit = NULL, page = NULL, ...) 
+  conn = get_connection(), limit = NULL, page = NULL) 
 {
   params  <- preprocess_api_params()
-  request_edp_api('GET', "v2/objects", conn = conn, limit = limit, page = page, params = params, ...)
+  request_edp_api('GET', "v2/objects", conn = conn, limit = limit, page = page, params = params)
 }
 
 preprocess_api_params <- function(
   exclude = c('conn', 'limit', 'page'), 
   match_args = list(
+    capacity = c('small', 'medium', 'large'),
     object_type = c('file', 'folder', 'dataset'),
     vault_type = c('personal', 'general'),
     storage_class =  c('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive')
@@ -389,12 +392,12 @@ preprocess_api_params <- function(
 #' @inheritParams params
 #' @export
 Object <- function(id = NULL, full_path = NULL, path = NULL,  vault_id = NULL, 
-  conn = get_connection(), ...) 
+  conn = get_connection()) 
 {
   
   get_by("v2/objects", 
     by = list(id = id, full_path = full_path, vault_path = list(vault_id = vault_id, path = path)), 
-    conn = conn, ...)
+    conn = conn)
 }
 
 
@@ -410,11 +413,10 @@ Object_create <- function(
   storage_class = NULL,
   mimetype = NULL,
   size = NULL,
-  conn = get_connection(), 
-  ...) 
+  conn = get_connection()) 
 {
   params <- preprocess_api_params()
-  request_edp_api('POST', 'v2/objects', conn = conn, params = params, ...)
+  request_edp_api('POST', 'v2/objects', conn = conn, params = params)
 }
 
 #' @export
@@ -426,15 +428,14 @@ Object_update <- function(id,
   metadata = NULL,
   tags = NULL,
   storage_class = NULL,
-  conn = get_connection(), 
-  ...) 
+  conn = get_connection()) 
 {
   params <- preprocess_api_params()
-  request_edp_api('PUT', file.path('v2/objects', id), conn = conn, params = params, ...)
+  request_edp_api('PUT', file.path('v2/objects', id), conn = conn, params = params)
 }
 
-Object_delete <- function(id, conn = get_connection(), ...) {
-  request_edp_api('DELETE', file.path("v2/objects", id), conn = conn, ...)
+Object_delete <- function(id, conn = get_connection()) {
+  request_edp_api('DELETE', file.path("v2/objects", id), conn = conn)
 }
 
 get_by <- function(path, by = list(), conn = NULL, ...) {
@@ -483,13 +484,6 @@ get_by <- function(path, by = list(), conn = NULL, ...) {
 
 
 
-# Object_read_records <- function(id, filters, col.names = NULL, env = quartzbio.edp:::.config, ...) {
- 
-
-#   df
-# }
-
-
 #' @export
 fetch.ObjectId <- function(x,  conn = get_connection()) {
   Object(id = x, conn = conn)
@@ -536,23 +530,85 @@ print.ObjectList <- function(x, ...) {
 #' @inherit Dataset.all
 #' @inheritParams params
 #' @export
-Datasets <- function(conn = get_connection(), limit = NULL, page = NULL,  ...) {
-  request_edp_api('GET', "v2/datasets", conn = conn, limit = limit, page = page, params = list(...))
+Datasets <- function(
+  vault_id = NULL,
+  vault_name = NULL,
+  vault_full_path = NULL,
+  filename = NULL,
+  path = NULL,
+  object_type = NULL,
+  depth = NULL,
+  query = NULL,
+  regex = NULL,
+  glob = NULL,
+  ancestor_id = NULL,
+  min_distance = NULL,
+  tag = NULL,
+  storage_class = NULL,
+  conn = get_connection(), 
+  limit = NULL, 
+  page = NULL) 
+{
+  lst <- Objects(vault_id = vault_id, vault_name = vault_name, vault_full_path = vault_full_path, 
+    filename = filename, path = path, object_type = 'dataset', depth = depth, 
+    query = query, regex = regex, glob = glob, ancestor_id = ancestor_id, 
+    min_distance = min_distance, tag = tag, storage_class = storage_class, 
+    conn = conn, limit = limit, page = page)
+  class(lst) <- c('DatasetList', class(lst))
+
+  lst
 }
 
 #' @inherit Dataset.retrieve
 #' @inheritParams params
 #' @export
-Dataset <- function(id, conn = get_connection(),  ...) {
+Dataset <- function(id, conn = get_connection()) {
   path <- paste("v2/datasets", paste(id), sep="/")
-  request_edp_api('GET', path, conn = conn,  params = list(...))
+  request_edp_api('GET', path, conn = conn)
+}
+
+#' @export
+Dataset_create <- function(
+  vault_id,
+  name,
+  fields = NULL,
+  vault_parent_object_id = NULL,
+  description = NULL,
+  metadata = NULL,
+  tags = NULL,
+  storage_class = NULL,
+  capacity = NULL,
+  conn = get_connection()) 
+{
+  if (!length(vault_parent_object_id)) {
+    vault_parent_object_id <- Folder_get_or_create_for_object_path(vault_id, name, conn)$id
+  }
+  name <- basename(name)
+  params <- preprocess_api_params()
+  request_edp_api('POST', 'v2/datasets', conn = conn, params = params)
 }
 
 #' @export
 print.Dataset <- function(x, ...) {
-  msg <- sprintf('Dataset "%s", %i documents, updated at:%s', 
-    x$full_path, x$documents_count, x$updated_at)
+  count <- x$documents_count
+  if (!length(count)) count <- 'NA'
+  msg <- .safe_sprintf('Dataset "%s", %s documents, updated at:%s', 
+    x$vault_object_path, count, x$updated_at)
   cat(msg, '\n')
+}
+
+#' @export
+print.DatasetList <- function(x, ...) {
+  cat('EDP List of' , length(x), 'Datasets\n')
+
+  df <- as.data.frame(x)
+  df$user_name <- sapply(df$user, getElement, 'full_name', USE.NAMES = FALSE)
+
+  cols <- c('path',  'documents_count', 'vault_name',  'user_name', 'last_modified')
+  cols <- intersect(cols, names(df))
+  df <- df[cols]
+  
+  print(df)
 }
 
 #' @export
@@ -560,7 +616,10 @@ fetch.DatasetId <- function(x,  conn = get_connection()) {
   Dataset(x, conn = conn)
 }
 
-
+#' @export
+fetch.UserId <- function(x,  conn = get_connection()) {
+  User(x, conn = conn)
+}
 
 
 # as.data.frame.Object <- function(x, row.names = NULL, optional = FALSE, ...) {
@@ -568,13 +627,12 @@ fetch.DatasetId <- function(x,  conn = get_connection()) {
 # }
 
 
-
 ###
 ### user
 #' @inherit User.retrieve
 #' @inheritParams params
 #' @export
-user <- function(conn = get_connection()) {
+User <- function(conn = get_connection()) {
   request_edp_api('GET', "v1/user", conn = conn)
 }
 
@@ -622,3 +680,64 @@ as.data.frame.edplist <- function (x,  ...) {
 
 ###
 ### ================================= FILTERS
+# substitute_operators <- function(lst) {
+#   # message(as.character(lst))
+
+#   if (!length(lst)) return(lst)
+#   if (is.symbol(lst)) {
+#     op <- as.character(lst)
+#     if (startsWith(op, '%'))
+#     op <- tolower(gsub('%', '', op))
+#     return(op)
+#   }
+#   if (!is.list(lst)) return(lst)
+  
+#   lapply(lst, substitute_operators)
+# }
+
+lst2filter <- function(lst) {
+  if (!length(lst)) return(lst) 
+  if (length(lst) == 2 && lst[[1]] == '(') return(lst2filter(lst[[2]]))
+  op <- as.character(lst[[1]])
+  op <- tolower(gsub('%', '', op))
+  
+  if (op %in% c('or', 'and')) {
+    conds <- lapply(lst[-1], lst2filter)
+    res <- list(conds)
+    names(res) <- op
+    return(res)
+  }
+  if (length(lst) != 3) return(lst)
+
+  # should be an a binary operator
+  lhs <- as.character(lst[[2]])
+  op <- as.character(lst[[1]])
+  if (op != '=') {
+    op <- tolower(gsub('%', '', op))
+    lhs <- paste0(lhs, '__', op)
+  }
+  rhs <- lst[[3]]
+  if (length(rhs) && is.symbol(rhs[[1]]) && as.character(rhs[[1]]) == 'c')
+    rhs <- rhs[-1]
+  list(lhs, rhs)
+}
+
+#' @export
+parse_filter <- function(fil) {
+  `%CONTAINS%` <- 'contains'
+  `%AND%` <- 'and'
+  `%OR%` <- 'or'
+  `%IN%` <- 'in'
+
+  for (op in c('AND', 'OR', 'CONTAINS', 'IN')) {
+    pattern <- paste0('\\s+', op, '\\s+')
+    replace <- paste0(' %', op, '% ')
+    fil <- gsub(pattern, replace, fil)
+  }
+
+  expr <- parse(text = fil)
+  lst <- qbcode::code_to_list(expr)
+  # lst2 <- substitute_operators(lst)
+
+  list(lst2filter(lst))
+}

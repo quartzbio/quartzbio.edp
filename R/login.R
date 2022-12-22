@@ -123,6 +123,8 @@ createEnv <- function(token, token_type="Token", host=Sys.getenv('SOLVEBIO_API_H
   raw = TRUE,
   ...) 
 {
+  # check connection, and initialize it if needed
+
   'Perform an HTTP request to the server.'
   # Set defaults
   headers <- c(

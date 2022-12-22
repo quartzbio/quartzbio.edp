@@ -19,11 +19,11 @@ check_connection <- function(conn) {
   .die_unless('host' %in% ns, 'no "host" in connection')
 
   secret <- conn$secret
-  .die_unless(.is_nz_string(secret), 'bad "secret" in connection')
+  .die_unless(.is_nz_string(secret), 'no "secret" in connection')
   .die_unless(.is_nz_string(conn$host), 'bad "host" in connection')
 
   .die_unless(looks_like_api_key(secret) || looks_like_api_token(secret), 
-    'connection secret does not look like an API key or token')
+    'connection secret does not look like an API key nor token')
 }
 
 env_2_connection <- function(env) {
@@ -68,11 +68,16 @@ set_connection <- function(conn) {
 #' get the default connection if any
 #' 
 #' @export
-get_connection <- function() {
-  .DEFAULTS$connection
+get_connection <- function(auto = TRUE) {
+  conn <- .DEFAULTS$connection
+  if (!length(conn) && auto) {
+    conn <- autoconnect()
+    test_connection(conn)
+    set_connection(conn)
+  }
+
+  conn
 }
-
-
 
 new_connection  <- function(
   api_key = get_env('EDP_API_KEY',get_env('SOLVEBIO_API_KEY')),
@@ -137,14 +142,28 @@ connect <- function(...) {
     # })
 }
 
+#' @export 
+autoconnect <- function() {
+  # try env vars first
+  secret <- get_env('EDP_API_SECRET', get_env('SOLVEBIO_API_KEY', get_env('SOLVEBIO_API_TOKEN')))
+  host <- get_env('EDP_API_HOST', get_env('SOLVEBIO_API_HOST', "https://sandbox.api.edp.aws.quartz.bio"))
+
+  if (.is_nz_string(secret) && !.is_nz_string(host))
+    return(list(secret = secret, host = host))
+
+  conn <- try(read_connection_profile(), silent = TRUE)
+  if (!.is_error(conn)) return(conn)
+
+  stop('autoconnect() failed')
+}
+
 #' connect to the QuartzBio EDP API using a saved profile
 #' 
 #' @inheritDotParams read_connection_profile
 #' 
 #' @export
 connect_with_profile <- function(...) {
-  conn <- read_connection_profile(...)
-  
+  read_connection_profile(...)
 }
 
 
@@ -160,7 +179,10 @@ read_all_connections_from_file <- function(path) {
 #' @return the connection for the given profile as a named list, or die if there is no such profile
 #' @family connection
 #' @export
-read_connection_profile <- function(profile = 'default', path = '~/.qb/edp.json') {
+read_connection_profile <- function(
+  profile = Sys.getenv('EDP_PROFILE', 'default'), 
+  path = Sys.getenv('EDP_CONFIG', '~/.qb/edp.json')) 
+{
   profiles <- read_all_connections_from_file(path)
   cfg <- profiles[[profile]]
   .die_if(length(cfg) == 0, 'no such profile "%s" in file "%s"', profile, path)
