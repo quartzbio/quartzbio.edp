@@ -9,7 +9,7 @@ Object.upload_file(
   vault_id,
   vault_path,
   filename,
-  env = quartzbio.edp:::.config
+  env = get_connection()
 )
 }
 \arguments{

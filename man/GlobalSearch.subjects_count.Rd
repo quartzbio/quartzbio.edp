@@ -4,7 +4,7 @@
 \alias{GlobalSearch.subjects_count}
 \title{GlobalSearch.subjects_count}
 \usage{
-GlobalSearch.subjects_count(env = quartzbio.edp:::.config, ...)
+GlobalSearch.subjects_count(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

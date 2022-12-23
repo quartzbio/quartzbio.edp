@@ -4,7 +4,7 @@
 \alias{Dataset.data}
 \title{Dataset.data}
 \usage{
-Dataset.data(id, filters, env = quartzbio.edp:::.config, ...)
+Dataset.data(id, filters, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}

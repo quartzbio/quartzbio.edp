@@ -4,7 +4,7 @@
 \alias{DatasetCommit.retrieve}
 \title{DatasetCommit.retrieve}
 \usage{
-DatasetCommit.retrieve(id, env = quartzbio.edp:::.config)
+DatasetCommit.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset commit.}

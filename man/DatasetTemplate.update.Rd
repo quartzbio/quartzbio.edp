@@ -4,7 +4,7 @@
 \alias{DatasetTemplate.update}
 \title{DatasetTemplate.update}
 \usage{
-DatasetTemplate.update(id, env = quartzbio.edp:::.config, ...)
+DatasetTemplate.update(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the dataset template to update.}

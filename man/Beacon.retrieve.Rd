@@ -4,7 +4,7 @@
 \alias{Beacon.retrieve}
 \title{Beacon.retrieve}
 \usage{
-Beacon.retrieve(id, env = quartzbio.edp:::.config)
+Beacon.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{The ID of the beacon.}

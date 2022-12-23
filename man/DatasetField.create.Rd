@@ -8,7 +8,7 @@ DatasetField.create(
   dataset_id,
   name,
   data_type = "auto",
-  env = quartzbio.edp:::.config,
+  env = get_connection(),
   ...
 )
 }

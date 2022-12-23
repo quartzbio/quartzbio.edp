@@ -4,7 +4,7 @@
 \alias{Vault.all}
 \title{Vault.all}
 \usage{
-Vault.all(..., env = quartzbio.edp:::.config)
+Vault.all(..., env = get_connection())
 }
 \arguments{
 \item{...}{(optional) Additional query parameters (e.g. limit, offset).}

@@ -4,7 +4,7 @@
 \alias{Beacon.update}
 \title{Beacon.update}
 \usage{
-Beacon.update(id, env = quartzbio.edp:::.config, ...)
+Beacon.update(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the beacon to update.}

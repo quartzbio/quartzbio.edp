@@ -4,7 +4,7 @@
 \alias{SavedQuery.retrieve}
 \title{SavedQuery.retrieve}
 \usage{
-SavedQuery.retrieve(id, env = quartzbio.edp:::.config)
+SavedQuery.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP saved query.}

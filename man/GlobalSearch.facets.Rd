@@ -4,7 +4,7 @@
 \alias{GlobalSearch.facets}
 \title{GlobalSearch.facets}
 \usage{
-GlobalSearch.facets(facets, env = quartzbio.edp:::.config, ...)
+GlobalSearch.facets(facets, env = get_connection(), ...)
 }
 \arguments{
 \item{facets}{Facets list.}

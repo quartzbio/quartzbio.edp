@@ -8,7 +8,7 @@ Dataset.query(
   id,
   paginate = FALSE,
   use_field_titles = TRUE,
-  env = quartzbio.edp:::.config,
+  env = get_connection(),
   ...
 )
 }

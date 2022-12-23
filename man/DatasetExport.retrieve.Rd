@@ -4,7 +4,7 @@
 \alias{DatasetExport.retrieve}
 \title{DatasetExport.retrieve}
 \usage{
-DatasetExport.retrieve(id, env = quartzbio.edp:::.config)
+DatasetExport.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset export.}

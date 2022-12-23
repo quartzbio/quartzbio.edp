@@ -4,7 +4,7 @@
 \alias{Vault.get_personal_vault}
 \title{Vault.get_personal_vault}
 \usage{
-Vault.get_personal_vault(env = quartzbio.edp:::.config)
+Vault.get_personal_vault(env = get_connection())
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

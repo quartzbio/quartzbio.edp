@@ -4,7 +4,7 @@
 \alias{Application.retrieve}
 \title{Retrieve the metadata about a specific application QuartzBio EDP.}
 \usage{
-Application.retrieve(client_id, env = quartzbio.edp:::.config)
+Application.retrieve(client_id, env = get_connection())
 }
 \arguments{
 \item{client_id}{The client ID for the application.}

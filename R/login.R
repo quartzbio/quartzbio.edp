@@ -40,7 +40,7 @@ login <- function(
     api_key = Sys.getenv('SOLVEBIO_API_KEY'), 
     api_token = Sys.getenv('SOLVEBIO_ACCESS_TOKEN'),
     api_host = Sys.getenv('SOLVEBIO_API_HOST'), 
-    env = quartzbio.edp:::.config) 
+    env = get_connection()) 
   {
     .is_nzs <- function(x) { length(x) == 1 && !is.na(x) && is.character(x) && nzchar(x)  }
     token <- NULL
@@ -90,40 +90,25 @@ login <- function(
 }
 
 
-#' createEnv
-#'
-#' Create a new QuartzBio EDP environment.
-#'
-#' @param token A QuartzBio EDP API key or OAuth2 token
-#' @param token_type QuartzBio EDP token type (default: Token)
-#' @param host (optional) The QuartzBio EDP API host (default: https://api.solvebio.com) 
-#'
-#' @examples \dontrun{
-#' env <- createEnv("MyAPIkey")
-#' User.retrieve(env = myEnv)
-#' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
-#' @export
-createEnv <- function(token, token_type="Token", host=Sys.getenv('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)) {
-    newEnv <- new.env()
-    newEnv$token <- token
-    newEnv$token_type <- token_type
-    newEnv$host <- host
-    return(newEnv)
-}
+
+# createEnv <- function(token, token_type="Token", host = Sys.getenv('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)) {
+#     newEnv <- new.env()
+#     newEnv$token <- token
+#     newEnv$token_type <- token_type
+#     newEnv$host <- host
+#     return(newEnv)
+# }
 
 
 # Private API request method.
 .request = function(method, path, query, body, 
-  env = quartzbio.edp:::.config, 
+  env = get_connection(), 
   content_type="application/json", 
   raw = TRUE,
   ...) 
 {
   # check connection, and initialize it if needed
+  check_connection(env)
 
   'Perform an HTTP request to the server.'
   # Set defaults
@@ -133,11 +118,8 @@ createEnv <- function(token, token_type="Token", host=Sys.getenv('SOLVEBIO_API_H
                 "Content-Type" = content_type
                 )
 
-  if (!is.null(env$token) && nchar(env$token) != 0) {
-      headers <- c(
-                    headers, 
-                    Authorization = paste(env$token_type, env$token, sep=" ")
-                    )
+  if (.is_nz_string(env$secret)) {
+    headers <- c(headers, format_auth_header(env$secret))
   }
 
   # Slice of beginning slash

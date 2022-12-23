@@ -4,7 +4,7 @@
 \alias{BeaconSet.all}
 \title{BeaconSet.all}
 \usage{
-BeaconSet.all(env = quartzbio.edp:::.config, ...)
+BeaconSet.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

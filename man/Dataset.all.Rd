@@ -4,7 +4,7 @@
 \alias{Dataset.all}
 \title{Retrieves the metadata about datasets on QuartzBio EDP.}
 \usage{
-Dataset.all(env = quartzbio.edp:::.config, ...)
+Dataset.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

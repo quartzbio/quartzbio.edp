@@ -4,7 +4,7 @@
 \alias{GlobalSearch.search}
 \title{GlobalSearch.search}
 \usage{
-GlobalSearch.search(paginate = FALSE, env = quartzbio.edp:::.config, ...)
+GlobalSearch.search(paginate = FALSE, env = get_connection(), ...)
 }
 \arguments{
 \item{paginate}{When set to TRUE, retrieves all records (memory permitting).}

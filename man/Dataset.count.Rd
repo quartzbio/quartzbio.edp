@@ -4,7 +4,7 @@
 \alias{Dataset.count}
 \title{Dataset.count}
 \usage{
-Dataset.count(id, env = quartzbio.edp:::.config, ...)
+Dataset.count(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}

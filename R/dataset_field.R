@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetField.all <- function(env = quartzbio.edp:::.config, ...) {
+DatasetField.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/dataset_fields", query=list(...), env=env)
 }
 
@@ -33,7 +33,7 @@ DatasetField.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetField.retrieve <- function(id, env = quartzbio.edp:::.config) {
+DatasetField.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset field ID is required.")
     }
@@ -59,7 +59,7 @@ DatasetField.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetField.facets <- function(id, env = quartzbio.edp:::.config, ...) {
+DatasetField.facets <- function(id, env = get_connection(), ...) {
     if (missing(id) | !(class(id) %in% c("DatasetField", "numeric", "character"))) {
         stop("A dataset field ID is required.")
     }
@@ -90,7 +90,7 @@ DatasetField.facets <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetField.create <- function(dataset_id, name, data_type = 'auto', env = quartzbio.edp:::.config, ...) {
+DatasetField.create <- function(dataset_id, name, data_type = 'auto', env = get_connection(), ...) {
     if (missing(dataset_id)) {
         stop("A dataset ID is required.")
     }
@@ -130,7 +130,7 @@ DatasetField.create <- function(dataset_id, name, data_type = 'auto', env = quar
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetField.update <- function(id, env = quartzbio.edp:::.config, ...) {
+DatasetField.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
         stop("A dataset field ID is required.")
     }

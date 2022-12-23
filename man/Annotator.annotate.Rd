@@ -9,7 +9,7 @@ Annotator.annotate(
   fields,
   include_errors = FALSE,
   raw = FALSE,
-  env = quartzbio.edp:::.config
+  env = get_connection()
 )
 }
 \arguments{

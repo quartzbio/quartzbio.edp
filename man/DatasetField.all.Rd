@@ -4,7 +4,7 @@
 \alias{DatasetField.all}
 \title{DatasetField.all}
 \usage{
-DatasetField.all(env = quartzbio.edp:::.config, ...)
+DatasetField.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

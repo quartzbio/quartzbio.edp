@@ -4,7 +4,7 @@
 \alias{DatasetTemplate.delete}
 \title{DatasetTemplate.delete}
 \usage{
-DatasetTemplate.delete(id, env = quartzbio.edp:::.config)
+DatasetTemplate.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID or full name of a QuartzBio EDP dataset template.}

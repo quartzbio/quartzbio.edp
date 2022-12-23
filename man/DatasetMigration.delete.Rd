@@ -4,7 +4,7 @@
 \alias{DatasetMigration.delete}
 \title{DatasetMigration.delete}
 \usage{
-DatasetMigration.delete(id, env = quartzbio.edp:::.config)
+DatasetMigration.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset migration.}

@@ -4,7 +4,7 @@
 \alias{SavedQuery.update}
 \title{SavedQuery.update}
 \usage{
-SavedQuery.update(id, env = quartzbio.edp:::.config, ...)
+SavedQuery.update(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the saved query to update.}

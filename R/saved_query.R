@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.all <- function(env = quartzbio.edp:::.config, ...) {
+SavedQuery.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/saved_queries", query=list(...), env=env)
 }
 
@@ -33,7 +33,7 @@ SavedQuery.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.retrieve <- function(id, env = quartzbio.edp:::.config) {
+SavedQuery.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A saved query ID is required.")
     }
@@ -58,7 +58,7 @@ SavedQuery.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.delete <- function(id, env = quartzbio.edp:::.config) {
+SavedQuery.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A saved query ID is required.")
     }
@@ -82,7 +82,7 @@ SavedQuery.delete <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.create <- function(env = quartzbio.edp:::.config, ...) {
+SavedQuery.create <- function(env = get_connection(), ...) {
     .request('POST', path='v2/saved_queries', query=NULL, body=list(...), env=env)
 }
 
@@ -106,7 +106,7 @@ SavedQuery.create <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-SavedQuery.update <- function(id, env = quartzbio.edp:::.config, ...) {
+SavedQuery.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
         stop("A saved query ID is required.")
     }

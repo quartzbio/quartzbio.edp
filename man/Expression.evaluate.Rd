@@ -10,7 +10,7 @@ Expression.evaluate(
   is_list = FALSE,
   data = NULL,
   raw = FALSE,
-  env = quartzbio.edp:::.config
+  env = get_connection()
 )
 }
 \arguments{

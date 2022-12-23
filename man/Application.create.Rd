@@ -4,7 +4,7 @@
 \alias{Application.create}
 \title{Application.create}
 \usage{
-Application.create(name, redirect_uris, env = quartzbio.edp:::.config, ...)
+Application.create(name, redirect_uris, env = get_connection(), ...)
 }
 \arguments{
 \item{name}{The name of the application.}

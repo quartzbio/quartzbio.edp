@@ -1,4 +1,6 @@
+EDP_DEFAULT_API_HOST <- 'https://api.solvebio.com'
 
+# Sys.getenv does not return unser if the variable is set but empty
 get_env <- function(name, unset = '') {
   vx <- Sys.getenv(name)
   if (.is_nz_string(vx)) vx else unset
@@ -55,18 +57,21 @@ test_connection <- function(conn) {
 
 .DEFAULTS <- new.env()
 
-#' set a connection as the default one
+#' set the default connection
 #' 
 #' may die on bad connection
 #' @inheritParams params
+#' @inheritParams connect
 #' @export
-set_connection <- function(conn) {
-  test_connection(conn)
+set_connection <- function(conn, check = TRUE) {
+  if (check) test_connection(conn)
   assign('connection', conn, envir = .DEFAULTS)
 }
 
 #' get the default connection if any
 #' 
+#' @param auto    whether to automatically use autoconnect() if the default connection is not yet set
+#' @seealso set_connection
 #' @export
 get_connection <- function(auto = TRUE) {
   conn <- .DEFAULTS$connection
@@ -79,79 +84,74 @@ get_connection <- function(auto = TRUE) {
   conn
 }
 
-new_connection  <- function(
-  api_key = get_env('EDP_API_KEY',get_env('SOLVEBIO_API_KEY')),
-  api_token = get_env('EDP_API_TOKEN', get_env('SOLVEBIO_API_TOKEN')),
-  api_host = get_env('EDP_API_HOST',get_env('SOLVEBIO_API_HOST', "https://sandbox.api.edp.aws.quartz.bio")))
-{
-  .die_if(!missing(api_key) && !missing(api_token), 'you can not give both api_key and api_token')
+# new_connection  <- function(
+#   api_key = get_env('EDP_API_KEY',get_env('SOLVEBIO_API_KEY')),
+#   api_token = get_env('EDP_API_TOKEN', get_env('SOLVEBIO_API_TOKEN')),
+#   api_host = get_env('EDP_API_HOST',get_env('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)))
+# {
+#   .die_if(!missing(api_key) && !missing(api_token), 'you can not give both api_key and api_token')
 
-  # give priority to key
-  secret <- NULL
-  is_key <- TRUE
-  # choose api_key if defined unl
-  if (.is_nz_string(api_key) && missing(api_token)) {
-    secret <- api_key
-  } else if (.is_nz_string(api_token)) {
-    secret <- api_token
-    is_key <- FALSE
-  }
-  .die_unless(.is_nz_string(secret), 'you must give either an API Key or an API Token')
+#   # give priority to key
+#   secret <- NULL
+#   is_key <- TRUE
+#   # choose api_key if defined unl
+#   if (.is_nz_string(api_key) && missing(api_token)) {
+#     secret <- api_key
+#   } else if (.is_nz_string(api_token)) {
+#     secret <- api_token
+#     is_key <- FALSE
+#   }
+#   .die_unless(.is_nz_string(secret), 'you must give either an API Key or an API Token')
 
-  list(secret = secret, is_key = is_key, host = api_host)
-}
+#   list(secret = secret, is_key = is_key, host = api_host)
+# }
 
 
-#' connect to the QuartzBio EDP API
+#' connect to the QuartzBio EDP API and return the connection
 #' 
-#' There are multiple ways to connect:
-#' - using an API key or token
-#' - using a connection config
-#' - using a saved connection profile
-#'
-#' @param api_key      a QuartzBio EDP **API key** as a string. 
-#'                     Defaults to the `EDP_API_KEY` environment variable if set, otherwise to the 
-#'                    legacy `SOLVEBIO_API_KEY`.
-#' @param api_token    a QuartzBio EDP **API access token** as a string.
-#'                    Defaults to the `EDP_API_TOKEN` environment variable if set, otherwise to the 
-#'                    legacy `SOLVEBIO_API_TOKEN`.
-#' @param api_host    the QuartzBio EDP **API host** as a string. 
+#' @param secret      a QuartzBio EDP **API key**  or **token** as a string. 
+#'                    Defaults to the `EDP_API_SECRET` environment variable if set, 
+#'                    otherwise to the legacy `SOLVEBIO_API_TOKEN` var, then to 
+#'                    to the `SOLVEBIO_API_KEY` var.
+
+#' @param host        the QuartzBio EDP **API host** as a string. 
 #'                    Defaults to the `EDP_API_HOST` environment variable if set, otherwise to the 
-#'                    legacy `SOLVEBIO_API_HOST`
+#'                    legacy `SOLVEBIO_API_HOST` var.
+#' @param check       whether to check the connection, mostly for debugging purposes
 #' @return a connection object
 #' 
 #' @examples \dontrun{
-#'    conn <- connect(api_key = 'MYKEY')
+#'    #  using API key
+#'    conn <- connect('MYKEY')
 #'    # using env vars
 #'    conn <- connect()
 #'    # using token and explicit host
-#'    conn <- connect(api_token = 'MYTOKEN', api_host = 'https://xxxx.yy.com')
+#'    conn <- connect('MYTOKEN', 'https://xxxx.yy.com')
 #' }
 #'
 #' @export
-connect <- function(...) {
-  conn <- new_connection(...)
-  # browser()
-    # # Test the login
-    # tryCatch({
-    #     user <- User.retrieve(env=env)
-    #     cat(sprintf("Logged-in to %s as %s.\n", env$host, user$email))
-    #     return(invisible(user))
-    # }, error = function(e) {
-    #     cat(sprintf("Login failed: %s\n", e$message))
-    # })
+connect <- function(
+  secret = get_env('EDP_API_SECRET', get_env('SOLVEBIO_API_TOKEN', get_env('SOLVEBIO_API_KEY'))),
+  host = get_env('EDP_API_HOST', get_env('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)),
+  check = TRUE
+) {
+  conn <- list(secret = secret, host = host)
+  check_connection(conn)
+  if (check) test_connection(conn)
+
+  conn
 }
 
 #' @export 
-autoconnect <- function() {
-  # try env vars first
-  secret <- get_env('EDP_API_SECRET', get_env('SOLVEBIO_API_KEY', get_env('SOLVEBIO_API_TOKEN')))
-  host <- get_env('EDP_API_HOST', get_env('SOLVEBIO_API_HOST', "https://sandbox.api.edp.aws.quartz.bio"))
-
-  if (.is_nz_string(secret) && !.is_nz_string(host))
-    return(list(secret = secret, host = host))
-
-  conn <- try(read_connection_profile(), silent = TRUE)
+autoconnect <- function(check = FALSE) {
+  # # try env vars first
+  # secret <- get_env('EDP_API_SECRET', get_env('SOLVEBIO_API_KEY', get_env('SOLVEBIO_API_TOKEN')))
+  # host <- get_env('EDP_API_HOST', get_env('SOLVEBIO_API_HOST', "https://sandbox.api.edp.aws.quartz.bio"))
+  conn <- try(connect(check = check), silent = TRUE)
+  if (!.is_error(conn)) return(conn)
+ 
+  # no or bad connection credentials, try the profile instead
+  conn <- try(connect_with_profile(check = check), silent = TRUE)
   if (!.is_error(conn)) return(conn)
 
   stop('autoconnect() failed')
@@ -160,10 +160,12 @@ autoconnect <- function() {
 #' connect to the QuartzBio EDP API using a saved profile
 #' 
 #' @inheritDotParams read_connection_profile
+#' @inheritParams connect
 #' 
 #' @export
-connect_with_profile <- function(...) {
-  read_connection_profile(...)
+connect_with_profile <- function(..., check = TRUE) {
+  conn <- read_connection_profile(...)
+  connect(conn$secret, conn$host, check = check)
 }
 
 
@@ -173,6 +175,7 @@ read_all_connections_from_file <- function(path) {
   jsonlite::read_json(path)
 }
 
+
 #' read a connection profile
 #' 
 #' @inheritParams save_connection_profile
@@ -180,8 +183,8 @@ read_all_connections_from_file <- function(path) {
 #' @family connection
 #' @export
 read_connection_profile <- function(
-  profile = Sys.getenv('EDP_PROFILE', 'default'), 
-  path = Sys.getenv('EDP_CONFIG', '~/.qb/edp.json')) 
+  profile = get_env('EDP_PROFILE', 'default'), 
+  path = get_env('EDP_CONFIG', '~/.qb/edp.json')) 
 {
   profiles <- read_all_connections_from_file(path)
   cfg <- profiles[[profile]]
@@ -192,14 +195,15 @@ read_connection_profile <- function(
 
 #' save a connection profile
 #' 
-#' @param path        the path to the connection profiles file, as a string
 #' @param profile     the name of the profile, as a string
+#' @param path        the path to the connection profiles file, as a string
+
 #' @param overwrite   whether to overwrite an existing profile
 #' @family connection
 #' @export
 save_connection_profile <- function(conn, 
-  profile = 'default', 
-  path = '~/.qb/edp.json', 
+  profile = get_env('EDP_PROFILE', 'default'), 
+  path = get_env('EDP_CONFIG', '~/.qb/edp.json'),
   overwrite = FALSE) 
 {
   cfg <- read_all_connections_from_file(path)
@@ -207,6 +211,9 @@ save_connection_profile <- function(conn,
     'can not overwrite existing profile "%s"', profile) 
 
   cfg[[profile]] <- conn
+
+  dir <- dirname(path)
+  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
 
   jsonlite::write_json(cfg, path, auto_unbox = TRUE)
 }

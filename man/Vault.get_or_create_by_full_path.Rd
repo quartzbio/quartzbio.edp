@@ -4,7 +4,7 @@
 \alias{Vault.get_or_create_by_full_path}
 \title{Vault.get_or_create_by_full_path}
 \usage{
-Vault.get_or_create_by_full_path(full_path, env = quartzbio.edp:::.config, ...)
+Vault.get_or_create_by_full_path(full_path, env = get_connection(), ...)
 }
 \arguments{
 \item{full_path}{The full path of a QuartzBio EDP vault.}

@@ -4,7 +4,7 @@
 \alias{SavedQuery.delete}
 \title{SavedQuery.delete}
 \usage{
-SavedQuery.delete(id, env = quartzbio.edp:::.config)
+SavedQuery.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of the QuartzBio EDP saved query.}

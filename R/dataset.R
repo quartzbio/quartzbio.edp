@@ -11,7 +11,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.all <- function(env = quartzbio.edp:::.config, ...) {
+Dataset.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/datasets", query=list(...), env=env)
 }
 
@@ -31,7 +31,7 @@ Dataset.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.retrieve <- function(id, env = quartzbio.edp:::.config) {
+Dataset.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -56,7 +56,7 @@ Dataset.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.delete <- function(id, env = quartzbio.edp:::.config) {
+Dataset.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -81,7 +81,7 @@ Dataset.delete <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.template <- function(id, env = quartzbio.edp:::.config) {
+Dataset.template <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -107,7 +107,7 @@ Dataset.template <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.data <- function(id, filters,  env = quartzbio.edp:::.config, ...) {
+Dataset.data <- function(id, filters,  env = get_connection(), ...) {
     if (missing(id) || !(class(id) %in% c("Dataset", "numeric", "integer", "character"))) {
         stop("A dataset ID (or object) is required.")
     }
@@ -160,7 +160,7 @@ Dataset.data <- function(id, filters,  env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = quartzbio.edp:::.config, ...) {
+Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = get_connection(), ...) {
     params <- list(...)
     params$id <- id
     params$env <- env
@@ -209,7 +209,7 @@ Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = quart
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.fields <- function(id, env = quartzbio.edp:::.config, ...) {
+Dataset.fields <- function(id, env = get_connection(), ...) {
     if (inherits(id, "numeric")) {
         warning("Please use string IDs instead of numeric IDs.")
     }
@@ -244,7 +244,7 @@ Dataset.fields <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.facets <- function(id, facets, env = quartzbio.edp:::.config, ...) {
+Dataset.facets <- function(id, facets, env = get_connection(), ...) {
     if (missing(facets) || is.null(facets) || facets == "") {
         stop("A list of one or more facets is required.")
     }
@@ -289,7 +289,7 @@ Dataset.facets <- function(id, facets, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.count <- function(id, env = quartzbio.edp:::.config, ...) {
+Dataset.count <- function(id, env = get_connection(), ...) {
     params <- list(...)
     # Count queries should not return results
     params$limit <- 0
@@ -319,7 +319,7 @@ Dataset.count <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.create <- function(vault_id, vault_parent_object_id, name, env = quartzbio.edp:::.config, ...) {
+Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_connection(), ...) {
     if (missing(vault_id)) {
         stop("A vault ID is required.")
     }
@@ -363,7 +363,7 @@ Dataset.create <- function(vault_id, vault_parent_object_id, name, env = quartzb
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.update <- function(id, env = quartzbio.edp:::.config, ...) {
+Dataset.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -390,7 +390,7 @@ Dataset.update <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.get_by_full_path <- function(full_path, env = quartzbio.edp:::.config) {
+Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
     object = Object.get_by_full_path(full_path, env=env)
 
     dataset = do.call(Dataset.retrieve, list(id=object$dataset_id, env=env))
@@ -414,7 +414,7 @@ Dataset.get_by_full_path <- function(full_path, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.get_or_create_by_full_path <- function(full_path, env = quartzbio.edp:::.config, ...) {
+Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
     dataset = NULL
     tryCatch({
         dataset <- Dataset.get_by_full_path(full_path=full_path, env=env)
@@ -492,7 +492,7 @@ Dataset.get_or_create_by_full_path <- function(full_path, env = quartzbio.edp:::
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.activity <- function(id, follow=TRUE, env = quartzbio.edp:::.config) {
+Dataset.activity <- function(id, follow=TRUE, env = get_connection()) {
     status <- paste('running', 'queued', 'pending', sep=',')
     tasks <- Task.all(target_object_id=id, status=status, env=env)$data
 
@@ -529,7 +529,7 @@ Dataset.activity <- function(id, follow=TRUE, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = quartzbio.edp:::.config) {
+Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -553,7 +553,7 @@ Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env 
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.enable_global_beacon <- function(id, env = quartzbio.edp:::.config) {
+Dataset.enable_global_beacon <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }
@@ -577,7 +577,7 @@ Dataset.enable_global_beacon <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Dataset.disable_global_beacon <- function(id, env = quartzbio.edp:::.config) {
+Dataset.disable_global_beacon <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset ID is required.")
     }

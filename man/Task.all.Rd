@@ -4,7 +4,7 @@
 \alias{Task.all}
 \title{Task.all}
 \usage{
-Task.all(env = quartzbio.edp:::.config, ...)
+Task.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

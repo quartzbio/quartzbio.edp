@@ -4,7 +4,7 @@
 \alias{DatasetMigration.retrieve}
 \title{DatasetMigration.retrieve}
 \usage{
-DatasetMigration.retrieve(id, env = quartzbio.edp:::.config)
+DatasetMigration.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset migration.}

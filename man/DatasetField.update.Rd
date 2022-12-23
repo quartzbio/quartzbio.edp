@@ -4,7 +4,7 @@
 \alias{DatasetField.update}
 \title{DatasetField.update}
 \usage{
-DatasetField.update(id, env = quartzbio.edp:::.config, ...)
+DatasetField.update(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the dataset field to update.}

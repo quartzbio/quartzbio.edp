@@ -9,7 +9,7 @@ Object.create(
   parent_object_id,
   object_type,
   filename,
-  env = quartzbio.edp:::.config,
+  env = get_connection(),
   ...
 )
 }

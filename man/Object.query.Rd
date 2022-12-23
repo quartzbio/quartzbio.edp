@@ -4,7 +4,7 @@
 \alias{Object.query}
 \title{Object.query}
 \usage{
-Object.query(id, paginate = FALSE, env = quartzbio.edp:::.config, ...)
+Object.query(id, paginate = FALSE, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of a QuartzBio EDP file (vault object).}

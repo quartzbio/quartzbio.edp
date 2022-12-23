@@ -4,7 +4,7 @@
 \alias{Dataset.delete}
 \title{Dataset.delete}
 \usage{
-Dataset.delete(id, env = quartzbio.edp:::.config)
+Dataset.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset}

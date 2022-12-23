@@ -8,7 +8,7 @@ Dataset.create(
   vault_id,
   vault_parent_object_id,
   name,
-  env = quartzbio.edp:::.config,
+  env = get_connection(),
   ...
 )
 }

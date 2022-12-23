@@ -4,7 +4,7 @@
 \alias{DatasetImport.delete}
 \title{DatasetImport.delete}
 \usage{
-DatasetImport.delete(id, env = quartzbio.edp:::.config)
+DatasetImport.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset import.}

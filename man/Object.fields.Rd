@@ -4,7 +4,7 @@
 \alias{Object.fields}
 \title{Object.fields}
 \usage{
-Object.fields(id, env = quartzbio.edp:::.config, ...)
+Object.fields(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of a QuartzBio EDP file (vault object).}

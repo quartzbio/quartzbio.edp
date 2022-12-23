@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetExport.all <- function(env = quartzbio.edp:::.config, ...) {
+DatasetExport.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/dataset_exports", query=list(...), env=env)
 }
 
@@ -32,7 +32,7 @@ DatasetExport.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetExport.retrieve <- function(id, env = quartzbio.edp:::.config) {
+DatasetExport.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset export ID is required.")
     }
@@ -57,7 +57,7 @@ DatasetExport.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetExport.delete <- function(id, env = quartzbio.edp:::.config) {
+DatasetExport.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset export ID is required.")
     }
@@ -91,7 +91,7 @@ DatasetExport.create <- function(
                                  format = 'json',
                                  params = list(),
                                  follow = FALSE,
-                                 env = quartzbio.edp:::.config,
+                                 env = get_connection(),
                                  ...) {
     if (missing(dataset_id)) {
         stop("A dataset ID is required.")
@@ -129,7 +129,7 @@ DatasetExport.create <- function(
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetExport.get_download_url <- function(id, env = quartzbio.edp:::.config) {
+DatasetExport.get_download_url <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset export ID is required.")
     }

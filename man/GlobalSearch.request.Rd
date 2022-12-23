@@ -8,7 +8,7 @@ GlobalSearch.request(
   query = NULL,
   filters,
   entities,
-  env = quartzbio.edp:::.config,
+  env = get_connection(),
   ...
 )
 }

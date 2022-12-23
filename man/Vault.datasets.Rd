@@ -4,7 +4,7 @@
 \alias{Vault.datasets}
 \title{Vault.datasets}
 \usage{
-Vault.datasets(id, env = quartzbio.edp:::.config, ...)
+Vault.datasets(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the vault.}

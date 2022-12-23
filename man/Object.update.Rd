@@ -4,7 +4,7 @@
 \alias{Object.update}
 \title{Object.update}
 \usage{
-Object.update(id, env = quartzbio.edp:::.config, ...)
+Object.update(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the vault to update.}

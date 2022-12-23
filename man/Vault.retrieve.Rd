@@ -4,7 +4,7 @@
 \alias{Vault.retrieve}
 \title{Vault.retrieve}
 \usage{
-Vault.retrieve(id, env = quartzbio.edp:::.config)
+Vault.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP vault}

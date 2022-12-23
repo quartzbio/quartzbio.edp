@@ -4,7 +4,7 @@
 \alias{DatasetTemplate.all}
 \title{DatasetTemplate.all}
 \usage{
-DatasetTemplate.all(env = quartzbio.edp:::.config, ...)
+DatasetTemplate.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

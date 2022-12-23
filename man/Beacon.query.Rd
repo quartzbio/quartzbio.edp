@@ -4,7 +4,7 @@
 \alias{Beacon.query}
 \title{Beacon.query}
 \usage{
-Beacon.query(id, query, entity_type, env = quartzbio.edp:::.config, ...)
+Beacon.query(id, query, entity_type, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the beacon.}

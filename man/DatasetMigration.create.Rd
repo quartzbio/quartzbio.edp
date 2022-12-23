@@ -11,7 +11,7 @@ DatasetMigration.create(
   source_params = NULL,
   target_fields = NULL,
   include_errors = FALSE,
-  env = quartzbio.edp:::.config,
+  env = get_connection(),
   ...
 )
 }

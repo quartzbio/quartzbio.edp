@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetImport.all <- function(env = quartzbio.edp:::.config, ...) {
+DatasetImport.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/dataset_imports", query=list(...), env=env)
 }
 
@@ -33,7 +33,7 @@ DatasetImport.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetImport.retrieve <- function(id, env = quartzbio.edp:::.config) {
+DatasetImport.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset import ID is required.")
     }
@@ -58,7 +58,7 @@ DatasetImport.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetImport.delete <- function(id, env = quartzbio.edp:::.config) {
+DatasetImport.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset import ID is required.")
     }
@@ -88,7 +88,7 @@ DatasetImport.delete <- function(id, env = quartzbio.edp:::.config) {
 DatasetImport.create <- function(
                                  dataset_id,
                                  commit_mode = 'append',
-                                 env = quartzbio.edp:::.config,
+                                 env = get_connection(),
                                  ...) {
     if (missing(dataset_id)) {
         stop("A dataset ID is required.")

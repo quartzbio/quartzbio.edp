@@ -4,7 +4,7 @@
 \alias{DatasetExport.get_download_url}
 \title{DatasetExport.get_download_url}
 \usage{
-DatasetExport.get_download_url(id, env = quartzbio.edp:::.config)
+DatasetExport.get_download_url(id, env = get_connection())
 }
 \arguments{
 \item{id}{The ID of the dataset export.}

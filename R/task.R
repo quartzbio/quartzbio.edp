@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Task.all <- function(env = quartzbio.edp:::.config, ...) {
+Task.all <- function(env = get_connection(), ...) {
     .request("GET", "v2/tasks", query = list(...), env = env)
 }
 
@@ -32,7 +32,7 @@ Task.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Task.retrieve <- function(id, env = quartzbio.edp:::.config) {
+Task.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A task ID is required.")
     }
@@ -59,7 +59,7 @@ Task.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Task.follow <- function(id, env = quartzbio.edp:::.config, interval = 2) {
+Task.follow <- function(id, env = get_connection(), interval = 2) {
     imp <- Task.retrieve(id, env)
     while (imp$status == "pending" || imp$status == "queued" || imp$status == "running") {
         imp <- Task.retrieve(id, env)

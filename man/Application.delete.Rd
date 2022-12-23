@@ -4,7 +4,7 @@
 \alias{Application.delete}
 \title{Application.delete}
 \usage{
-Application.delete(client_id, env = quartzbio.edp:::.config)
+Application.delete(client_id, env = get_connection())
 }
 \arguments{
 \item{client_id}{The client ID for the application.}

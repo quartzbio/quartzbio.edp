@@ -4,7 +4,7 @@
 \alias{SavedQuery.all}
 \title{SavedQuery.all}
 \usage{
-SavedQuery.all(env = quartzbio.edp:::.config, ...)
+SavedQuery.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

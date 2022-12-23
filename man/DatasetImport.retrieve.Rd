@@ -4,7 +4,7 @@
 \alias{DatasetImport.retrieve}
 \title{DatasetImport.retrieve}
 \usage{
-DatasetImport.retrieve(id, env = quartzbio.edp:::.config)
+DatasetImport.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset import.}

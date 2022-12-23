@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetCommit.all <- function(env = quartzbio.edp:::.config, ...) {
+DatasetCommit.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/dataset_commits", query=list(...), env=env)
 }
 
@@ -33,7 +33,7 @@ DatasetCommit.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetCommit.retrieve <- function(id, env = quartzbio.edp:::.config) {
+DatasetCommit.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset commit ID is required.")
     }
@@ -58,7 +58,7 @@ DatasetCommit.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetCommit.delete <- function(id, env = quartzbio.edp:::.config) {
+DatasetCommit.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset commit ID is required.")
     }

@@ -4,7 +4,7 @@
 \alias{Dataset.fields}
 \title{Dataset.fields}
 \usage{
-Dataset.fields(id, env = quartzbio.edp:::.config, ...)
+Dataset.fields(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}

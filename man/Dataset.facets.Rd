@@ -4,7 +4,7 @@
 \alias{Dataset.facets}
 \title{Dataset.facets}
 \usage{
-Dataset.facets(id, facets, env = quartzbio.edp:::.config, ...)
+Dataset.facets(id, facets, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of a QuartzBio EDP dataset, or a Dataset object.}

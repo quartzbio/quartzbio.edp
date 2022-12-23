@@ -4,7 +4,7 @@
 \alias{Vault.objects}
 \title{Vault.objects}
 \usage{
-Vault.objects(id, env = quartzbio.edp:::.config, ...)
+Vault.objects(id, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the vault.}

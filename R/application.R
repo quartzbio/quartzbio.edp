@@ -3,7 +3,7 @@
 #' @inheritParams params
 #' @examples \dontrun{ Application.all() }
 #' @export
-Application.all <- function(env = quartzbio.edp:::.config, ...) {
+Application.all <- function(env = get_connection(), ...) {
   .request('GET', "v2/applications", query=list(...), env = env)  
 }
 
@@ -13,7 +13,7 @@ Application.all <- function(env = quartzbio.edp:::.config, ...) {
 #' @inheritParams params
 #' @examples \dontrun{  Application.retrieve("abcd1234") }
 #' @export
-Application.retrieve <- function(client_id, env = quartzbio.edp:::.config) {
+Application.retrieve <- function(client_id, env = get_connection()) {
   path <- paste("v2/applications", client_id, sep="/")
   .request('GET', path = path, env = env)
 }
@@ -38,7 +38,7 @@ Application.retrieve <- function(client_id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Application.update <- function(client_id, env = quartzbio.edp:::.config, ...) {
+Application.update <- function(client_id, env = get_connection(), ...) {
     if (missing(client_id)) {
         stop("A client ID is required.")
     }
@@ -65,7 +65,7 @@ Application.update <- function(client_id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Application.delete <- function(client_id, env = quartzbio.edp:::.config) {
+Application.delete <- function(client_id, env = get_connection()) {
     if (missing(client_id)) {
         stop("A client ID is required.")
     }
@@ -95,7 +95,7 @@ Application.delete <- function(client_id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Application.create <- function(name, redirect_uris, env = quartzbio.edp:::.config, ...) {
+Application.create <- function(name, redirect_uris, env = get_connection(), ...) {
     if (missing(name)) {
         stop("A name is required.")
     }

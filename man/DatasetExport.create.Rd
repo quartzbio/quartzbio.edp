@@ -9,7 +9,7 @@ DatasetExport.create(
   format = "json",
   params = list(),
   follow = FALSE,
-  env = quartzbio.edp:::.config,
+  env = get_connection(),
   ...
 )
 }

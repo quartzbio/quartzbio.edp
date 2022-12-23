@@ -4,7 +4,7 @@
 \alias{BeaconSet.delete}
 \title{BeaconSet.delete}
 \usage{
-BeaconSet.delete(id, env = quartzbio.edp:::.config)
+BeaconSet.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{The ID of the beacon set.}

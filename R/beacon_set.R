@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.all <- function(env = quartzbio.edp:::.config, ...) {
+BeaconSet.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/beacon_sets", query=list(...), env=env)
 }
 
@@ -32,7 +32,7 @@ BeaconSet.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.retrieve <- function(id, env = quartzbio.edp:::.config) {
+BeaconSet.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A beacon set ID is required.")
     }
@@ -61,7 +61,7 @@ BeaconSet.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.update <- function(id, env = quartzbio.edp:::.config, ...) {
+BeaconSet.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
         stop("A beacon set ID is required.")
     }
@@ -88,7 +88,7 @@ BeaconSet.update <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.delete <- function(id, env = quartzbio.edp:::.config) {
+BeaconSet.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A beacon set ID is required.")
     }
@@ -118,7 +118,7 @@ BeaconSet.delete <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.create <- function(title, description, is_shared=FALSE, env = quartzbio.edp:::.config, ...) {
+BeaconSet.create <- function(title, description, is_shared=FALSE, env = get_connection(), ...) {
     if (missing(title)) {
         stop("A title is required.")
     }
@@ -159,7 +159,7 @@ BeaconSet.create <- function(title, description, is_shared=FALSE, env = quartzbi
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-BeaconSet.query <- function(id, query, entity_type, env = quartzbio.edp:::.config, ...) {
+BeaconSet.query <- function(id, query, entity_type, env = get_connection(), ...) {
     if (missing(id)) {
         stop("A beacon set ID is required.")
     }

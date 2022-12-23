@@ -4,7 +4,7 @@
 \alias{Task.retrieve}
 \title{Task.retrieve}
 \usage{
-Task.retrieve(id, env = quartzbio.edp:::.config)
+Task.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{The ID of a task.}

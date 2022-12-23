@@ -2,5 +2,5 @@
 #' @inheritParams old_params
 #' @export
 User.retrieve <- function(env = get_connection()) {
-  user(conn = env_2_connection(env))
+  User(conn = env_2_connection(env))
 }

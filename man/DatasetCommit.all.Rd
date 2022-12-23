@@ -4,7 +4,7 @@
 \alias{DatasetCommit.all}
 \title{DatasetCommit.all}
 \usage{
-DatasetCommit.all(env = quartzbio.edp:::.config, ...)
+DatasetCommit.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

@@ -4,7 +4,7 @@
 \alias{Application.update}
 \title{Application.update}
 \usage{
-Application.update(client_id, env = quartzbio.edp:::.config, ...)
+Application.update(client_id, env = get_connection(), ...)
 }
 \arguments{
 \item{client_id}{The client ID for the application.}

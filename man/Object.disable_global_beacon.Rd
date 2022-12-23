@@ -4,7 +4,7 @@
 \alias{Object.disable_global_beacon}
 \title{Object.disable_global_beacon}
 \usage{
-Object.disable_global_beacon(id, env = quartzbio.edp:::.config)
+Object.disable_global_beacon(id, env = get_connection())
 }
 \arguments{
 \item{id}{The ID of a QuartzBio EDP dataset.}

@@ -8,7 +8,7 @@ login(
   api_key = Sys.getenv("SOLVEBIO_API_KEY"),
   api_token = Sys.getenv("SOLVEBIO_ACCESS_TOKEN"),
   api_host = Sys.getenv("SOLVEBIO_API_HOST"),
-  env = quartzbio.edp:::.config
+  env = get_connection()
 )
 }
 \arguments{

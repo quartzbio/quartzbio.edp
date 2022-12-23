@@ -4,7 +4,7 @@
 \alias{Vault.search}
 \title{Vault.search}
 \usage{
-Vault.search(id, query, env = quartzbio.edp:::.config, ...)
+Vault.search(id, query, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the vault.}

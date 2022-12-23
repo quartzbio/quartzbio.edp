@@ -4,7 +4,7 @@
 \alias{Dataset.template}
 \title{Dataset.template}
 \usage{
-Dataset.template(id, env = quartzbio.edp:::.config)
+Dataset.template(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset}

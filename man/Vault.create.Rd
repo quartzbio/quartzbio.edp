@@ -4,7 +4,7 @@
 \alias{Vault.create}
 \title{Vault.create}
 \usage{
-Vault.create(name, env = quartzbio.edp:::.config, ...)
+Vault.create(name, env = get_connection(), ...)
 }
 \arguments{
 \item{name}{The unique name of the vault.}

@@ -4,7 +4,7 @@
 \alias{Vault.delete}
 \title{Vault.delete}
 \usage{
-Vault.delete(id, env = quartzbio.edp:::.config)
+Vault.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP vault.}

@@ -4,7 +4,7 @@
 \alias{GlobalSearch.subjects}
 \title{GlobalSearch.subjects}
 \usage{
-GlobalSearch.subjects(env = quartzbio.edp:::.config, ...)
+GlobalSearch.subjects(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

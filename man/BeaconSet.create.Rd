@@ -8,7 +8,7 @@ BeaconSet.create(
   title,
   description,
   is_shared = FALSE,
-  env = quartzbio.edp:::.config,
+  env = get_connection(),
   ...
 )
 }

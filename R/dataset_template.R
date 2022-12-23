@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.all <- function(env = quartzbio.edp:::.config, ...) {
+DatasetTemplate.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/dataset_templates", query=list(...), env=env)
 }
 
@@ -33,7 +33,7 @@ DatasetTemplate.all <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.retrieve <- function(id, env = quartzbio.edp:::.config) {
+DatasetTemplate.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset template ID is required.")
     }
@@ -58,7 +58,7 @@ DatasetTemplate.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.delete <- function(id, env = quartzbio.edp:::.config) {
+DatasetTemplate.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A dataset template ID is required.")
     }
@@ -82,7 +82,7 @@ DatasetTemplate.delete <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.create <- function(env = quartzbio.edp:::.config, ...) {
+DatasetTemplate.create <- function(env = get_connection(), ...) {
     .request('POST', path='v2/dataset_templates', query=NULL, body=list(...), env=env)
 }
 
@@ -106,7 +106,7 @@ DatasetTemplate.create <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-DatasetTemplate.update <- function(id, env = quartzbio.edp:::.config, ...) {
+DatasetTemplate.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
         stop("A dataset template ID is required.")
     }

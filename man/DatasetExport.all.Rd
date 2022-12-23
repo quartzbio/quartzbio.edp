@@ -4,7 +4,7 @@
 \alias{DatasetExport.all}
 \title{DatasetExport.all}
 \usage{
-DatasetExport.all(env = quartzbio.edp:::.config, ...)
+DatasetExport.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

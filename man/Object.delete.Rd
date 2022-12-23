@@ -4,7 +4,7 @@
 \alias{Object.delete}
 \title{Object.delete}
 \usage{
-Object.delete(id, env = quartzbio.edp:::.config)
+Object.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{The ID of the object.}

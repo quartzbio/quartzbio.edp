@@ -4,7 +4,7 @@
 \alias{Application.all}
 \title{Retrieve the metadata about all application on QuartzBio EDP available to the current user.}
 \usage{
-Application.all(env = quartzbio.edp:::.config, ...)
+Application.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{Custom client environment.}

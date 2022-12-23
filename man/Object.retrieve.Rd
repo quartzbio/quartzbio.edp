@@ -4,7 +4,7 @@
 \alias{Object.retrieve}
 \title{Object.retrieve}
 \usage{
-Object.retrieve(id, env = quartzbio.edp:::.config)
+Object.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{The ID of the object.}

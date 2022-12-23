@@ -4,7 +4,7 @@
 \alias{DatasetField.retrieve}
 \title{DatasetField.retrieve}
 \usage{
-DatasetField.retrieve(id, env = quartzbio.edp:::.config)
+DatasetField.retrieve(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a dataset field.}

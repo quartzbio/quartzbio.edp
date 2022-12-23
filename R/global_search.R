@@ -25,7 +25,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.search <- function(paginate=FALSE, env = quartzbio.edp:::.config, ...) {
+GlobalSearch.search <- function(paginate=FALSE, env = get_connection(), ...) {
   params <- list(...)
   params$env <- env
 
@@ -71,7 +71,7 @@ GlobalSearch.search <- function(paginate=FALSE, env = quartzbio.edp:::.config, .
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.facets <- function(facets, env = quartzbio.edp:::.config, ...) {
+GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
     if (missing(facets) || is.null(facets) || facets == "") {
         stop("A list of one or more facets is required.")
     }
@@ -111,7 +111,7 @@ GlobalSearch.facets <- function(facets, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.subjects <- function(env = quartzbio.edp:::.config, ...) {
+GlobalSearch.subjects <- function(env = get_connection(), ...) {
   params <- list(...)
   params$limit = 0
   params$include_subjects = TRUE
@@ -138,7 +138,7 @@ GlobalSearch.subjects <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.subjects_count <- function(env = quartzbio.edp:::.config, ...) {
+GlobalSearch.subjects_count <- function(env = get_connection(), ...) {
   params <- list(...)
   params$limit = 0
   params$env <- env
@@ -194,7 +194,7 @@ GlobalSearch.subjects_count <- function(env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-GlobalSearch.request <- function(query=NULL, filters, entities, env = quartzbio.edp:::.config, ...) {
+GlobalSearch.request <- function(query=NULL, filters, entities, env = get_connection(), ...) {
   body = list(...)
 
   # Advanced search query

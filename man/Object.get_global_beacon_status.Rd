@@ -7,7 +7,7 @@
 Object.get_global_beacon_status(
   id,
   raise_on_disabled = FALSE,
-  env = quartzbio.edp:::.config
+  env = get_connection()
 )
 }
 \arguments{

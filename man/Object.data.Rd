@@ -4,7 +4,7 @@
 \alias{Object.data}
 \title{Object.data}
 \usage{
-Object.data(id, filters, col.names = NULL, env = quartzbio.edp:::.config, ...)
+Object.data(id, filters, col.names = NULL, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of a QuartzBio EDP file (vault object).}

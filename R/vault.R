@@ -13,7 +13,7 @@
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.all <- function(..., env = quartzbio.edp:::.config) {
+Vault.all <- function(..., env = get_connection()) {
     .request("GET", "v2/vaults", query=list(...), env=env)
 }
 
@@ -33,7 +33,7 @@ Vault.all <- function(..., env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.retrieve <- function(id, env = quartzbio.edp:::.config) {
+Vault.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A vault ID is required.")
     }
@@ -60,7 +60,7 @@ Vault.retrieve <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.delete <- function(id, env = quartzbio.edp:::.config) {
+Vault.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
         stop("A vault ID is required.")
     }
@@ -85,7 +85,7 @@ Vault.delete <- function(id, env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.create <- function(name, env = quartzbio.edp:::.config, ...) {
+Vault.create <- function(name, env = get_connection(), ...) {
     # TODO
     if (missing(name)) {
         stop("A name is required.")
@@ -121,7 +121,7 @@ Vault.create <- function(name, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.update <- function(id, env = quartzbio.edp:::.config, ...) {
+Vault.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
         stop("A vault ID is required.")
     }
@@ -154,7 +154,7 @@ Vault.update <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.get_by_full_path <- function(full_path, verbose=TRUE, env = quartzbio.edp:::.config) {
+Vault.get_by_full_path <- function(full_path, verbose=TRUE, env = get_connection()) {
     if (missing(full_path)) {
         stop("A vault full path is required.")
     }
@@ -199,7 +199,7 @@ Vault.get_by_full_path <- function(full_path, verbose=TRUE, env = quartzbio.edp:
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.get_or_create_by_full_path <- function(full_path, env = quartzbio.edp:::.config, ...) {
+Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
     vault = Vault.get_by_full_path(full_path, verbose=FALSE, env=env)
     if (!is.null(vault)) {
         # Return if exists
@@ -230,7 +230,7 @@ Vault.get_or_create_by_full_path <- function(full_path, env = quartzbio.edp:::.c
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.get_personal_vault <- function(env = quartzbio.edp:::.config) {
+Vault.get_personal_vault <- function(env = get_connection()) {
     user = User.retrieve(env=env)
     params = list(
                   name=paste("user", user$id, sep="-"),
@@ -260,7 +260,7 @@ Vault.get_personal_vault <- function(env = quartzbio.edp:::.config) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.files <- function(id, env = quartzbio.edp:::.config, ...) {
+Vault.files <- function(id, env = get_connection(), ...) {
     objects = .object_list_helper(id, object_type="file", env=env, ...)
     return(objects)
 }
@@ -283,7 +283,7 @@ Vault.files <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.folders <- function(id, env = quartzbio.edp:::.config, ...) {
+Vault.folders <- function(id, env = get_connection(), ...) {
     objects = .object_list_helper(id, object_type="folder", env=env, ...)
     return(objects)
 }
@@ -306,7 +306,7 @@ Vault.folders <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.datasets <- function(id, env = quartzbio.edp:::.config, ...) {
+Vault.datasets <- function(id, env = get_connection(), ...) {
     objects = .object_list_helper(id, object_type="dataset", env=env, ...)
     return(objects)
 }
@@ -329,7 +329,7 @@ Vault.datasets <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.objects <- function(id, env = quartzbio.edp:::.config, ...) {
+Vault.objects <- function(id, env = get_connection(), ...) {
     objects = .object_list_helper(id, env=env, ...)
     return(objects)
 }
@@ -353,7 +353,7 @@ Vault.objects <- function(id, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.search <- function(id, query, env = quartzbio.edp:::.config, ...) {
+Vault.search <- function(id, query, env = get_connection(), ...) {
     objects = .object_list_helper(id, query=query, env=env, ...)
     return(objects)
 }
@@ -378,7 +378,7 @@ Vault.search <- function(id, query, env = quartzbio.edp:::.config, ...) {
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.create_dataset <- function(id, path, name, env = quartzbio.edp:::.config, ...) {
+Vault.create_dataset <- function(id, path, name, env = get_connection(), ...) {
     if (missing(id)) {
         stop("A vault ID is required.")
     }
@@ -430,7 +430,7 @@ Vault.create_dataset <- function(id, path, name, env = quartzbio.edp:::.config, 
 #' \url{https://docs.solvebio.com/}
 #'
 #' @export
-Vault.create_folder <- function(id, path, recursive=FALSE, env = quartzbio.edp:::.config, ...) {
+Vault.create_folder <- function(id, path, recursive=FALSE, env = get_connection(), ...) {
     if (missing(id) || is.null(id)) {
         stop("A vault ID is required.")
     }
@@ -514,7 +514,7 @@ Vault.create_folder <- function(id, path, recursive=FALSE, env = quartzbio.edp::
 #
 
 # Retrieves objects within a specific vault.
-.object_list_helper = function(id, env = quartzbio.edp:::.config, ...) {
+.object_list_helper = function(id, env = get_connection(), ...) {
     objects = Object.all(vault_id=id, env=env, ...)
     return(objects$data)
 }

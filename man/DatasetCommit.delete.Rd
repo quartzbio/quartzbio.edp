@@ -4,7 +4,7 @@
 \alias{DatasetCommit.delete}
 \title{DatasetCommit.delete}
 \usage{
-DatasetCommit.delete(id, env = quartzbio.edp:::.config)
+DatasetCommit.delete(id, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID or full name of a QuartzBio EDP dataset commit.}

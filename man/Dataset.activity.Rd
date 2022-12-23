@@ -4,7 +4,7 @@
 \alias{Dataset.activity}
 \title{Dataset.activity}
 \usage{
-Dataset.activity(id, follow = TRUE, env = quartzbio.edp:::.config)
+Dataset.activity(id, follow = TRUE, env = get_connection())
 }
 \arguments{
 \item{id}{String The ID of a QuartzBio EDP dataset}

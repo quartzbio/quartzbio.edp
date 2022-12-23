@@ -4,11 +4,7 @@
 \alias{Vault.get_by_full_path}
 \title{Vault.get_by_full_path}
 \usage{
-Vault.get_by_full_path(
-  full_path,
-  verbose = TRUE,
-  env = quartzbio.edp:::.config
-)
+Vault.get_by_full_path(full_path, verbose = TRUE, env = get_connection())
 }
 \arguments{
 \item{full_path}{The full path of a QuartzBio EDP vault.}

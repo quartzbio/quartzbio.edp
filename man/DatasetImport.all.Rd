@@ -4,7 +4,7 @@
 \alias{DatasetImport.all}
 \title{DatasetImport.all}
 \usage{
-DatasetImport.all(env = quartzbio.edp:::.config, ...)
+DatasetImport.all(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}

@@ -3,7 +3,7 @@
 #' @inheritParams params
 #' @export
 Annotator.annotate <- function(records, fields, include_errors = FALSE, raw = FALSE,
-                               env = quartzbio.edp:::.config) {
+                               env = get_connection()) {
   params <- list(
     records = records,
     fields = fields,
@@ -21,7 +21,7 @@ Annotator.annotate <- function(records, fields, include_errors = FALSE, raw = FA
 #' }
 #' @export
 Expression.evaluate <- function(expression, data_type = "string", is_list = FALSE,
-                                data = NULL, raw = FALSE, env = quartzbio.edp:::.config) {
+                                data = NULL, raw = FALSE, env = get_connection()) {
   params <- list(
     expression = expression,
     data_type = data_type,

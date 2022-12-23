@@ -4,13 +4,7 @@
 \alias{Vault.create_folder}
 \title{Vault.create_folder}
 \usage{
-Vault.create_folder(
-  id,
-  path,
-  recursive = FALSE,
-  env = quartzbio.edp:::.config,
-  ...
-)
+Vault.create_folder(id, path, recursive = FALSE, env = get_connection(), ...)
 }
 \arguments{
 \item{id}{The ID of the vault.}

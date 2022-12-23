@@ -4,7 +4,7 @@
 \alias{SavedQuery.create}
 \title{SavedQuery.create}
 \usage{
-SavedQuery.create(env = quartzbio.edp:::.config, ...)
+SavedQuery.create(env = get_connection(), ...)
 }
 \arguments{
 \item{env}{(optional) Custom client environment.}
