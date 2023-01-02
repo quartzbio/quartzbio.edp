@@ -86,7 +86,7 @@ get_connection <- function(auto = TRUE) {
 
 # new_connection  <- function(
 #   api_key = get_env('EDP_API_KEY',get_env('SOLVEBIO_API_KEY')),
-#   api_token = get_env('EDP_API_TOKEN', get_env('SOLVEBIO_API_TOKEN')),
+#   api_token = get_env('EDP_API_TOKEN', get_env('SOLVEBIO_ACCESS_TOKEN')),
 #   api_host = get_env('EDP_API_HOST',get_env('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)))
 # {
 #   .die_if(!missing(api_key) && !missing(api_token), 'you can not give both api_key and api_token')
@@ -111,7 +111,7 @@ get_connection <- function(auto = TRUE) {
 #' 
 #' @param secret      a QuartzBio EDP **API key**  or **token** as a string. 
 #'                    Defaults to the `EDP_API_SECRET` environment variable if set, 
-#'                    otherwise to the legacy `SOLVEBIO_API_TOKEN` var, then to 
+#'                    otherwise to the legacy `SOLVEBIO_ACCESS_TOKEN` var, then to 
 #'                    to the `SOLVEBIO_API_KEY` var.
 
 #' @param host        the QuartzBio EDP **API host** as a string. 
@@ -131,7 +131,7 @@ get_connection <- function(auto = TRUE) {
 #'
 #' @export
 connect <- function(
-  secret = get_env('EDP_API_SECRET', get_env('SOLVEBIO_API_TOKEN', get_env('SOLVEBIO_API_KEY'))),
+  secret = get_env('EDP_API_SECRET', get_env('SOLVEBIO_ACCESS_TOKEN', get_env('SOLVEBIO_API_KEY'))),
   host = get_env('EDP_API_HOST', get_env('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)),
   check = TRUE
 ) {
@@ -145,7 +145,7 @@ connect <- function(
 #' @export 
 autoconnect <- function(check = FALSE) {
   # # try env vars first
-  # secret <- get_env('EDP_API_SECRET', get_env('SOLVEBIO_API_KEY', get_env('SOLVEBIO_API_TOKEN')))
+  # secret <- get_env('EDP_API_SECRET', get_env('SOLVEBIO_API_KEY', get_env('SOLVEBIO_ACCESS_TOKEN')))
   # host <- get_env('EDP_API_HOST', get_env('SOLVEBIO_API_HOST', "https://sandbox.api.edp.aws.quartz.bio"))
   conn <- try(connect(check = check), silent = TRUE)
   if (!.is_error(conn)) return(conn)
