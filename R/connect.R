@@ -78,7 +78,7 @@ get_connection <- function(auto = TRUE) {
   if (!length(conn) && auto) {
     conn <- autoconnect()
     test_connection(conn)
-    set_connection(conn)
+    set_connection(conn, check = FALSE)
   }
 
   conn

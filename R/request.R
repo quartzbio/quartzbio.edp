@@ -60,7 +60,7 @@ request_edp_api <- function(method, path, query = list(), body = list(),
                             as = NULL,
                             encoding = "UTF-8",
                             simplifyDataFrame = FALSE,
-                            verbose = TRUE,
+                            verbose = getOption('quartzbio.edp.verbose', TRUE),
                             ...) 
 {
   if (verbose) {
@@ -145,10 +145,66 @@ request_edp_api <- function(method, path, query = list(), body = list(),
     content <- postprocess_response(content)
   }
 
-  attr(content, 'connection') <- as.environment(conn)
+  conn <- as.environment(conn)
+  attr(content, 'connection') <- conn
+  if (inherits(content, 'edplist'))
+    for (i in seq_along(content) )
+      attr(content[[i]], 'connection') <- conn
 
   content
 }
+
+
+
+# do a API request based on the existence of the params in the "by" named list:
+# - exactly one item must be set
+# - if the item is itself a list, all its items must be set to be considered a set
+fetch_by <- function(path, by = list(), conn = NULL, ...) {
+  keys <- names(by)
+
+  # process sublists
+  .is_set <- function(x) {
+    if (is.list(x)) {
+      # a sublist is set if all its items are set, otherwise it is an error
+      nb_set <- sum(lengths(x) == 1)
+      if (nb_set == 0) return(FALSE)
+      .die_unless(nb_set == length(x), 'all items "%s" must be set', names(x))
+      return(TRUE)
+    }
+
+    length(x) == 1
+  }
+  
+  with_values <- sapply(by, .is_set)
+  nb_set <- sum(with_values)
+
+  .die_unless(nb_set == 1, 'you must exactly one parameter among %s', keys)
+
+  params <- list(...)
+  key <- keys[with_values]
+  value <- by[[key]]
+ 
+  if (key == 'id') {
+    path <- file.path(path, value)
+  } else {
+    if (is.list(value)) {
+      params <- value 
+    } else {
+      params[[key]] <- value
+    }
+  }
+
+  o <- request_edp_api('GET', path, conn = conn,  params = params)
+
+  if (key != 'id') {
+    if (!length(o)) return(NULL)
+    o <- o[[1]]
+  }
+
+  o
+}
+
+
 
 # set types (class)
 postprocess_response <- function(res) {

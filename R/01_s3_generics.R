@@ -89,3 +89,8 @@ fetch_vaults <- function(x) {
 fetch_vaults.default <- function(x) {
   NULL
 }
+
+#' @export
+as.data.frame.edplist <- function (x,  ...) {
+  convert_edp_list_data_to_df(x)
+}
