@@ -21,10 +21,9 @@
     length(x) == 0
 }
 
-.die <- function(..., qblog = FALSE, .envir = parent.frame()) {
+.die <- function(..., .envir = parent.frame()) {
   
 	msg <- .build_error_message(..., .envir = .envir)
-  if (qblog) qblog_error(msg)
 	stop(msg, call. = FALSE)
 }
 

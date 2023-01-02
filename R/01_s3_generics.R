@@ -41,12 +41,12 @@ decorate.default <- function(x, ...) {
 #' @param x the object to delete
 #' @export
 #' @rdname generics
-delete <- function(x, conn = get_connection()) {
+delete <- function(x) {
   UseMethod('delete')
 }
 
 #' @export
-delete.default <- function(x,  conn = get_connection()) {
+delete.default <- function(x) {
   stop('Not yet implemented')
 }
 
@@ -56,12 +56,12 @@ delete.default <- function(x,  conn = get_connection()) {
 #' @return the decorated object
 #' @export
 #' @rdname generics
-fetch <- function(x, conn = get_connection()) {
+fetch <- function(x) {
   UseMethod('fetch')
 }
 
 #' @export
-fetch.default <- function(x,  conn = get_connection()) {
+fetch.default <- function(x) {
   stop('Not yet implemented')
 }
 
@@ -81,11 +81,11 @@ fetch_next <- function(x) {
 #' @return the vault, or NULL if  not applicable
 #' @export
 #' @rdname generics
-fetch_vaults <- function(x, conn = get_connection()) {
+fetch_vaults <- function(x) {
   UseMethod('fetch_vaults')
 }
 
 #' @export
-fetch_vaults.default <- function(x,  conn = get_connection()) {
+fetch_vaults.default <- function(x) {
   NULL
 }

@@ -21,6 +21,7 @@ NULL
 #' 
 #' @param client_id                 The client ID for the application.
 #' @param conn                      a EDP connection object (as a named list or environment)
+#' @param data                      TODO
 #' @param data_type                 The data type to cast the expression result.
 #' @param env                       Custom client environment.
 #' @param expression                The EDP expression string.

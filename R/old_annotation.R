@@ -1,6 +1,6 @@
 #' Annotate a data table/frame with additional fields.
 #'
-#' @inheritParams params
+#' @inheritParams old_params
 #' @export
 Annotator.annotate <- function(records, fields, include_errors = FALSE, raw = FALSE,
                                env = get_connection()) {
@@ -15,7 +15,7 @@ Annotator.annotate <- function(records, fields, include_errors = FALSE, raw = FA
 
 #' Evaluate a QuartzBio EDP expression.
 #'
-#' @inheritParams params
+#' @inheritParams old_params
 #' @examples \dontrun{
 #' Expression.evaluate("1 + 1", data_type = "integer", is_list = FALSE)
 #' }

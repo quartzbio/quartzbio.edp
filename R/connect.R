@@ -142,6 +142,11 @@ connect <- function(
   conn
 }
 
+#' tries to connect, using environment variables or the default profile
+#' @inheritParams connect
+#' @seealso connect
+#' @seealso read_connection_profile
+#' @return the connection
 #' @export 
 autoconnect <- function(check = FALSE) {
   # # try env vars first
@@ -195,6 +200,7 @@ read_connection_profile <- function(
 
 #' save a connection profile
 #' 
+#' @inheritParams params
 #' @param profile     the name of the profile, as a string
 #' @param path        the path to the connection profiles file, as a string
 

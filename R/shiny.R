@@ -1,3 +1,11 @@
+createEnv <- function(token, token_type="Token", host = Sys.getenv('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)) {
+    newEnv <- new.env()
+    newEnv$token <- token
+    newEnv$token_type <- token_type
+    newEnv$host <- host
+    return(newEnv)
+}
+
 #' protectedServer
 #'
 #' Wraps an existing Shiny server in an OAuth2 flow.
@@ -31,7 +39,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
             user <- NULL
         }
         else {
-            env <- quartzbio.edp::createEnv(token=token, token_type=token_type)
+            env <- createEnv(token=token, token_type=token_type)
             user <- User.retrieve(env=env)
         }
 
@@ -184,7 +192,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
                                                  path="v1/oauth2/token",
                                                  query=NULL,
                                                  body=oauth_params,
-                                                 env=quartzbio.edp::createEnv(token=''),
+                                                 env=createEnv(token=''),
                                                  content_type="application/x-www-form-urlencoded")
                                     }, error = function(e) {
                                         stop(sprintf("ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n", e))

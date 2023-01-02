@@ -25,8 +25,8 @@
 #' Store and verify your QuartzBio EDP credentials.
 #'
 #' @param api_key Your QuartzBio EDP API key
+#' @param api_token Your QuartzBio EDP API token
 #' @param api_host QuartzBio EDP API host (default: https://api.solvebio.com)
-#' @param env (optional) The R environment used to store API credentials.
 #'
 #' @examples \dontrun{
 #' login()
@@ -50,13 +50,7 @@ login <- function(
 
 
 
-# createEnv <- function(token, token_type="Token", host = Sys.getenv('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)) {
-#     newEnv <- new.env()
-#     newEnv$token <- token
-#     newEnv$token_type <- token_type
-#     newEnv$host <- host
-#     return(newEnv)
-# }
+
 
 
 # Private API request method.
