@@ -20,6 +20,34 @@ get_api_response_error_message <- function(res, default_message = '') {
   msg
 }
 
+preprocess_api_params <- function(
+  exclude = c('conn', 'limit', 'page'), 
+  match_args = list(
+    capacity = c('small', 'medium', 'large'),
+    object_type = c('file', 'folder', 'dataset'),
+    vault_type = c('user', 'general'),
+    storage_class =  c('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive')
+  )
+) {
+  env <- parent.frame()
+  # remove common args
+  keys <- setdiff(ls(env), exclude)
+  values <- mget(keys, env)
+
+  params <- list()
+  for (key in keys) {
+    value <- get(key, env)
+    args <- match_args[[key]]
+    if (length(value)) {
+      if (length(args)) {
+        value <- match.arg(value, args)
+      }
+      params[[key]] <- value
+    }
+  }
+  
+  params
+}
 
 # Error Code 	Meaning 	Description
 # 400 	Bad Request 	Your request was malformed
@@ -63,6 +91,7 @@ request_edp_api <- function(method, path, query = list(), body = list(),
                             verbose = getOption('quartzbio.edp.verbose', TRUE),
                             ...) 
 {
+  check_connection(conn)
   if (verbose) {
     msg <- sprintf('%s %s...', method, path)
     message(msg)
@@ -159,7 +188,7 @@ request_edp_api <- function(method, path, query = list(), body = list(),
 # do a API request based on the existence of the params in the "by" named list:
 # - exactly one item must be set
 # - if the item is itself a list, all its items must be set to be considered a set
-fetch_by <- function(path, by = list(), conn = NULL, ...) {
+fetch_by <- function(path, by = list(), conn = NULL, all = FALSE, unique = TRUE, ...) {
   keys <- names(by)
 
   # process sublists
@@ -175,45 +204,50 @@ fetch_by <- function(path, by = list(), conn = NULL, ...) {
     length(x) == 1
   }
   
-  with_values <- sapply(by, .is_set)
+  with_values <- unlist(lapply(by, .is_set), recursive = FALSE, use.names = FALSE)
   nb_set <- sum(with_values)
 
-  .die_unless(nb_set == 1, 'you must exactly one parameter among %s', keys)
+  .die_unless(!unique || nb_set == 1, 'you must give exactly one parameter among %s', keys)
 
   params <- list(...)
-  key <- keys[with_values]
-  value <- by[[key]]
- 
-  if (key == 'id') {
-    path <- file.path(path, value)
-  } else {
-    if (is.list(value)) {
-      params <- value 
-    } else {
-      params[[key]] <- value
+
+  if (nb_set > 0) {
+    for (key in keys[with_values]) {
+      value <- by[[key]]
+    
+      if (key == 'id') {
+        path <- file.path(path, value)
+      } else {
+        if (is.list(value)) {
+          browser()
+          params <- value 
+        } else {
+          params[[key]] <- value
+        }
+      }
     }
   }
 
   o <- request_edp_api('GET', path, conn = conn,  params = params)
 
-  if (key != 'id') {
-    if (!length(o)) return(NULL)
-    o <- o[[1]]
+  if (!all) {
+    if (key != 'id') {
+      if (!length(o)) return(NULL)
+      o <- o[[1]]
+    }
   }
 
   o
 }
 
-
-
 # set types (class)
 postprocess_response <- function(res) {
-    .classify <- function(x) {
-      class_name <- x$class_name
-      if (.is_nz_string(class_name) && class_name != 'list')
-        class(x) <- c(class_name, class(x))
-      x
-    }
+  .classify <- function(x) {
+    class_name <- x$class_name
+    if (.is_nz_string(class_name) && class_name != 'list')
+      class(x) <- c(class_name, class(x))
+    x
+  }
 
   # is the content an object or a list of objects...
   # a list of objects should have the $total key and have a class_name=='list'
@@ -238,10 +272,7 @@ postprocess_response <- function(res) {
     data <- res[[key]]
   }
 
-   # store other items as attributes
-  items <- setdiff(names(res), c(key))
-  for (attr in items) 
-    attr(data, attr) <- res[[attr]]
+
 
   if (is.data.frame(data)) {
     # nothing cyrrently to do
@@ -259,6 +290,11 @@ postprocess_response <- function(res) {
         class(data) <- c(paste0(class_obj, 'List'), class(data))
     }
   }
+
+  # store other items as attributes
+  items <- setdiff(names(res), c(key, 'class', 'class_name'))
+  for (attr in items) 
+    attr(data, attr) <- res[[attr]]
 
   data
 }

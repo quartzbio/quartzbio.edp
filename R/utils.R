@@ -11,34 +11,7 @@ summary_string <- function(lst) {
   paste0(res, collapse = '')
 }
 
-preprocess_api_params <- function(
-  exclude = c('conn', 'limit', 'page'), 
-  match_args = list(
-    capacity = c('small', 'medium', 'large'),
-    object_type = c('file', 'folder', 'dataset'),
-    vault_type = c('personal', 'general'),
-    storage_class =  c('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive')
-  )
-) {
-  env <- parent.frame()
-  # remove common args
-  keys <- setdiff(ls(env), exclude)
-  values <- mget(keys, env)
 
-  params <- list()
-  for (key in keys) {
-    value <- get(key, env)
-    args <- match_args[[key]]
-    if (length(value)) {
-      if (length(args)) {
-        value <- match.arg(value, args)
-      }
-      params[[key]] <- value
-    }
-  }
-  
-  params
-}
 
 # if x is a list with a scalar x$id item, it is returned
 # otherwise x is returned
