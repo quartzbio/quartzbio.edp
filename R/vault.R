@@ -96,18 +96,30 @@ Vault_create <- function(name,
   request_edp_api('POST', "v2/vaults", conn = conn, params = params)
 }
 
-#' update a vault (TODO)
-#' @inheritParams params
+#' updates a vault
+#' 
+#' N.B: the updated vault properties are overwritten, not merged!
+#' 
+#' @inheritParams Vault_create
+#' @inheritParams Vault
+#' @return a Vault object
 #' @export
 Vault_update <- function(id,  
   name = NULL,
   description = NULL,
   metadata = NULL,
   tags = NULL,
-  default_storage_class = NULL,
+  storage_class = NULL,
   conn = get_connection()) 
 {
+  if (length(tags)) tags <- as.list(tags)
+
   params <- preprocess_api_params()
+
+  # rename storage_class as default_storage class
+  params$default_storage_class <- params$storage_class
+  params$storage_class <- NULL
+
   request_edp_api('PUT', file.path("v2/vaults", id), conn = conn, params = params)
 }
 
@@ -146,12 +158,14 @@ vault_fetch_personal <- function(conn = get_connection()) {
   request_edp_api('GET', "v2/vaults", conn = conn, params = params)[[1]]
 }
 
-Vault_delete <- function(id, conn = get_connection()) {
-  request_edp_api('DELETE', file.path("v2/vaults", id), conn = conn)
-}
+# Vault_delete <- function(id, conn = get_connection()) {
+#   request_edp_api('DELETE', file.path("v2/vaults", id), conn = conn)
+# }
+
 
 #' @export
-update.Vault <- function(object, conn = get_connection(), ...) {
+update.Vault <- function(object, conn = attr(object, 'connection'), ...) 
+{
   Vault_update(object$id, conn = conn, ...)
 }
 
@@ -162,12 +176,12 @@ update.VaultId <- function(object, conn = get_connection(), ...) {
 
 #' @export
 delete.Vault <- function(x, conn = attr(x, 'connection')) {
-  Vault_delete(x$id, conn = conn)
+  delete.VaultId(x$id, conn = conn)
 }
 
 #' @export
 delete.VaultId <- function(x,  conn = get_connection()) {
-  Vault_delete(x, conn = conn)
+  request_edp_api('DELETE', file.path("v2/vaults", x), conn = conn)
 }
 
 #' @export
