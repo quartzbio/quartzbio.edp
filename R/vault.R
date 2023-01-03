@@ -1,5 +1,4 @@
 
-
 #' fetches a list of vaults
 #'
 #' @inheritParams params
@@ -58,9 +57,12 @@ Vault <- function(id = NULL, full_path = NULL, name = NULL, conn = get_connectio
   lst
 }
 
-#' creates a new EDP vault.
+#' creates a new EDP vault or updates an existing one.
 #' 
 #' cf https://docs.solvebio.com/reference/vaults/vaults/#create
+#' 
+#' if id is NULL, it will create a new vault, otherwise it will update
+#' the vault with the corresponding id
 #' 
 #' @param name  the vault name to create, as a string.
 #' @inheritParams params
@@ -85,25 +87,27 @@ Vault_create <- function(name,
   storage_class = NULL,
   conn = get_connection()) 
 {
-  if (length(tags)) tags <- as.list(tags)
-  
-  params <- preprocess_api_params()
-  
-  # rename storage_class as default_storage class
-  params$default_storage_class <- params$storage_class
-  params$storage_class <- NULL
-
-  request_edp_api('POST', "v2/vaults", conn = conn, params = params)
+  Vault_update(id = NULL, name = name, description = description, metadata = metadata, 
+    tags = tags, storage_class = storage_class, conn = conn)
 }
 
 #' updates a vault
 #' 
-#' N.B: the updated vault properties are overwritten, not merged!
+#' N.B: 
+#' - the updated vault properties are overwritten, not merged!
+#' - if `id` is NULL, this will create a new vault 
 #' 
 #' @inheritParams Vault_create
 #' @inheritParams Vault
 #' @return a Vault object
 #' @export
+#' @examples \dontrun{
+#'   v2 <- Vault_update(v$id, name = name, description = 'desc',    
+#'    metadata = list(meta1 = 'toto'), storage_class = 'Performance', tags = 'A')
+#' # using methods
+#' v3 <- update(v2, name = name, storage_class = 'Temporary')
+#' v4 <- update(vault_id, tags = LETTERS[1:5])
+#' }
 Vault_update <- function(id,  
   name = NULL,
   description = NULL,
@@ -120,37 +124,11 @@ Vault_update <- function(id,
   params$default_storage_class <- params$storage_class
   params$storage_class <- NULL
 
-  request_edp_api('PUT', file.path("v2/vaults", id), conn = conn, params = params)
+  if (length(id))
+    request_edp_api('PUT', file.path("v2/vaults", id), conn = conn, params = params)
+  else 
+    request_edp_api('POST', "v2/vaults", conn = conn, params = params)
 }
-
-# vault_create_or_update <- function(id = NULL, name = NULL, description = NULL,
-#   metadata = NULL,
-#   tags = NULL, 
-#   default_storage_class = c('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive'),
-#   conn = get_connection(),
-#   ...) 
-# {
-#   params <- list()
-#   if (.is_nz_string(name)) params$name <- name
-#   if (length(default_storage_class)) {
-#     default_storage_class <- match.arg(default_storage_class)
-#     if (.is_nz_string(default_storage_class)) params$default_storage_class <- default_storage_class
-#   }
-#   if (.is_nz_string(description)) params$description <- description
-#   if (.is_nz_string(tags)) params$tags <- tags
-#   if (length(metadata)) params$metadata <- metadata
-
-#   method <- 'POST'
-#   path <-"v2/vaults"
-#   if (length(id)) {
-#     method <- 'PUT'
-#     path <- file.path(path, id)
-#   }
-
-#   request_edp_api(method, path, conn = conn, params = params, ...)
-# }
-
-
 
 vault_fetch_personal <- function(conn = get_connection()) {
   userid <- User(conn = conn)$id
@@ -158,29 +136,28 @@ vault_fetch_personal <- function(conn = get_connection()) {
   request_edp_api('GET', "v2/vaults", conn = conn, params = params)[[1]]
 }
 
-# Vault_delete <- function(id, conn = get_connection()) {
-#   request_edp_api('DELETE', file.path("v2/vaults", id), conn = conn)
-# }
-
+###
+################################## methods ###################################################
+###
 
 #' @export
-update.Vault <- function(object, conn = attr(object, 'connection'), ...) 
+update.Vault <- function(object, conn = retrieve_connection(object), ...) 
 {
   Vault_update(object$id, conn = conn, ...)
 }
 
 #' @export
-update.VaultId <- function(object, conn = get_connection(), ...) {
-  Vault_update(object, conn = conn, ...)
+update.VaultId <- function(object, conn = retrieve_connection(object), ...) {
+  Vault_update(unclass(object), conn = conn, ...)
 }
 
 #' @export
-delete.Vault <- function(x, conn = attr(x, 'connection')) {
+delete.Vault <- function(x, conn = retrieve_connection(x)) {
   delete.VaultId(x$id, conn = conn)
 }
 
 #' @export
-delete.VaultId <- function(x,  conn = get_connection()) {
+delete.VaultId <- function(x,  conn = retrieve_connection(x)) {
   request_edp_api('DELETE', file.path("v2/vaults", x), conn = conn)
 }
 
@@ -208,6 +185,11 @@ print.VaultList <- function(x, ...) {
 }
 
 #' @export
-fetch.VaultId <- function(x,  conn = attr(x, 'connection')) {
+fetch.VaultId <- function(x,  conn = retrieve_connection(x)) {
+  Vault(unclass(x), conn = conn)
+}
+
+#' @export
+fetch.Vault <- function(x,  conn = retrieve_connection(x)) {
   Vault(x, conn = conn)
 }
