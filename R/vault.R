@@ -5,34 +5,44 @@
 #' @inheritParams params
 #' @export
 Vaults <- function(
-  vault_type = c('personal', 'general'),
-  tag = NULL,
+  vault_type = NULL,
+  tags = NULL,
   user_id = NULL,
   storage_class = NULL,
   limit = NULL, page = NULL, 
   conn = get_connection()) 
 {
-  params  <- list()
-  if (.is_nz_string(vault_type)) params$vault_type <- vault_type
-  if (.is_nz_string(tag)) params$tags <- tag
-  if (length(user_id)) params$user_id <- user_id
-  if (.is_nz_string(storage_class)) params$storage_class <- storage_class
-  request_edp_api('GET', "v2/vaults", conn = conn, limit = limit, page = page, params = params)
+  by <- preprocess_api_params()
+  fetch_by("v2/vaults", by = by, limit = limit, page = page, all = TRUE, unique = FALSE, conn = conn)
 }
 
 #' fetches a vault
 #' 
 #' N.B: 
-#'   - if called without id, full_path or name, it fetches the personal vault of the connected
-#' user.
+#'   - if called without `id`, `full_path` or `name`, it fetches the *personal vault* 
+#'      of the connected user.
 #'   - dies if multiple vaults are matched
 #' 
 #' @param id          the Vault ID or object to fetch
 #' @param full_path   the full path of the vault to fetch
-#' @param name        the name if the the vault to fetch
+#' @param name        the name of the the vault to fetch
 #' @inheritParams params
 #' @return the vault as a list with class `Vault`, or NULL if no matching vault is found 
 #' @export
+#' @examples \dontrun{
+#' # with no argument, fetch the connected user personal vault
+#' v <- Vault()
+#' 
+#' # by id
+#' v2 <- Vault(v$id)
+#' 
+#' # by full_path
+#' v2 <- Vault(full_path = v$full_path)
+#' 
+#' # by name
+#' v2 <- Vault(name = "Public")
+#' 
+#' }
 Vault <- function(id = NULL, full_path = NULL, name = NULL, conn = get_connection()) 
 {
   id <- id(id)
@@ -55,6 +65,19 @@ Vault <- function(id = NULL, full_path = NULL, name = NULL, conn = get_connectio
 #' @param name  the vault name to create, as a string.
 #' @inheritParams params
 #' @export
+#' @examples \dontrun{
+#' # simplest form
+#' v <- Vault_create('my.new.vault')
+#' 
+#' # using all params
+#' v <- Vault_create(name = 'my.new.vault', 
+#'    description = 'This is my own vault', 
+#'    metadata = list(a = 1, b = 'toto', sublist = list(x = 'str')), 
+#'    tags = c('TEST', 'DATA'), 
+#'    storage_class = 'Performance', 
+#'    conn = conn)
+#' 
+#' }
 Vault_create <- function(name,  
   description = NULL,
   metadata = NULL,
@@ -62,6 +85,8 @@ Vault_create <- function(name,
   storage_class = NULL,
   conn = get_connection()) 
 {
+  if (length(tags)) tags <- as.list(tags)
+  
   params <- preprocess_api_params()
   
   # rename storage_class as default_storage class
@@ -71,6 +96,8 @@ Vault_create <- function(name,
   request_edp_api('POST', "v2/vaults", conn = conn, params = params)
 }
 
+#' update a vault (TODO)
+#' @inheritParams params
 #' @export
 Vault_update <- function(id,  
   name = NULL,
@@ -136,7 +163,6 @@ update.VaultId <- function(object, conn = get_connection(), ...) {
 #' @export
 delete.Vault <- function(x, conn = attr(x, 'connection')) {
   Vault_delete(x$id, conn = conn)
-  cat('after Vault_delete\n')
 }
 
 #' @export
@@ -168,6 +194,6 @@ print.VaultList <- function(x, ...) {
 }
 
 #' @export
-fetch.VaultId <- function(x,  conn = get_connection()) {
+fetch.VaultId <- function(x,  conn = attr(x, 'connection')) {
   Vault(x, conn = conn)
 }

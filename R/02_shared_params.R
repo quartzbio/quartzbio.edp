@@ -11,17 +11,17 @@
 #' @param is_list                   whether the result is expected to be a list.
 #' @param limit                     The maximum number of elements to fetch, as an integer. 
 #'                                  See also `page`.
-#' @param page                      The number of the page to fetch, as an integer. 
+#' @param page                      The number of the page to fetch, as an integer. starts from 1.
 #'                                  See also `limit`.
 #' @param metadata                  metadata as a named list.
 #' @param raw                       whether to return the raw response.
 #' @param records                   The data to annotate as a data frame.
-#' @param storage_class             The Storage class of the vault ('Standard', 'Standard-IA',
-#'                                   'Essential', 'Temporary', 'Performance', 'Archive) as a string.
+#' @param storage_class             The Storage class of the vault `('Standard', 'Standard-IA',
+#'                                   'Essential', 'Temporary', 'Performance', 'Archive')` as a string.
 #' @param tag                       a tag as a string.
 #' @param tags                      a list of tags as a character vector.
 #' @param user_id                   a user id (or User object) as a string
-#' @param vault_type                the type of vault (personal', 'general') as a string
+#' @param vault_type                the type of vault ('user', 'general') as a string
 #' @param ...                       Additional query parameters, passed to .request().
 #' 
 #' @references \url{https://docs.solvebio.com/} 
