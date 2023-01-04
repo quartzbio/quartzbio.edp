@@ -7,38 +7,10 @@
 NULL
 
 
-#' decorate object
-#' 
-#' @docType methods
-#' @return the decorated object
-#' @export
-#' @rdname generics
-decorate <- function(x) {
-  UseMethod('decorate')
-}
-
-
-#' @export
-decorate.default <- function(x, ...) {
-  # look for ids
-  id_names <- grep('_id$', names(x), value = TRUE)
-  for (name in id_names) {
-    if (length(x[[name]])) {
-      class_name <- head(tail(strsplit(name, '_')[[1]], 2), 1)
-      class_name  <- paste0(toupper(substring(class_name, 1, 1)), substring(class_name, 2))
-      class_name <- paste0(class_name, 'Id')
-      class(x[[name]]) <- class_name
-
-      x
-    }
-  }
-
-  x
-}
 
 
 
-#' delete an object from EDP
+#' deletes an object from EDP
 #' 
 #' @docType methods
 #' @param x the object to delete
@@ -53,7 +25,7 @@ delete.default <- function(x, conn = attr(x, 'connection')) {
   stop('Not yet implemented')
 }
 
-#' fetch an object using its ID
+#' fetches an object using its ID
 #' 
 #' @docType methods
 #' @return the decorated object
@@ -68,17 +40,53 @@ fetch.default <- function(x, conn = attr(x, 'connection')) {
   stop('Not yet implemented')
 }
 
-#' fetch the next one
+
+#' fetches the next chunk of data/page
 #' 
 #' @docType methods
 #' @return the decorated object
 #' @export
 #' @rdname generics
-fetch_next <- function(x, conn = attr(x, 'connection')) {
+fetch_next <- function(x, conn = retrieve_connection(x)) {
   UseMethod('fetch_next')
 }
 
-#' fetch the vault related to an object
+#' @export
+fetch_next.default <- function(x, conn = attr(x, 'connection')) {
+  stop('Not yet implemented')
+}
+
+#' fetches the previous chunk of data/page
+#' 
+#' @docType methods
+#' @return the decorated object
+#' @export
+#' @rdname generics
+fetch_prev <- function(x, conn = retrieve_connection(x)) {
+  UseMethod('fetch_prev')
+}
+
+#' @export
+fetch_prev.default <- function(x, conn = attr(x, 'connection')) {
+  stop('Not yet implemented')
+}
+
+#' fetches all next chunks/pages of data and aggregate them in a single data chunk
+#' 
+#' @docType methods
+#' @return the decorated object
+#' @export
+#' @rdname generics
+fetch_all <- function(x) {
+  UseMethod('fetch_all')
+}
+
+#' @export
+fetch_all.default <- function(x) {
+  stop('Not yet implemented')
+}
+
+#' fetches the vault related to an object
 #' 
 #' @docType methods
 #' @return the vault, or NULL if  not applicable
@@ -90,10 +98,10 @@ fetch_vaults <- function(x, conn = attr(x, 'connection')) {
 
 #' @export
 fetch_vaults.default <- function(x, conn = attr(x, 'connection')) {
-  NULL
+  stop('Not yet implemented')
 }
 
 #' @export
 as.data.frame.edplist <- function (x,  ...) {
-  convert_edp_list_data_to_df(x)
+  convert_edp_list_to_df(x)
 }

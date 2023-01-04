@@ -1,3 +1,4 @@
+# nocov start
 #' Retrieves the metadata about all objects on EDP accessible to the current user.
 #'
 #' @inheritParams old_params
@@ -594,3 +595,4 @@ Object.disable_global_beacon <- function(id, env = get_connection()) {
 }
 
 
+# nocov end

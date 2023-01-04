@@ -1,3 +1,4 @@
+# nocov start
 #' Beacon.all
 #'
 #' Retrieves the metadata about all beacons on QuartzBio EDP accessible to the current user.
@@ -185,3 +186,4 @@ Beacon.query <- function(id, query, entity_type, env = get_connection(), ...) {
 
     .request('POST', path=path, query=NULL, body=params, env=env)
 }
+# nocov end

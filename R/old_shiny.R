@@ -1,3 +1,4 @@
+# nocov start
 createEnv <- function(token, token_type="Token", host = Sys.getenv('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)) {
     newEnv <- new.env()
     newEnv$token <- token
@@ -279,3 +280,4 @@ protectedServerJS <- function() {
     }
     ')
 }
+# nocov end

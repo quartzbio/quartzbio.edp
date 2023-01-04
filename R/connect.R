@@ -28,9 +28,6 @@ check_connection <- function(conn) {
     'connection secret does not look like an API key nor token')
 }
 
-env_2_connection <- function(env) {
-  list(secret = env$token, host = env$host)
-}
 
 #' test a connection
 #' 
@@ -42,7 +39,7 @@ test_connection <- function(conn) {
   check_connection(conn)
 
   # N.B: not silent on purpose
-  res <- try(request_edp_api('GET', "v1/user", conn = conn))
+  res <- try(request_edp_api('GET', "v1/user", conn = conn), silent = TRUE)
   if (.is_error(res)) {
     warning(paste('got error connecting:', .get_error_msg(res)))
     stop(.get_error(res))
@@ -59,12 +56,13 @@ test_connection <- function(conn) {
 
 #' set the default connection
 #' 
+#' N.B: use conn=NULL to unset the default connection
 #' may die on bad connection
 #' @inheritParams params
 #' @inheritParams connect
 #' @export
 set_connection <- function(conn, check = TRUE) {
-  if (check) test_connection(conn)
+  if (check && !is.null(conn)) test_connection(conn)
   assign('connection', conn, envir = .DEFAULTS)
 }
 

@@ -1,3 +1,4 @@
+# nocov start
 #' DatasetCommit.all
 #'
 #' Retrieves the metadata about all dataset commits on QuartzBio EDP.
@@ -66,3 +67,4 @@ DatasetCommit.delete <- function(id, env = get_connection()) {
     path <- paste("v2/dataset_commits", paste(id), sep="/")
     .request('DELETE', path=path, env=env)
 }
+# nocov end

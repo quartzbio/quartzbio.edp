@@ -1,3 +1,4 @@
+# nocov start
 #' GlobalSearch.search
 #'
 #' Performs a Global Search based on provided filters, entities, queries, and returns an R data frame containing results from API response.
@@ -236,3 +237,4 @@ GlobalSearch.request <- function(query=NULL, filters, entities, env = get_connec
     cat(sprintf("Query failed: %s\n", e$message))
   })
 }
+# nocov end

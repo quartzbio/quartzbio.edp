@@ -1,3 +1,4 @@
+# nocov start
 #' Retrieve the metadata about all application on QuartzBio EDP available to the current user.
 #'
 #' @inheritParams params
@@ -111,3 +112,4 @@ Application.create <- function(name, redirect_uris, env = get_connection(), ...)
 
     .request('POST', path='v2/applications', query=NULL, body=params, env=env)
 }
+# nocov end

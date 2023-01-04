@@ -175,7 +175,7 @@
 #       cat(' of type', cl)
 
 #     cat('\n')
-#     df <- convert_edp_list_data_to_df(x)
+#     df <- convert_edp_list_to_df(x)
 #     print(df)
 #   } else {
 #     cat('\n')
@@ -210,7 +210,7 @@
 #   by <- list(id = id, full_path = full_path, name = name)
 #   # no arg ==> fetch personal vault
 #   if (all(lengths(by) == 0)) {
-#     return(vault_fetch_personal(conn = conn))
+#     return(Vault_fetch_personal(conn = conn))
 #   }
 #   lst <- get_by("v2/vaults", by = by, conn = conn)
 
@@ -275,7 +275,7 @@
 
 
 
-# vault_fetch_personal <- function(conn = get_connection()) {
+# Vault_fetch_personal <- function(conn = get_connection()) {
 #   userid <- User(conn = conn)$id
 #   params <- list(name = paste("user", userid, sep = "-"), vault_type = "user")
 #   request_edp_api('GET', "v2/vaults", conn = conn, params = params)[[1]]
@@ -594,7 +594,7 @@
 
 
 # # as.data.frame.Object <- function(x, row.names = NULL, optional = FALSE, ...) {
-# #   convert_edp_list_data_to_df(x)
+# #   convert_edp_list_to_df(x)
 # # }
 
 
@@ -638,7 +638,7 @@ User <- function(conn = get_connection()) {
 #       cat(' of type', cl)
 
 #     cat('\n')
-#     df <- convert_edp_list_data_to_df(x)
+#     df <- convert_edp_list_to_df(x)
 #     print(df)
 #   } else {
 #     cat('\n')

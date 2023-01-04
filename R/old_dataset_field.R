@@ -1,3 +1,4 @@
+# nocov start
 #' DatasetField.all
 #'
 #' Retrieves the metadata about all dataset fields on QuartzBio EDP.
@@ -140,3 +141,4 @@ DatasetField.update <- function(id, env = get_connection(), ...) {
     path <- paste("v2/dataset_fields", paste(id), sep="/")
     .request('PATCH', path=path, query=NULL, body=params, env=env)
 }
+# nocov end

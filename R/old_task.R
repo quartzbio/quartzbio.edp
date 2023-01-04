@@ -1,3 +1,4 @@
+# nocov start
 #' Task.all
 #'
 #' Retrieves the metadata about all tasks on QuartzBio EDP accessible to the current user.
@@ -67,4 +68,4 @@ Task.follow <- function(id, env = get_connection(), interval = 2) {
         Sys.sleep(interval)
     }
     return(imp)
-}
+}# nocov end

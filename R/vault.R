@@ -47,7 +47,7 @@ Vault <- function(id = NULL, full_path = NULL, name = NULL, conn = get_connectio
   id <- id(id)
   by <- list(id = id, full_path = full_path, name = name)
   # no arg ==> fetch personal vault
-  if (all(lengths(by) == 0)) return(vault_fetch_personal(conn = conn))
+  if (all(lengths(by) == 0)) return(Vault_fetch_personal(conn = conn))
   
   lst <- fetch_by("v2/vaults", by = by, conn = conn)
 
@@ -130,7 +130,7 @@ Vault_update <- function(id,
     request_edp_api('POST', "v2/vaults", conn = conn, params = params)
 }
 
-vault_fetch_personal <- function(conn = get_connection()) {
+Vault_fetch_personal <- function(conn = get_connection()) {
   userid <- User(conn = conn)$id
   params <- list(name = paste("user", userid, sep = "-"), vault_type = "user")
   request_edp_api('GET', "v2/vaults", conn = conn, params = params)[[1]]

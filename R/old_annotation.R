@@ -1,3 +1,4 @@
+# nocov start
 #' Annotate a data table/frame with additional fields.
 #'
 #' @inheritParams old_params
@@ -31,3 +32,4 @@ Expression.evaluate <- function(expression, data_type = "string", is_list = FALS
 
   .request("POST", path = "v1/evaluate", query = NULL, body = params, env = env, raw = raw)
 }
+# nocov end

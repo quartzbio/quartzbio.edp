@@ -49,6 +49,9 @@ preprocess_api_params <- function(
   params
 }
 
+
+
+# either die, return TRUE if all good, or the early return value
 # Error Code 	Meaning 	Description
 # 400 	Bad Request 	Your request was malformed
 # 401 	Unauthorized 	Your API key or token is invalid
@@ -58,11 +61,17 @@ preprocess_api_params <- function(
 # 429 	Too Many Requests 	You have reached the rate limit
 # 500 	Internal Server Error 	We had a problem with our server
 # 503 	Service Unavailable 	We are temporarily offline for maintenance
-check_httr_response_error <- function(res) {
+check_httr_response <- function(res) {
   status <- res$status
+  # 204: no content, 301: moved permanently, 302: Moved Temporarily
+  if (status == 204 || status == 301 || status == 302) {
+    return(res)
+  }
+  if (status == 404) # Not found
+    return(NULL)
 
   if (status >= 200 && status < 400) # no error
-    return()
+    return(TRUE)
 
   .die_if(status == 429, 
     "API error: Too many requests, please retry in %i seconds", res$header$"retry-after")
@@ -77,9 +86,10 @@ check_httr_response_error <- function(res) {
 
 
 # Private API request method.
-request_edp_api <- function(method, path, query = list(), body = list(),
+request_edp_api <- function(method, path = '', query = list(), body = list(),
                             conn,
                             content_type = "application/json",
+                            uri = file.path(conn$host, path),
                             # raw = TRUE,
                             params = list(),
                             limit = NULL, 
@@ -92,10 +102,6 @@ request_edp_api <- function(method, path, query = list(), body = list(),
                             ...) 
 {
   check_connection(conn)
-  if (verbose) {
-    msg <- sprintf('%s %s...', method, path)
-    message(msg)
-  }
   JSON <- "application/json"
 
   ### params
@@ -122,7 +128,11 @@ request_edp_api <- function(method, path, query = list(), body = list(),
   if (substring(path, 1, 1) == "/") {
     path <- substring(path, 2)
   }
-  uri <- file.path(conn$host, path)
+  force(uri)
+  if (verbose) {
+    msg <- sprintf('%s %s...', method, uri)
+    message(msg)
+  }
 
   ### User Agent
   useragent <- sprintf(
@@ -154,15 +164,9 @@ request_edp_api <- function(method, path, query = list(), body = list(),
     ...
   )
 
-  status <- res$status
-  # 204: no content, 301: moved permanently, 302: Moved Temporarily
-  if (status == 204 || status == 301 || status == 302) {
-    return(res)
-  }
-  if (status == 404) # Not found
-    return(NULL)
-
-  check_httr_response_error(res)
+  # N.B: may die with an appropriate error message
+  ret <- check_httr_response(res)
+  if (!isTRUE(ret)) return(ret)
 
   content <- httr::content(res, as = as, encoding = encoding, simplifyDataFrame = simplifyDataFrame)
   # if (raw) return(content)
@@ -184,16 +188,16 @@ request_edp_api <- function(method, path, query = list(), body = list(),
 }
 
 
-
-# do a API request based on the existence of the params in the "by" named list:
-# - exactly one item must be set
-# - if the item is itself a list, all its items must be set to be considered a set
-fetch_by <- function(path, by = list(), conn = NULL, all = FALSE, unique = TRUE, ...) {
+# process a list of params, which may have been set or not.
+# apply the constraints (unique, empty) to check those params, and return the appropriate ones
+# a param may be a sublist, in which case it is deemed set iff all its items are set
+process_by_params <- function(by,  unique = !empty, empty = FALSE) {
   keys <- names(by)
-
-  # process sublists
+  .die_unless(length(keys) == length(by) && all(nzchar(keys)), '"by" must be a named list')
+  .die_unless(length(by) > 0, '"by" can not be empty')
+    # also process sublists
   .is_set <- function(x) {
-    if (is.list(x)) {
+    if (is.list(x)) { # sublist
       # a sublist is set if all its items are set, otherwise it is an error
       nb_set <- sum(lengths(x) == 1)
       if (nb_set == 0) return(FALSE)
@@ -201,37 +205,44 @@ fetch_by <- function(path, by = list(), conn = NULL, all = FALSE, unique = TRUE,
       return(TRUE)
     }
 
+    # a non-list item is set iff it is a scalar
     length(x) == 1
   }
-  
   with_values <- unlist(lapply(by, .is_set), recursive = FALSE, use.names = FALSE)
+
+  # number of params which have been set/given
   nb_set <- sum(with_values)
 
   .die_unless(!unique || nb_set == 1, 'you must give exactly one parameter among %s', keys)
+  .die_if(nb_set == 0 && !empty, 'you must give at least one parameter among %s', keys)
+  if (nb_set == 0) return(list())
 
-  params <- list(...)
-
-  if (nb_set > 0) {
-    for (key in keys[with_values]) {
-      value <- by[[key]]
-    
-      if (key == 'id') {
-        path <- file.path(path, value)
-      } else {
-        if (is.list(value)) {
-          browser()
-          params <- value 
-        } else {
-          params[[key]] <- value
-        }
-      }
-    }
+  params <- list()
+  for (key in keys[with_values]) {
+    value <- by[[key]]
+    if (is.list(value)) params <- c(params, value) else params[[key]] <- value
   }
 
-  o <- request_edp_api('GET', path, conn = conn,  params = params)
+
+  params
+}
+
+# do a API request based on the existence of the params in the "by" named list:
+#  if all==FALSE, and id is not set, returns only the first item
+fetch_by <- function(path, by, conn, all = FALSE, unique = !empty, empty = FALSE, ...) {
+  params <- if (length(by)) process_by_params(by, unique = unique, empty = empty) else list()
+
+  # if "id" is in params, ajust the path and remove it from the params
+  id <- params$id
+  if (length(id)) {
+    path <- file.path(path, id)
+    params$id <- NULL
+  }
+
+  o <- request_edp_api('GET', path, conn = conn,  params = params, ...)
 
   if (!all) {
-    if (key != 'id') {
+    if (!length(id)) {
       if (!length(o)) return(NULL)
       o <- o[[1]]
     }
@@ -273,11 +284,11 @@ postprocess_response <- function(res) {
   }
 
 
-
-  if (is.data.frame(data)) {
-    # nothing cyrrently to do
-    class(data) <- c('edpdf', 'data.frame')
-  } else {
+  ### should never be a data frame
+  # if (is.data.frame(data)) {
+  #   # nothing cyrrently to do
+  #   class(data) <- c('edpdf', 'data.frame')
+  # } else {
     data <- lapply(data, .classify)
       # decorate objects
     data <- lapply(data, decorate)
@@ -289,7 +300,7 @@ postprocess_response <- function(res) {
       if (.is_nz_string(class_obj))
         class(data) <- c(paste0(class_obj, 'List'), class(data))
     }
-  }
+  # }
 
   # store other items as attributes
   items <- setdiff(names(res), c(key, 'class', 'class_name'))
@@ -299,19 +310,21 @@ postprocess_response <- function(res) {
   data
 }
 
-convert_edp_list_data_to_df <- function(lst) {
-  df <- as.data.frame(do.call(rbind,  lst), stringsAsFactors = FALSE)
+decorate <- function(x) {
+  # look for ids
+  id_names <- grep('_id$', names(x), value = TRUE)
+  for (name in id_names) {
+    if (length(x[[name]])) {
+      class_name <- head(tail(strsplit(name, '_')[[1]], 2), 1)
+      class_name  <- paste0(toupper(substring(class_name, 1, 1)), substring(class_name, 2))
+      class_name <- paste0(class_name, 'Id')
+      class(x[[name]]) <- class_name
 
-  if (length(lst)) {
-    # N.B: use the first row to infer types
-    row1 <- lst[[1]]
-
-    for (col in seq_along(df)) {
-      # only if all scalars
-      if (all(lengths(df[[col]]) == 1)) 
-        df[[col]] <- as(df[[col]], typeof(row1[[col]]))
+      x
     }
   }
 
-  df
+  x
 }
+
+

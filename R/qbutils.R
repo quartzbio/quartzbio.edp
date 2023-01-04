@@ -1,3 +1,7 @@
+# N.B: these are function copy-pasted from qbutils, where there are already tested.
+# that's why we exclude them from the code coverage 
+# nocov start
+
 .is_nz_string  <- function(x) { length(x) == 1 && !is.na(x) && is.character(x) && nzchar(x)  }
 
 .die_if  <- function(cond, ..., .envir = parent.frame()) .die_unless(!cond, ..., .envir = .envir)
@@ -64,3 +68,4 @@
 
   do.call(sprintf, c(list(fmt), fixed_dots))
 }
+# nocov end

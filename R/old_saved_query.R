@@ -1,3 +1,4 @@
+# nocov start
 #' SavedQuery.all
 #'
 #' Retrieves the all saved queries on QuartzBio EDP.
@@ -114,3 +115,4 @@ SavedQuery.update <- function(id, env = get_connection(), ...) {
     path <- paste("v2/saved_queries", paste(id), sep="/")
     .request('PATCH', path=path, query=NULL, body=list(...), env=env)
 }
+# nocov end

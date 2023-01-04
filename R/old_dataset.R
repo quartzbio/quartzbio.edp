@@ -1,3 +1,4 @@
+# nocov start
 #' Retrieves the metadata about datasets on QuartzBio EDP.
 #'
 #' @param env (optional) Custom client environment.
@@ -587,3 +588,4 @@ Dataset.disable_global_beacon <- function(id, env = get_connection()) {
 
 
 
+# nocov end

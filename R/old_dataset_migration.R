@@ -1,3 +1,4 @@
+# nocov start
 #' DatasetMigration.all
 #'
 #' Retrieves the metadata about all dataset migrations on QuartzBio EDP.
@@ -120,3 +121,4 @@ DatasetMigration.create <- function(
 
     return(dataset_migration)
 }
+# nocov end
