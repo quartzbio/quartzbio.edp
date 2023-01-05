@@ -255,8 +255,15 @@ fetch_by <- function(path, by, conn, all = FALSE, unique = !empty, empty = FALSE
 postprocess_response <- function(res) {
   .classify <- function(x) {
     class_name <- x$class_name
-    if (.is_nz_string(class_name) && class_name != 'list')
-      class(x) <- c(class_name, class(x))
+    if (.is_nz_string(class_name) && class_name != 'list') {
+
+      # special case for objects
+      if (class_name == 'Object') {
+        class(x) <- c(capitalize(x$object_type), 'Object', class(x))
+      } else {
+        class(x) <- c(class_name, class(x))
+      }
+    }
     x
   }
 
@@ -296,7 +303,8 @@ postprocess_response <- function(res) {
       # check what kind of objects are in the list
     class(data) <- c('edplist', 'list')
     if (length(data)) {
-      class_obj <- class(data[[1]])[1]
+      # class_obj <- class(data[[1]])[1]
+      class_obj <- data[[1]]$class_name
       if (.is_nz_string(class_obj))
         class(data) <- c(paste0(class_obj, 'List'), class(data))
     }

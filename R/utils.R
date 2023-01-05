@@ -1,3 +1,11 @@
+
+bless <- function(o, blessing) {
+  class(o) <- blessing
+  o
+}
+
+capitalize <- function(s) paste0(toupper(substring(s, 1, 1)), substring(s, 2))
+
 # convert an EDP list to df
 # - the types are applied from the first row
 convert_edp_list_to_df <- function(lst) {
