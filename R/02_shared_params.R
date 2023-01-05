@@ -1,11 +1,12 @@
 #' shared roxygen params
 #' 
-#' @param client_id                 The client ID for the application.
+#' @param account_id                an Account ID.
+#' @param client_id                 the client ID for the application.
 #' @param conn                      a EDP connection object (as a named list or environment)
-#' @param data_type                 The data type to cast the expression result.
-#' @param description               The description as a string.
+#' @param data_type                 the data type to cast the expression result.
+#' @param description               the description as a string.
 #' @param env                       Custom client environment.
-#' @param expression                The EDP expression string.
+#' @param exclude_group_id          a group ID to exclude. 
 #' @param fields                    The fields to add.
 #' @param include_errors            whether to include errors in the output.
 #' @param is_list                   whether the result is expected to be a list.

@@ -87,7 +87,7 @@ check_httr_response <- function(res) {
 
 # Private API request method.
 request_edp_api <- function(method, path = '', query = list(), body = list(),
-                            conn,
+                            conn = get_connection(),
                             content_type = "application/json",
                             uri = file.path(conn$host, path),
                             # raw = TRUE,
