@@ -11,6 +11,7 @@
 #' @param exclude_group_id          a group ID to exclude. 
 #' @param fields                    The fields to add.
 #' @param filename                  an Object filename, without the parent folder (e.g. "foo.csv")
+#' @param full_path                 an Object full path, including the account, vault and path.
 #' @param glob                      a glob (full path with wildcard characters) which searches 
 #'                                  objects for matching paths (case-insensitive).
 #' @param include_errors            whether to include errors in the output.
@@ -18,15 +19,19 @@
 #' @param limit                     The maximum number of elements to fetch, as an integer. 
 #'                                  See also `page`.
 #' @param metadata                  metadata as a named list.
+#' @param mimetype                  the MIME type of the Object.
 #' @param min_distance              used in conjuction with the ancestor_id filter to only include
 #'                                   objects at a minimum distance from the ancestor.
 #' @param object_type               the type of an object, one of  "file", "folder", or "dataset".
 #' @param page                      The number of the page to fetch, as an integer. starts from 1.
 #'                                  See also `limit`.
 #' @param path                      the path of an object, with the folders (e.g. "/d1/d2/foo.csv").
+#' @param parent_object_id          the ID of the parent of the Object.
 #' @param query                     a string that matches any objects whose path contains that string.
 #' @param raw                       whether to return the raw response.
 #' @param records                   The data to annotate as a data frame.
+#' @param regex                     A regular expression, as a string, to filter the results with.
+#' @param size                      The size of the object.
 #' @param storage_class             The Storage class of the vault `('Standard', 'Standard-IA',
 #'                                   'Essential', 'Temporary', 'Performance', 'Archive')` as a string.
 #' @param tag                       a single tag as a string.

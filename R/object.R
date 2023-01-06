@@ -30,7 +30,9 @@ Objects <- function(
 }
 
 
-#' fetches an object
+#' fetches an object.
+#' 
+#' @param id    an Object ID 
 #' @inheritParams params
 #' @export
 Object <- function(id = NULL, full_path = NULL, path = NULL,  vault_id = NULL, 
@@ -65,6 +67,9 @@ Object_create <- function(
 
 
 #' updates an Object. 
+#' @inheritParams params
+#' @inheritParams Object
+#' @return the object as as list with class Object
 #' @export
 Object_update <- function(id,  
   filename = NULL ,
