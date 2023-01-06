@@ -220,6 +220,7 @@ process_by_params <- function(by,  unique = !empty, empty = FALSE) {
   params <- list()
   for (key in keys[with_values]) {
     value <- by[[key]]
+    if (endsWith(key, 'id')) value <- unclass(id(value))
     if (is.list(value)) params <- c(params, value) else params[[key]] <- value
   }
 
