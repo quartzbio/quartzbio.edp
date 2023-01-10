@@ -1,11 +1,11 @@
-# # fetches a list of folders.
-# #' @inheritParams params
-# #' @inheritDotParams Objects
-# #' @return the folders as an ObjectList
-# #' @export
-# Folders <- function(...) {
-#   Objects(object_type = 'folder', vault_id = vault_id, ...)
-# }
+#' fetches a list of folders.
+#' @inheritParams params
+#' @inheritDotParams Objects
+#' @return the folders as an ObjectList
+#' @export
+Folders <- function(...) {
+  Objects(..., object_type = 'folder')
+}
 
 #' fetches a folder by id, full_path or (vault_id, path)
 #' @param id      the folder ID.

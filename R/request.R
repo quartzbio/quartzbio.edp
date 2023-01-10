@@ -42,6 +42,9 @@ preprocess_api_params <- function(
       if (length(args)) {
         value <- match.arg(value, args)
       }
+      if (grepl('id$', key)) {
+        value <- id(value)
+      }
       params[[key]] <- value
     }
   }
