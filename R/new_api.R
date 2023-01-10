@@ -1,48 +1,5 @@
-# ### 
-# ### Folders
-# # get folders
-# #' @inheritParams params
-# #' @export
-# Folders <- function(vault_id = NULL, ...) {
-#   Objects(object_type = 'folder', vault_id = vault_id, ...)
-# }
 
-# # get a folder
-# #' @inheritParams params
-# #' @export
-# Folder <- function(id = NULL, full_path = NULL, path = NULL, vault_id = NULL, 
-#   conn = get_connection()) 
-# {
-#   if (length(id)) return(Object(id = id, conn = get_connection()))
 
-#   lst <- Objects(object_type = 'folder', vault_id = vault_id, vault_full_path = full_path, 
-#     path = path)
-
-#   if (!length(lst)) return(NULL) # no result / not found
-#   .die_if(length(lst) > 1, 'ERROR, found multiple results') # should not happen
-
-#   lst[[1]]
-# }
-
-# #' create folder
-# #' @export
-# Folder_create <- function(vault_id, path, recursive = TRUE, parent_folder_id = NULL, 
-#   conn = get_connection()) 
-# {
-#   path <- path_make_absolute(path)
-#   parent_path <- dirname(path)
-#   folders <- strsplit(path, '/', fixed = TRUE)[[1]][-1]
-#   if (!length(parent_folder_id) && parent_path != '/') {
-#     parent <- Folder(path = parent_path, vault_id = vault_id, conn = conn)
-#     .die_if(!length(parent) && !recursive, 'not allowed to create parent folder (recursive == FALSE)')
-#     if (!length(parent)) {
-#       parent <- Folder_create(vault_id, parent_path, recursive = recursive, conn = conn)
-#     }
-#     parent_folder_id <- parent$id
-#   }
-#   Object_create(vault_id = vault_id, filename = basename(path), object_type = 'folder', 
-#     parent_object_id = parent_folder_id, conn = conn)
-# }
 
 # ### 
 # ### files
@@ -139,8 +96,6 @@
 # }
 
 
-
-
 # #' @export
 # fetch_next.edpdf <- function(x) {
 #   fun <- attr(x, 'next')
@@ -163,8 +118,6 @@
 
 #   df
 # }
-
-
 
 
 # # vault_create_or_update <- function(id = NULL, name = NULL, description = NULL,
@@ -193,9 +146,6 @@
 
 # #   request_edp_api(method, path, conn = conn, params = params, ...)
 # # }
-
-
-
 
 
 
@@ -303,34 +253,6 @@
 
 
 # ###
-# ### user
-
-#' fetches  user information
-#' @inheritParams params
-#' @return the connected user information as a User object
-#' @export
-User <- function(conn = get_connection()) {
-  request_edp_api('GET', "v1/user", conn = conn)
-}
-
-# #' @export
-# print.User <- function(x, ...) {
-#   msg <- sprintf('EDP user "%s"(%s) role:%s', 
-#     x$full_name, x$username, x$role)
-#   cat(msg, '\n')
-# }
-
-# #' @export
-# fetch_vaults.User <- function(x,  conn = get_connection()) {
-#   Vaults(user_id = x$id, conn = conn)
-# }
-
-# #' @export
-# fetch_vaults.UserId <- function(x,  conn = get_connection()) {
-#   Vaults(user_id = x, conn = conn)
-# }
-
-# ###
 # ### edplist
 # #' @export
 # print.edplist <- function(x, ...) {
@@ -348,8 +270,6 @@ User <- function(conn = get_connection()) {
 #     cat('\n')
 #   }
 # }
-
-
 
 
 # ###

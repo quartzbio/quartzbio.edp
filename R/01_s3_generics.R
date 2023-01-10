@@ -6,10 +6,6 @@
 #' @rdname generics
 NULL
 
-
-
-
-
 #' deletes an object from EDP
 #' 
 #' @docType methods
