@@ -7,6 +7,7 @@ Author: David Caplan
 Maintainer: Karl Forner <karl.forner@precisionformedicine.com>
 Description: R client for QuartzBio EDP API.
 Imports:
+    curl,
     httr,
     jsonlite,
     methods,
