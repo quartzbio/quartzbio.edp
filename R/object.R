@@ -35,11 +35,16 @@ Objects <- function(
 #' @param id    an Object ID 
 #' @inheritParams params
 #' @export
-Object <- function(id = NULL, full_path = NULL, path = NULL,  vault_id = NULL, 
+Object <- function(id = NULL, full_path = NULL, path = NULL,  vault_id = NULL, object_type = NULL,
   conn = get_connection()) 
 {
+  if (length(id)) return(request_edp_api('GET', file.path('v2/objects', id(id))))
+ 
+  vault_id <- id(vault_id)
   fetch_by("v2/objects", 
-    by = list(id = id, full_path = full_path, vault_path = list(vault_id = vault_id, path = path)), 
+    by = list(full_path = full_path, object_type = object_type, 
+      vault_path = list(vault_id = vault_id, path = path)), 
+    unique = FALSE,
     conn = conn)
 }
 

@@ -202,7 +202,7 @@ process_by_params <- function(by,  unique = !empty, empty = FALSE) {
   .is_set <- function(x) {
     if (is.list(x)) { # sublist
       # a sublist is set if all its items are set, otherwise it is an error
-      nb_set <- sum(lengths(x) == 1)
+      nb_set <- sum(lengths(x) > 0)
       if (nb_set == 0) return(FALSE)
       .die_unless(nb_set == length(x), 'all items "%s" must be set', names(x))
       return(TRUE)
@@ -226,7 +226,6 @@ process_by_params <- function(by,  unique = !empty, empty = FALSE) {
     if (endsWith(key, 'id')) value <- unclass(id(value))
     if (is.list(value)) params <- c(params, value) else params[[key]] <- value
   }
-
 
   params
 }
