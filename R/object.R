@@ -64,6 +64,7 @@ Object_create <- function(
   storage_class = NULL,
   mimetype = NULL,
   size = NULL,
+  md5 = NULL,
   conn = get_connection()) 
 {
   params <- preprocess_api_params()

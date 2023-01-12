@@ -254,74 +254,96 @@ fetch_by <- function(path, by, conn, all = FALSE, unique = !empty, empty = FALSE
   o
 }
 
-# set types (class)
-postprocess_response <- function(res) {
-  .classify <- function(x) {
-    class_name <- x$class_name
-    if (.is_nz_string(class_name) && class_name != 'list') {
+# add a class to an EDP entity, using it $class_name item
+classify_entity <- function(x) {
+  if (!is.list(x)) return(x)
 
-      # special case for objects
-      if (class_name == 'Object') {
-        class(x) <- c(capitalize(x$object_type), 'Object', class(x))
-      } else {
-        class(x) <- c(class_name, class(x))
-      }
+  class_name <- x$class_name
+  if (!.is_nz_string(class_name)) return(x)
+
+  if (class_name != 'list') {
+    # special case for objects
+    if (class_name == 'Object') {
+      class(x) <- c(capitalize(x$object_type), 'Object', class(x))
+    } else {
+      class(x) <- c(class_name, class(x))
     }
-    x
   }
 
-  # is the content an object or a list of objects...
-  # a list of objects should have the $total key and have a class_name=='list'
-  if (!'total' %in% names(res) && res$class_name != 'list') {
-    # consider it is an object
-    res <- .classify(res)
-    res <- decorate(res)
-    return(res)
+  x
+}
+
+# process a response that contains only a single entity: classify it, and classify its ids
+postprocess_single_entity <- function(res) {
+  res <- classify_entity(res)
+  res <- classify_ids(res)
+
+  res
+}
+
+# return a edplist
+postprocess_entity_list <- function(res, key) {
+  lst <- res[[key]]
+
+  lst <- lapply(lst, classify_entity)
+    # decorate objects
+  lst <- lapply(lst, classify_ids)
+
+    # check what kind of objects are in the list
+  class(lst) <- c('edplist', class(lst))
+  if (length(lst)) {
+    # class_obj <- class(lst[[1]])[1]
+    class_obj <- lst[[1]]$class_name
+    if (.is_nz_string(class_obj))
+      class(lst) <- c(paste0(class_obj, 'List'), class(lst))
   }
 
-  ### results are either in $data or $results
-  key <- NULL
-  if ('data' %in% names(res) && length(res$data)) {
-    key <- 'data' 
-  } else if ('results' %in% names(res) && length(res$results)) {
-    key <- 'results' 
-  }
+  # store other items as attributes on the edp list
+  items <- setdiff(names(res), c(key, 'class', 'class_name'))
+  for (attr in items) 
+    attr(lst, attr) <- res[[attr]]
 
-  # no data
-  data <- list()
-  if (length(key)) {
-    data <- res[[key]]
-  }
+  lst
+}
 
-
-  ### should never be a data frame
-  # if (is.data.frame(data)) {
-  #   # nothing cyrrently to do
-  #   class(data) <- c('edpdf', 'data.frame')
-  # } else {
-    data <- lapply(data, .classify)
-      # decorate objects
-    data <- lapply(data, decorate)
-
-      # check what kind of objects are in the list
-    class(data) <- c('edplist', 'list')
-    if (length(data)) {
-      # class_obj <- class(data[[1]])[1]
-      class_obj <- data[[1]]$class_name
-      if (.is_nz_string(class_obj))
-        class(data) <- c(paste0(class_obj, 'List'), class(data))
-    }
-  # }
+postprocess_df <- function(res, key) {
+  df <- res[[key]]
+  # nothing currently to do
+  class(df) <- c('edpdf', class(df))
 
   # store other items as attributes
   items <- setdiff(names(res), c(key, 'class', 'class_name'))
   for (attr in items) 
-    attr(data, attr) <- res[[attr]]
+    attr(df, attr) <- res[[attr]]
 
-  data
+  df
 }
 
-decorate <- function(x) {
+# 3 main cases:
+# - result for one object/entity
+# - results for a list of objects/entitities
+# - results for some data as a dataframe
+postprocess_response <- function(res) {
+  # dispatch
+  if (!'total' %in% names(res) && res$class_name != 'list') {
+    # consider it is a single entity
+    return(postprocess_single_entity(res))
+  }
+
+  ### results are either in $data or $results
+  key <- intersect(names(res), c('data', 'results'))
+  .die_if(length(key) == 0, 'got NEITHER data NOR results in response')
+  .die_if(length(key) > 1, 'got BOTH data AND results in response')
+
+  value <- res[[key]]
+  # BEWARE: a data.frame IS a list
+  if (is.data.frame(value)) return(postprocess_df(res, key))
+  if (is.list(value)) return(postprocess_entity_list(res, key))
+
+  .die('unknow response data type: class=%s, type=%s', class(value), typeof(value)) 
+}
+
+classify_ids <- function(x) {
   # look for ids
   id_names <- grep('_id$', names(x), value = TRUE)
   for (name in id_names) {
@@ -329,7 +351,7 @@ decorate <- function(x) {
       class_name <- head(tail(strsplit(name, '_')[[1]], 2), 1)
       class_name  <- paste0(toupper(substring(class_name, 1, 1)), substring(class_name, 2))
       class_name <- paste0(class_name, 'Id')
-      class(x[[name]]) <- class_name
+      class(x[[name]]) <- c(class_name, class(x[[name]]))
 
       x
     }

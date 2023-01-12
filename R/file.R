@@ -33,16 +33,19 @@ File_upload <- function(vault_id, local_path, vault_path,
   .die_unless(file.exists(local_path), 'bad local_path "%s"', local_path)
   size <- file.size(local_path)
   force(mimetype)
-browser()
+
   parent_path <- dirname(vault_path)
   fo <- Folder_fetch_or_create(vault_id, parent_path, conn = conn)
 
   # create object for the file
+  md5 <- tools::md5sum(local_path)[[1]]
+
   obj <- Object_create(vault_id, filename, 
     object_type = 'file', 
     parent_object_id = fo$id,
     size = size, 
     mimetype = mimetype, 
+    md5 = md5,
     conn = conn)
 
   # res <- try(curl_upload(local_path, obj$upload_url))
@@ -81,18 +84,19 @@ hex2raw <- function (hex)
 
 File_upload_content <- function(upload_url, path, size, mimetype) {
   message('uploading file ', path, '...') 
-  browser()
+
   md5 <- tools::md5sum(path)[[1]]
   encoded_md5 <- jsonlite::base64_enc(hex2raw(md5))
   headers <- c('Content-MD5' = encoded_md5, 'Content-Type' = mimetype, 'Content-Length' = size)
-  httr::with_verbose(PUT(upload_url, add_headers(headers), body = upload_file(path, type = mimetype)))
-  #curl_upload(path, upload_url, 
-  # httr::RETRY('PUT', upload_url, add_headers(headers), body = upload_file(path, type = mimetype))
+
+  PUT(upload_url, add_headers(headers), body = upload_file(path, type = mimetype))
 }
 
 #' @export
 File_read <- function(id, filters = NULL, limit = NULL, offset = 0, conn = get_connection()) {
+  id <- id(id)
   params <- list(filters = filters, offset = offset)
+  browser()
   df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 
       simplifyDataFrame = TRUE, conn = conn, limit = limit)
   
