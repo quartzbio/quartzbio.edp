@@ -97,12 +97,13 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
                             params = list(),
                             limit = NULL, 
                             page = NULL,
+                            offset = NULL,
                             postprocess = TRUE,
                             as = NULL,
                             encoding = "UTF-8",
                             simplifyDataFrame = FALSE,
                             verbose = getOption('quartzbio.edp.verbose', TRUE),
-                            ...) 
+                            ...)
 {
   check_connection(conn)
   JSON <- "application/json"
@@ -110,6 +111,10 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
   ### params
   if (length(limit)) params$limit <- limit
   if (length(page)) params$page <- page
+  if (length(offset)) {
+    if (offset < 0) return(NULL)
+    params$offset <- offset
+  }
 
   if (length(params)) {
     if (method == 'GET') {
@@ -179,6 +184,14 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
   # }
   if (postprocess) {
     content <- postprocess_response(content)
+    if (inherits(content, 'edpdf')) {
+      if (!length(offset)) offset <- 0L
+      .fun <- function(limit, offset) request_edp_api(method = method, path = path, query = query, 
+        uri = uri, params = params, limit = limit, page = page, offset = offset, postprocess = postprocess, as = as,
+        encoding = encoding, simplifyDataFrame = simplifyDataFrame, verbose = verbose, ...)
+
+      content <- setup_prev_next(content, .fun, limit, offset)
+    }
   }
 
   conn <- as.environment(conn)
@@ -290,7 +303,7 @@ postprocess_entity_list <- function(res, key) {
   lst <- lapply(lst, classify_ids)
 
     # check what kind of objects are in the list
-  class(lst) <- c('edplist', class(lst))
+  lst <- edplist(lst)
   if (length(lst)) {
     # class_obj <- class(lst[[1]])[1]
     class_obj <- lst[[1]]$class_name
@@ -307,9 +320,7 @@ postprocess_entity_list <- function(res, key) {
 }
 
 postprocess_df <- function(res, key) {
-  df <- res[[key]]
-  # nothing currently to do
-  class(df) <- c('edpdf', class(df))
+  df <- edpdf(res[[key]])
 
   # store other items as attributes
   items <- setdiff(names(res), c(key, 'class', 'class_name'))
@@ -361,3 +372,12 @@ classify_ids <- function(x) {
 }
 
 
+setup_prev_next <- function(x, fun, limit, offset) {
+  if (!length(x)) return(x)
+  # fun2 <- function(limit, page) setup_prev_next(fun(limit, page), fun, limit, page)
+
+  attr(x, 'next') <- function() { fun(limit, offset + limit)}
+  attr(x, 'prev') <- function() { fun(limit, offset - limit) }
+
+  x
+}

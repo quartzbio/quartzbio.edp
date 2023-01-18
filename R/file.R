@@ -9,6 +9,7 @@ Files <- function(...) {
 }
 
 #' fetches a file by id, full_path or (vault_id, path)
+#' @param id    a File ID 
 #' @inheritParams params
 #' @return 
 #' @export
@@ -21,6 +22,7 @@ File <- function(id = NULL, full_path = NULL, path = NULL, vault_id = NULL,
 
 
 #' uploads a file
+#' @inheritParams params
 #' @export
 File_upload <- function(vault_id, local_path, vault_path, 
   mimetype = mime::guess_type(local_path),
@@ -92,17 +94,16 @@ File_upload_content <- function(upload_url, path, size, mimetype) {
   PUT(upload_url, add_headers(headers), body = upload_file(path, type = mimetype))
 }
 
+#' reads the content of a file.
+#' @param id    a File ID 
+#' @inheritParams params
 #' @export
 File_read <- function(id, filters = NULL, limit = NULL, offset = 0, conn = get_connection()) {
   id <- id(id)
-  params <- list(filters = filters, offset = offset)
-  browser()
-  df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 
-      simplifyDataFrame = TRUE, conn = conn, limit = limit)
-  
-  if (length(df) && nrow(df))
-    attr(df, 'next') <- function() { File_read(id, filters = filters, limit = limit, 
-      offset + nrow(df), conn = conn) }
+  params <- list(filters = filters)
 
+  df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 
+      simplifyDataFrame = TRUE, conn = conn, limit = limit, offset = offset)
+  
   df
 }

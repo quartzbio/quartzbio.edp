@@ -11,7 +11,6 @@ Vaults <- function(
   account_id = NULL,
   # exclude_group_id = NULL,
   limit = NULL, page = NULL, 
-
   conn = get_connection()) 
 {
   by <- preprocess_api_params()

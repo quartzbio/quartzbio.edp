@@ -1,6 +1,6 @@
 
-bless <- function(o, blessing) {
-  class(o) <- blessing
+bless <- function(o, ...) {
+  class(o) <- c(list(...), class(o))
   o
 }
 

@@ -11,6 +11,7 @@
 #' @param exclude_group_id          a group ID to exclude. 
 #' @param fields                    The fields to add.
 #' @param filename                  an Object filename, without the parent folder (e.g. "foo.csv")
+#' @param filters                   a filter expression as a JSON string.
 #' @param full_path                 an Object full path, including the account, vault and path.
 #' @param glob                      a glob (full path with wildcard characters) which searches 
 #'                                  objects for matching paths (case-insensitive).
@@ -18,6 +19,8 @@
 #' @param is_list                   whether the result is expected to be a list.
 #' @param limit                     The maximum number of elements to fetch, as an integer. 
 #'                                  See also `page`.
+#' @param local_path                the path of a local file.
+#' @param md5                       a MD5 fingerprint, as a string.
 #' @param metadata                  metadata as a named list.
 #' @param mimetype                  the MIME type of the Object.
 #' @param min_distance              used in conjuction with the ancestor_id filter to only include
@@ -40,6 +43,7 @@
 #' @param vault_id                  a Vault ID as a string (e.g. "19").
 #' @param vault_name                a Vault name as a string (e.g. "Public").
 #' @param vault_full_path           a Vault full path, as a string (e.g. "quartzbio:Public")
+#' @param vault_path                a Vault path, as a string (e.g. "/d1/d2/foo.csv")
 #' @param vault_type                the type of vault ('user', 'general') as a string
 #' @param ...                       Additional query parameters, passed to .request().
 #' 
