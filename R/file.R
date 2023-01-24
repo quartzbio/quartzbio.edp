@@ -11,7 +11,7 @@ Files <- function(...) {
 #' fetches a file by id, full_path or (vault_id, path)
 #' @param id    a File ID 
 #' @inheritParams params
-#' @return 
+#' @return the file info as an Object
 #' @export
 File <- function(id = NULL, full_path = NULL, path = NULL, vault_id = NULL, 
   conn = get_connection()) 
@@ -55,34 +55,18 @@ File_upload <- function(vault_id, local_path, vault_path,
 
   if (.is_error(res) || res$status != 200) {
     warning('deleting object file because uploading file content failed...')
-    delete(obj, conn = conn)
+    del <- try(delete(obj, conn = conn), silent = TRUE)
+    if (.is_error(del)) {
+      message('could not delete the Object ', obj$id, ' : ', .get_error_msg(del))
+    }
 
-    if (.is_error(res)) stop(res)
     err <- get_api_response_error_message(res)
     .die('uploading file content failed with code %s: %s', res$status, err)
-
   }
 
   obj
 }
-# borrowed from wkb:::.hex2raw
-hex2raw <- function (hex) 
-{
-    hex <- gsub("[^0-9a-fA-F]", "", hex)
-    if (length(hex) == 1) {
-        if (nchar(hex) < 2 || nchar(hex)%%2 != 0) {
-            stop("hex is not a valid hexadecimal representation")
-        }
-        hex <- strsplit(hex, character(0))[[1]]
-        hex <- paste(hex[c(TRUE, FALSE)], hex[c(FALSE, TRUE)], 
-            sep = "")
-    }
-    if (!all(vapply(X = hex, FUN = nchar, FUN.VALUE = integer(1)) == 
-        2)) {
-        stop("hex is not a valid hexadecimal representation")
-    }
-    as.raw(as.hexmode(hex))
-}
+
 
 File_upload_content <- function(upload_url, path, size, mimetype) {
   message('uploading file ', path, '...') 
@@ -98,7 +82,7 @@ File_upload_content <- function(upload_url, path, size, mimetype) {
 #' @param id    a File ID 
 #' @inheritParams params
 #' @export
-File_read <- function(id, filters = NULL, limit = NULL, offset = 0, conn = get_connection()) {
+File_read <- function(id, filters = NULL, limit = NULL, offset = NULL, conn = get_connection()) {
   id <- id(id)
   params <- list(filters = filters)
 

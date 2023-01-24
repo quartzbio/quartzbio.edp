@@ -26,6 +26,7 @@
 #' @param min_distance              used in conjuction with the ancestor_id filter to only include
 #'                                   objects at a minimum distance from the ancestor.
 #' @param object_type               the type of an object, one of  "file", "folder", or "dataset".
+#' @param offset                    the file offset (starts from 0).
 #' @param page                      The number of the page to fetch, as an integer. starts from 1.
 #'                                  See also `limit`.
 #' @param path                      the path of an object, with the folders (e.g. "/d1/d2/foo.csv").

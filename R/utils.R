@@ -4,6 +4,25 @@ bless <- function(o, ...) {
   o
 }
 
+# inspired by from wkb:::.hex2raw
+hex2raw <- function(hex) 
+{
+  msg <- "hex is not a valid hexadecimal representation"
+  .die_unless(length(hex) > 0, msg)
+  
+  # sanitize
+  hex <- gsub("[^0-9a-fA-F]", "", hex)
+  if (length(hex) == 1) { # single string, split it to a vector of strings
+    nb <- nchar(hex)
+    .die_unless(nb > 0 && nb %%2 == 0, msg)
+    hex <- strsplit(hex, '')[[1]]
+    hex <- paste0(hex[c(TRUE, FALSE)], hex[c(FALSE, TRUE)])
+  }
+  .die_unless(all(nchar(hex) ==  2), msg)
+
+  as.raw(as.hexmode(hex))
+}
+
 capitalize <- function(s) paste0(toupper(substring(s, 1, 1)), substring(s, 2))
 
 # convert an EDP list to df
