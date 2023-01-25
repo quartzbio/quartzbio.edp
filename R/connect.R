@@ -40,10 +40,13 @@ test_connection <- function(conn) {
 
   # N.B: not silent on purpose
   res <- try(request_edp_api('GET', "v1/user", conn = conn), silent = TRUE)
+ 
   if (.is_error(res)) {
     warning(paste('got error connecting:', .get_error_msg(res)))
     stop(.get_error(res))
   }
+
+  .die_unless(inherits(res, 'User'), 'could not retrieve user profile.')
 
   type <- if (looks_like_api_key(conn$secret)) 'Key' else 'Token'
   msg <- sprintf('Connected to %s with user "%s" using an API %s', conn$host, res$full_name, type)
