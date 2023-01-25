@@ -1,3 +1,4 @@
+# nocov start
 #' Vault.all
 #'
 #' Retrieves the metadata about all accessible vaults.
@@ -518,3 +519,4 @@ Vault.create_folder <- function(id, path, recursive=FALSE, env = get_connection(
     objects = Object.all(vault_id=id, env=env, ...)
     return(objects$data)
 }
+# nocov end

@@ -1,0 +1,93 @@
+
+
+#' fetches a list of files.
+#' @inheritParams params
+#' @inheritDotParams Objects
+#' @export
+Files <- function(...) {
+  Objects(..., object_type = 'file')
+}
+
+#' fetches a file by id, full_path or (vault_id, path)
+#' @param id    a File ID 
+#' @inheritParams params
+#' @return the file info as an Object
+#' @export
+File <- function(id = NULL, full_path = NULL, path = NULL, vault_id = NULL, 
+  conn = get_connection()) 
+{
+  Object(object_type = 'file', id = id, full_path = full_path, path = path, vault_id = vault_id, 
+    conn = conn)
+}
+
+
+#' uploads a file
+#' @inheritParams params
+#' @export
+File_upload <- function(vault_id, local_path, vault_path, 
+  mimetype = mime::guess_type(local_path),
+  conn = get_connection()) 
+{
+  vault_id <- id(vault_id)
+  vault_path <- path_make_absolute(vault_path)
+  filename <- basename(vault_path)
+  .die_unless(.is_nz_string(filename), 'bad vault_path "%s"', vault_path)
+  .die_unless(file.exists(local_path), 'bad local_path "%s"', local_path)
+  size <- file.size(local_path)
+  force(mimetype)
+
+  parent_path <- dirname(vault_path)
+  fo <- Folder_fetch_or_create(vault_id, parent_path, conn = conn)
+
+  # create object for the file
+  md5 <- tools::md5sum(local_path)[[1]]
+
+  obj <- Object_create(vault_id, filename, 
+    object_type = 'file', 
+    parent_object_id = fo$id,
+    size = size, 
+    mimetype = mimetype, 
+    md5 = md5,
+    conn = conn)
+
+  # res <- try(curl_upload(local_path, obj$upload_url))
+  res <- try(File_upload_content(obj$upload_url, local_path, size = size, mimetype = mimetype))
+
+  if (.is_error(res) || res$status != 200) {
+    warning('deleting object file because uploading file content failed...')
+    del <- try(delete(obj, conn = conn), silent = TRUE)
+    if (.is_error(del)) {
+      message('could not delete the Object ', obj$id, ' : ', .get_error_msg(del))
+    }
+
+    err <- get_api_response_error_message(res)
+    .die('uploading file content failed with code %s: %s', res$status, err)
+  }
+
+  obj
+}
+
+
+File_upload_content <- function(upload_url, path, size, mimetype) {
+  message('uploading file ', path, '...') 
+
+  md5 <- tools::md5sum(path)[[1]]
+  encoded_md5 <- jsonlite::base64_enc(hex2raw(md5))
+  headers <- c('Content-MD5' = encoded_md5, 'Content-Type' = mimetype, 'Content-Length' = size)
+
+  PUT(upload_url, add_headers(headers), body = upload_file(path, type = mimetype))
+}
+
+#' reads the content of a file.
+#' @param id    a File ID 
+#' @inheritParams params
+#' @export
+File_read <- function(id, filters = NULL, limit = NULL, offset = NULL, conn = get_connection()) {
+  id <- id(id)
+  params <- list(filters = filters)
+
+  df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 
+      simplifyDataFrame = TRUE, conn = conn, limit = limit, offset = offset)
+  
+  df
+}

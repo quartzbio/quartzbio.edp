@@ -1,3 +1,4 @@
+# nocov start
 #' DatasetExport.all
 #'
 #' Retrieves the metadata about all dataset exports on QuartzBio EDP.
@@ -139,3 +140,4 @@ DatasetExport.get_download_url <- function(id, env = get_connection()) {
 
     return(response$url)
 }
+# nocov end

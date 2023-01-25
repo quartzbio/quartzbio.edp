@@ -1,3 +1,4 @@
+# nocov start
 #' DatasetTemplate.all
 #'
 #' Retrieves the metadata about all dataset templates on QuartzBio EDP.
@@ -114,3 +115,4 @@ DatasetTemplate.update <- function(id, env = get_connection(), ...) {
     path <- paste("v2/dataset_templates", paste(id), sep="/")
     .request('PATCH', path=path, query=NULL, body=list(...), env=env)
 }
+# nocov end

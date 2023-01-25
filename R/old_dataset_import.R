@@ -1,3 +1,4 @@
+# nocov start
 #' DatasetImport.all
 #'
 #' Retrieves the metadata about all dataset imports on QuartzBio EDP.
@@ -104,3 +105,4 @@ DatasetImport.create <- function(
 
     return(dataset_import)
 }
+# nocov end

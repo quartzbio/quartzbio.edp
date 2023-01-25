@@ -1,3 +1,4 @@
+# nocov start
 # Internal functions and environments used internally
 # by the QuartzBio EDP package (not exported).
 
@@ -202,3 +203,4 @@ login <- function(
 
   res
 }
+# nocov end

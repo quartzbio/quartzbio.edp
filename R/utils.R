@@ -1,4 +1,77 @@
 
+bless <- function(o, ...) {
+  class(o) <- c(list(...), class(o))
+  o
+}
+
+# inspired by from wkb:::.hex2raw
+hex2raw <- function(hex) 
+{
+  msg <- "hex is not a valid hexadecimal representation"
+  .die_unless(length(hex) > 0, msg)
+  
+  # sanitize
+  hex <- gsub("[^0-9a-fA-F]", "", hex)
+  if (length(hex) == 1) { # single string, split it to a vector of strings
+    nb <- nchar(hex)
+    .die_unless(nb > 0 && nb %%2 == 0, msg)
+    hex <- strsplit(hex, '')[[1]]
+    hex <- paste0(hex[c(TRUE, FALSE)], hex[c(FALSE, TRUE)])
+  }
+  .die_unless(all(nchar(hex) ==  2), msg)
+
+  as.raw(as.hexmode(hex))
+}
+
+capitalize <- function(s) paste0(toupper(substring(s, 1, 1)), substring(s, 2))
+
+# convert an EDP list to df
+# - the types are applied from the first row
+convert_edp_list_to_df <- function(lst) {
+  if (!length(lst)) return(NULL)
+
+  df <- as.data.frame(do.call(rbind,  lst), stringsAsFactors = FALSE)
+
+  # N.B: use the first row to infer types
+  row1 <- lst[[1]]
+
+  for (col in seq_along(df)) {
+    # only if all scalars
+    if (all(lengths(df[[col]]) == 1)) 
+      df[[col]] <- as(df[[col]], typeof(row1[[col]]))
+  }
+
+  df
+}
+
+retrieve_connection <- function(x) {
+  conn <- attr(x, 'connection')
+  if (!length(conn)) 
+    conn <- get_connection()
+  
+  conn
+}
+
+# intended for permissions
+summary_string <- function(lst) {
+  ns <- names(lst)
+  .fetch_value <- function(name) {
+    x <- substr(name, 1, 1)
+    if (isTRUE(lst[[name]])) toupper(x) else tolower(x)
+  }
+  res <- lapply(ns, .fetch_value)
+
+  paste0(res, collapse = '')
+}
+
+
+
+# if x is a list with a scalar x$id item, it is returned
+# otherwise x is returned
+id <- function(x) {
+  if (is.list(x) && length(x$id) == 1) x$id else x
+}
+
 path_make_absolute <- function(path) {
   if (!.is_nz_string(path)) return('/')
   if (substring(path, 1, 1) != '/') 
@@ -6,85 +79,3 @@ path_make_absolute <- function(path) {
   path
 }
 
-
-formatEDPResponse <- function(res, raw = FALSE) {
-    url = res$url
-    body = httr::content(res, as="text", encoding="UTF-8")
-    if (raw) {
-        return(body)
-    } else {
-        # Only simplify uniform JSON dictionary responses
-        # as data frames. These responses include
-        # resource GET requests (list and detail)
-        # as well as dataset queries.
-        res = jsonlite::fromJSON(body,
-                                 simplifyVector = FALSE,
-                                 simplifyDataFrame = TRUE,
-                                 simplifyMatrix = FALSE)
-        res$'_url' = url
-        return(res)
-    }
-
-}
-
-formatEDPQueryResponse <- function (res, raw = FALSE, col.names = NULL) {
-    # res will be the output of formatEDPResponse
-    if (!raw & is.data.frame(res$results) & !is.null(col.names)) {
-        res$results <- as.data.frame(res$results, col.names = col.names)
-    }
-    else {
-        if (!raw & is.data.frame(res$results)) {
-            # Flatten the data frame
-            res$results <- jsonlite::flatten(res$results)
-        } else {
-            res$results <- as.data.frame(res$results)
-        }
-    }
-    return(res)
-}
-
-
-# prepareArgs <- function (args) {
-#     if (!is.null(args) && length(args) > 0) {
-#         args = args[!sapply(args, is.null)]
-#         rapply(args, function (x) {
-#                    ifelse(is.logical(x), x * 1, x)
-#                                  }, how="replace")
-#     } else {
-#         NULL
-#     }
-# }
-
-formatQueryColumns <- function (id, env, res, use_field_titles) {
-    # Retrieve the list of ordered fields
-    ds_fields <- do.call(Dataset.fields, list(id, limit=1000, env=env))$data
-
-    # Create a dataframe that maps column names with titles
-    if ("_id" %in% names(res)) {
-        # Append column "_id" to the list of names and titles because it's always present in result query, but not in names and titles
-        col.name.title.map <- data.frame(
-            names = c(ds_fields$name, "_id"),
-            title = c(ds_fields$title, "_id"),
-            stringsAsFactors = FALSE
-        )
-    }
-    else {
-        col.name.title.map <- data.frame(
-            names = ds_fields$name,
-            title = ds_fields$title,
-            stringsAsFactors = FALSE
-        )
-    }
-    # Remove all names and titles that are not in the results query
-    col.name.title.map <- col.name.title.map[col.name.title.map$names %in% colnames(res), ]
-
-    # Order columns in the dataframe based on list of dataset fields
-    res <- res[col.name.title.map$names]
-
-    if (use_field_titles) {
-        # Change column names to titles based on the col.name.title.map dataframe
-        colnames(res)[match(col.name.title.map[,1], colnames(res))] <- col.name.title.map[,2][match(col.name.title.map[,1], colnames(res))]
-        colnames(res) <- make.unique(colnames(res), sep="_")
-    }
-    return (res)
-}
