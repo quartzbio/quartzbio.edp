@@ -1,3 +1,5 @@
+  JSON <- "application/json"
+
 format_auth_header <- function(secret) {
   token_type <- if (looks_like_api_key(secret)) 'Token' else 'Bearer'
   c(Authorization = paste(token_type, secret, sep = " "))
@@ -73,8 +75,12 @@ check_httr_response <- function(res) {
   if (status == 404) # Not found
     return(NULL)
 
-  if (status >= 200 && status < 400) # no error
+  if (status >= 200 && status < 400)  { # no error
+    # check content-type
+    content_type <- res$headers$`Content-Type`
+    if (!.is_nz_string(content_type) || content_type != JSON) return(res)
     return(TRUE)
+  }
 
   .die_if(status == 429, 
     "API error: Too many requests, please retry in %i seconds", res$header$"retry-after")
@@ -106,7 +112,6 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
                             ...)
 {
   check_connection(conn)
-  JSON <- "application/json"
 
   ### params
   if (length(limit)) params$limit <- limit
@@ -177,11 +182,7 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
   if (!isTRUE(ret)) return(ret)
 
   content <- httr::content(res, as = as, encoding = encoding, simplifyDataFrame = simplifyDataFrame)
-  # if (raw) return(content)
 
-  # if (!.is_nz_string(content$class_name)) {
-  #   class(content) <- content$class_name
-  # }
   if (postprocess) {
     content <- postprocess_response(content)
     if (inherits(content, 'edpdf')) {
