@@ -6,8 +6,8 @@ Date: 2022-12-07
 Author: David Caplan
 Maintainer: Karl Forner <karl.forner@precisionformedicine.com>
 Description: R client for QuartzBio EDP API.
-URL: https://github.com/solvebio/solvebio-r
 Imports:
+    curl,
     httr,
     jsonlite,
     methods,
