@@ -69,34 +69,7 @@
 #   lst
 # }
 
-# #' @inherit Dataset.retrieve
-# #' @inheritParams params
-# #' @export
-# Dataset <- function(id, conn = get_connection()) {
-#   path <- paste("v2/datasets", paste(id), sep="/")
-#   request_edp_api('GET', path, conn = conn)
-# }
 
-# #' @export
-# Dataset_create <- function(
-#   vault_id,
-#   name,
-#   fields = NULL,
-#   vault_parent_object_id = NULL,
-#   description = NULL,
-#   metadata = NULL,
-#   tags = NULL,
-#   storage_class = NULL,
-#   capacity = NULL,
-#   conn = get_connection()) 
-# {
-#   if (!length(vault_parent_object_id)) {
-#     vault_parent_object_id <- Folder_get_or_create_for_object_path(vault_id, name, conn)$id
-#   }
-#   name <- basename(name)
-#   params <- preprocess_api_params()
-#   request_edp_api('POST', 'v2/datasets', conn = conn, params = params)
-# }
 
 # #' @export
 # print.Dataset <- function(x, ...) {

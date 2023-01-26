@@ -78,16 +78,54 @@ File_upload_content <- function(upload_url, path, size, mimetype) {
   PUT(upload_url, add_headers(headers), body = upload_file(path, type = mimetype))
 }
 
-#' reads the content of a file.
+#' queries the content of a file.
+#' 
+#' The file has to be parsable by EDP. Otherwise you can use [File_download()] 
+#'
 #' @param id    a File ID 
 #' @inheritParams params
 #' @export
-File_read <- function(id, filters = NULL, limit = NULL, offset = NULL, conn = get_connection()) {
+File_query <- function(id, filters = NULL, limit = NULL, offset = NULL, all = FALSE, 
+    conn = get_connection()) 
+{
   id <- id(id)
   params <- list(filters = filters)
 
   df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 
       simplifyDataFrame = TRUE, conn = conn, limit = limit, offset = offset)
+  if (all)  df <- fetch_all(df)
   
   df
+}
+
+#' fetches the download URL of a file. 
+#' 
+#' This URL can then be used to download the file using any HTTP client, such as 
+#' utils::download.file() 
+#' @inheritParams params
+#' @return the download URL as a string
+#' @export
+File_get_download_url <- function(file_id, conn = get_connection()) {
+  request_edp_api('GET', file.path("v2/objects", id(file_id), 'download'), postprocess = FALSE, 
+    conn = conn)$download_url
+}
+
+#' utility function that downloads an EDP File into a local file or in memory
+#' 
+#' @inheritParams params
+#' @param ...  passed to utils::download.file()
+#' @return either the file content as a character vector, or NULL if `local_path` is set
+#' @export
+File_download <- function(file_id, local_path = NULL, conn = get_connection(), ...) {
+  url <- File_get_download_url(file_id, conn = conn)
+  if (.is_nz_string(local_path)) {
+    # download file
+    status <- utils::download.file(url, local_path, ...)
+    .die_unless(status == 0, 'got error downloading URL "%s"', url)
+    return(invisible())
+  }
+  # read file into memory
+  fh <- url(url)
+  on.exit(close(fh), add = TRUE)
+  readLines(fh)
 }

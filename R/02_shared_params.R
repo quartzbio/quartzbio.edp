@@ -1,6 +1,7 @@
 #' shared roxygen params
 #' 
 #' @param account_id                an Account ID as a string.
+#' @param all                       whether to fetch all data, by iterating if needed.
 #' @param ancestor_id               an object ID of an ancestor, for filtering. 
 #' @param client_id                 the client ID for the application.
 #' @param conn                      a EDP connection object (as a named list or environment)
@@ -10,6 +11,7 @@
 #' @param env                       Custom client environment.
 #' @param exclude_group_id          a group ID to exclude. 
 #' @param fields                    The fields to add.
+#' @param file_id                   a file Object ID.
 #' @param filename                  an Object filename, without the parent folder (e.g. "foo.csv")
 #' @param filters                   a filter expression as a JSON string.
 #' @param full_path                 an Object full path, including the account, vault and path.

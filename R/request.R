@@ -337,7 +337,10 @@ postprocess_df <- function(res, key) {
 # - results for some data as a dataframe
 postprocess_response <- function(res) {
   # dispatch
-  if (!'total' %in% names(res) && res$class_name != 'list') {
+  class_name <- res$class_name
+  if (!.is_nz_string(class_name)) class_name <- ''
+
+  if (!'total' %in% names(res) && class_name != 'list') {
     # consider it is a single entity
     return(postprocess_single_entity(res))
   }

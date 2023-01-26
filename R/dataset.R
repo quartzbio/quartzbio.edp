@@ -29,3 +29,59 @@ Datasets <- function(
 
   lst
 }
+
+#' creates a new Dataset.
+#' @export
+Dataset_create <- function(
+  vault_id,
+  name,
+  fields = NULL,
+  parent_object_id = NULL,
+  description = NULL,
+  metadata = NULL,
+  tags = NULL,
+  storage_class = NULL,
+  capacity = NULL,
+  conn = get_connection()) 
+{
+  obj <- Object_create(vault_id, filename, 
+    object_type = 'dataset', 
+    parent_object_id = fo$id,
+    size = size, 
+    conn = conn)
+}
+
+
+
+#' @export
+print.Dataset <- function(x, ...) {
+  count <- x$documents_count
+  if (!length(count)) count <- 'NA'
+  msg <- .safe_sprintf('Dataset "%s", %s documents, updated at:%s', 
+    x$vault_object_path, count, x$updated_at)
+  cat(msg, '\n')
+}
+
+#' @export
+print.DatasetList <- function(x, ...) {
+  cat('EDP List of' , length(x), 'Datasets\n')
+
+  df <- as.data.frame(x)
+  df$user_name <- sapply(df$user, getElement, 'full_name', USE.NAMES = FALSE)
+
+  cols <- c('path',  'documents_count', 'vault_name',  'user_name', 'last_modified')
+  cols <- intersect(cols, names(df))
+  df <- df[cols]
+  
+  print(df)
+}
+
+#' @export
+fetch.DatasetId <- function(x,  conn = get_connection()) {
+  Dataset(x, conn = conn)
+}
+
+#' @export
+fetch.UserId <- function(x,  conn = get_connection()) {
+  User(x, conn = conn)
+}
