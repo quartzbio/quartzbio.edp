@@ -29,29 +29,18 @@ File_upload <- function(vault_id, local_path, vault_path,
   conn = get_connection()) 
 {
   vault_id <- id(vault_id)
-  vault_path <- path_make_absolute(vault_path)
-  filename <- basename(vault_path)
-  .die_unless(.is_nz_string(filename), 'bad vault_path "%s"', vault_path)
   .die_unless(file.exists(local_path), 'bad local_path "%s"', local_path)
   size <- file.size(local_path)
   force(mimetype)
-
-  parent_path <- dirname(vault_path)
-  fo <- Folder_fetch_or_create(vault_id, parent_path, conn = conn)
-
-  # create object for the file
   md5 <- tools::md5sum(local_path)[[1]]
 
-  obj <- Object_create(vault_id, filename, 
-    object_type = 'file', 
-    parent_object_id = fo$id,
+  obj <- File_create(vault_id, vault_path, 
     size = size, 
     mimetype = mimetype, 
     md5 = md5,
     conn = conn)
 
-  # res <- try(curl_upload(local_path, obj$upload_url))
-  res <- try(File_upload_content(obj$upload_url, local_path, size = size, mimetype = mimetype))
+  res <- try(File_upload_content(obj$upload_url, local_path, size = size, mimetype = mimetype, md5 = md5))
 
   if (.is_error(res) || res$status != 200) {
     warning('deleting object file because uploading file content failed...')
@@ -67,11 +56,26 @@ File_upload <- function(vault_id, local_path, vault_path,
   obj
 }
 
+File_create <- function(vault_id, vault_path, object_type = 'file', conn = get_connection(), ...) {
+  vault_id <- id(vault_id)
+  vault_path <- path_make_absolute(vault_path)
+  filename <- basename(vault_path)
+  .die_unless(.is_nz_string(filename), 'bad vault_path "%s"', vault_path)
 
-File_upload_content <- function(upload_url, path, size, mimetype) {
+  parent_path <- dirname(vault_path)
+  fo <- Folder_fetch_or_create(vault_id, parent_path, conn = conn)
+
+  Object_create(vault_id, filename, 
+    object_type = object_type, 
+    parent_object_id = fo$id,
+    conn = conn, 
+    ...)
+}
+
+
+File_upload_content <- function(upload_url, path, size, mimetype, md5 = tools::md5sum(path)[[1]]) {
   message('uploading file ', path, '...') 
 
-  md5 <- tools::md5sum(path)[[1]]
   encoded_md5 <- jsonlite::base64_enc(hex2raw(md5))
   headers <- c('Content-MD5' = encoded_md5, 'Content-Type' = mimetype, 'Content-Length' = size)
 
