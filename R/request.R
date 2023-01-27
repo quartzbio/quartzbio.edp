@@ -25,7 +25,7 @@ get_api_response_error_message <- function(res, default_message = '') {
 preprocess_api_params <- function(
   exclude = c('conn', 'limit', 'page'), 
   match_args = list(
-    capacity = c('small', 'medium', 'large'),
+    capacity = c('small', 'medium', 'large', 'xlarge'),
     object_type = c('file', 'folder', 'dataset'),
     vault_type = c('user', 'general'),
     storage_class =  c('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive')

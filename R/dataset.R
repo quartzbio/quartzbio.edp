@@ -34,9 +34,7 @@ Datasets <- function(
 #' @export
 Dataset_create <- function(
   vault_id,
-  name,
-  fields = NULL,
-  parent_object_id = NULL,
+  vault_path,
   description = NULL,
   metadata = NULL,
   tags = NULL,
@@ -44,23 +42,16 @@ Dataset_create <- function(
   capacity = NULL,
   conn = get_connection()) 
 {
-  obj <- Object_create(vault_id, filename, 
+  File_create(vault_id, vault_path, 
     object_type = 'dataset', 
-    parent_object_id = fo$id,
-    size = size, 
+    description = description,
+    metadata = metadata,
+    tags = tags,
+    storage_class = storage_class,
+    capacity = capacity,
     conn = conn)
 }
 
-
-
-#' @export
-print.Dataset <- function(x, ...) {
-  count <- x$documents_count
-  if (!length(count)) count <- 'NA'
-  msg <- .safe_sprintf('Dataset "%s", %s documents, updated at:%s', 
-    x$vault_object_path, count, x$updated_at)
-  cat(msg, '\n')
-}
 
 #' @export
 print.DatasetList <- function(x, ...) {

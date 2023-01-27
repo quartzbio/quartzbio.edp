@@ -152,7 +152,7 @@ connect <- function(
 autoconnect <- function(check = FALSE) {
   # # try env vars first
   # secret <- get_env('EDP_API_SECRET', get_env('SOLVEBIO_API_KEY', get_env('SOLVEBIO_ACCESS_TOKEN')))
-  # host <- get_env('EDP_API_HOST', get_env('SOLVEBIO_API_HOST', "https://sandbox.api.edp.aws.quartz.bio"))
+  # host <- get_env('EDP_API_HOST', get_env('SOLVEBIO_API_HOST', "https://vsim-dev.api.edp.aws.quartz.bio"))
   conn <- try(connect(check = check), silent = TRUE)
   if (!.is_error(conn)) return(conn)
  

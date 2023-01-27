@@ -62,6 +62,7 @@ Object_create <- function(
   metadata = NULL,
   tags = NULL,
   storage_class = NULL,
+  capacity = NULL,
   mimetype = NULL,
   size = NULL,
   md5 = NULL,
