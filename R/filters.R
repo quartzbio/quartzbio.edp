@@ -1,4 +1,4 @@
-LOGICAL_OPERATORS <- c('and, or')
+LOGICAL_OPERATORS <- c('and', 'or')
 BINARY_OPERATORS <- list(
     `=` = NULL,
     `exact` = 'exact',
@@ -7,15 +7,19 @@ BINARY_OPERATORS <- list(
     `iexact` = 'iexact',
     `range` = 'range',
     `gt` = 'gt',
+    `>` = 'gt',
     `lt` = 'lt',
+    `<` = 'lt',
     `gte` = 'gte',
+    `>=` = 'gte', 
     `lte` = 'lte',
+    `<=` = 'lte', 
     `contains` = 'contains',
     `regexp` = 'regexp',
     `and` = 'and',
     `or` = 'or'
 )
-
+UNARY_OPERATORS <- list(not = '!')
 
 #' parses the maths-like syntax of filters.
 #' 
@@ -31,14 +35,25 @@ filters <- function(x) {
     r_operator <- paste0(' %', op, '% ')
     fil <- gsub(pattern, r_operator, fil, ignore.case = TRUE)
 
-    # rewrite RHS list to c()
-    pattern <- paste0(r_operator, '\\(')
-    replace <- paste0(r_operator, 'c(')
-    fil <- gsub(pattern, replace, fil, ignore.case = TRUE)
+    if (!op %in% LOGICAL_OPERATORS) {
+      # rewrite RHS list to c()
+      pattern <- paste0(r_operator, '\\(')
+      replace <- paste0(r_operator, 'c(')
+      fil <- gsub(pattern, replace, fil, ignore.case = TRUE)
+    }
 
     # assign r_operator in env
     assign(r_operator,  BINARY_OPERATORS[[op]], envir = env)
   }
+
+  for (op in names(UNARY_OPERATORS)) {
+    pattern <- paste0(op, '\\s+')
+    r_operator <- UNARY_OPERATORS[[op]]
+    fil <- gsub(pattern, r_operator, fil, ignore.case = TRUE)
+    # assign r_operator in env
+    # assign(r_operator,  op, envir = env)
+  }
+
  
   expr <- try(parse(text = fil), silent = TRUE)
 
@@ -51,12 +66,25 @@ filters <- function(x) {
 }
 
 lst2filter <- function(lst) {
-  if (!length(lst)) return(lst) 
-  if (length(lst) == 2 && lst[[1]] == '(') return(lst2filter(lst[[2]]))
+  if (!length(lst)) return(lst)
+
+  if (length(lst) == 2) {
+    op <- as.character(lst[[1]])
+
+    if (op == '(') {
+      # ( xxxx )
+      return(lst2filter(lst[[2]]))
+    }
+    
+    if (op == '!') {
+      return(list(not = lst2filter(lst[[2]])))
+    }
+  }
+
   op <- as.character(lst[[1]])
   op <- tolower(gsub('%', '', op))
   
-  if (op %in% c('or', 'and')) {
+  if (op %in% LOGICAL_OPERATORS) {
     conds <- lapply(lst[-1], lst2filter)
     res <- list(conds)
     names(res) <- op
