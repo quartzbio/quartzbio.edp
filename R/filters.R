@@ -174,3 +174,14 @@ code_to_list_rec <- function(call) {
 
   lst
 }
+
+pairlist_to_call <- function(pl) {
+  # add a dummy call
+  lst <- list(as.symbol('pairlist'))
+  for (i in seq_along(pl)) {
+   item <- pl[[i]]
+   if (!missing(item)) lst <- c(lst, item)
+  }
+
+  as.call(lst)
+}
