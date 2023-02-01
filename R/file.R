@@ -116,6 +116,9 @@ File_get_download_url <- function(file_id, conn = get_connection()) {
 
 #' utility function that downloads an EDP File into a local file or in memory
 #' 
+#' N.B: using the function without the `local_path` param only works reliably for text files.
+#' Otherwise please download to file.
+#
 #' @inheritParams params
 #' @param ...  passed to utils::download.file()
 #' @return either the file content as a character vector, or NULL if `local_path` is set
@@ -123,13 +126,11 @@ File_get_download_url <- function(file_id, conn = get_connection()) {
 File_download <- function(file_id, local_path = NULL, conn = get_connection(), ...) {
   url <- File_get_download_url(file_id, conn = conn)
   if (.is_nz_string(local_path)) {
-    # download file
-    status <- utils::download.file(url, local_path, ...)
-    .die_unless(status == 0, 'got error downloading URL "%s"', url)
+    curl::curl_download(url, local_path)
     return(invisible())
   }
-  # read file into memory
-  fh <- url(url)
-  on.exit(close(fh), add = TRUE)
-  readLines(fh)
+  
+  con <- curl::curl(url)
+  on.exit(close(con), add = TRUE)
+  readLines(con)
 }
