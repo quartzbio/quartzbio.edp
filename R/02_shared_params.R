@@ -4,8 +4,21 @@
 #' @param all                       whether to fetch all data, by iterating if needed.
 #' @param ancestor_id               an object ID of an ancestor, for filtering. 
 #' @param client_id                 the client ID for the application.
+#' @param commit_mode               There are four commit modes that can be selected depending on the scenario:
+#'                                   append (default), overwrite, upsert, and delete. 
 #' @param conn                      a EDP connection object (as a named list or environment)
-#' @param data_type                 the data type to cast the expression result.
+#' @param data_type                 the data type. one of: 
+#' * auto (the default)
+#' * boolean - Either True, False, or null
+#' * date - A string in ISO 8601 format, for example: `2017-03-29T14:52:01`
+#' * double - A double-precision 64-bit IEEE 754 floating point.
+#' * float - single-precision 32-bit IEEE 754 floating point.
+#' * integer 	A signed 32-bit integer with a minimum value of -231 and a maximum value of 231-1.
+#' * long 	A signed 64-bit integer with a minimum value of -263 and a maximum value of 263-1.
+#' * object 	A key/value, JSON-like object, similar to a Python dictionary.
+#' * string 	A valid UTF-8 string up to 32,766 characters in length.
+#' * text 	A valid UTF-8 string of any length, indexed for full-text search.
+#' * blob 	A valid UTF-8 string of any length, not indexed for search.
 #' @param depth                     the depth of the object in the Vault as an integer (0 means root)
 #' @param description               the description as a string.
 #' @param env                       Custom client environment.

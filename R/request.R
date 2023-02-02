@@ -26,6 +26,9 @@ preprocess_api_params <- function(
   exclude = c('conn', 'limit', 'page'), 
   match_args = list(
     capacity = c('small', 'medium', 'large', 'xlarge'),
+    commit_mode = c('append', 'overwrite', 'upsert', 'delete'),
+    data_type = c('auto', 'boolean', 'date', 'double', 'float', 'integer', 'long', 'object', 
+      'string', 'text', 'blob'),
     object_type = c('file', 'folder', 'dataset'),
     vault_type = c('user', 'general'),
     storage_class =  c('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive')

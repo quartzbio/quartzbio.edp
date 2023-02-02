@@ -53,6 +53,73 @@ Dataset_create <- function(
 }
 
 
+# problems with df import
+# factor --> character
+# numeric that only contains integers --> int
+# TODO: try NA, NULL, ""
+
+#' imports data into an existing dataset
+#' @export
+Dataset_import <- function(
+  dataset_id,
+  commit_mode = NULL,
+  records = NULL,
+  df = NULL,
+  conn = get_connection()) 
+{
+  dataset_id <- id(dataset_id)
+
+  if (length(df)) {
+    records <- split(df, seq(nrow(df)))
+    records <- lapply(records, as.list)
+    names(records) <- NULL
+
+    rm(df)
+  }
+
+  params  <- preprocess_api_params()
+  request_edp_api('POST', "v2/dataset_imports", conn = conn, params = params)
+}
+
+#' imports data into an existing dataset
+#' @export
+Dataset_query <- function(
+  dataset_id,
+  filters = NULL,
+  facets = NULL,
+  fields = NULL,
+  exclude_fields = NULL,
+  ordering = NULL,
+  query = NULL,
+  limit = NULL, offset = NULL, all = FALSE,
+  meta = TRUE,
+  conn = get_connection()) 
+{
+  dataset_id <- id(dataset_id)
+  params  <- preprocess_api_params()
+  all <- params$all
+  params$all <- NULL
+
+  df <- request_edp_api('POST', file.path("v2/datasets", dataset_id, 'data'), params = params, 
+      simplifyDataFrame = TRUE, conn = conn, limit = limit, offset = offset)
+  if (all) df <- fetch_all(df)
+
+  if (meta) {
+    fields <- DatasetFields(dataset_id, conn = conn, all = TRUE)
+    df <- format_df_with_fields(df, fields)
+  }
+
+  df
+}
+
+
+
+
+
+
+### 
+### DatasetList methods 
+
 #' @export
 print.DatasetList <- function(x, ...) {
   cat('EDP List of' , length(x), 'Datasets\n')
