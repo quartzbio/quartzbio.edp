@@ -79,3 +79,9 @@ path_make_absolute <- function(path) {
   path
 }
 
+# fast unlist
+unlist1 <- function(x) unlist(x, recursive = FALSE, use.names = FALSE)
+
+elts <- function(objects, name_or_idx) {
+  lapply(objects, getElement, name_or_idx)
+}

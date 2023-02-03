@@ -65,6 +65,7 @@ Dataset_import <- function(
   commit_mode = NULL,
   records = NULL,
   df = NULL,
+  target_fields = infer_fields_from_df(df),
   conn = get_connection()) 
 {
   dataset_id <- id(dataset_id)
@@ -74,6 +75,8 @@ Dataset_import <- function(
     records <- lapply(records, as.list)
     names(records) <- NULL
 
+    # evaluate fields before removing df
+    force(target_fields)
     rm(df)
   }
 
@@ -88,7 +91,7 @@ Dataset_query <- function(
   filters = NULL,
   facets = NULL,
   fields = NULL,
-  exclude_fields = NULL,
+  exclude_fields = c('_id', '_commit'),
   ordering = NULL,
   query = NULL,
   limit = NULL, offset = NULL, all = FALSE,
