@@ -93,6 +93,10 @@ File_query <- function(id, filters = NULL, limit = NULL, offset = NULL, all = FA
     conn = get_connection()) 
 {
   id <- id(id)
+  # filters: may be a JSON string or a R data structure
+  if (.is_nz_string(filters))
+    filters <- jsonlite::fromJSON(filters, simplifyVector = FALSE)
+
   params <- list(filters = filters)
 
   df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 

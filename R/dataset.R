@@ -99,9 +99,15 @@ Dataset_query <- function(
   conn = get_connection()) 
 {
   dataset_id <- id(dataset_id)
+  # filters: may be a JSON string or a R data structure
+  if (.is_nz_string(filters))
+    filters <- jsonlite::fromJSON(filters, simplifyVector = FALSE)
+
   params  <- preprocess_api_params()
   all <- params$all
   params$all <- NULL
+
+
 
   df <- request_edp_api('POST', file.path("v2/datasets", dataset_id, 'data'), params = params, 
       simplifyDataFrame = TRUE, conn = conn, limit = limit, offset = offset)
