@@ -64,7 +64,7 @@ DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, co
      conn = conn, limit = limit, page = page)
   if (all) lst <- fetch_all(lst)
 
-  names(lst) <- elts(fields, 'name')
+  names(lst) <- elts(lst, 'name')
 
   lst
 }
