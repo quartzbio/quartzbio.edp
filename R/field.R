@@ -1,7 +1,3 @@
-# TODO:
-# - how to change a field meta data
-# - how to fetch a field ID by name
-
 
 #' creates a new Dataset Field.
 #' @inheritParams params
@@ -49,7 +45,6 @@ DatasetField_update <- function(
 
   request_edp_api('PATCH', file.path('v2/dataset_fields', field_id), conn = conn, params = params)
 }
-
 
 #' fetches the fields of a dataset.
 #' @export

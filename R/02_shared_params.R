@@ -21,6 +21,13 @@
 #' * blob 	A valid UTF-8 string of any length, not indexed for search.
 #' @param depth                     the depth of the object in the Vault as an integer (0 means root)
 #' @param description               the description as a string.
+#' @param entity_type               A valid entity type:
+#' * dataset - a Dataset ID (510110013133189334)
+#' * gene - A gene (EGFR)
+#' * genomic_region - A genomic region (GRCH38-7-55019017-55211628)
+#' * literature - A PubMed ID (19915526)
+#' * sample - A sample identifier (TCGA-02-0001)
+#' * variant - A genomic variant (GRCH38-7-55181378-55181378-T)
 #' @param env                       Custom client environment.
 #' @param exclude_group_id          a group ID to exclude. 
 #' @param fields                    The fields to add.
