@@ -118,23 +118,32 @@ File_get_download_url <- function(file_id, conn = get_connection()) {
     conn = conn)$download_url
 }
 
-#' utility function that downloads an EDP File into a local file or in memory
+#' utility function that downloads an EDP File into a local file
 #' 
-#' N.B: using the function without the `local_path` param only works reliably for text files.
-#' Otherwise please download to file.
-#
 #' @inheritParams params
-#' @param ...  passed to utils::download.file()
-#' @return either the file content as a character vector, or NULL if `local_path` is set
+#' @param ...  passed to File_download_content()
+#' @return the response
 #' @export
-File_download <- function(file_id, local_path = NULL, conn = get_connection(), ...) {
+File_download <- function(file_id, local_path, conn = get_connection(), ...) {
   url <- File_get_download_url(file_id, conn = conn)
-  if (.is_nz_string(local_path)) {
-    curl::curl_download(url, local_path)
-    return(invisible())
-  }
-  
-  con <- curl::curl(url)
-  on.exit(close(con), add = TRUE)
-  readLines(con)
+  File_download_content(url, local_path, ...)
 }
+
+File_download_content <- function(url, local_path, overwrite = FALSE, ...) {
+  httr::GET(url, httr::write_disk(local_path, overwrite = overwrite), ...)
+}
+
+#' convenience function to download a file into memory, just a wrapper over File_download()
+#' 
+#' @inheritParams params
+#' @param ...  passed to File_download()
+#' @return the file content
+#' @export
+File_read <- function(file_id, conn = get_connection(), ...) {
+  local_path <- tempfile()
+  on.exit(unlink(local_path), add = TRUE)
+  File_download(file_id, local_path, conn = conn, ...)
+ 
+  readLines(local_path)
+}
+
