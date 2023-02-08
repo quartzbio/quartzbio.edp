@@ -3,6 +3,7 @@
 #' @param account_id                an Account ID as a string.
 #' @param all                       whether to fetch all data, by iterating if needed.
 #' @param ancestor_id               an object ID of an ancestor, for filtering. 
+#' @param capacity                  The dataset capacity level (small, medium, or large).
 #' @param client_id                 the client ID for the application.
 #' @param commit_mode               There are four commit modes that can be selected depending on the scenario:
 #'                                   append (default), overwrite, upsert, and delete. 
@@ -58,10 +59,14 @@
 #' @param records                   The data to annotate as a data frame.
 #' @param regex                     A regular expression, as a string, to filter the results with.
 #' @param size                      The size of the object.
+#' @param status                    a Task status, one of 'running', 'queued', 'pending', 'completed', 'failed'
 #' @param storage_class             The Storage class of the vault `('Standard', 'Standard-IA',
 #'                                   'Essential', 'Temporary', 'Performance', 'Archive')` as a string.
+#' @param sync                      whether to proceed in synchronous mode, i.e to wait for all 
+#'                                  sub tasks to finish before returning.
 #' @param tag                       a single tag as a string.
 #' @param tags                      a list of tags as a character vector.
+#' @param task_id                   an (ECS) Task ID as a string.
 #' @param user_id                   a user id (or User object) as a string
 #' @param vault_id                  a Vault ID as a string (e.g. "19").
 #' @param vault_name                a Vault name as a string (e.g. "Public").

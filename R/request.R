@@ -30,6 +30,7 @@ preprocess_api_params <- function(
     data_type = c('auto', 'boolean', 'date', 'double', 'float', 'integer', 'long', 'object', 
       'string', 'text', 'blob'),
     object_type = c('file', 'folder', 'dataset'),
+    status = c('running', 'queued', 'pending', 'completed', 'failed'),
     vault_type = c('user', 'general'),
     storage_class =  c('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive')
   )

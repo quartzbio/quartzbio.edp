@@ -139,6 +139,7 @@ format_df_with_fields <- function(df, fields,
 
   # !! must be first
   if (ordering) {
+    browser()
     # use ordering if set, otherwise the current ordering
     orderings <- .elts(fields, 'ordering')
     missings <- lengths(orderings) == 0

@@ -30,6 +30,17 @@ Datasets <- function(
   lst
 }
 
+
+#' fetches a dataset.
+#' @inheritParams params
+#' @export
+Dataset <- function(dataset_id = NULL, full_path = NULL, path = NULL, vault_id = NULL, 
+  conn = get_connection()) 
+{
+  Object(object_type = 'dataset', id = dataset_id, full_path = full_path, path = path, vault_id = vault_id, 
+    conn = conn)
+}
+
 #' creates a new Dataset.
 #' @export
 Dataset_create <- function(
@@ -66,7 +77,8 @@ Dataset_import <- function(
   records = NULL,
   df = NULL,
   target_fields = infer_fields_from_df(df),
-  conn = get_connection()) 
+  sync = FALSE,
+  conn = get_connection())
 {
   dataset_id <- id(dataset_id)
 
@@ -80,11 +92,20 @@ Dataset_import <- function(
     rm(df)
   }
 
-  params  <- preprocess_api_params()
-  request_edp_api('POST', "v2/dataset_imports", conn = conn, params = params)
+  params  <- preprocess_api_params(exclude = c(c('conn', 'sync')))
+  res <- request_edp_api('POST', "v2/dataset_imports", conn = conn, params = params)
+
+  if (sync) {
+    status <- Dataset_wait_for_completion(dataset_id, conn = conn)
+    if (!status) { # timeout
+      warning('got timeout while waiting for dataset import task completion: ', res$task_id)
+    }
+  }
+
+  res
 }
 
-#' imports data into an existing dataset
+#' queries data into a dataset
 #' @export
 Dataset_query <- function(
   dataset_id,
@@ -96,6 +117,7 @@ Dataset_query <- function(
   query = NULL,
   limit = NULL, offset = NULL, all = FALSE,
   meta = TRUE,
+  as_data_frame = TRUE,
   conn = get_connection()) 
 {
   dataset_id <- id(dataset_id)
@@ -107,10 +129,8 @@ Dataset_query <- function(
   all <- params$all
   params$all <- NULL
 
-
-
   df <- request_edp_api('POST', file.path("v2/datasets", dataset_id, 'data'), params = params, 
-      simplifyDataFrame = TRUE, conn = conn, limit = limit, offset = offset)
+      simplifyDataFrame = as_data_frame, conn = conn, limit = limit, offset = offset)
   if (all) df <- fetch_all(df)
 
   if (meta) {
@@ -121,9 +141,24 @@ Dataset_query <- function(
   df
 }
 
+###
+### utilities
+Dataset_fetch_tasks <- function(dataset_id, conn = get_connection(), ...) {
+  Tasks(target_object_id = id(dataset_id), conn = conn, ...)
+}
 
-
-
+Dataset_wait_for_completion <- function(dataset_id, conn = get_connection(), ...) {
+  tasks <- Tasks(dataset_id, conn = conn)
+  while(length(tasks)) {
+    task <- tasks[[1]]
+    task2 <- Task_wait_for_completion(task, conn = conn, ...)
+    if (.empty(task2)) return(FALSE)
+    # refresh the list of tasks
+    tasks <- Tasks(dataset_id, conn = conn)
+  }
+  
+  TRUE
+}
 
 
 ### 
