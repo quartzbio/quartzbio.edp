@@ -4,6 +4,33 @@ bless <- function(o, ...) {
   o
 }
 
+# transform the multi-values entries of a named list into single-valued
+# by repeating the names if needed
+# e.g. list(a = 1, b = 1:3) --> list(a = 1, b = 1, b = 2, b = 3)
+scalarize_list <- function(lst) {
+  if (.empty(lst)) return(lst)
+
+  # locate the multi-valued entries
+  multi_idx <- which(lengths(lst) > 1)
+  if (.empty(multi_idx)) return(lst)
+
+  .scalarize <- function(idx) {
+    v <- unlist(lst[[idx]], recursive = TRUE, use.names = FALSE)
+    v <- as.list(v)
+    # N.B: may be NULL
+    names(v) <- rep(names(lst)[idx], length(v))
+
+    v
+  }
+  
+  res <- lapply(multi_idx, .scalarize)
+  scalar_lst <- Reduce(c, res, list())
+
+  c(lst[-multi_idx], scalar_lst)
+}
+
+
+
 # inspired by from wkb:::.hex2raw
 hex2raw <- function(hex) 
 {

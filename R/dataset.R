@@ -96,7 +96,7 @@ Dataset_import <- function(
   res <- request_edp_api('POST', "v2/dataset_imports", conn = conn, params = params)
 
   if (sync) {
-    status <- Dataset_wait_for_completion(dataset_id, conn = conn)
+    status <- Task_wait_for_completion(res$task_id, recursive = TRUE, conn = conn)
     if (!status) { # timeout
       warning('got timeout while waiting for dataset import task completion: ', res$task_id)
     }

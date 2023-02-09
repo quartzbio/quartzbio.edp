@@ -1,6 +1,8 @@
 #' shared roxygen params
 #' 
 #' @param account_id                an Account ID as a string.
+#' @param alive                     whether to select the Tasks that are alive, i.e. not finished 
+#'                                  or failed. 
 #' @param all                       whether to fetch all data, by iterating if needed.
 #' @param ancestor_id               an object ID of an ancestor, for filtering. 
 #' @param capacity                  The dataset capacity level (small, medium, or large).
@@ -59,7 +61,11 @@
 #' @param records                   The data to annotate as a data frame.
 #' @param regex                     A regular expression, as a string, to filter the results with.
 #' @param size                      The size of the object.
-#' @param status                    a Task status, one of 'running', 'queued', 'pending', 'completed', 'failed'
+#' @param status                    a Task status, one of (
+#' ```{r,echo=FALSE, results='asis'}
+#' cat(TASK_STATUS, sep = ', ')
+#' ```
+#' )
 #' @param storage_class             The Storage class of the vault `('Standard', 'Standard-IA',
 #'                                   'Essential', 'Temporary', 'Performance', 'Archive')` as a string.
 #' @param sync                      whether to proceed in synchronous mode, i.e to wait for all 
@@ -99,3 +105,7 @@ NULL
 #' 
 #' @name old_params
 NULL
+
+
+TASK_STATUS <- c('running', 'queued', 'pending', 'completed', 'failed')
+TASK_STATUS_ALIVE <- c("pending", "queued", "running")
