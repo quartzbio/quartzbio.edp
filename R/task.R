@@ -61,6 +61,9 @@ Task <- function(task_id, conn = get_connection())
 
 #' Waits for a task to be completed (or failed).
 #' 
+#' N.B: using retries == 0 will immediately timeout and return FALSE. This is convenient for 
+#' unit testing for example 
+#
 #' @inheritParams params
 #' @return TRUE if the task is finished (completed or failed), or FALSE if the number of retries
 #'  is exceeded (~ timeout).
@@ -68,6 +71,8 @@ Task <- function(task_id, conn = get_connection())
 Task_wait_for_completion <- function(task_id, interval = 3, retries = 30, recursive = TRUE, 
   conn = get_connection()) 
 {
+  if (retries <= 0) return(FALSE)
+
   .task <- function() {
     x <- Task(task_id, conn = conn)
     .die_unless(!.empty(x), 'unable to fetch a task for id="%s"', task_id)
@@ -75,10 +80,9 @@ Task_wait_for_completion <- function(task_id, interval = 3, retries = 30, recurs
   }
 
   task <- .task()
-
   while(Task_is_alive(task)) {
     retries <- retries - 1L
-    if (retries < 0) return(NULL) # timeout
+    if (retries < 0) return(FALSE) # timeout
     Sys.sleep(interval)
 
     msg <- .safe_sprintf('waiting for task %s ("%s" for "%s"),  %i retries left', 

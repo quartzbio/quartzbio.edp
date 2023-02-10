@@ -70,6 +70,8 @@ Dataset_create <- function(
 # TODO: try NA, NULL, ""
 
 #' imports data into an existing dataset
+#' @inheritParams params
+#' @param ... passed to [Task_wait_for_completion()]
 #' @export
 Dataset_import <- function(
   dataset_id,
@@ -78,7 +80,8 @@ Dataset_import <- function(
   df = NULL,
   target_fields = infer_fields_from_df(df),
   sync = FALSE,
-  conn = get_connection())
+  conn = get_connection(),
+  ...)
 {
   dataset_id <- id(dataset_id)
 
@@ -92,11 +95,12 @@ Dataset_import <- function(
     rm(df)
   }
 
-  params  <- preprocess_api_params(exclude = c(c('conn', 'sync')))
+  params  <- preprocess_api_params(exclude = c('conn', 'sync'))
   res <- request_edp_api('POST', "v2/dataset_imports", conn = conn, params = params)
 
   if (sync) {
-    status <- Task_wait_for_completion(res$task_id, recursive = TRUE, conn = conn)
+    status <- Task_wait_for_completion(res$task_id, recursive = TRUE, conn = conn, ...)
+ 
     if (!status) { # timeout
       warning('got timeout while waiting for dataset import task completion: ', res$task_id)
     }
@@ -143,22 +147,7 @@ Dataset_query <- function(
 
 ###
 ### utilities
-Dataset_fetch_tasks <- function(dataset_id, conn = get_connection(), ...) {
-  Tasks(target_object_id = id(dataset_id), conn = conn, ...)
-}
 
-Dataset_wait_for_completion <- function(dataset_id, conn = get_connection(), ...) {
-  tasks <- Tasks(dataset_id, conn = conn)
-  while(length(tasks)) {
-    task <- tasks[[1]]
-    task2 <- Task_wait_for_completion(task, conn = conn, ...)
-    if (.empty(task2)) return(FALSE)
-    # refresh the list of tasks
-    tasks <- Tasks(dataset_id, conn = conn)
-  }
-  
-  TRUE
-}
 
 
 ### 
@@ -183,7 +172,3 @@ fetch.DatasetId <- function(x,  conn = get_connection()) {
   Dataset(x, conn = conn)
 }
 
-#' @export
-fetch.UserId <- function(x,  conn = get_connection()) {
-  User(x, conn = conn)
-}

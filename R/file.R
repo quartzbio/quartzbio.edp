@@ -136,12 +136,13 @@ File_download_content <- function(url, local_path, overwrite = FALSE, ...) {
 #' convenience function to download a file into memory, just a wrapper over File_download()
 #' 
 #' @inheritParams params
+#' @param local_path  where to download the file. Used for testing purposes.
 #' @param ...  passed to File_download()
 #' @return the file content
 #' @export
-File_read <- function(file_id, conn = get_connection(), ...) {
-  local_path <- tempfile()
-  on.exit(unlink(local_path), add = TRUE)
+File_read <- function(file_id, local_path = tempfile(), conn = get_connection(), ...) {
+  if (missing(local_path))
+    on.exit(unlink(local_path), add = TRUE)
   File_download(file_id, local_path, conn = conn, ...)
  
   readLines(local_path)

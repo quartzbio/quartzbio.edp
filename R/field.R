@@ -104,7 +104,7 @@ R_TO_DATA_TYPES = list(
   numeric = 'double',
   integer = 'integer',
   list = 'object',
-  factor = 'character'
+  factor = 'string'
 )
 
 
@@ -119,6 +119,8 @@ format_df_with_fields <- function(df, fields,
   ordering = TRUE, 
   attributes = TRUE) 
 {
+  if (.empty(df)) return(df)
+
   .elts <- function(lst, name) unname(sapply(lst, getElement, name))
  
   # the fields may not cover all columns, e.g. the _id, _commit ones
