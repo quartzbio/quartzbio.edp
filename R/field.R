@@ -121,6 +121,9 @@ format_df_with_fields <- function(df, fields,
 {
   if (.empty(df)) return(df)
 
+  # save attributes
+  attrs <- attributes(df)
+
   .elts <- function(lst, name) unname(sapply(lst, getElement, name))
  
   # the fields may not cover all columns, e.g. the _id, _commit ones
@@ -186,6 +189,12 @@ format_df_with_fields <- function(df, fields,
     attr(df, 'field_titles') <- .elts(fields, 'title')
     attr(df, 'field_descriptions') <- .elts(fields, 'description')
     attr(df, 'field_data_types') <- .elts(fields, 'data_type')
+  }
+
+  # preserve existing attributes
+  attrs2 <- attributes(df)
+  for (attr in setdiff(names(attrs), names(attrs2))) {
+    attr(df, attr) <- attrs[[attr]]
   }
 
   df
