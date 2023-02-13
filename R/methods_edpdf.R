@@ -12,7 +12,7 @@ fetch_all.edpdf <- function(x) {
   df <- do.call(rbind.data.frame, dfs)
 
   # remove obsolete attributes
-  attr(df, 'next') <- attr(df, 'prev') <- NULL
+  attr(df, 'next') <- attr(df, 'prev') <- attr(df, 'offset') <- attr(df, 'took') <- NULL
 
   df
 }
