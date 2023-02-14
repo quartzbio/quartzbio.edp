@@ -35,7 +35,9 @@ Tasks <- function(
 
   res <- request_edp_api('GET', "v2/tasks", conn = conn, limit = limit, page = page, params = params)
 
+  parent_task_id <- id(parent_task_id)
   if (.is_nz_string(parent_task_id)) {
+
     df <- as.data.frame(res)
     # df$parent_id may be a list with NULL elements
     .good <- function(x) .is_nz_string(x) && x == parent_task_id
@@ -92,7 +94,9 @@ Task_wait_for_completion <- function(task_id, interval = 3, retries = 30, recurs
   }
 
   if (recursive) {
-    subtasks <- Tasks(parent_task_id = task_id, alive = TRUE, conn = conn)
+    subtasks <- Tasks(parent_task_id = task_id, target_object_id = task$target_object$id, 
+      alive = TRUE, conn = conn)
+
     for (subtask in subtasks) {
       if (!Task_wait_for_completion(subtask, interval = interval, retries = retries, 
         recursive = TRUE, conn = conn))

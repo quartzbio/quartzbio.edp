@@ -64,9 +64,6 @@ Dataset_create <- function(
 }
 
 
-# problems with df import
-# factor --> character
-# numeric that only contains integers --> int
 # TODO: try NA, NULL, ""
 
 #' imports data into an existing dataset
