@@ -103,7 +103,7 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
                             conn = get_connection(),
                             content_type = "application/json",
                             uri = file.path(conn$host, path),
-                            # raw = TRUE,
+                            raw = FALSE,
                             params = list(),
                             limit = NULL, 
                             page = NULL,
@@ -181,7 +181,7 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
     encode = encode,
     ...
   )
-
+  if (raw) return(res)
   # N.B: may die with an appropriate error message
   ret <- check_httr_response(res)
   if (!isTRUE(ret)) return(ret)

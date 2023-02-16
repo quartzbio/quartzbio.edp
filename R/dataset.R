@@ -119,7 +119,8 @@ Dataset_query <- function(
   limit = NULL, offset = NULL, all = FALSE,
   meta = TRUE,
   as_data_frame = TRUE,
-  conn = get_connection()) 
+  conn = get_connection(),
+  ...) 
 {
   dataset_id <- id(dataset_id)
   # filters: may be a JSON string or a R data structure
@@ -131,7 +132,7 @@ Dataset_query <- function(
   params$all <- NULL
 
   df <- request_edp_api('POST', file.path("v2/datasets", dataset_id, 'data'), params = params, 
-      simplifyDataFrame = as_data_frame, conn = conn, limit = limit, offset = offset)
+      simplifyDataFrame = as_data_frame, conn = conn, limit = limit, offset = offset, ...)
   if (all) df <- fetch_all(df)
 
   if (meta) {
