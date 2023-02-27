@@ -41,6 +41,6 @@ print.edplist <- function(x, ...) {
 }
 
 #' @export
-as.data.frame.edplist <- function (x,  ...) {
+as.data.frame.edplist <- function(x,  ...) {
   convert_edp_list_to_df(x)
 }
