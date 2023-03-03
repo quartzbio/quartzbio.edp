@@ -12,6 +12,7 @@ Imports:
     jsonlite,
     methods,
     mime,
+    RcppSimdJson,
     utils
 License: MIT + file LICENSE
 RoxygenNote: 7.1.2

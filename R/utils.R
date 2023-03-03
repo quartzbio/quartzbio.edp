@@ -1,6 +1,7 @@
 
 bless <- function(o, ...) {
-  class(o) <- c(list(...), class(o))
+  if (!length(o)) o <- data.frame()
+    class(o) <- c(list(...), class(o))
   o
 }
 

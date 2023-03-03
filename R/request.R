@@ -113,6 +113,7 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
                             encoding = "UTF-8",
                             simplifyDataFrame = FALSE,
                             verbose = getOption('quartzbio.edp.verbose', TRUE),
+                            use_fast_parser = TRUE,
                             ...)
 {
   check_connection(conn)
@@ -186,7 +187,13 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
   ret <- check_httr_response(res)
   if (!isTRUE(ret)) return(ret)
 
-  content <- httr::content(res, as = as, encoding = encoding, simplifyDataFrame = simplifyDataFrame)
+  content <- if (use_fast_parser) {
+    max_simplify_lvl <- if (simplifyDataFrame) 'data_frame' else 'list'
+    RcppSimdJson::fparse(res$content, max_simplify_lvl = max_simplify_lvl)
+
+  } else {
+    httr::content(res, as = as, encoding = encoding, simplifyDataFrame = simplifyDataFrame)
+  }
 
   if (postprocess) {
     content <- postprocess_response(content)
@@ -327,7 +334,6 @@ postprocess_entity_list <- function(res, key) {
 
 postprocess_df <- function(res, key) {
   df <- edpdf(res[[key]])
-
   # store other items as attributes
   items <- setdiff(names(res), c(key, 'class', 'class_name'))
   for (attr in items) 
@@ -359,6 +365,12 @@ postprocess_response <- function(res) {
   # BEWARE: a data.frame IS a list
   if (is.data.frame(value)) return(postprocess_df(res, key))
   if (is.list(value)) return(postprocess_entity_list(res, key))
+
+  if (is.null(value)) {
+    # no results, so can use the data type
+    if (class_name == 'list') return(postprocess_entity_list(res, key))
+    if (key == 'results') return(postprocess_df(res, key))
+   }
 
   .die('unknow response data type: class=%s, type=%s', class(value), typeof(value)) 
 }

@@ -17,7 +17,6 @@ Tasks <- function(
   conn = get_connection()) 
 {
   # currently preprocess_api_params does not support multi-valued params
-
   params  <- preprocess_api_params(exclude = c('conn', 'limit', 'page', 
     'status', 'parent_task_id', 'alive'))
 

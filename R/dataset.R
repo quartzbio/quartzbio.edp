@@ -136,7 +136,7 @@ Dataset_query <- function(
   if (all) df <- fetch_all(df)
 
   if (meta) {
-    fields <- DatasetFields(dataset_id, conn = conn, all = TRUE)
+    fields <- DatasetFields(dataset_id, limit = 10000, conn = conn, all = TRUE)
     df <- format_df_with_fields(df, fields)
   }
 
