@@ -5,6 +5,7 @@
 #' fetches a list of tasks.
 #' 
 #' @inheritParams params
+#' @param parent_task_id    find the children of that task
 #' @param target_object_id  the object ID to fetch the tasks for
 #' @return a list of Tasks as a ECSTaskList object.
 #' @export
@@ -66,6 +67,11 @@ Task <- function(task_id, conn = get_connection())
 #' unit testing for example 
 #
 #' @inheritParams params
+#' @param interval    time in seconds to wait before retrying
+#' @param recursive   whether to also wait for the subtasks
+#' @param retries     number of attempts to perform to check the task completion
+#' 
+#' 
 #' @return TRUE if the task is finished (completed or failed), or FALSE if the number of retries
 #'  is exceeded (~ timeout).
 #' @export

@@ -23,7 +23,7 @@ UNARY_OPERATORS <- list(not = '!')
 
 #' parses the maths-like syntax of filters.
 #' 
-#' @inheritParams params
+#' @param x   the filters string to parse
 #' @return the download URL as a string
 #' @export
 filters <- function(x) {

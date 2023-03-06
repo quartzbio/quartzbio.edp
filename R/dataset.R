@@ -42,6 +42,8 @@ Dataset <- function(dataset_id = NULL, full_path = NULL, path = NULL, vault_id =
 }
 
 #' creates a new Dataset.
+#' 
+#' @inherit params
 #' @export
 Dataset_create <- function(
   vault_id,
@@ -68,6 +70,7 @@ Dataset_create <- function(
 
 #' imports data into an existing dataset
 #' @inheritParams params
+#' @param df    The data to import as a data.frame
 #' @param ... passed to [Task_wait_for_completion()]
 #' @export
 Dataset_import <- function(
@@ -106,7 +109,10 @@ Dataset_import <- function(
   res
 }
 
-#' queries data into a dataset
+#' queries data into a dataset.
+#' @inheritParams params
+#' @param meta    whether to retrieve fields meta data information to properly format, reorder
+#'                and rename the data frame
 #' @export
 Dataset_query <- function(
   dataset_id,

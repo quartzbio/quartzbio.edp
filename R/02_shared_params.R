@@ -5,11 +5,13 @@
 #'                                  or failed. 
 #' @param all                       whether to fetch all data, by iterating if needed.
 #' @param ancestor_id               an object ID of an ancestor, for filtering. 
+#' @param as_data_frame             whether to convert the results as a data frame.     
 #' @param capacity                  The dataset capacity level (small, medium, or large).
 #' @param client_id                 the client ID for the application.
 #' @param commit_mode               There are four commit modes that can be selected depending on the scenario:
 #'                                   append (default), overwrite, upsert, and delete. 
 #' @param conn                      a EDP connection object (as a named list or environment)
+#' @param dataset_id                a Dataset ID as a string
 #' @param data_type                 the data type. one of: 
 #' * auto (the default)
 #' * boolean - Either True, False, or null
@@ -32,8 +34,13 @@
 #' * sample - A sample identifier (TCGA-02-0001)
 #' * variant - A genomic variant (GRCH38-7-55181378-55181378-T)
 #' @param env                       Custom client environment.
+#' @param exclude_fields            A list of fields to exclude in the results, as a character vector.
 #' @param exclude_group_id          a group ID to exclude. 
+#' @param expression                EDP xpressions are Python-like formulas that can be used to pull 
+#'                                  data from datasets, calculate statistics, or run advanced algorithms.
+#' @param facets                    A valid facets objects.
 #' @param fields                    The fields to add.
+#' @param field_id                  a Field object ID.
 #' @param file_id                   a file Object ID.
 #' @param filename                  an Object filename, without the parent folder (e.g. "foo.csv")
 #' @param filters                   a filter expression as a JSON string.
@@ -51,6 +58,7 @@
 #' @param min_distance              used in conjuction with the ancestor_id filter to only include
 #'                                   objects at a minimum distance from the ancestor.
 #' @param object_type               the type of an object, one of  "file", "folder", or "dataset".
+#' @param ordering                  A list of fields to order/sort the results with, as a character vector.
 #' @param offset                    the file offset (starts from 0).
 #' @param page                      The number of the page to fetch, as an integer. starts from 1.
 #'                                  See also `limit`.
@@ -72,7 +80,12 @@
 #'                                  sub tasks to finish before returning.
 #' @param tag                       a single tag as a string.
 #' @param tags                      a list of tags as a character vector.
+#' @param target_fields             A list of valid dataset fields to create or override in the import, 
+#'                                  as a character vector.
 #' @param task_id                   an (ECS) Task ID as a string.
+#' @param url_template              A URL template with one or more "{value}" sections that will be 
+#'                                  interpolated with the field value and displayed as a link 
+#'                                  in the dataset table.
 #' @param user_id                   a user id (or User object) as a string
 #' @param vault_id                  a Vault ID as a string (e.g. "19").
 #' @param vault_name                a Vault name as a string (e.g. "Public").

@@ -1,9 +1,11 @@
 
 #' creates a new Dataset Field.
 #' @inheritParams params
-#' @param title   The field's display name, shown in the UI and in CSV/Excel exports, as a string
-#' @param ordering  The order in which this column appears when retrieving data from the dataset. 
-#'                  Order is 0-based. Default is 0.
+#' @param name          The name of the field
+#' @param title         The field's display name, shown in the UI and in CSV/Excel exports, as a string
+#' @param is_hidden     whether the field should be hidden from the UI.
+#' @param ordering      The order in which this column appears when retrieving data from the dataset. 
+#'                      Order is 0-based. Default is 0.
 #' @export
 DatasetField_create <- function(
   dataset_id,
@@ -25,7 +27,10 @@ DatasetField_create <- function(
 }
 
 #' updates an existing Dataset Field.
+#' 
+#' @inheritParams params
 #' @inheritParams DatasetField_create
+#' @return a DatasetField object
 #' @export
 DatasetField_update <- function(
   field_id,
@@ -47,6 +52,8 @@ DatasetField_update <- function(
 }
 
 #' fetches the fields of a dataset.
+#' @inherit params
+#' @return a DatasetFieldList object
 #' @export
 DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, conn = get_connection()) 
 {
@@ -65,10 +72,13 @@ DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, co
 }
 
 #' fetches a field metadata of a dataset by ID or (datasetid, field_name)
+#' @inheritParams DatasetField_create
+#' @inheritParams params
+#' @return a DatasetField object
 #' @export
-DatasetField <- function(id = NULL, dataset_id = NULL, name = NULL, conn = get_connection()) 
+DatasetField <- function(field_id = NULL, dataset_id = NULL, name = NULL, conn = get_connection()) 
 {
-  id <- id(id)
+  id <- id(field_id)
   if (!length(id)) {
     dataset_id <- id(dataset_id)
     .die_unless(.is_nz_string(dataset_id) && .is_nz_string(name), 
