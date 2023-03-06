@@ -113,7 +113,7 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
                             encoding = "UTF-8",
                             simplifyDataFrame = FALSE,
                             verbose = getOption('quartzbio.edp.verbose', TRUE),
-                            use_fast_parser = TRUE,
+                            use_fast_parser = getOption('quartzbio.edp.use_fast_parser', require('RcppSimdJson')),
                             ...)
 {
   check_connection(conn)
