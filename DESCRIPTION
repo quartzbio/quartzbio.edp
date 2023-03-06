@@ -12,7 +12,6 @@ Imports:
     jsonlite,
     methods,
     mime,
-    RcppSimdJson,
     utils
 License: MIT + file LICENSE
 RoxygenNote: 7.1.2
@@ -21,6 +20,7 @@ Roxygen: list(markdown = TRUE)
 Suggests:
     openssl,
     qb.web,
+    RcppSimdJson,
     shiny,
     shinyjs,
     testthat,
