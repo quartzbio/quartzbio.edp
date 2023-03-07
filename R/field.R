@@ -55,7 +55,7 @@ DatasetField_update <- function(
 #' @inherit params
 #' @return a DatasetFieldList object
 #' @export
-DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, conn = get_connection()) 
+DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, conn = get_connection(), ...) 
 {
   dataset_id <- id(dataset_id)
   params  <- preprocess_api_params()
@@ -63,7 +63,7 @@ DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, co
   params$all <- NULL
 
   lst <- request_edp_api('GET', file.path("v2/datasets", dataset_id, 'fields'), params = params, 
-     conn = conn, limit = limit, page = page)
+     conn = conn, limit = limit, page = page, ...)
   if (all) lst <- fetch_all(lst)
 
   names(lst) <- elts(lst, 'name')

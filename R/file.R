@@ -100,7 +100,7 @@ File_query <- function(id, filters = NULL, limit = NULL, offset = NULL, all = FA
   params <- list(filters = filters)
 
   df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 
-      simplifyDataFrame = TRUE, conn = conn, limit = limit, offset = offset)
+      parse_as_df = TRUE, conn = conn, limit = limit, offset = offset)
   if (all) df <- fetch_all(df)
   
   df

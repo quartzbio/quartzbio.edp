@@ -5,22 +5,6 @@ format_auth_header <- function(secret) {
   c(Authorization = paste(token_type, secret, sep = " "))
 }
 
-# try to parse some details about an API error, as provided by the API in the response
-get_api_response_error_message <- function(res, default_message = '') {
-  parsed <- try(httr::content(res), silent = TRUE)
-  if (.is_error(parsed)) return('Error parsing API response')
-  if (!length(parsed)) return(default_message)
-
-  msg <- default_message
-  if ("details" %in% names(parsed)) {
-    msg <- parsed$details
-  } else {
-    # backwards compatibility
-    msg <- paste0(unlist(parsed), collapse = ', ')
-  }
-  
-  msg
-}
 
 preprocess_api_params <- function(
   exclude = c('conn', 'limit', 'page'), 
@@ -60,61 +44,25 @@ preprocess_api_params <- function(
 
 
 
-# either die, return TRUE if all good, or the early return value
-# Error Code 	Meaning 	Description
-# 400 	Bad Request 	Your request was malformed
-# 401 	Unauthorized 	Your API key or token is invalid
-# 403 	Forbidden 	Your API key or token is not valid for this type of request
-# 404 	Not Found 	The specified resource could not be found
-# 405 	Method Not Allowed 	Your request used an invalid method
-# 429 	Too Many Requests 	You have reached the rate limit
-# 500 	Internal Server Error 	We had a problem with our server
-# 503 	Service Unavailable 	We are temporarily offline for maintenance
-check_httr_response <- function(res) {
-  status <- res$status
-  # 204: no content, 301: moved permanently, 302: Moved Temporarily
-  if (status == 204 || status == 301 || status == 302) {
-    return(res)
-  }
-  if (status == 404) # Not found
-    return(NULL)
-
-  if (status >= 200 && status < 400)  { # no error
-    # check content-type
-    content_type <- res$headers$`Content-Type`
-    if (!.is_nz_string(content_type) || content_type != JSON) return(res)
-    return(TRUE)
-  }
-
-  .die_if(status == 429, 
-    "API error: Too many requests, please retry in %i seconds", res$header$"retry-after")
-
-  .die_if(status == 401, 
-    "Unauthorized: %s (error %s)", get_api_response_error_message(res), status)
-
-  .die_if(status == 400, "API error: %s", get_api_response_error_message(res))
-
-  .die("Uknown API error %s: %s", status,  get_api_response_error_message(res))
-}
-
 
 # Private API request method.
+# parse options: 
+# - parse_fast
+# -parse_as_df
 request_edp_api <- function(method, path = '', query = list(), body = list(),
                             conn = get_connection(),
                             content_type = "application/json",
                             uri = file.path(conn$host, path),
                             raw = FALSE,
                             params = list(),
-                            limit = NULL, 
+                            limit = 1000, 
                             page = NULL,
                             offset = NULL,
                             postprocess = TRUE,
-                            as = NULL,
                             encoding = "UTF-8",
-                            simplifyDataFrame = FALSE,
                             verbose = getOption('quartzbio.edp.verbose', TRUE),
-                            use_fast_parser = getOption('quartzbio.edp.use_fast_parser', require('RcppSimdJson')),
-                            ...)
+                            parse_fast = getOption('quartzbio.edp.use_fast_parser', require('RcppSimdJson')),
+                            parse_as_df = FALSE)
 {
   check_connection(conn)
 
@@ -122,8 +70,8 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
   if (length(limit)) params$limit <- limit
   if (length(page)) params$page <- page
   if (length(offset)) {
-    if (offset < 0) return(NULL)
     params$offset <- offset
+    if (offset < 0) return(NULL)
   }
 
   if (length(params)) {
@@ -179,42 +127,78 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
     config = config,
     body = body,
     query = query,
-    encode = encode,
-    ...
-  )
+    encode = encode)
   if (raw) return(res)
   # N.B: may die with an appropriate error message
   ret <- check_httr_response(res)
   if (!isTRUE(ret)) return(ret)
 
-  content <- if (use_fast_parser) {
-    max_simplify_lvl <- if (simplifyDataFrame) 'data_frame' else 'list'
+  content <- if (parse_fast) {
+    max_simplify_lvl <- if (parse_as_df) 'data_frame' else 'list'
     RcppSimdJson::fparse(res$content, max_simplify_lvl = max_simplify_lvl)
 
   } else {
-    httr::content(res, as = as, encoding = encoding, simplifyDataFrame = simplifyDataFrame)
+    httr::content(res, encoding = encoding, simplifyDataFrame = parse_as_df)
   }
 
   if (postprocess) {
-    content <- postprocess_response(content)
-    if (inherits(content, 'edpdf')) {
-      if (!length(offset)) offset <- 0L
-      .fun <- function(limit, offset) request_edp_api(method = method, path = path, query = query, 
-        uri = uri, params = params, limit = limit, page = page, offset = offset, postprocess = postprocess, as = as,
-        encoding = encoding, simplifyDataFrame = simplifyDataFrame, verbose = verbose, ...)
-
-      content <- setup_prev_next(content, .fun, limit, offset)
-    }
+    call <- sys.call()
+    fetchers <- create_fetchers()
+    content <- postprocess_response(content, is_df = parse_as_df, conn = conn, fetchers = fetchers)
   }
-
-  conn <- as.environment(conn)
-  attr(content, 'connection') <- conn
-  if (inherits(content, 'edplist'))
-    for (i in seq_along(content) )
-      attr(content[[i]], 'connection') <- conn
 
   content
 }
+
+# function dedicated to request_edp_api(). Will automatically create the next and prev fetchers 
+create_fetchers <- function() {
+  env <- parent.frame()
+
+  call <- sys.call(-1)
+  args <- as.list(call[-1])
+
+  # remove ... from args
+  dot_idx <- which(as.character(args) == '...')
+  args_no_dots <- args
+  if (length(dot_idx)) args_no_dots <- args_no_dots[-dot_idx]
+
+  fun <- eval(call[[1]], env)
+  formal_args <- names(formals(fun))
+
+  pos_args_idx <- which(!nzchar(names(args_no_dots)))
+  arg_names <- names(args)
+  arg_names <- arg_names[nzchar(arg_names)]
+  if (length(pos_args_idx)) arg_names <- c(arg_names, formal_args[pos_args_idx])
+
+  args_to_pass <- mget(arg_names, env)
+  offset <- get0('offset', env)
+  if (.empty(offset)) offset <- 0L
+  limit <- get('limit', env)
+
+  fetcher <- function(limit, offset) {
+    args2 <- args_to_pass
+    args2$limit <- limit
+    args2$offset <- offset
+
+    do.call(fun, args2)
+  }
+
+  fetch_next <- function() fetcher(limit, offset + limit)
+  fetch_prev <- function() fetcher(limit, offset - limit)
+
+  list(`next` = fetch_next, `prev` = fetch_prev)
+}
+
+setup_prev_next <- function(x, fun, limit, offset) {
+  if (!length(x)) return(x)
+  # fun2 <- function(limit, page) setup_prev_next(fun(limit, page), fun, limit, page)
+
+  attr(x, 'next') <- function() { fun(limit, offset + limit)}
+  attr(x, 'prev') <- function() { fun(limit, offset - limit) }
+
+  x
+}
+
 
 
 # process a list of params, which may have been set or not.
@@ -278,127 +262,4 @@ fetch_by <- function(path, by, conn, all = FALSE, unique = !empty, empty = FALSE
   }
 
   o
-}
-
-# add a class to an EDP entity, using it $class_name item
-classify_entity <- function(x) {
-  if (!is.list(x)) return(x)
-
-  class_name <- x$class_name
-  if (!.is_nz_string(class_name)) return(x)
-
-  if (class_name != 'list') {
-    # special case for objects
-    if (class_name == 'Object') {
-      class(x) <- c(capitalize(x$object_type), 'Object', class(x))
-    } else {
-      class(x) <- c(class_name, class(x))
-    }
-  }
-
-  x
-}
-
-# process a response that contains only a single entity: classify it, and classify its ids
-postprocess_single_entity <- function(res) {
-  res <- classify_entity(res)
-  res <- classify_ids(res)
-
-  res
-}
-
-# return a edplist
-postprocess_entity_list <- function(res, key) {
-  lst <- res[[key]]
-
-  lst <- lapply(lst, classify_entity)
-    # decorate objects
-  lst <- lapply(lst, classify_ids)
-
-    # check what kind of objects are in the list
-  lst <- edplist(lst)
-  if (length(lst)) {
-    # class_obj <- class(lst[[1]])[1]
-    class_obj <- lst[[1]]$class_name
-    if (.is_nz_string(class_obj))
-      class(lst) <- c(paste0(class_obj, 'List'), class(lst))
-  }
-
-  # store other items as attributes on the edp list
-  items <- setdiff(names(res), c(key, 'class', 'class_name'))
-  for (attr in items) 
-    attr(lst, attr) <- res[[attr]]
-
-  lst
-}
-
-postprocess_df <- function(res, key) {
-  df <- edpdf(res[[key]])
-  # store other items as attributes
-  items <- setdiff(names(res), c(key, 'class', 'class_name'))
-  for (attr in items) 
-    attr(df, attr) <- res[[attr]]
-
-  df
-}
-
-# 3 main cases:
-# - result for one object/entity
-# - results for a list of objects/entitities
-# - results for some data as a dataframe
-postprocess_response <- function(res) {
-  # dispatch
-  class_name <- res$class_name
-  if (!.is_nz_string(class_name)) class_name <- ''
-
-  if (!'total' %in% names(res) && class_name != 'list') {
-    # consider it is a single entity
-    return(postprocess_single_entity(res))
-  }
-
-  ### results are either in $data or $results
-  key <- intersect(names(res), c('data', 'results'))
-  .die_if(length(key) == 0, 'got NEITHER data NOR results in response')
-  .die_if(length(key) > 1, 'got BOTH data AND results in response')
-
-  value <- res[[key]]
-  # BEWARE: a data.frame IS a list
-  if (is.data.frame(value)) return(postprocess_df(res, key))
-  if (is.list(value)) return(postprocess_entity_list(res, key))
-
-  if (is.null(value)) {
-    # no results, so can use the data type
-    if (class_name == 'list') return(postprocess_entity_list(res, key))
-    if (key == 'results') return(postprocess_df(res, key))
-   }
-
-  .die('unknow response data type: class=%s, type=%s', class(value), typeof(value)) 
-}
-
-classify_ids <- function(x) {
-  # look for ids
-  id_names <- grep('_id$', names(x), value = TRUE)
-  for (name in id_names) {
-    if (length(x[[name]])) {
-      class_name <- head(tail(strsplit(name, '_')[[1]], 2), 1)
-      class_name  <- paste0(toupper(substring(class_name, 1, 1)), substring(class_name, 2))
-      class_name <- paste0(class_name, 'Id')
-      class(x[[name]]) <- c(class_name, class(x[[name]]))
-
-      x
-    }
-  }
-
-  x
-}
-
-
-setup_prev_next <- function(x, fun, limit, offset) {
-  if (!length(x)) return(x)
-  # fun2 <- function(limit, page) setup_prev_next(fun(limit, page), fun, limit, page)
-
-  attr(x, 'next') <- function() { fun(limit, offset + limit)}
-  attr(x, 'prev') <- function() { fun(limit, offset - limit) }
-
-  x
 }
