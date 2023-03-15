@@ -42,52 +42,70 @@ preprocess_api_params <- function(
   params
 }
 
+# N.: param ... is silently ignored
+#' @export
+request_pointer <- function(offset = NULL, page = NULL, limit = NULL, ...) {
+  .die_if(length(offset) && length(page), 'you can not set both "page" AND "offset"')
 
+  list(offset = offset, page = page, limit = limit)
+}
 
+# N.: param ... is silently ignored
+#' @export
+request_options <- function(content_type = "application/json",
+                            raw = FALSE,
+                            postprocess = TRUE,
+                            encoding = "UTF-8",
+                            verbose = getOption('quartzbio.edp.verbose', TRUE),
+                            parse_fast = getOption('quartzbio.edp.use_fast_parser', require('RcppSimdJson')),
+                            parse_as_df = FALSE, ...)
+{
+  list(
+    content_type = content_type,
+    raw = raw,
+    postprocess = postprocess,
+    encoding = encoding,
+    verbose = verbose,
+    parse_fast = parse_fast,
+    parse_as_df = parse_as_df
+  )
+}
 
 # Private API request method.
 # parse options: 
 # - parse_fast
 # -parse_as_df
-request_edp_api <- function(method, path = '', query = list(), body = list(),
-                            conn = get_connection(),
-                            content_type = "application/json",
-                            uri = file.path(conn$host, path),
-                            raw = FALSE,
-                            params = list(),
-                            limit = 1000, 
-                            page = NULL,
-                            offset = NULL,
-                            postprocess = TRUE,
-                            encoding = "UTF-8",
-                            verbose = getOption('quartzbio.edp.verbose', TRUE),
-                            parse_fast = getOption('quartzbio.edp.use_fast_parser', require('RcppSimdJson')),
-                            parse_as_df = FALSE)
+request_edp_api <- function(method, path = '',  params = list(), 
+  pointer = request_pointer(...),
+  options = request_options(...),  
+  uri = file.path(conn$host, path), 
+  conn = get_connection(), ...)
 {
   check_connection(conn)
 
   ### params
-  if (length(limit)) params$limit <- limit
-  if (length(page)) params$page <- page
-  if (length(offset)) {
-    params$offset <- offset
-    if (offset < 0) return(NULL)
+  if (length(pointer$limit)) params$limit <- pointer$limit
+  if (length(pointer$page)) params$page <- pointer$page
+  if (length(pointer$offset)) {
+    params$offset <- pointer$offset
+    if (params$offset < 0) return(NULL)
   }
 
+  query <- list()
+  body <- list()
   if (length(params)) {
     if (method == 'GET') {
-      query <- modifyList(query, params)
+      query <- params
     } else {
-      body <- modifyList(body, params)
+      body <- params
     }
-
   }
 
   ### headers
   headers <- c(
     "Accept" = JSON,
     "Accept-Encoding" = "gzip,deflate",
-    "Content-Type" = content_type,
+    "Content-Type" = options$content_type,
     c(format_auth_header(conn$secret))
   )
 
@@ -96,7 +114,7 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
     path <- substring(path, 2)
   }
   force(uri)
-  if (verbose) {
+  if (options$verbose) {
     msg <- sprintf('%s %s...', method, uri)
     message(msg)
   }
@@ -112,7 +130,7 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
 
   ### encoding
   encode <- "form"
-  if (content_type == JSON) {
+  if (options$content_type == JSON) {
     if (length(body) > 0) {
       body <- jsonlite::toJSON(body, auto_unbox = TRUE, null = "null")
       encode <- "json"
@@ -128,63 +146,48 @@ request_edp_api <- function(method, path = '', query = list(), body = list(),
     body = body,
     query = query,
     encode = encode)
-  if (raw) return(res)
+  if (options$raw) return(res)
   # N.B: may die with an appropriate error message
   ret <- check_httr_response(res)
   if (!isTRUE(ret)) return(ret)
 
-  content <- if (parse_fast) {
-    max_simplify_lvl <- if (parse_as_df) 'data_frame' else 'list'
+  content <- if (options$parse_fast) {
+    max_simplify_lvl <- if (options$parse_as_df) 'data_frame' else 'list'
     RcppSimdJson::fparse(res$content, max_simplify_lvl = max_simplify_lvl)
 
   } else {
-    httr::content(res, encoding = encoding, simplifyDataFrame = parse_as_df)
+    httr::content(res, encoding = options$encoding, simplifyDataFrame = options$parse_as_df)
   }
 
-  if (postprocess) {
-    call <- sys.call()
-    fetchers <- create_fetchers()
-    content <- postprocess_response(content, is_df = parse_as_df, conn = conn, fetchers = fetchers)
+  if (options$postprocess) {
+    args <- list(method = method, uri = uri, params = params, options = options, conn = conn)
+    fetchers <- create_fetchers(args, pointer)
+    content <- postprocess_response(content, is_df = options$parse_as_df, conn = conn, fetchers = fetchers)
   }
 
   content
 }
 
 # function dedicated to request_edp_api(). Will automatically create the next and prev fetchers 
-create_fetchers <- function() {
-  env <- parent.frame()
+create_fetchers <- function(args, pointer) {
+  if (!length(pointer$limit)) return(NULL)
+  if (!length(pointer$offset)) pointer$offset <- 0L
 
-  call <- sys.call(-1)
-  args <- as.list(call[-1])
-
-  # remove ... from args
-  dot_idx <- which(as.character(args) == '...')
-  args_no_dots <- args
-  if (length(dot_idx)) args_no_dots <- args_no_dots[-dot_idx]
-
-  fun <- eval(call[[1]], env)
-  formal_args <- names(formals(fun))
-
-  pos_args_idx <- which(!nzchar(names(args_no_dots)))
-  arg_names <- names(args)
-  arg_names <- arg_names[nzchar(arg_names)]
-  if (length(pos_args_idx)) arg_names <- c(arg_names, formal_args[pos_args_idx])
-
-  args_to_pass <- mget(arg_names, env)
-  offset <- get0('offset', env)
-  if (.empty(offset)) offset <- 0L
-  limit <- get('limit', env)
-
-  fetcher <- function(limit, offset) {
-    args2 <- args_to_pass
-    args2$limit <- limit
-    args2$offset <- offset
-
-    do.call(fun, args2)
+  fetcher <- function(x) {
+    args$pointer <- x
+    do.call(request_edp_api, args)
   }
 
-  fetch_next <- function() fetcher(limit, offset + limit)
-  fetch_prev <- function() fetcher(limit, offset - limit)
+  fetch_next <- function() {
+    x <- pointer
+    x$offset <- x$offset + x$limit
+    fetcher(x)
+  }
+  fetch_prev <- function() {
+    x <- pointer
+     x$offset <- x$offset - x$limit
+    fetcher(x)
+  }
 
   list(`next` = fetch_next, `prev` = fetch_prev)
 }

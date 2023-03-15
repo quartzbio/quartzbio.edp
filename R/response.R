@@ -58,7 +58,7 @@ postprocess_df <- function(res, key, conn, fetchers = NULL) {
 # - result for one object/entity
 # - results for a list of objects/entitities
 # - results for some data as a dataframe
-postprocess_response <- function(res, is_df, conn, call = NULL) {
+postprocess_response <- function(res, is_df, conn, call = NULL, fetchers = NULL) {
   # dispatch
   class_name <- res$class_name
   if (!.is_nz_string(class_name)) class_name <- ''
@@ -76,7 +76,7 @@ postprocess_response <- function(res, is_df, conn, call = NULL) {
   value <- res[[key]]
 
   x <- if (is_df) {
-    postprocess_df(res, key, conn, call)
+    postprocess_df(res, key, conn, fetchers = fetchers)
     } else {
     postprocess_entity_list(res, key, conn)
   }
