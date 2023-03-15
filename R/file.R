@@ -89,7 +89,7 @@ File_upload_content <- function(upload_url, path, size, mimetype, md5 = tools::m
 #' @param id    a File ID 
 #' @inheritParams params
 #' @export
-File_query <- function(id, filters = NULL, limit = NULL, offset = NULL, all = FALSE, 
+File_query <- function(id, filters = NULL, limit = 10000, offset = NULL, all = FALSE, 
     conn = get_connection()) 
 {
   id <- id(id)

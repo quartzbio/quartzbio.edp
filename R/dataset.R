@@ -122,7 +122,7 @@ Dataset_query <- function(
   exclude_fields = c('_id', '_commit'),
   ordering = NULL,
   query = NULL,
-  limit = NULL, offset = NULL, all = FALSE,
+  limit = 10000, offset = NULL, all = FALSE,
   meta = TRUE,
   conn = get_connection(),
   ...) 

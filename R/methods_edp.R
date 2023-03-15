@@ -9,7 +9,9 @@ fetch_url <- function(x, direction, conn) {
   links <- attr(x, 'links')
   if (!length(links) || !length(links[[direction]])) return(NULL)
 
-  request_edp_api('GET', uri = links[[direction]], conn = conn)
+  # N.B: since the pointer is integrated in the URI, set it to NULL not to overwrite
+  # those URI encoded values
+  request_edp_api('GET', uri = links[[direction]], conn = conn, pointer = NULL)
 }
 
 #' @export
