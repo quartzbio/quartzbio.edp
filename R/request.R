@@ -43,7 +43,8 @@ preprocess_api_params <- function(
 }
 
 # N.: param ... is silently ignored
-#' @export
+# create the request params involved in referencing a piece of data
+
 request_pointer <- function(offset = NULL, page = NULL, limit = NULL, ...) {
   .die_if(length(offset) && length(page), 'you can not set both "page" AND "offset"')
 
@@ -51,7 +52,7 @@ request_pointer <- function(offset = NULL, page = NULL, limit = NULL, ...) {
 }
 
 # N.: param ... is silently ignored
-#' @export
+# create the request options
 request_options <- function(content_type = "application/json",
                             raw = FALSE,
                             postprocess = TRUE,
