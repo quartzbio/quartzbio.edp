@@ -23,5 +23,6 @@ Suggests:
     RcppSimdJson,
     shiny,
     shinyjs,
+    stats,
     testthat,
     withr
