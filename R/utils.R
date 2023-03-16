@@ -113,3 +113,28 @@ unlist1 <- function(x) unlist(x, recursive = FALSE, use.names = FALSE)
 elts <- function(objects, name_or_idx) {
   lapply(objects, getElement, name_or_idx)
 }
+
+msg <- function(...) {
+  message(.safe_sprintf(...))
+}
+
+build_httr_response <- function(url, 
+  code = 200L, 
+  headers =  list(`content-type` = "application/json"),
+  content = NULL)
+{
+  structure(
+    list(
+      url = url, 
+      status_code = code, 
+      headers = headers,
+      content = content
+    ),
+    class = "response"
+  )
+}
+
+`%IF_EMPTY_THEN%` <- function(a, b) {
+  if (!length(a)) b else a
+}
+
