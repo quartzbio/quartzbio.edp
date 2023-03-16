@@ -25,8 +25,8 @@ check_httr_response <- function(res) {
     return(TRUE)
   }
 
-  .die_if(status == 429, 
-    "API error: Too many requests, please retry in %i seconds", res$header$"retry-after")
+  # .die_if(status == 429, 
+  #   "API error: Too many requests, please retry in %s seconds", res$header$"retry-after")
 
   .die_if(status == 401, 
     "Unauthorized: %s (error %s)", get_api_response_error_message(res), status)

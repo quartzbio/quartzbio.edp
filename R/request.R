@@ -59,7 +59,10 @@ request_options <- function(content_type = "application/json",
                             encoding = "UTF-8",
                             verbose = getOption('quartzbio.edp.verbose', TRUE),
                             parse_fast = getOption('quartzbio.edp.use_fast_parser', require('RcppSimdJson')),
-                            parse_as_df = FALSE, ...)
+                            parse_as_df = FALSE, 
+                            retries = 3,
+                            default_wait = 10,
+                            ...)
 {
   list(
     content_type = content_type,
@@ -68,8 +71,34 @@ request_options <- function(content_type = "application/json",
     encoding = encoding,
     verbose = verbose,
     parse_fast = parse_fast,
-    parse_as_df = parse_as_df
+    parse_as_df = parse_as_df,
+    retries = retries,
+    default_wait = default_wait
   )
+}
+
+# wrapper on httr::VERB with additional features: support for http code 429 and the "retry-after"
+# header value
+send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 10) {
+  res <- if (length(fake_response)) fake_response else httr::VERB(...)
+  
+  if (!length(res) || !'status_code' %in% names(res) || res$status_code != 429) return(res)
+
+  ### too many requests --> that's our business to manage that
+  # defensive programming
+  .die_unless(is.numeric(retries), 'param "retries" must be numeric')
+  .die_unless(is.numeric(default_wait), 'param "default_wait" must be numeric')
+
+  .die_unless(retries > 0, 
+    'received a "Too many requests" response (429) but retries are exhausted, giving up...')
+  
+  retry_after <- res$headers[["retry-after"]] %IF_EMPTY_THEN% default_wait
+  wait <- retry_after * (stats::runif(1) + 1) # add some jitter
+  msg('received a "Too many requests" response (429). will retry in %ss...', wait)
+
+  Sys.sleep(wait)
+
+  send_request(..., fake_response = fake_response, retries = retries - 1, default_wait = default_wait)
 }
 
 # Private API request method.
@@ -80,7 +109,9 @@ request_edp_api <- function(method, path = '',  params = list(),
   pointer = request_pointer(...),
   options = request_options(...),  
   uri = file.path(conn$host, path), 
-  conn = get_connection(), ...)
+  conn = get_connection(), 
+  fake_response = NULL,
+  ...)
 {
   check_connection(conn)
 
@@ -139,14 +170,18 @@ request_edp_api <- function(method, path = '',  params = list(),
   }
 
   ### actual API request
-  res <- httr::VERB(
-    method,
-    uri,
+  res <- send_request(  
+    verb = method,
+    url = uri,
     httr::add_headers(headers),
     config = config,
     body = body,
     query = query,
-    encode = encode)
+    encode = encode,
+    fake_response = fake_response,
+    retries = options$retries,
+    default_wait = options$default_wait
+  )
   if (options$raw) return(res)
   # N.B: may die with an appropriate error message
   ret <- check_httr_response(res)
