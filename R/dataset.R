@@ -128,25 +128,53 @@ Dataset_query <- function(
   ...) 
 {
   dataset_id <- id(dataset_id)
+  .die_unless(length(limit) == 1 && is.finite(limit), 'you must set a limit')
+
   # filters: may be a JSON string or a R data structure
   if (.is_nz_string(filters))
     filters <- jsonlite::fromJSON(filters, simplifyVector = FALSE)
 
   params  <- preprocess_api_params()
+  api_path <- file.path("v2/datasets", dataset_id, 'data')
+
+  HARDLIMIT <- 10000
+  limit <- min(limit, HARDLIMIT)
+
   all <- params$all
   params$all <- NULL
 
-  df <- request_edp_api('POST', file.path("v2/datasets", dataset_id, 'data'), params = params, 
-      parse_as_df = TRUE, conn = conn, limit = limit, offset = offset, ...)
-  if (all) df <- fetch_all(df)
+  .query_chunk <- function(offset) {
+    request_edp_api('POST', api_path, params = params, parse_as_df = TRUE, 
+      conn = conn, limit = limit, offset = offset, ...)
+  }
+
+  df0 <- .query_chunk(offset)
+  total <- attr(df0, 'total')
+
+  if (all && total > nrow(df0)) {
+    nb_chunks <- ceiling( (total - nrow(df0)) / limit )
+    offsets <- seq.int(0, length.out = nb_chunks)*limit + nrow(df0)
+      browser()
+    dfs <- future.apply::future_lapply(offsets, .query_chunk, future.packages = 'quartzbio.edp')
+  }
+
+  dfs <- c(list(df0), dfs)
+  df <- do.call(rbind.data.frame, dfs)
 
   if (meta) {
-    fields <- DatasetFields(dataset_id, limit = 10000, conn = conn, all = TRUE)
+    fields <- DatasetFields(dataset_id, limit = HARDLIMIT, conn = conn, all = TRUE)
     df <- format_df_with_fields(df, fields)
   }
 
   df
 }
+
+
+Dataset_query_one_chunk <- function(dataset_id, params, conn, limit, offset, ...) {
+  request_edp_api('POST', file.path("v2/datasets", dataset_id, 'data'), params = params, 
+      parse_as_df = TRUE, conn = conn, limit = limit, offset = offset, ...)
+}
+
 
 ###
 ### utilities
