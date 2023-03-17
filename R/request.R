@@ -105,8 +105,39 @@ send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 
 # parse options: 
 # - parse_fast
 # -parse_as_df
-request_edp_api <- function(method, path = '',  params = list(), 
-  pointer = request_pointer(...),
+request_edp_api <- function(method, api, ..., params = list(), pointer = request_pointer(...))
+{
+  # pointer: NB: we only add page and offset params if > 0. 
+  # But we still use them to determine if we are page-based, offset-based or none 
+  # the 
+  if (length(pointer$limit)) params$limit <- pointer$limit
+  page <- pointer$page
+  offset <- pointer$offset
+
+  if (.empty(page) && .empty(offset)) # NOT paginated
+    return(request_edp_api2(method, api, ..., params = params))
+
+  # if (length(page) && page > 0) params$page <- page
+  # if (length(offset) && offset > 0) params$offset <- offset
+  fetch_page <- function(page = NULL, offset = NULL) {
+    if (length(page) && page > 1) params$page <- page
+    if (length(offset) && offset > 0) params$offset <- offset
+    res <- request_edp_api2(method, api, ..., params = params)
+    size <- if (is.data.frame(res)) nrow(res) else length(res)
+    total <- attr(res, 'total')
+    
+    attr(res, 'page_index') <- index
+
+    res
+  }
+  index <- new_page_index(page = page, offset = offset, size = size, total = total)
+  res <- fetch_page(page = page, offset = offset)
+  attr(res, 'fetch_page') <- fetch_page
+
+  res
+}
+
+request_edp_api2 <- function(method, path = '',  params = list(), 
   options = request_options(...),  
   uri = file.path(conn$host, path), 
   conn = get_connection(), 
@@ -116,13 +147,16 @@ request_edp_api <- function(method, path = '',  params = list(),
   check_connection(conn)
 
   ### params
-  if (length(pointer$limit)) params$limit <- pointer$limit
-  if (length(pointer$page)) params$page <- pointer$page
-  if (length(pointer$offset)) {
-    params$offset <- pointer$offset
-    if (params$offset < 0) return(NULL)
-  }
 
+  # pointer: NB: we only add page and offset params if > 0. 
+  # But we still use them to determine if we are page-based, offset-based or none 
+  # the 
+  # if (length(pointer$limit)) params$limit <- pointer$limit
+  # page <- pointer$page
+  # offset <- pointer$offset
+  # if (length(page) && page > 0) params$page <- page
+  # if (length(offset) && offset > 0) params$offset <- offset
+  
   query <- list()
   body <- list()
   if (length(params)) {
@@ -197,12 +231,14 @@ request_edp_api <- function(method, path = '',  params = list(),
 
   if (options$postprocess) {
     args <- list(method = method, uri = uri, params = params, options = options, conn = conn)
-    fetchers <- create_fetchers(args, pointer)
+    # fetchers <- create_fetchers(args, pointer)
+    fetchers  <- NULL
     content <- postprocess_response(content, is_df = options$parse_as_df, conn = conn, fetchers = fetchers)
   }
 
   content
 }
+
 
 # function dedicated to request_edp_api(). Will automatically create the next and prev fetchers 
 create_fetchers <- function(args, pointer) {

@@ -138,3 +138,6 @@ build_httr_response <- function(url,
   if (!length(a)) b else a
 }
 
+is_defined_scalar_integer <- function(x) {
+  length(x) == 1 && is.numeric(x) && is.finite(x) && as.integer(x) == x
+}

@@ -150,7 +150,7 @@ Dataset_query <- function(
 
   df0 <- .query_chunk(offset)
   total <- attr(df0, 'total')
-
+  dfs <- NULL
   if (all && total > nrow(df0)) {
     nb_chunks <- ceiling( (total - nrow(df0)) / limit )
     offsets <- seq.int(0, length.out = nb_chunks)*limit + nrow(df0)
@@ -169,11 +169,6 @@ Dataset_query <- function(
   df
 }
 
-
-Dataset_query_one_chunk <- function(dataset_id, params, conn, limit, offset, ...) {
-  request_edp_api('POST', file.path("v2/datasets", dataset_id, 'data'), params = params, 
-      parse_as_df = TRUE, conn = conn, limit = limit, offset = offset, ...)
-}
 
 
 ###
