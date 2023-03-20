@@ -10,7 +10,8 @@ Vaults <- function(
   storage_class = NULL,
   account_id = NULL,
   # exclude_group_id = NULL,
-  limit = NULL, page = 0, 
+  page = NULL,
+  limit = NULL, 
   conn = get_connection()) 
 {
   by <- preprocess_api_params()

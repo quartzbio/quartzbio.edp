@@ -105,44 +105,63 @@ send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 
 # parse options: 
 # - parse_fast
 # -parse_as_df
-request_edp_api <- function(method, api, ..., params = list(), pointer = request_pointer(...))
+request_edp_api <- function(method, api, 
+  params = list(),  
+  options = request_options(...),  
+  pointer = request_pointer(...),
+  conn = get_connection(),
+  ...)
 {
   # pointer: NB: we only add page and offset params if > 0. 
   # But we still use them to determine if we are page-based, offset-based or none 
   # the 
   if (length(pointer$limit)) params$limit <- pointer$limit
-  page <- pointer$page
-  offset <- pointer$offset
 
-  if (.empty(page) && .empty(offset)) # NOT paginated
-    return(request_edp_api2(method, api, ..., params = params))
-
-  # if (length(page) && page > 0) params$page <- page
-  # if (length(offset) && offset > 0) params$offset <- offset
-  fetch_page <- function(page = NULL, offset = NULL) {
-    if (length(page) && page > 1) params$page <- page
-    if (length(offset) && offset > 0) params$offset <- offset
-    res <- request_edp_api2(method, api, ..., params = params)
-    size <- if (is.data.frame(res)) nrow(res) else length(res)
-    total <- attr(res, 'total')
-    
-    attr(res, 'page_index') <- index
-
-    res
+  index_name <- 'page'
+  index_default <- 1L
+  if (options$parse_as_df) {
+    index_name <- 'offset'
+    index_default <- 0L
   }
-  index <- new_page_index(page = page, offset = offset, size = size, total = total)
-  res <- fetch_page(page = page, offset = offset)
-  attr(res, 'fetch_page') <- fetch_page
+  
+  index <- pointer[[index_name]]
+
+
+  fetch_page <- function(index) {
+    if (!.empty(index)) params[[index_name]] <- index
+
+    request_edp_api2(method, api, params = params, options = options, conn = conn)
+  }
+
+  res <- fetch_page(index)
+
+  size <- if (is.data.frame(res)) nrow(res) else length(res)
+  total <- attr(res, 'total')
+
+  # page_index <- new_page_index(page = page, offset = offset, size = size, total = total)
+  page_index <- list(index = index, index_name = index_name, size = size, total = total)
+
+  fetcher <- if (options$parse_as_df) {
+    function(index) {
+      if (missing(index)) return(page_index)
+      fetch_page(page_to_offset(index, size))
+    }
+  } else {
+    function(index) {
+      if (missing(index)) return(page_index)
+      fetch_page(index)
+    }
+  }
+
+  attr(res, 'fetcher') <- fetcher
 
   res
 }
 
-request_edp_api2 <- function(method, path = '',  params = list(), 
-  options = request_options(...),  
+request_edp_api2 <- function(method, path = '',  params, options,
   uri = file.path(conn$host, path), 
   conn = get_connection(), 
-  fake_response = NULL,
-  ...)
+  fake_response = NULL)
 {
   check_connection(conn)
 
