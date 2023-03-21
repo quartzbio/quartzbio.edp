@@ -102,9 +102,13 @@ send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 
 }
 
 # Private API request method.
-# parse options: 
-# - parse_fast
-# -parse_as_df
+# wrapper for request_edp_api_no_pager that provides a pager for the request
+# i.e. the ability to fetch the other pages of data, either based on the "page" API param
+# or on the "offset" API param
+# the pager will be stored as the "pager" attribute, and is a function such as: 
+# - pager() return the page index information
+# - pager(NULL) return initial query
+# - pager(i) returns the page #i of data, even if it has to use the "offset" to achieve that 
 request_edp_api <- function(method, api, 
   params = list(),  
   options = request_options(...),  
@@ -116,49 +120,77 @@ request_edp_api <- function(method, api,
   # But we still use them to determine if we are page-based, offset-based or none 
   # the 
   if (length(pointer$limit)) params$limit <- pointer$limit
+  offset <- pointer$offset
+  page <- pointer$page
 
   index_name <- 'page'
   index_default <- 1L
-  if (options$parse_as_df) {
-    index_name <- 'offset'
-    index_default <- 0L
+  USE_OFFSET <- options$parse_as_df
+
+  # will be defined later
+  PAGE_INDEX <- NULL
+  SIZE <- NULL
+
+  pager <- function(index, offset = NULL, page = NULL) {
+    # N.B: for the first call, page_index is not initialized but index == NULL
+    if (missing(index)) return(PAGE_INDEX)
+
+    # initial values
+    if (length(offset)) {
+      params$offset <- offset
+    } else if (length(page)) {
+      params$page <- page
+    } else {
+    # use default from params if index == NULL
+      if (!.empty(index)) {
+        # update index
+        PAGE_INDEX$index <- index 
+
+        # we have an index
+        if (USE_OFFSET) { # convert if to offset if needed
+          params$offset <- page_to_offset(index, SIZE)
+        } else {
+          params$page <- index
+        }
+      }
+    }
+
+    res <- request_edp_api_no_pager(method, api, params = params, options = options, conn = conn)
+    if (!length(res)) return(res)
+
+    current_fun <- sys.function()
+    # create new closure to store new value of PAGE_INDEX
+    attr(res, 'pager') <- function(index) { 
+      if (missing(index)) return(PAGE_INDEX)
+      current_fun(index)
+    }
+
+    res
   }
-  
-  index <- pointer[[index_name]]
 
+  # initial request
+  res <- pager(NULL, offset = offset, page = page)
 
-  fetch_page <- function(index) {
-    if (!.empty(index)) params[[index_name]] <- index
-
-    request_edp_api2(method, api, params = params, options = options, conn = conn)
-  }
-
-  res <- fetch_page(index)
-
-  size <- if (is.data.frame(res)) nrow(res) else length(res)
+  # now we can at last initialize size and total
+  SIZE <- if (is.data.frame(res)) nrow(res) else length(res)
   total <- attr(res, 'total')
 
-  # page_index <- new_page_index(page = page, offset = offset, size = size, total = total)
-  page_index <- list(index = index, index_name = index_name, size = size, total = total)
-
-  fetcher <- if (options$parse_as_df) {
-    function(index) {
-      if (missing(index)) return(page_index)
-      fetch_page(page_to_offset(index, size))
-    }
+  index <- 1L
+  if (USE_OFFSET) {
+    if (length(offset))
+      index <- offset_to_page(offset, SIZE)
   } else {
-    function(index) {
-      if (missing(index)) return(page_index)
-      fetch_page(index)
-    }
+    if (length(page))
+      index <- page
   }
 
-  attr(res, 'fetcher') <- fetcher
+  nb_pages <- ceiling(total / SIZE)
+  PAGE_INDEX <- list(index = index, nb = nb_pages, total = total)
 
   res
 }
 
-request_edp_api2 <- function(method, path = '',  params, options,
+request_edp_api_no_pager <- function(method, path = '',  params, options,
   uri = file.path(conn$host, path), 
   conn = get_connection(), 
   fake_response = NULL)

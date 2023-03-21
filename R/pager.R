@@ -24,3 +24,8 @@ new_page_index <- function(size, total, offset = NULL, page = NULL) {
 
 offset_to_page <- function(offset, size) { ceiling(offset / size) + 1 }
 page_to_offset <- function(page, size) {  (page - 1) * size }
+
+
+# util
+#' @export 
+pager <- function(x) attr(x, 'pager')

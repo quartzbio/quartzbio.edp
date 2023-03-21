@@ -14,17 +14,17 @@ fetch_url <- function(x, direction, conn) {
   request_edp_api('GET', uri = links[[direction]], conn = conn, pointer = NULL)
 }
 
-#' @export
-fetch_next.edp <- function(x,  conn = retrieve_connection(x)) {
-  res <- fetch_url(x, 'next', conn)
-  if (length(res)) res else NULL
-}
+# #' @export
+# fetch_next.edp <- function(x,  conn = retrieve_connection(x)) {
+#   res <- fetch_url(x, 'next', conn)
+#   if (length(res)) res else NULL
+# }
 
-#' @export
-fetch_prev.edp <- function(x,  conn = retrieve_connection(x)) {
-  res <- fetch_url(x, 'prev', conn)
-  if (length(res)) res else NULL
-}
+# #' @export
+# fetch_prev.edp <- function(x,  conn = retrieve_connection(x)) {
+#   res <- fetch_url(x, 'prev', conn)
+#   if (length(res)) res else NULL
+# }
 
 #' fetch all next chunks/pages of data and aggregate them in a single data chunk
 #' @param x   a chunk of data
