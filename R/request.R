@@ -302,43 +302,6 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
   content
 }
 
-
-# # function dedicated to request_edp_api(). Will automatically create the next and prev fetchers 
-# create_fetchers <- function(args, pointer) {
-#   if (!length(pointer$limit)) return(NULL)
-#   if (!length(pointer$offset)) pointer$offset <- 0L
-
-#   fetcher <- function(x) {
-#     args$pointer <- x
-#     do.call(request_edp_api, args)
-#   }
-
-#   fetch_next <- function() {
-#     x <- pointer
-#     x$offset <- x$offset + x$limit
-#     fetcher(x)
-#   }
-#   fetch_prev <- function() {
-#     x <- pointer
-#      x$offset <- x$offset - x$limit
-#     fetcher(x)
-#   }
-
-#   list(`next` = fetch_next, `prev` = fetch_prev)
-# }
-
-# setup_prev_next <- function(x, fun, limit, offset) {
-#   if (!length(x)) return(x)
-#   # fun2 <- function(limit, page) setup_prev_next(fun(limit, page), fun, limit, page)
-
-#   attr(x, 'next') <- function() { fun(limit, offset + limit)}
-#   attr(x, 'prev') <- function() { fun(limit, offset - limit) }
-
-#   x
-# }
-
-
-
 # process a list of params, which may have been set or not.
 # apply the constraints (unique, empty) to check those params, and return the appropriate ones
 # a param may be a sublist, in which case it is deemed set iff all its items are set
