@@ -38,6 +38,8 @@ fetch_all <- function(x) {
     res <- do.call(rbind.data.frame, lst)
   } else {
     res <- do.call(c, lst)
+    # apply class from x
+    class(res) <- class(x)
   }
 
   # remove obsolete attributes
