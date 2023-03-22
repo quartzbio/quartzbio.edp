@@ -133,7 +133,6 @@ request_edp_api <- function(method, api,
 
   pager <- function(index, offset = NULL, page = NULL) {
     # N.B: for the first call, page_index is not initialized but index == NULL
-    if (missing(index)) return(PAGE_INDEX)
 
     # initial values
     if (length(offset)) {
