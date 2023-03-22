@@ -7,7 +7,7 @@ format_auth_header <- function(secret) {
 
 
 preprocess_api_params <- function(
-  exclude = c('conn', 'limit', 'page'), 
+  exclude = c('conn', 'limit', 'page', 'offset'), 
   match_args = list(
     capacity = c('small', 'medium', 'large', 'xlarge'),
     commit_mode = c('append', 'overwrite', 'upsert', 'delete'),
@@ -45,10 +45,10 @@ preprocess_api_params <- function(
 # N.: param ... is silently ignored
 # create the request params involved in referencing a piece of data
 
-request_pointer <- function(offset = NULL, page = NULL, limit = NULL, ...) {
+request_pointer <- function(offset = NULL, page = NULL, limit = NULL, total = NULL, ...) {
   .die_if(length(offset) && length(page), 'you can not set both "page" AND "offset"')
 
-  list(offset = offset, page = page, limit = limit)
+  list(offset = offset, page = page, limit = limit, total = total)
 }
 
 # N.: param ... is silently ignored
@@ -158,6 +158,7 @@ request_edp_api <- function(method, api,
     res <- request_edp_api_no_pager(method, api, params = params, options = options, conn = conn)
     if (!length(res)) return(res)
 
+    ### set pager
     current_fun <- sys.function()
     # create new closure to store new value of PAGE_INDEX
     attr(res, 'pager') <- function(index) { 
@@ -171,9 +172,22 @@ request_edp_api <- function(method, api,
   # initial request
   res <- pager(NULL, offset = offset, page = page)
 
+  # N.B: sometimes the total can be explicitely given with the request, it ends up in pointer$total
+  total <- attr(res, 'total') %UNLESS_TRUE_INT% pointer$total
+  if (!length(total) || is.na(total)) {
+    # remove pager
+    attr(res, 'pager') <- NULL
+    return(res)
+  }
+
   # now we can at last initialize size and total
   SIZE <- if (is.data.frame(res)) nrow(res) else length(res)
-  total <- attr(res, 'total')
+  # fix for API bug, cf https://precisionformedicine.atlassian.net/browse/SBP-527
+  # if (length(total) && is.na(total)) {
+  #   object_id <- attr(res, "object_id")
+  #   if (length(object_id)) {
+  #     warning('got null "total" from API, fetching instead of number of records')
+  # }
 
   index <- 1L
   if (USE_OFFSET) {
@@ -274,7 +288,7 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
 
   content <- if (options$parse_fast) {
     max_simplify_lvl <- if (options$parse_as_df) 'data_frame' else 'list'
-    RcppSimdJson::fparse(res$content, max_simplify_lvl = max_simplify_lvl)
+    RcppSimdJson::fparse(res$content, max_simplify_lvl = max_simplify_lvl, int64_policy = "string")
 
   } else {
     httr::content(res, encoding = options$encoding, simplifyDataFrame = options$parse_as_df)
@@ -282,48 +296,46 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
 
   if (options$postprocess) {
     args <- list(method = method, uri = uri, params = params, options = options, conn = conn)
-    # fetchers <- create_fetchers(args, pointer)
-    fetchers  <- NULL
-    content <- postprocess_response(content, is_df = options$parse_as_df, conn = conn, fetchers = fetchers)
+    content <- postprocess_response(content, is_df = options$parse_as_df, conn = conn)
   }
 
   content
 }
 
 
-# function dedicated to request_edp_api(). Will automatically create the next and prev fetchers 
-create_fetchers <- function(args, pointer) {
-  if (!length(pointer$limit)) return(NULL)
-  if (!length(pointer$offset)) pointer$offset <- 0L
+# # function dedicated to request_edp_api(). Will automatically create the next and prev fetchers 
+# create_fetchers <- function(args, pointer) {
+#   if (!length(pointer$limit)) return(NULL)
+#   if (!length(pointer$offset)) pointer$offset <- 0L
 
-  fetcher <- function(x) {
-    args$pointer <- x
-    do.call(request_edp_api, args)
-  }
+#   fetcher <- function(x) {
+#     args$pointer <- x
+#     do.call(request_edp_api, args)
+#   }
 
-  fetch_next <- function() {
-    x <- pointer
-    x$offset <- x$offset + x$limit
-    fetcher(x)
-  }
-  fetch_prev <- function() {
-    x <- pointer
-     x$offset <- x$offset - x$limit
-    fetcher(x)
-  }
+#   fetch_next <- function() {
+#     x <- pointer
+#     x$offset <- x$offset + x$limit
+#     fetcher(x)
+#   }
+#   fetch_prev <- function() {
+#     x <- pointer
+#      x$offset <- x$offset - x$limit
+#     fetcher(x)
+#   }
 
-  list(`next` = fetch_next, `prev` = fetch_prev)
-}
+#   list(`next` = fetch_next, `prev` = fetch_prev)
+# }
 
-setup_prev_next <- function(x, fun, limit, offset) {
-  if (!length(x)) return(x)
-  # fun2 <- function(limit, page) setup_prev_next(fun(limit, page), fun, limit, page)
+# setup_prev_next <- function(x, fun, limit, offset) {
+#   if (!length(x)) return(x)
+#   # fun2 <- function(limit, page) setup_prev_next(fun(limit, page), fun, limit, page)
 
-  attr(x, 'next') <- function() { fun(limit, offset + limit)}
-  attr(x, 'prev') <- function() { fun(limit, offset - limit) }
+#   attr(x, 'next') <- function() { fun(limit, offset + limit)}
+#   attr(x, 'prev') <- function() { fun(limit, offset - limit) }
 
-  x
-}
+#   x
+# }
 
 
 

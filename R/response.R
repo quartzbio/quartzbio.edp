@@ -37,19 +37,18 @@ check_httr_response <- function(res) {
 }
 
 
-postprocess_df <- function(res, key, conn, fetchers = NULL) {
+postprocess_df <- function(res, key, conn) {
   df <- edpdf(res[[key]])
   # store other items as attributes
   items <- setdiff(names(res), c(key, 'class', 'class_name'))
-  for (attr in items) 
-    attr(df, attr) <- res[[attr]]
+  for (attr in items) {
+    # fix for NULL attributes that should NOT be NULL
+    value <- res[[attr]] %IF_EMPTY_THEN% NA
+    attr(df, attr) <- value
+  }
 
   attr(df, 'connection') <- as.environment(conn)
 
-  if (length(fetchers)) {
-    attr(df, 'next') <- fetchers$`next`
-    attr(df, 'prev') <- fetchers$prev
-  }
 
   df
 }
@@ -58,7 +57,7 @@ postprocess_df <- function(res, key, conn, fetchers = NULL) {
 # - result for one object/entity
 # - results for a list of objects/entitities
 # - results for some data as a dataframe
-postprocess_response <- function(res, is_df, conn, call = NULL, fetchers = NULL) {
+postprocess_response <- function(res, is_df, conn, call = NULL) {
   # dispatch
   class_name <- res$class_name
   if (!.is_nz_string(class_name)) class_name <- ''
@@ -76,7 +75,7 @@ postprocess_response <- function(res, is_df, conn, call = NULL, fetchers = NULL)
   value <- res[[key]]
 
   x <- if (is_df) {
-    postprocess_df(res, key, conn, fetchers = fetchers)
+    postprocess_df(res, key, conn)
     } else {
     postprocess_entity_list(res, key, conn)
   }

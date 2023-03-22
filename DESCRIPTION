@@ -19,7 +19,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests:
     future,
-    future.appy,
+    future.apply,
     openssl,
     qb.web,
     RcppSimdJson,

@@ -141,3 +141,7 @@ build_httr_response <- function(url,
 is_defined_scalar_integer <- function(x) {
   length(x) == 1 && is.numeric(x) && is.finite(x) && as.integer(x) == x
 }
+
+`%UNLESS_TRUE_INT%` <- function(a, b) {
+  if (is_defined_scalar_integer(a)) a else b 
+}

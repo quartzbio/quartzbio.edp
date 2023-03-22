@@ -93,14 +93,28 @@ File_query <- function(id, filters = NULL, limit = 10000, offset = NULL, all = F
     conn = get_connection()) 
 {
   id <- id(id)
+  params <- list()
+
   # filters: may be a JSON string or a R data structure
   if (.is_nz_string(filters))
     filters <- jsonlite::fromJSON(filters, simplifyVector = FALSE)
 
-  params <- list(filters = filters)
+
+  total <- NULL
+  if (.empty(filters)) {
+    # cf https://precisionformedicine.atlassian.net/browse/SBP-527
+    # no filters --> use File documents_count
+    msg('fetching the number of rows of the file...')
+
+    fi <- File(id, conn = conn)
+    total <- fi$documents_count
+    msg('found %s lines', total)
+  } else {
+    params$filters <- filters
+  }
 
   df <- request_edp_api('POST', file.path("v2/objects", id, 'data'), params = params, 
-      parse_as_df = TRUE, conn = conn, limit = limit, offset = offset)
+      parse_as_df = TRUE, conn = conn, limit = limit, offset = offset, total = total)
   if (all) df <- fetch_all(df)
   
   df
