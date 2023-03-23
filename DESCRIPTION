@@ -21,6 +21,7 @@ Suggests:
     future,
     future.apply,
     openssl,
+    progressr,
     qb.web,
     RcppSimdJson,
     shiny,

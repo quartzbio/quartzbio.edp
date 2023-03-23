@@ -92,7 +92,9 @@ send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 
   .die_unless(retries > 0, 
     'received a "Too many requests" response (429) but retries are exhausted, giving up...')
   
-  retry_after <- res$headers[["retry-after"]] %IF_EMPTY_THEN% default_wait
+  str(res$headers)
+  retry_after <- as.numeric(res$headers[["retry-after"]] %IF_EMPTY_THEN% default_wait)
+  msg('retry_after=%s', retry_after)
   wait <- retry_after * (stats::runif(1) + 1) # add some jitter
   msg('received a "Too many requests" response (429). will retry in %ss...', wait)
 

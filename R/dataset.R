@@ -143,23 +143,12 @@ Dataset_query <- function(
   all <- params$all
   params$all <- NULL
 
-  .query_chunk <- function(offset) {
-    request_edp_api('POST', api_path, params = params, parse_as_df = TRUE, 
-      conn = conn, limit = limit, offset = offset, ...)
-  }
+  df <- request_edp_api('POST', api_path, params = params, parse_as_df = TRUE,  conn = conn, 
+    limit = limit, offset = offset, ...)
 
-  df0 <- .query_chunk(offset)
-  total <- attr(df0, 'total')
-  dfs <- NULL
-  if (all && total > nrow(df0)) {
-    nb_chunks <- ceiling( (total - nrow(df0)) / limit )
-    offsets <- seq.int(0, length.out = nb_chunks)*limit + nrow(df0)
-      browser()
-    dfs <- future.apply::future_lapply(offsets, .query_chunk, future.packages = 'quartzbio.edp')
+  if (all) {
+    df <- fetch_all(df)
   }
-
-  dfs <- c(list(df0), dfs)
-  df <- do.call(rbind.data.frame, dfs)
 
   if (meta) {
     fields <- DatasetFields(dataset_id, limit = HARDLIMIT, conn = conn, all = TRUE)

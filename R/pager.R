@@ -28,7 +28,17 @@ fetch_all <- function(x) {
   pages <- compute_next_pages(page_index)
   if (!length(pages)) return(x)
 
-  lst <- future.apply::future_lapply(pages, pager)
+  p <- progressr::progressor(along = pages)
+
+  fun <- function(x) {
+    p(sprintf('page=%s', x))
+    pager(x)
+  }
+
+  lst <- future.apply::future_lapply(pages, fun, 
+    future.seed = NULL, 
+    future.packages ='quartzbio.edp')
+
   lst <- c(list(x), lst)
 
   # how to bind results ?
