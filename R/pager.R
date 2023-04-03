@@ -21,7 +21,7 @@ fetch_page <- function(x, delta) {
 #' @param x   an API result
 #' @return the object resulting in combining the current object/page and all subsequent pages
 #' @export
-fetch_all <- function(x) {
+fetch_all <- function(x, ...) {
   pager <- pager(x) %IF_EMPTY_THEN% return(NULL)
   page_index <- pager()
 
@@ -37,15 +37,16 @@ fetch_all <- function(x) {
 
   lst <- future.apply::future_lapply(pages, fun, 
     future.seed = NULL, 
-    future.packages ='quartzbio.edp')
+    future.packages ='quartzbio.edp', ...)
 
   lst <- c(list(x), lst)
-
+  msg('got all results.')
   # how to bind results ?
   # current naive implementation
   res <- NULL
   if (is.data.frame(lst[[1]])) {
-    res <- do.call(rbind.data.frame, lst)
+    tt <- system.time(res <- do.call(rbind.data.frame, lst))
+    msg('took %s to bind the data frames', tt[3])
   } else {
     res <- do.call(c, lst)
     # apply class from x
