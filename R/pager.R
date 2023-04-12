@@ -19,6 +19,7 @@ fetch_page <- function(x, delta) {
 #' fetch all the pages for a possibly incomplete paginated API result
 #' 
 #' @param x   an API result
+#' @param ... passed to future.apply::future_lapply()
 #' @return the object resulting in combining the current object/page and all subsequent pages
 #' @export
 fetch_all <- function(x, ...) {

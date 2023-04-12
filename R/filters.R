@@ -117,7 +117,6 @@ lst2filter <- function(lst) {
     # must evaluate rhs to eval "-"  or "+" R numeric ops
     rhs <- eval_numeric_litterals(rhs)
   }
-  #     browser()
 
   list(lhs, rhs)
 }

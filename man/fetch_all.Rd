@@ -8,6 +8,8 @@ fetch_all(x, ...)
 }
 \arguments{
 \item{x}{an API result}
+
+\item{...}{passed to future.apply::future_lapply()}
 }
 \value{
 the object resulting in combining the current object/page and all subsequent pages
