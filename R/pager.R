@@ -46,7 +46,17 @@ fetch_all <- function(x, ...) {
   # current naive implementation
   res <- NULL
   if (is.data.frame(lst[[1]])) {
-    tt <- system.time(res <- do.call(rbind.data.frame, lst))
+    # implement fastest method with fallback in case of error
+    tt <- system.time(res <- try(as.data.frame(dplyr::bind_rows(lst)), TRUE), gcFirst = FALSE)
+    if (.is_error(res)) {
+      # errors may happen for example if the JSON data type vary across pages
+      # cf https://precisionformedicine.atlassian.net/browse/SBP-536
+      warning(.safe_sprintf('got error using dplyr::bind_rows() to aggregate the paginated results: "%s"', 
+        .get_error_msg(res)))
+
+      msg('got error using dplyr::bind_rows() to aggregate the paginated results, retrying with rbind.data.frame()...')
+      tt <- system.time(res <- do.call(rbind.data.frame, lst), FALSE)
+    }
     msg('took %s to bind the data frames', tt[3])
   } else {
     res <- do.call(c, lst)
