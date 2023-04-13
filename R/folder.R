@@ -16,21 +16,6 @@ Folder <- function(id = NULL, full_path = NULL, path = NULL, vault_id = NULL,
 {
   Object(object_type = 'folder', id = id, full_path = full_path, path = path, vault_id = vault_id, 
     conn = conn)
-  # if (length(id)) {
-  #   id <- id(id)
-  #   o <- Object(id = id, conn = get_connection())
-  #   # check that it is indeed a folder
-  #   .die_unless(o$object_type == 'folder','Object id=%s is not a folder', id)
-  #   return(o)
-  # }
-
-  # lst <- Objects(object_type = 'folder', vault_id = vault_id, vault_full_path = full_path, 
-  #   path = path)
-
-  # if (!length(lst)) return(NULL) # no result / not found
-  # .die_if(length(lst) > 1, 'ERROR, found multiple results') # should not happen
-
-  # lst[[1]]
 }
 
 #' creates  a folder.
@@ -48,12 +33,11 @@ Folder_create <- function(vault_id, path, recursive = TRUE, parent_folder_id = N
   parent_folder_id <- id(parent_folder_id)
   path <- path_make_absolute(path)
   parent_path <- dirname(path)
-    folders <- strsplit(path, '/', fixed = TRUE)[[1]][-1]
-
+  folders <- strsplit(path, '/', fixed = TRUE)[[1]][-1]
 
   # do we need a parent ?
   if (!length(parent_folder_id) && parent_path != '/') {
-    parent <- Folder(path = parent_path, vault_id = vault_id, conn = conn)
+    parent <- Folders(path = parent_path, vault_id = vault_id, conn = conn)[[1]]
     .die_if(!length(parent) && !recursive, 'not allowed to create parent folder (recursive == FALSE)')
     if (!length(parent)) {
       parent <- Folder_create(vault_id, parent_path, recursive = recursive, conn = conn)
@@ -72,7 +56,7 @@ Folder_fetch_or_create <- function(vault_id, path, conn = get_connection()) {
   vault_id <- id(vault_id)
 
   # must get a folder
-  fo <- Folder(path = path, vault_id = vault_id, conn = conn)
+  fo <- Folders(path = path, vault_id = vault_id, conn = conn)[[1]]
   if (!length(fo)) {
     # no parent --> create it
     fo <- Folder_create(vault_id, path, conn = conn)
