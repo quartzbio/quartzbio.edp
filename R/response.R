@@ -88,8 +88,7 @@ postprocess_response <- function(res, is_df, conn, call = NULL) {
 # process a response that contains only a single entity: classify it, and classify its ids
 postprocess_single_entity <- function(res, conn) {
   res <- classify_entity(res)
-  res <- classify_ids(res)
-
+  res <- apply_class_to_ids(res, detect_ids(res))
   attr(res, 'connection') <- as.environment(conn)
 
   res
@@ -98,10 +97,11 @@ postprocess_single_entity <- function(res, conn) {
 # return a edplist
 postprocess_entity_list <- function(res, key, conn) {
   lst <- res[[key]]
-
+  if (!length(lst)) return(NULL)
   lst <- lapply(lst, classify_entity)
     # decorate objects
-  lst <- lapply(lst, classify_ids)
+  id_classes <- detect_ids(lst[[1]])
+  lst <- lapply(lst, apply_class_to_ids, id_classes)
 
     # check what kind of objects are in the list
   lst <- edplist(lst)
@@ -145,21 +145,36 @@ get_api_response_error_message <- function(res, default_message = '') {
 }
 
 
-classify_ids <- function(x) {
+detect_ids <- function(x) {
   # look for ids
-  id_names <- grep('_id$', names(x), value = TRUE)
-  for (name in id_names) {
-    if (length(x[[name]])) {
-      class_name <- head(tail(strsplit(name, '_')[[1]], 2), 1)
-      class_name  <- paste0(toupper(substring(class_name, 1, 1)), substring(class_name, 2))
-      class_name <- paste0(class_name, 'Id')
-      class(x[[name]]) <- c(class_name, class(x[[name]]))
+  is_id <- grepl('_id$', names(x)) & lengths(x) > 0
+  lst <- x[is_id]
 
-      x
-    }
+  # extract the part before _id (e.g. dataset_id --> dataset)
+  class_names <- sub('_.+$', '', names(lst))
+  # capitalize, e.g. dataset --> Dataset
+  class_names <- capitalize(class_names)
+  # suffix with Id
+  class_names <- paste0(class_names, 'Id')
+
+  current_classes <- lapply(lst, class)
+  for (i in seq_along(current_classes)) {
+    current_classes[[i]] <- c(class_names[i], current_classes[[i]])
   }
 
-  x
+  current_classes
+}
+
+
+apply_class_to_ids <- function(lst, id_classes) {
+  # cols <- intersect(names(id_classes), names(lst))
+  for (col in names(id_classes)) {
+    v <- lst[[col]]
+    if (length(v))
+      class(lst[[col]]) <- id_classes[[col]]
+  }
+
+ lst
 }
 
 
