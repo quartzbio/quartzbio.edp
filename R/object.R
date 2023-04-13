@@ -92,6 +92,7 @@ Object_update <- function(id,
   storage_class = NULL,
   conn = get_connection()) 
 {
+  id <- id(id)
   params <- preprocess_api_params()
   request_edp_api('PUT', file.path('v2/objects', id), conn = conn, params = params)
 }
