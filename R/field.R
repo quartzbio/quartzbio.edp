@@ -64,6 +64,8 @@ DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, co
 
   lst <- request_edp_api('GET', file.path("v2/datasets", dataset_id, 'fields'), params = params, 
      conn = conn, limit = limit, page = page, ...)
+  if (!length(lst)) return(NULL)
+
   if (all) lst <- fetch_all(lst)
 
   names(lst) <- elts(lst, 'name')
@@ -85,11 +87,14 @@ DatasetField <- function(field_id = NULL, dataset_id = NULL, name = NULL, conn =
       'both "dataset_id" and "name" are required to fetch a DataSetField by name' )
     fields <- DatasetFields(dataset_id, conn = conn)
     field <- fields[[name]]
-    .die_if(length(field) == 0, 'could not find a field named "%s"', name)
+    .die_if(length(field) == 0, 'field not foundn: "%s"', name)
     return(field)
   }
 
-  request_edp_api('GET', file.path("v2/dataset_fields", id), conn = conn)
+  field <- request_edp_api('GET', file.path("v2/dataset_fields", id), conn = conn) %IF_EMPTY_THEN%
+    .die('field id "%s" not found', id)
+  
+  field
 }
 
 

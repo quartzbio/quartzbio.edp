@@ -356,8 +356,8 @@ fetch_by <- function(path, by, conn, all = FALSE, unique = !empty, empty = FALSE
   o <- request_edp_api('GET', path, conn = conn,  params = params, ...)
 
   if (!all) {
+    .die_if(.empty(o), 'entity not found')
     if (!length(id)) {
-      if (!length(o)) return(NULL)
       o <- o[[1]]
     }
   }

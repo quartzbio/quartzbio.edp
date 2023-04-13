@@ -38,7 +38,11 @@ Objects <- function(
 Object <- function(id = NULL, full_path = NULL, path = NULL,  vault_id = NULL, object_type = NULL,
   conn = get_connection()) 
 {
-  if (length(id)) return(request_edp_api('GET', file.path('v2/objects', id(id))))
+  if (length(id)) {
+    o <- request_edp_api('GET', file.path('v2/objects', id(id)))
+    .die_if(.empty(o), 'entity not found')
+    return(o)
+  }
  
   vault_id <- id(vault_id)
   fetch_by("v2/objects", 
