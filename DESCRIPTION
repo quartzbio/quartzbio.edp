@@ -17,14 +17,17 @@ License: MIT + file LICENSE
 RoxygenNote: 7.1.2
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
 Suggests:
     dplyr,
     future,
     future.apply,
+    knitr,
     openssl,
     progressr,
     qb.web,
     RcppSimdJson,
+    rmarkdown,
     shiny,
     shinyjs,
     stats,

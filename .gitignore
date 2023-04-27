@@ -14,3 +14,5 @@
 .qbdev_devmode
 .qbrocker_bash_history
 man/.roxygen.md5
+/doc/
+/Meta/
