@@ -32,13 +32,25 @@ fetch_all <- function(x, ...) {
   p <- progressr::progressor(along = pages)
 
   fun <- function(x) {
+    if (!require('quartzbio.edp')) {
+      # we need to load quartzbio.edp in multisession plans
+      # the problem is that in dev it is not installed so we have to load it
+      # from source using qbdev
+      .die_unless(require('qbdev'), 'the quartzbio.edp R package was not found in future_lapply()')
+     
+      # qbdev is not declared as dependency, so we have to hack
+      ns <- getNamespace()
+      load_pkg <- get('load_pkg', ns)
+      load_pkg('quartzbio.edp')
+    }
     p(sprintf('page=%s', x))
     pager(x)
   }
 
   lst <- future.apply::future_lapply(pages, fun, 
     future.seed = NULL, 
-    future.packages ='quartzbio.edp', ...)
+    # future.packages ='quartzbio.edp',
+     ...)
 
   lst <- c(list(x), lst)
   msg('got all results.')
