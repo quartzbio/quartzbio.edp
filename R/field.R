@@ -123,6 +123,96 @@ R_TO_DATA_TYPES = list(
 )
 
 
+
+# create a model data frame (empty) from a list of colum names and some meta data fields
+# actions:
+# - order columns based on ordering
+# - type the data frame using the field types
+# - set the column names to the titles
+# - store the names, titles and descriptions as attributes
+create_model_df_from_fields <- function(cols, fields, 
+  titles = TRUE, 
+  ordering = TRUE)
+{
+  if (.empty(cols)) return(NULL)
+
+  .elts <- function(lst, name) unname(sapply(lst, getElement, name))
+ 
+  # the fields may not cover all columns, e.g. the _id, _commit ones
+  # we create default dummy fields for those to simplify the processing
+  .field  <- function(name) {
+    list(name = name, title = name, description = '', data_type = 'string', ordering = NULL)
+  }
+
+  field_names <- .elts(fields, 'name')
+
+  missings <- setdiff(cols, field_names)
+  missing_fields <- lapply(missings, .field)
+  fields <- c(fields, missing_fields)
+  names(fields) <- c(field_names, missings)
+
+  # N.B: reorder by cols
+  fields <- fields[cols]
+
+  # !! must be first
+  if (ordering) {
+    # use ordering if set, otherwise the current ordering
+    orderings <- .elts(fields, 'ordering')
+    missings <- lengths(orderings) == 0
+
+    if (any(missings)) {
+      maxo <- if (all(missings)) 0 else max(unlist(orderings, recursive = FALSE), na.rm = TRUE) + 1
+      missing_orderings <- seq.int(maxo, length.out = sum(missings))
+      orderings[missings] <- missing_orderings
+    }
+    ordering <- order(unlist(orderings, recursive = FALSE))
+    fields <- fields[ordering]
+    cols <- names(fields)
+  }
+
+  model <- vector(mode = 'list', length = length(cols))
+  types <- .elts(fields, 'data_type')
+  r_types <- DATA_TYPES_TO_R[types]
+  df <- lapply(r_types, vector)
+
+  names(df) <- if (titles) .elts(fields, 'title') else cols
+  # crude way to convert to data frame, but it PRESERVES list columns
+  class(df)  <- 'data.frame'
+
+  for (x in c('name', 'title',  'description', 'data_type')) {
+    attr(df, paste0('field_', x, 's')) <-  .elts(fields, x)
+  }
+
+  df
+}
+
+# format a data frame like a model data frame: i.e copy
+# - the columns order
+# - the field types
+# - the column names
+# - the "field_" attributes
+# the "model" data frame is assumed to have been generated either by create_model_df_from_fields()
+# or by this very same function
+# N.B: the mapping of columns between the df and the model is performed using
+# the "field_names" attribute of the model 
+# N.B2: tested with create_model_df_from_fields()
+format_df_like_model <- function(df, model) {
+  ### mapping
+  field_names <- attr(model, 'field_names')
+  .die_if(.empty(field_names), 'error in model, attribute "field_names" is empty')
+
+  missing_from_model <- setdiff(names(df), field_names)
+  .die_unless(.empty(missing_from_model), 'these columns are not in the model: "%s"', missing_from_model)
+
+  model <- model[, field_names %in% names(df), drop = FALSE]
+  field_names <- attr(model, 'field_names')
+  browser()
+
+  idx <- match(names(df), field_names)
+  df <- df[, idx, drop = FALSE]
+
+}
+
 # actions:
 # - order columns based on ordering
 # - type the data frame using the field types
@@ -178,7 +268,7 @@ format_df_with_fields <- function(df, fields,
     for (col in df_names) {
       ftype <- fields[[col]]$data_type
       if (length(ftype)) {
-        df_type <- class(df[[col]])[1]
+        df_type <- class(df[[col]])[1] # not used
         expected_type <- DATA_TYPES_TO_R[[ftype]]
         # defensive programming
         .die_unless(.is_nz_string(expected_type), 'unknown data_type "%s"', ftype)
