@@ -195,22 +195,37 @@ create_model_df_from_fields <- function(cols, fields,
 # or by this very same function
 # N.B: the mapping of columns between the df and the model is performed using
 # the "field_names" attribute of the model 
-# N.B2: tested with create_model_df_from_fields()
+# N.B 2: tested with create_model_df_from_fields()
+# N.B 3: both data franes must have the same fields
 format_df_like_model <- function(df, model) {
   ### mapping
   field_names <- attr(model, 'field_names')
   .die_if(.empty(field_names), 'error in model, attribute "field_names" is empty')
 
-  missing_from_model <- setdiff(names(df), field_names)
-  .die_unless(.empty(missing_from_model), 'these columns are not in the model: "%s"', missing_from_model)
+  .die_unless(setequal(names(df), field_names), 'different fields')
 
-  model <- model[, field_names %in% names(df), drop = FALSE]
-  field_names <- attr(model, 'field_names')
-  browser()
-
-  idx <- match(names(df), field_names)
+  ### reorder like the model
+  idx <- match(field_names, names(df))
   df <- df[, idx, drop = FALSE]
 
+  ### set field types
+  for (i in seq_along(df)) {
+    if (class(df[[i]]) != class(model[[i]])) {
+      class(df[[i]]) <- class(model[[i]])
+    }
+  }
+
+  ### set titles/column names
+  names(df) <- names(model)
+
+  # set field attributes
+  attrs <- attributes(model)
+  attrs <- attrs[grepl('^field_', names(attrs))]
+  for (attname in names(attrs)) {
+    attr(df, attname) <- attrs[[attname]]
+  }
+
+  df
 }
 
 # actions:
@@ -224,85 +239,9 @@ format_df_with_fields <- function(df, fields,
   ordering = TRUE, 
   attributes = TRUE) 
 {
-  if (.empty(df)) return(df)
-
-  # save attributes
-  attrs <- attributes(df)
-
-  .elts <- function(lst, name) unname(sapply(lst, getElement, name))
- 
-  # the fields may not cover all columns, e.g. the _id, _commit ones
-  # we create default dummy fields for those to simplify the processing
-  .field  <- function(name) {
-    list(name = name, title = name, description = '', data_type = NULL, ordering = NULL)
-  }
-
-  field_names <- .elts(fields, 'name')
-  df_names <- names(df)
-
-  missings <- setdiff(df_names, field_names)
-  missing_fields <- lapply(missings, .field)
-  fields <- c(fields, missing_fields)
-  names(fields) <- c(field_names, missings)
-
-  fields <- fields[df_names]
-
-  # !! must be first
-  if (ordering) {
-    # use ordering if set, otherwise the current ordering
-    orderings <- .elts(fields, 'ordering')
-    missings <- lengths(orderings) == 0
-
-    if (any(missings)) {
-      maxo <- if (all(missings)) 0 else max(unlist(orderings, recursive = FALSE), na.rm = TRUE) + 1
-      missing_orderings <- seq.int(maxo, length.out = sum(missings))
-      orderings[missings] <- missing_orderings
-    }
-    ordering <- order(unlist(orderings, recursive = FALSE))
-    fields <- fields[ordering]
-    df <- df[ordering]
-  }
-
-  if (types) {
-    df_names <- names(df)
-    for (col in df_names) {
-      ftype <- fields[[col]]$data_type
-      if (length(ftype)) {
-        df_type <- class(df[[col]])[1] # not used
-        expected_type <- DATA_TYPES_TO_R[[ftype]]
-        # defensive programming
-        .die_unless(.is_nz_string(expected_type), 'unknown data_type "%s"', ftype)
-
-        if (!inherits(df[[col]], expected_type)) {
-          if (expected_type == 'numeric') {
-            # for some reason as(1L, 'numeric') does not work
-            df[[col]] <- as.numeric(df[[col]])
-          } else {
-            df[[col]] <- as(df[[col]], expected_type)
-          }
-        }
-      }
-    }
-  }
-
-  if (titles) {
-    names(df) <- .elts(fields, 'title')
-  }
-
-  if (attributes) {
-    attr(df, 'field_names') <-  .elts(fields, 'name')
-    attr(df, 'field_titles') <- .elts(fields, 'title')
-    attr(df, 'field_descriptions') <- .elts(fields, 'description')
-    attr(df, 'field_data_types') <- .elts(fields, 'data_type')
-  }
-
-  # preserve existing attributes
-  attrs2 <- attributes(df)
-  for (attr in setdiff(names(attrs), names(attrs2))) {
-    attr(df, attr) <- attrs[[attr]]
-  }
-
-  df
+  if (ncol(df) == 0) return(df)
+  model <- create_model_df_from_fields(names(df), fields)
+  format_df_like_model(df, model)
 }
 
 # create a fields list suitable to be used to create or update a Dataset

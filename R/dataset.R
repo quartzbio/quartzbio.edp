@@ -153,6 +153,7 @@ Dataset_query <- function(
   if (meta) {
     tt <- system.time({
       fields <- DatasetFields(dataset_id, limit = HARDLIMIT, conn = conn, all = TRUE)
+      browser()
       df <- format_df_with_fields(df, fields)
     }, gcFirst = FALSE)
     msg('took %s to process the meta data.', tt[3])
