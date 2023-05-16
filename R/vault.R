@@ -118,6 +118,7 @@ Vault_update <- function(id,
   storage_class = NULL,
   conn = get_connection()) 
 {
+  id <- id(id)
   if (length(tags)) tags <- as.list(tags)
 
   params <- preprocess_api_params()
