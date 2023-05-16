@@ -200,9 +200,15 @@ create_model_df_from_fields <- function(cols, fields,
 format_df_like_model <- function(df, model) {
   ### mapping
   field_names <- attr(model, 'field_names')
-  .die_if(.empty(field_names), 'error in model, attribute "field_names" is empty')
+  if(.empty(field_names)) {
+    # model has no field information --> it is not a true model, nothing to do
+    return(df)
+  }
 
   .die_unless(setequal(names(df), field_names), 'different fields')
+
+  # backup attributes
+  backup_attrs <- attributes(df)
 
   ### reorder like the model
   idx <- match(field_names, names(df))
@@ -223,6 +229,13 @@ format_df_like_model <- function(df, model) {
   attrs <- attrs[grepl('^field_', names(attrs))]
   for (attname in names(attrs)) {
     attr(df, attname) <- attrs[[attname]]
+  }
+
+  # fetch attributes from backup which are not set
+  attrs <- attributes(df)
+  lost <- setdiff(names(backup_attrs), names(attrs))
+  for (attr_name in lost) {
+    attr(df, attr_name) <- backup_attrs[[attr_name]]
   }
 
   df
