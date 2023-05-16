@@ -1,4 +1,4 @@
-.*
+#.*
 .DS_Store
 .Rproj.user
 .Rhistory
@@ -16,4 +16,4 @@
 man/.roxygen.md5
 /doc/
 /Meta/
-docs
+#docs

@@ -27,13 +27,11 @@ Authentication Tokens can be obtained from [Personal Access Tokens](https://docs
 
 Installing this package requires an installed [R environment](https://www.r-project.org).  
 
-**from CRAN**
-```R
-install.packages("quartzbio.edp")
-library(quartzbio.edp)
-```
+
 
 **from github**
+
+
 
 ```R
 install.packages(c("devtools", "httr", "jsonlite"))
@@ -42,7 +40,12 @@ devtools::install_github("quartzbio.edp/quartzbio.edp-r", ref="master")
 ```
 
 
+
 ## Usage
+
+* [Github quartzbio.edp](https://github.com/quartzbio/quartzbio.edp)
+* [Github quartzbio.edp package documentation](https://quartzbio.github.io/quartzbio.edp)
+
 
 ### connection/authentication
 
@@ -70,17 +73,3 @@ Folders()
 ```
 
 
-
-
-## Packaging and Releasing
-
-1. Bump the version using the `bumpversion` command (pip install bumpversion).
-2. Update the NEWS.md with changes.
-3. Update the DESCRIPTION file with the latest date.
-4. Regenerate roxygen2 and build/check the tarball:
-
-    make clean
-    make
-    make check
-
-5. Submit to CRAN.
