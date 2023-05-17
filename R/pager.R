@@ -13,7 +13,13 @@ fetch_page <- function(x, delta) {
   pager <- attr(x, 'pager') %IF_EMPTY_THEN% return(NULL)
   page_index <- pager()
   index <- page_index$index + delta
-  if (index >= 1 && index <= page_index$nb) pager(index) else NULL
+  res <- if (index >= 1 && index <= page_index$nb) pager(index) else NULL
+
+  if (is.data.frame(x) && is.data.frame(res)) {
+    res <- format_df_like_model(res, x)
+  }
+
+  res
 }
 
 #' fetch all the pages for a possibly incomplete paginated API result
@@ -23,6 +29,7 @@ fetch_page <- function(x, delta) {
 #' @return the object resulting in combining the current object/page and all subsequent pages
 #' @export
 fetch_all <- function(x, ...) {
+  model <- x
   pager <- pager(x) %IF_EMPTY_THEN% return(NULL)
   page_index <- pager()
 
@@ -33,7 +40,12 @@ fetch_all <- function(x, ...) {
 
   fun <- function(x) {
     p(sprintf('page=%s', x))
-    pager(x)
+    res <- pager(x)
+    ### format the result taking the first page as model
+    if (is.data.frame(model) && is.data.frame(res))
+      res <- format_df_like_model(res, model)
+
+    res
   }
 
   lst <- future.apply::future_lapply(pages, fun, 
@@ -58,6 +70,7 @@ fetch_all <- function(x, ...) {
       tt <- system.time(res <- do.call(rbind.data.frame, lst), FALSE)
     }
     msg('took %s to bind the data frames', tt[3])
+
   } else {
     res <- do.call(c, lst)
     # apply class from x
