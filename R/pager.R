@@ -22,7 +22,13 @@ fetch_page <- function(x, delta) {
 #' @param ... passed to future.apply::future_lapply()
 #' @return the object resulting in combining the current object/page and all subsequent pages
 #' @export
-fetch_all <- function(x, ...) {
+fetch_all <- function(x, ..., parallel = FALSE, workers = 4) {
+  if (parallel) {
+    workers <- max(workers, 4) # hard-limit for now
+    old_plan <- future::plan(future::multisession, workers = workers)
+    on.exit(future::plan(old_plan), add = TRUE)
+  }
+
   pager <- pager(x) %IF_EMPTY_THEN% return(NULL)
   page_index <- pager()
 
@@ -31,25 +37,27 @@ fetch_all <- function(x, ...) {
 
   p <- progressr::progressor(along = pages)
 
-  fun <- function(x) {
-    if (!require('quartzbio.edp')) {
-      # we need to load quartzbio.edp in multisession plans
-      # the problem is that in dev it is not installed so we have to load it
-      # from source using qbdev
-      .die_unless(require('qbdev'), 'the quartzbio.edp R package was not found in future_lapply()')
-     
-      # qbdev is not declared as dependency, so we have to hack
-      ns <- getNamespace()
-      load_pkg <- get('load_pkg', ns)
-      load_pkg('quartzbio.edp')
+  fun <- function(page) {
+    pager <- attr(x, 'pager')
+
+    cat('fun\n')
+    if (!require('quartzbio.edp', quietly = TRUE)) {
+      # # we need to load quartzbio.edp in multisession plans
+      # # the problem is that in dev it is not installed so we have to load it
+      # # from source using qbdev
+      stopifnot(require('qbdev'), 'the qbdev.edp R package was not found in future_lapply()')
+      cat('loading quartzbio.edp...\n')
+      qbdev::load_pkg('quartzbio.edp')
     }
     p(sprintf('page=%s', x))
+    print(pager)
     pager(x)
   }
 
   lst <- future.apply::future_lapply(pages, fun, 
     future.seed = NULL, 
-    # future.packages ='quartzbio.edp',
+    future.packages ='qbdev',
+    future.globals = list(pager = pager, x = x),
      ...)
 
   lst <- c(list(x), lst)

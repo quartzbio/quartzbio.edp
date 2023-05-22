@@ -4,7 +4,7 @@
 \alias{fetch_all}
 \title{fetch all the pages for a possibly incomplete paginated API result}
 \usage{
-fetch_all(x, ...)
+fetch_all(x, ..., parallel = FALSE, workers = 4)
 }
 \arguments{
 \item{x}{an API result}
