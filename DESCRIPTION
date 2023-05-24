@@ -3,8 +3,8 @@ Type: Package
 Title: The Official QuartzBio EDP API Client
 Version: 1.00.0
 Date: 2023-05-12
-Authors@R: c(person(given="David", family="Caplan", email="David.Caplan@precisionformedicine.com", role = c("cre")), 
-    person(given="Karl", family="Forner", email="Karl.Forner@precisionformedicine.com", role = c("aut")),
+Authors@R: c( 
+    person(given="Karl", family="Forner", email="Karl.Forner@precisionformedicine.com", role = c("aut", "cre")),
     person(given="Marc", family="Lamarine", email="Marc.Lamarine@precisionformedicine.com", role = c("ctb")))
 Description: R client for QuartzBio EDP API.
 Imports:

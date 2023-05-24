@@ -112,7 +112,7 @@ future package</a> package.</li>
 limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/1959547506112563037/data...</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.029   0.003   0.202</span></code></pre></div>
+<span class="co">#&gt;   0.015   0.000   0.164</span></code></pre></div>
 <div class="section level2">
 <h2 id="read-all-data">Read all data<a class="anchor" aria-label="anchor" href="#read-all-data"></a>
 </h2>
@@ -131,17 +131,17 @@ limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class=
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, fields <span class="op">=</span> <span class="va">COLS</span>, 
 filters <span class="op">=</span> <span class="va">FILTER</span>, limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span>, all <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; got all results.</span>
-<span class="co">#&gt; took 0.344000000000001 to bind the data frames</span>
+<span class="co">#&gt; took 0.390000000000001 to bind the data frames</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   2.719   0.107  15.634</span>
+<span class="co">#&gt;   2.691   0.092  15.718</span>
 
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multicore</span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, fields <span class="op">=</span> <span class="va">COLS</span>, filters <span class="op">=</span> <span class="va">FILTER</span>, limit <span class="op">=</span> <span class="fl">10000</span>, 
   meta <span class="op">=</span> <span class="cn">FALSE</span>, all <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; got all results.</span>
-<span class="co">#&gt; took 0.0689999999999991 to bind the data frames</span>
+<span class="co">#&gt; took 0.0640000000000001 to bind the data frames</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   3.111   0.603   6.234</span></code></pre></div>
+<span class="co">#&gt;   3.015   0.490   5.512</span></code></pre></div>
 </div>
 </div>
   </main>
@@ -151,7 +151,7 @@ filters <span class="op">=</span> <span class="va">FILTER</span>, limit <span cl
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by David Caplan, Karl Forner.</p>
+<p>Developed by Karl Forner.</p>
 </div>
 
 <div class="pkgdown-footer-right">
