@@ -30,7 +30,13 @@ Installing this package requires an installed [R environment](https://www.r-proj
 **from github**
 
 ```R
-install.packages(c("devtools", "httr", "jsonlite", "RcppSimdJson"), dependencies = TRUE)
+install.packages(c("devtools", "httr"), dependencies = TRUE)
+install.packages(c("leafem", "leaflet", "leafpop", "raster", "satellite"), dependencies = TRUE)
+install.packages(c("sf"), dependencies = TRUE)
+install.packages(c("jsonlite"), dependencies = TRUE)
+
+install.packages(c("RcppSimdJson"), dependencies = TRUE)
+
 library(devtools)
 devtools::install_github("quartzbio/quartzbio.edp", ref="main")
 ```
