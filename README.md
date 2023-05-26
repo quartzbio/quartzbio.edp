@@ -40,14 +40,13 @@ devtools::install_github("quartzbio.edp/quartzbio.edp-r", ref="master")
 ```
 
 
-
 ## Usage
 
 * [Github quartzbio.edp](https://github.com/quartzbio/quartzbio.edp)
 * [Github quartzbio.edp package documentation](https://quartzbio.github.io/quartzbio.edp)
 
 
-### connection/authentication
+### Connection/Authentication
 
 See the [Connection to an EDP host vignette](https://quartzbio.github.io/quartzbio.edp/articles/connection.html)  Connection to an EDP host vignette for more details.
 
@@ -73,3 +72,6 @@ Folders()
 ```
 
 
+## Articles
+
+* [Vignettes](https://quartzbio.github.io/quartzbio.edp/articles)
