@@ -21,7 +21,7 @@ Authentication Tokens can be obtained from [Personal Access Tokens](https://docs
 
 * on going migration of former solvebio R API to the new package.  
 * backward compatibility has been maintained.  
-* See [ChangeLog](../docs/news/index.html) for updates
+* See [ChangeLog](https://quartzbio.github.io/quartzbio.edp/news/index.html) for updates
 
 ## Installation
 
