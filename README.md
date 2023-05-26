@@ -27,16 +27,12 @@ Authentication Tokens can be obtained from [Personal Access Tokens](https://docs
 
 Installing this package requires an installed [R environment](https://www.r-project.org).  
 
-
-
 **from github**
 
-
-
 ```R
-install.packages(c("devtools", "httr", "jsonlite"))
+install.packages(c("devtools", "httr", "jsonlite", "RcppSimdJson"), dependencies = TRUE)
 library(devtools)
-devtools::install_github("quartzbio.edp/quartzbio.edp-r", ref="master")
+devtools::install_github("quartzbio/quartzbio.edp", ref="main")
 ```
 
 
