@@ -49,7 +49,7 @@ devtools::install_github("quartzbio.edp/quartzbio.edp-r", ref="master")
 
 ### connection/authentication
 
-See the [Connection to an EDP host vignette](../docs/connection.html)  Connection to an EDP host vignette for more details.
+See the [Connection to an EDP host vignette](https://quartzbio.github.io/quartzbio.edp/articles/connection.html)  Connection to an EDP host vignette for more details.
 
 * Save into the ** ~/.qb/edp.json files** a default EDP configuration profile.  
 
