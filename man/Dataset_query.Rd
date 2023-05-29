@@ -16,6 +16,8 @@ Dataset_query(
   offset = NULL,
   all = FALSE,
   meta = TRUE,
+  parallel = FALSE,
+  workers = 4,
   conn = get_connection(),
   ...
 )
@@ -44,6 +46,10 @@ See also \code{page}.}
 
 \item{meta}{whether to retrieve fields meta data information to properly format, reorder
 and rename the data frame}
+
+\item{parallel}{whether to parallelize the API calls.}
+
+\item{workers}{in parallel mode, the number of concurrent requests to make}
 
 \item{conn}{a EDP connection object (as a named list or environment)}
 

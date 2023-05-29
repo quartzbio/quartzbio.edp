@@ -19,15 +19,21 @@ fetch_page <- function(x, delta) {
 #' fetch all the pages for a possibly incomplete paginated API result
 #' 
 #' @param x   an API result
+#' @param verbose     whether to output debugging information, mostly for development
 #' @param ... passed to future.apply::future_lapply()
+#' @inheritParams params
 #' @return the object resulting in combining the current object/page and all subsequent pages
 #' @export
-fetch_all <- function(x, ..., parallel = FALSE, workers = 4) {
+fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
   if (parallel) {
-    workers <- max(workers, 4) # hard-limit for now
+    workers <- min(workers, 4) # hard-limit for now
     old_plan <- future::plan(future::multisession, workers = workers)
     on.exit(future::plan(old_plan), add = TRUE)
   }
+  # if (progress) {
+  #   old_handlers <- progressr::handlers(global = TRUE)
+  #   on.exit(progressr::handlers(global = FALSE), add = TRUE)
+  # }
 
   pager <- pager(x) %IF_EMPTY_THEN% return(NULL)
   page_index <- pager()
@@ -38,30 +44,32 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4) {
   p <- progressr::progressor(along = pages)
 
   fun <- function(page) {
-    pager <- attr(x, 'pager')
-
-    cat('fun\n')
     if (!require('quartzbio.edp', quietly = TRUE)) {
+     
       # # we need to load quartzbio.edp in multisession plans
       # # the problem is that in dev it is not installed so we have to load it
       # # from source using qbdev
-      stopifnot(require('qbdev'), 'the qbdev.edp R package was not found in future_lapply()')
+      REQUIRE <- require
+      stopifnot(REQUIRE('qbdev'), 'the qbdev R package was not found in future_lapply()')
       cat('loading quartzbio.edp...\n')
-      qbdev::load_pkg('quartzbio.edp')
+      load_pkg <- utils::getFromNamespace('load_pkg', 'qbdev')
+      load_pkg('quartzbio.edp')
     }
-    p(sprintf('page=%s', x))
-    print(pager)
-    pager(x)
+    p(message = sprintf('page=%s', page))
+
+    pager(page, verbose = FALSE)
   }
+
+  env <- environment()
 
   lst <- future.apply::future_lapply(pages, fun, 
     future.seed = NULL, 
     future.packages ='qbdev',
-    future.globals = list(pager = pager, x = x),
+    future.globals = as.list(env),
      ...)
 
   lst <- c(list(x), lst)
-  msg('got all results.')
+  if (verbose) msg('got all results.')
   # how to bind results ?
   # current naive implementation
   res <- NULL
@@ -77,7 +85,7 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4) {
       msg('got error using dplyr::bind_rows() to aggregate the paginated results, retrying with rbind.data.frame()...')
       tt <- system.time(res <- do.call(rbind.data.frame, lst), FALSE)
     }
-    msg('took %s to bind the data frames', tt[3])
+    if (verbose) msg('took %s to bind the data frames', tt[3])
   } else {
     res <- do.call(c, lst)
     # apply class from x

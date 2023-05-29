@@ -132,8 +132,14 @@ request_edp_api <- function(method, api,
   PAGE_INDEX <- NULL
   SIZE <- NULL
 
-  pager <- function(index, offset = NULL, page = NULL) {
+  ## N.B: this function will be called in plan(multisession). It must be explicit about the functions
+  # it calls
+  pager <- function(index, offset = NULL, page = NULL, verbose = NA) {
     # N.B: for the first call, page_index is not initialized but index == NULL
+    ns <- getNamespace('quartzbio.edp')
+    page_to_offset <- get('page_to_offset', ns)
+    request_edp_api_no_pager <- get('request_edp_api_no_pager', ns)
+
 
     # initial values
     if (length(offset)) {
@@ -142,7 +148,7 @@ request_edp_api <- function(method, api,
       params$page <- page
     } else {
     # use default from params if index == NULL
-      if (!.empty(index)) {
+      if (length(index)) {
         # update index
         PAGE_INDEX$index <- index 
 
@@ -155,15 +161,17 @@ request_edp_api <- function(method, api,
       }
     }
 
+    if (!is.na(verbose)) options$verbose <- verbose
+
     res <- request_edp_api_no_pager(method, api, params = params, options = options, conn = conn)
     if (!length(res)) return(res)
 
     ### set pager
     current_fun <- sys.function()
     # create new closure to store new value of PAGE_INDEX
-    attr(res, 'pager') <- function(index) { 
+    attr(res, 'pager') <- function(index, verbose = NA) { 
       if (missing(index)) return(PAGE_INDEX)
-      current_fun(index)
+      current_fun(index, verbose = verbose)
     }
 
     res

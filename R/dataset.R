@@ -124,6 +124,8 @@ Dataset_query <- function(
   query = NULL,
   limit = 10000, offset = NULL, all = FALSE,
   meta = TRUE,
+  parallel = FALSE, 
+  workers = 4,
   conn = get_connection(),
   ...) 
 {
@@ -147,7 +149,7 @@ Dataset_query <- function(
     limit = limit, offset = offset, ...)
 
   if (all) {
-    df <- fetch_all(df)
+    df <- fetch_all(df, parallel = parallel, workers = workers)
   }
 
   if (meta) {
