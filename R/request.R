@@ -163,7 +163,7 @@ request_edp_api <- function(method, api,
 
 
 
-request_page <- function(request_args, index, verbose = NA) {
+request_page <- function(previous, request_args, index, verbose = NA) {
   params <- request_args$params
   options <- request_args$options
   if (!is.na(verbose)) options$verbose <- verbose
@@ -178,8 +178,15 @@ request_page <- function(request_args, index, verbose = NA) {
     params$page <- index
   }
   
- res <- request_edp_api_no_pager(request_args$method, request_args$api, params = params, 
+  res <- request_edp_api_no_pager(request_args$method, request_args$api, params = params, 
     options = options, conn = request_args$conn)
+
+  .die_unless(length(res) > 0, 'request_edp_api_no_pager produced empty results for index=%s', index)
+
+  if (is.data.frame(previous) && is.data.frame(res)) {
+    res <- format_df_like_model(res, previous)
+    .die_unless(length(res) > 0, 'format_df_like_model() produced empty results')
+  }
 
   # update page_index
   request_args$page_index$index <- index
