@@ -1,20 +1,8 @@
 
 
-
 offset_to_page <- function(offset, size) { ceiling(offset / size) + 1 }
 page_to_offset <- function(page, size) {  (page - 1) * size }
 
-
-# util
-pager <- function(x) attr(x, 'pager')
-
-
-fetch_page <- function(x, delta) {
-  pager <- attr(x, 'pager') %IF_EMPTY_THEN% return(NULL)
-  page_index <- pager()
-  index <- page_index$index + delta
-  if (index >= 1 && index <= page_index$nb) pager(index) else NULL
-}
 
 #' fetch all the pages for a possibly incomplete paginated API result
 #' 
@@ -30,13 +18,9 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
     old_plan <- future::plan(future::multisession, workers = workers)
     on.exit(future::plan(old_plan), add = TRUE)
   }
-  # if (progress) {
-  #   old_handlers <- progressr::handlers(global = TRUE)
-  #   on.exit(progressr::handlers(global = FALSE), add = TRUE)
-  # }
 
-  pager <- pager(x) %IF_EMPTY_THEN% return(NULL)
-  page_index <- pager()
+  pagination <- attr(x, 'pagination') %IF_EMPTY_THEN% return(NULL)
+  page_index <- pagination$page_index
 
   pages <- compute_next_pages(page_index)
   if (!length(pages)) return(x)
@@ -57,13 +41,15 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
     }
     p(message = sprintf('page=%s', page))
 
-    pager(page, verbose = FALSE)
+
+    request_page <- utils::getFromNamespace('request_page', 'quartzbio.edp')
+    request_page(pagination, page, verbose = verbose)
   }
 
-  env <- environment()
 
+  env <- environment()
   lst <- future.apply::future_lapply(pages, fun, 
-    future.seed = NULL, 
+    future.seed = NULL,
     future.packages ='qbdev',
     future.globals = as.list(env),
      ...)
@@ -93,9 +79,20 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
   }
 
   # remove obsolete attributes
-  attr(res, 'pager')  <- attr(res, 'offset') <- attr(res, 'page')  <- attr(res, 'took') <- NULL
+  attr(res, 'pagination')  <- attr(res, 'offset') <- attr(res, 'page')  <- attr(res, 'took') <- NULL
   
   res
+}
+
+fetch_page <- function(x, delta) {
+  pagination <- attr(x, 'pagination') %IF_EMPTY_THEN% return(NULL)
+
+  page_index <- pagination$page_index
+  index <- page_index$index + delta
+  if (index < 1 || index > page_index$nb) # out of range
+    return(NULL)
+
+  request_page(pagination, index)
 }
 
 #' fetch the next page of data if any

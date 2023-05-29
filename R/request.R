@@ -124,93 +124,70 @@ request_edp_api <- function(method, api,
   offset <- pointer$offset
   page <- pointer$page
 
-  index_name <- 'page'
-  index_default <- 1L
-  USE_OFFSET <- options$parse_as_df
-
-  # will be defined later
-  PAGE_INDEX <- NULL
-  SIZE <- NULL
-
-  ## N.B: this function will be called in plan(multisession). It must be explicit about the functions
-  # it calls
-  pager <- function(index, offset = NULL, page = NULL, verbose = NA) {
-    # N.B: for the first call, page_index is not initialized but index == NULL
-    ns <- getNamespace('quartzbio.edp')
-    page_to_offset <- get('page_to_offset', ns)
-    request_edp_api_no_pager <- get('request_edp_api_no_pager', ns)
-
-
-    # initial values
-    if (length(offset)) {
-      params$offset <- offset
-    } else if (length(page)) {
-      params$page <- page
-    } else {
-    # use default from params if index == NULL
-      if (length(index)) {
-        # update index
-        PAGE_INDEX$index <- index 
-
-        # we have an index
-        if (USE_OFFSET) { # convert if to offset if needed
-          params$offset <- page_to_offset(index, SIZE)
-        } else {
-          params$page <- index
-        }
-      }
-    }
-
-    if (!is.na(verbose)) options$verbose <- verbose
-
-    res <- request_edp_api_no_pager(method, api, params = params, options = options, conn = conn)
-    if (!length(res)) return(res)
-
-    ### set pager
-    current_fun <- sys.function()
-    # create new closure to store new value of PAGE_INDEX
-    attr(res, 'pager') <- function(index, verbose = NA) { 
-      if (missing(index)) return(PAGE_INDEX)
-      current_fun(index, verbose = verbose)
-    }
-
-    res
-  }
-
   # initial request
-  res <- pager(NULL, offset = offset, page = page)
+  params0 <- params
+  if (length(offset)) {
+    params0$offset <- offset
+  } else if (length(page)) {
+    params0$page <- page
+  }
+  res <- request_edp_api_no_pager(method, api, params = params0, options = options, conn = conn)
 
-  # N.B: sometimes the total can be explicitely given with the request, it ends up in pointer$total
+  # N.B: sometimes the total can be explicitly given with the request, it ends up in pointer$total
   total <- attr(res, 'total') %UNLESS_TRUE_INT% pointer$total
-  if (!length(total) || is.na(total)) {
-    # remove pager
-    attr(res, 'pager') <- NULL
+  if (!length(total) || is.na(total)) { # no subsequent pages --> no pager to manage
     return(res)
   }
 
   # now we can at last initialize size and total
-  SIZE <- if (is.data.frame(res)) nrow(res) else length(res)
-  # fix for API bug, cf https://precisionformedicine.atlassian.net/browse/SBP-527
-  # if (length(total) && is.na(total)) {
-  #   object_id <- attr(res, "object_id")
-  #   if (length(object_id)) {
-  #     warning('got null "total" from API, fetching instead of number of records')
-  # }
+  size <- if (is.data.frame(res)) nrow(res) else length(res)
 
   index <- 1L
-  if (USE_OFFSET) {
+  if (options$parse_as_df) { # endpoints that return tables use `offset` instead of `page`
     if (length(offset))
-      index <- offset_to_page(offset, SIZE)
+      index <- offset_to_page(offset, size)
   } else {
     if (length(page))
       index <- page
   }
 
-  nb_pages <- ceiling(total / SIZE)
-  PAGE_INDEX <- list(index = index, nb = nb_pages, total = total)
+  nb_pages <- ceiling(total / size)
+  page_index <- list(index = index, nb = nb_pages, total = total, size = size)
+
+  ### store pagination info as attribute
+  attr(res, 'pagination') <- list(method = method, api = api, params = params, options = options, 
+    page_index = page_index, conn = conn)
 
   res
 }
+
+
+
+request_page <- function(request_args, index, verbose = NA) {
+  params <- request_args$params
+  options <- request_args$options
+  if (!is.na(verbose)) options$verbose <- verbose
+  # endpoints that return a table/df use offset instead of page
+
+  .die_unless(length(index) > 0, 'empty index!')
+
+  # we have an index
+  if (options$parse_as_df) { # convert if to offset if needed
+    params$offset <- page_to_offset(index, request_args$page_index$size)
+  } else {
+    params$page <- index
+  }
+  
+ res <- request_edp_api_no_pager(request_args$method, request_args$api, params = params, 
+    options = options, conn = request_args$conn)
+
+  # update page_index
+  request_args$page_index$index <- index
+  attr(res, 'pagination') <- request_args
+
+  res
+}
+
 
 request_edp_api_no_pager <- function(method, path = '',  params, options,
   uri = file.path(conn$host, path), 
