@@ -4,6 +4,26 @@ offset_to_page <- function(offset, size) { ceiling(offset / size) + 1 }
 page_to_offset <- function(page, size) {  (page - 1) * size }
 
 
+<<<<<<< HEAD
+=======
+# util
+pager <- function(x) attr(x, 'pager')
+
+
+fetch_page <- function(x, delta) {
+  pager <- attr(x, 'pager') %IF_EMPTY_THEN% return(NULL)
+  page_index <- pager()
+  index <- page_index$index + delta
+  res <- if (index >= 1 && index <= page_index$nb) pager(index) else NULL
+
+  if (is.data.frame(x) && is.data.frame(res)) {
+    res <- format_df_like_model(res, x)
+  }
+
+  res
+}
+
+>>>>>>> origin/master
 #' fetch all the pages for a possibly incomplete paginated API result
 #' 
 #' @param x   an API result
@@ -13,6 +33,7 @@ page_to_offset <- function(page, size) {  (page - 1) * size }
 #' @return the object resulting in combining the current object/page and all subsequent pages
 #' @export
 fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
+  model <- x
   if (parallel) {
     workers <- min(workers, 4) # hard-limit for now
     old_plan <- future::plan(future::multisession, workers = workers)
@@ -41,11 +62,13 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
     }
     p(message = sprintf('page=%s', page))
 
-
     request_page <- utils::getFromNamespace('request_page', 'quartzbio.edp')
-    request_page(pagination, page, verbose = verbose)
-  }
+    res <- request_page(pagination, page, verbose = verbose)
+    if (is.data.frame(model) && is.data.frame(res))
+      res <- format_df_like_model(res, model)
 
+    res
+  }
 
   env <- environment()
   lst <- future.apply::future_lapply(pages, fun, 
