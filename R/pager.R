@@ -29,6 +29,10 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
   p <- progressr::progressor(along = pages)
 
   fun <- function(page) {
+
+    # this code is for multisession on dev when quartzbio.edp is not installed
+    # it is not testable with covr so we exclude it from coverage
+    # nocov start
     if (!require('quartzbio.edp', quietly = TRUE)) {
      
       # # we need to load quartzbio.edp in multisession plans
@@ -40,6 +44,8 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
       load_pkg <- utils::getFromNamespace('load_pkg', 'qbdev')
       load_pkg('quartzbio.edp')
     }
+    # nocov end
+    
     p(message = sprintf('page=%s', page))
 
     request_page <- utils::getFromNamespace('request_page', 'quartzbio.edp')
@@ -56,7 +62,7 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
      ...)
 
   lst <- c(list(x), lst)
-  if (verbose) msg('got all results.')
+  verbose && msg('got all results.')
   # how to bind results ?
   # current naive implementation
   res <- NULL
@@ -72,7 +78,7 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
       msg('got error using dplyr::bind_rows() to aggregate the paginated results, retrying with rbind.data.frame()...')
       tt <- system.time(res <- do.call(rbind.data.frame, lst), FALSE)
     }
-    if (verbose) msg('took %s to bind the data frames', tt[3])
+    verbose && msg('took %s to bind the data frames', tt[3])
   } else {
     res <- do.call(c, lst)
     # apply class from x
