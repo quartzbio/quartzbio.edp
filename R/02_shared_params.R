@@ -63,6 +63,7 @@
 #' @param page                      The number of the page to fetch, as an integer. starts from 1.
 #'                                  See also `limit`.
 #' @param path                      the path of an object, with the folders (e.g. "/d1/d2/foo.csv").
+#' @param parallel                  whether to parallelize the API calls.
 #' @param parent_object_id          the ID of the parent of the Object.
 #' @param query                     a string that matches any objects whose path contains that string.
 #' @param raw                       whether to return the raw response.
@@ -92,6 +93,7 @@
 #' @param vault_full_path           a Vault full path, as a string (e.g. "quartzbio:Public")
 #' @param vault_path                a Vault path, as a string (e.g. "/d1/d2/foo.csv")
 #' @param vault_type                the type of vault ('user', 'general') as a string
+#' @param workers                   in parallel mode, the number of concurrent requests to make
 #' @param ...                       Additional query parameters, passed to .request().
 #' 
 #' @references \url{https://docs.solvebio.com/} 
