@@ -25,17 +25,14 @@ Authentication Tokens can be obtained from [Personal Access Tokens](https://docs
 
 ## Installation
 
-Installing this package requires an installed [R environment](https://www.r-project.org).  
+Installing this package requires an installed [R environment](https://www.r-project.org). 
 
 **from github**
 
 ```R
-install.packages(c("devtools", "httr"), dependencies = TRUE)
-install.packages(c("leafem", "leaflet", "leafpop", "raster", "satellite"), dependencies = TRUE)
-install.packages(c("sf"), dependencies = TRUE)
-install.packages(c("jsonlite"), dependencies = TRUE)
-
-install.packages(c("RcppSimdJson"), dependencies = TRUE)
+install.packages(c("devtools", "httr"))
+install.packages(c("jsonlite"))
+install.packages(c("RcppSimdJson"))
 
 library(devtools)
 devtools::install_github("quartzbio/quartzbio.edp", ref="main")
