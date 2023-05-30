@@ -1,10 +1,12 @@
 Package: quartzbio.edp
 Type: Package
 Title: The Official QuartzBio EDP API Client
-Version: 2.99.0
-Date: 2022-12-07
-Author: David Caplan
-Maintainer: Karl Forner <karl.forner@precisionformedicine.com>
+Version:  0.99
+Date: 2023-05-30
+Authors@R: c( 
+    person(given="David", family="Caplan", email="David.Caplan@precisionformedicine.com", role = "aut"),
+    person(given="Karl", family="Forner", email="Karl.Forner@precisionformedicine.com", role = c("aut", "cre")),
+    person(given="Marc", family="Lamarine", email="Marc.Lamarine@precisionformedicine.com", role = "ctb"))
 Description: R client for QuartzBio EDP API.
 Imports:
     curl,
