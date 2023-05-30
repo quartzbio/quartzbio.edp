@@ -1,0 +1,41 @@
+url: https://quartzbio.github.io/quartzbio.edp
+template:
+  bootstrap: 5
+  bootswatch: lumen
+navbar:
+  structure:
+    left:  [intro, toc, reference, articles, tutorials, authors, news]
+    right: [search, github]
+reference:
+- title: EDP connections
+  desc: > 
+    Set, get manage connections to EDP using profiles or environments variables 
+    [Connection to EDP hosts](../../docs/articles/)
+  contents: 
+  - matches('connect')
+  - params
+- title:  Vaults, Files, Folders
+  desc: > 
+   Vaults, Files, Folders management [Vaults and Objects](../../docs/articles/vaults_and_objects.html)
+  contents: 
+  - matches('^Vault?_')
+  - matches('^Folder?_')
+  - matches('^File?_')
+
+- title:  Datasets
+  desc: > 
+  contents: 
+  - matches('^Dataset?_')
+
+- title:  Fetching, Querying and Filtering
+  desc: > 
+  contents: 
+  - matches('^fetch_*')
+  - matches('*_query')
+  - matches('^filter')
+
+- title: All Functions
+  desc: > 
+  contents: 
+  - lacks_concepts("solvebio_api")
+

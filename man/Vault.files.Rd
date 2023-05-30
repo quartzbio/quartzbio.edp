@@ -18,7 +18,7 @@ Retrieves all files in a specific vault.
 }
 \examples{
 \dontrun{
-vault = Vault.get_personal_vault()
+vault <- Vault.get_personal_vault()
 Vault.files(vault$id)
 }
 
@@ -26,3 +26,4 @@ Vault.files(vault$id)
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}

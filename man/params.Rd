@@ -110,8 +110,6 @@ See also \code{limit}.}
 
 \item{path}{the path of an object, with the folders (e.g. "/d1/d2/foo.csv").}
 
-\item{parallel}{whether to parallelize the API calls.}
-
 \item{parent_object_id}{the ID of the parent of the Object.}
 
 \item{query}{a string that matches any objects whose path contains that string.}
@@ -156,8 +154,6 @@ in the dataset table.}
 \item{vault_path}{a Vault path, as a string (e.g. "/d1/d2/foo.csv")}
 
 \item{vault_type}{the type of vault ('user', 'general') as a string}
-
-\item{workers}{in parallel mode, the number of concurrent requests to make}
 
 \item{...}{Additional query parameters, passed to .request().}
 }

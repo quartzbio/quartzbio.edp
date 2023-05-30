@@ -17,8 +17,10 @@ ui <- fluidPage(
         shiny::tags$script(src = jscookie_src)
     ),
     useShinyjs(),
-    extendShinyjs(text = quartzbio.edp::protectedServerJS(),
-                  functions = c("enableCookieAuth", "getCookie", "setCookie", "rmCookie"))
+    extendShinyjs(
+        text = quartzbio.edp::protectedServerJS(),
+        functions = c("enableCookieAuth", "getCookie", "setCookie", "rmCookie")
+    )
 )
 }
 
@@ -26,3 +28,4 @@ ui <- fluidPage(
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}

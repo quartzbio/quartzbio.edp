@@ -1,0 +1,209 @@
+---
+title: "Connection to EDP hosts"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+description: |
+  describe connections methods available
+vignette: >
+  %\VignetteIndexEntry{Connection to EDP hosts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE, echo = FALSE, message =  FALSE, warning=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+withr:::defer({Sys.unsetenv('EDP_PROFILE')}, parent.frame(n=2))
+```
+
+# TL;DR
+
+Save into the  **~/.qb/edp.json**  files, different EDP configuration profiles.  
+The **default** profile is used automatically in functions if no connection are specified in arguments.
+
+```
+{
+  "default": {
+    "secret": "API_TOKEN",
+    "host": "https://api.solvebio.com"
+  },
+  "demo-corp":  {
+    "secret": "API_TOKEN_2",
+    "host": "https://demo-corp.api.solvebio.com"
+  }
+}
+```
+
+```{r}
+
+# by default all functions will use the default profile set in the default config file
+library(quartzbio.edp)
+User()
+vlst <- Vaults()
+vlst[[1]]
+
+flds <- Folders()
+flds[[1]]
+
+fis  <- Files()
+fis[[1]]
+
+das  <-Datasets()
+das[[1]]
+
+```
+
+# Introduction
+
+There are several methods to be connected to a EDP instance.  
+
+* using explicit connection
+* using environment variables
+* using profiles
+* using autoconnect()
+
+* **key**: designates an API key (deprecated and will not be supported anymore in the future)
+* **token**: designates an API token
+* **secret**: can be a *key* or a *token* but *token* connections based are highly recommended 
+
+
+## Connection from Profiles
+
+Different EDP environment profiles config can be stored in the default config location of your home 
+directory: **~/.qb/edp.json** 
+At least a single **default** profile should be defined as examplified above.  
+
+* the default profile witl set the default connection, if no explicit connection was specified using
+the environment variables.
+
+
+```{r}
+
+# use the default profile
+User()
+
+# use explicitely the default profile
+conn <- connect_with_profile()
+User(conn)
+
+# use  profile named demo-corp defined in the default config file without
+# changing the current connection
+conn <- connect_with_profile('demo-corp')
+User(conn)
+Vaults(conn = conn)
+
+# still using the default profile
+# because no explicit profile connection is given in argument
+Vaults()
+
+```
+
+## Connection From System Environment variables
+
+If no **default** profile or config are available, the environment variables **EDP_PROFILE** and **EDP_CONFIG** are explored to obtain the profile name.  
+This way several config files, containing different profiles can be used by switching only environment variables.  
+
+Setting *EDP_PROFILE to 'default'* and *EDP_CONFIG to '~/.qb/edp.json'* is equivalent to use the default
+package settings.  
+
+A good practice is to have profiles defined in the **EDP_CONFIG** file and to set the **EDP_PROFILE** environment variable at
+the beginning of your scripts.  The remaining connections will automatically use it.
+
+```{r, include = FALSE, echo = FALSE, message =  FALSE, warning=FALSE}
+  # usnet connection for next block
+  set_connection(NULL)
+```
+
+```{r}
+# set the demo-corp connection as the default for future connections
+
+Sys.getenv('EDP_PROFILE')
+Sys.setenv(EDP_PROFILE = 'demo-corp')
+User()
+
+```
+
+## Explicit connection
+
+**secret** and **host** can be set explicitely. *read_connection* returns connection infos for a 
+given config.
+
+```{r}
+conn <- read_connection_profile('default')
+secret <- conn$secret
+host <- conn$host
+conn <- connect(secret, host)
+User(conn)
+
+```
+## autoconnect()
+
+**autoconnect()** function tries to connect using the environment variables **EDP_PROFILE** and 
+**EDP_CONFIG** at first and  then the **default** profile in the default config file.  
+
+```{r}
+# auto connect use the EDP profile to set the current connection
+Sys.setenv(EDP_PROFILE = 'demo-corp')
+conn <- autoconnect()
+User(conn = conn)
+User()
+
+
+# unset the EDP_PROFILE environment variable
+# autoconnect() use the default settings.
+Sys.unsetenv('EDP_PROFILE') # unset current profile environment variables
+set_connection(NULL) # unset current connection
+
+conn <- autoconnect()
+
+# Will used the default profile
+User(conn=conn)
+User()
+
+```
+
+# Advanced Usage 
+
+## set_connection() and get_connection()
+
+So far connection objects (i.e list) were passed as arguments to functions such as *User()* or *Vaults()*.  
+Still theses functions can use a current connection.   
+By default, if no connection argument is given to these function(). The *current connection* will 
+be set to the default connection. 
+
+* **get_connection()** returns the current connection. If none are yet available and **auto=TRUE**, it 
+will use autoconnect() to obtain it and sets as the current one.
+
+* **set_connection()**: explicitely sets the *current connection*
+
+
+```{r}
+
+# explicitely set the connection with a profile
+set_connection( connect_with_profile('demo-corp'))
+
+# remove the current connection
+set_connection(NULL)
+
+# the firt call to User() sets the current default connection to the default connection
+# both calls will use the current connection
+
+User()
+User(conn = get_connection())
+
+# the current connection remains the 'default'
+# connecting with a profile did not change it
+conn_corp <- connect_with_profile('demo-corp')
+User(conn_corp)
+User()
+
+# the current connection will be the 'demo-corp' one 
+# after unsetting the previous connection and profile environment variables
+Sys.setenv(EDP_PROFILE = 'demo-corp')
+set_connection(NULL)
+User()
+
+```

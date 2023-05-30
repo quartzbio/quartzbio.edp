@@ -23,3 +23,4 @@ Object.get_download_url("1234567890")
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}

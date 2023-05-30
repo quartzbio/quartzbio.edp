@@ -1,10 +1,11 @@
 Package: quartzbio.edp
 Type: Package
 Title: The Official QuartzBio EDP API Client
-Version: 2.99.0
-Date: 2022-12-07
-Author: David Caplan
-Maintainer: Karl Forner <karl.forner@precisionformedicine.com>
+Version: 1.00.0
+Date: 2023-05-12
+Authors@R: c( 
+    person(given="Karl", family="Forner", email="Karl.Forner@precisionformedicine.com", role = c("aut", "cre")),
+    person(given="Marc", family="Lamarine", email="Marc.Lamarine@precisionformedicine.com", role = c("ctb")))
 Description: R client for QuartzBio EDP API.
 Imports:
     curl,
@@ -17,14 +18,19 @@ License: MIT + file LICENSE
 RoxygenNote: 7.1.2
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
 Suggests:
     dplyr,
     future,
     future.apply,
+    knitr,
     openssl,
     progressr,
     qb.web,
+    readxl,
+    pkgdown,
     RcppSimdJson,
+    rmarkdown,
     shiny,
     shinyjs,
     stats,

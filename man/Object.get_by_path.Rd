@@ -25,3 +25,4 @@ Object.get_by_path("/ClinVar")
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}

@@ -21,10 +21,11 @@ Returns a single page of results otherwise (default).
 }
 \examples{
 \dontrun{
-Object.query("12345678790", paginate=TRUE)
+Object.query("12345678790", paginate = TRUE)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}
