@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.00.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -156,6 +156,8 @@ objects at a minimum distance from the ancestor.</p></dd>
 See also <code>limit</code>.</p></dd>
 <dt>path</dt>
 <dd><p>the path of an object, with the folders (e.g. "/d1/d2/foo.csv").</p></dd>
+<dt>parallel</dt>
+<dd><p>whether to parallelize the API calls.</p></dd>
 <dt>parent_object_id</dt>
 <dd><p>the ID of the parent of the Object.</p></dd>
 <dt>query</dt>
@@ -201,6 +203,8 @@ in the dataset table.</p></dd>
 <dd><p>a Vault path, as a string (e.g. "/d1/d2/foo.csv")</p></dd>
 <dt>vault_type</dt>
 <dd><p>the type of vault ('user', 'general') as a string</p></dd>
+<dt>workers</dt>
+<dd><p>in parallel mode, the number of concurrent requests to make</p></dd>
 <dt>...</dt>
 <dd><p>Additional query parameters, passed to .request().</p></dd>
 </dl></div>
@@ -214,7 +218,7 @@ in the dataset table.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Karl Forner.</p>
+  <p></p><p>Developed by David Caplan, Karl Forner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

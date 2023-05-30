@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.00.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,45 +88,45 @@
 <span class="va">vlts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vaults.html">Vaults</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: RcppSimdJson</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
-<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Karl Forner" using an API Token</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
 <span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
 <span class="va">u</span><span class="op">$</span><span class="va">first_name</span>
-<span class="co">#&gt; [1] "Marc"</span>
+<span class="co">#&gt; [1] "Karl"</span>
 <span class="va">vme</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault_create.html">Vault_create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'vault_'</span>, <span class="va">u</span><span class="op">$</span><span class="va">first_name</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
 
 <span class="fu"><a href="../reference/Vault.html">Vault</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">vme</span><span class="op">)</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2407...</span>
-<span class="co">#&gt; Vault "vsim-dev:vault_Marc" ("", general, RWA), @ "Marc Lamarine", updated at:2023-05-26T13:43:18.124Z</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2475...</span>
+<span class="co">#&gt; Vault "vsim-dev:vault_Karl" ("", general, RWA), @ "Karl Forner", updated at:2023-05-30T10:03:50.703Z</span>
 <span class="fu"><a href="../reference/Folder_create.html">Folder_create</a></span><span class="op">(</span><span class="va">vme</span>, <span class="st">'data/cyto'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; folder "vsim-dev:vault_Marc:/data/cyto" (application/vnd.solvebio.folder) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:18.834Z</span>
+<span class="co">#&gt; folder "vsim-dev:vault_Karl:/data/cyto" (application/vnd.solvebio.folder) nb:0 user:Karl Forner accessed:2023-05-30T10:03:51.532Z</span>
 <span class="fu"><a href="../reference/Folder_create.html">Folder_create</a></span><span class="op">(</span><span class="va">vme</span>, <span class="st">'data/flow'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; folder "vsim-dev:vault_Marc:/data/flow" (application/vnd.solvebio.folder) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:19.290Z</span>
+<span class="co">#&gt; folder "vsim-dev:vault_Karl:/data/flow" (application/vnd.solvebio.folder) nb:0 user:Karl Forner accessed:2023-05-30T10:03:51.907Z</span>
 <span class="fu"><a href="../reference/Folder_create.html">Folder_create</a></span><span class="op">(</span><span class="va">vme</span>, <span class="st">'source/code'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; folder "vsim-dev:vault_Marc:/source/code" (application/vnd.solvebio.folder) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:19.796Z</span>
+<span class="co">#&gt; folder "vsim-dev:vault_Karl:/source/code" (application/vnd.solvebio.folder) nb:0 user:Karl Forner accessed:2023-05-30T10:03:52.485Z</span>
 <span class="fu"><a href="../reference/Folders.html">Folders</a></span><span class="op">(</span>vault_id<span class="op">=</span><span class="va">vme</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; EDP List of 5 Objects</span>
-<span class="co">#&gt;           path object_type vault_name     user_name            last_modified</span>
-<span class="co">#&gt; 1        /data      folder vault_Marc Marc Lamarine 2023-05-26T13:43:18.658Z</span>
-<span class="co">#&gt; 2   /data/cyto      folder vault_Marc Marc Lamarine 2023-05-26T13:43:18.834Z</span>
-<span class="co">#&gt; 3   /data/flow      folder vault_Marc Marc Lamarine 2023-05-26T13:43:19.290Z</span>
-<span class="co">#&gt; 4      /source      folder vault_Marc Marc Lamarine 2023-05-26T13:43:19.608Z</span>
-<span class="co">#&gt; 5 /source/code      folder vault_Marc Marc Lamarine 2023-05-26T13:43:19.796Z</span>
+<span class="co">#&gt;           path object_type vault_name   user_name            last_modified</span>
+<span class="co">#&gt; 1        /data      folder vault_Karl Karl Forner 2023-05-30T10:03:51.296Z</span>
+<span class="co">#&gt; 2   /data/cyto      folder vault_Karl Karl Forner 2023-05-30T10:03:51.532Z</span>
+<span class="co">#&gt; 3   /data/flow      folder vault_Karl Karl Forner 2023-05-30T10:03:51.907Z</span>
+<span class="co">#&gt; 4      /source      folder vault_Karl Karl Forner 2023-05-30T10:03:52.265Z</span>
+<span class="co">#&gt; 5 /source/code      folder vault_Karl Karl Forner 2023-05-30T10:03:52.485Z</span>
 
 <span class="fu"><a href="../reference/generics.html">delete</a></span><span class="op">(</span><span class="va">vme</span><span class="op">)</span>
-<span class="co">#&gt; DELETE https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2407...</span>
-<span class="co">#&gt; Vault "vsim-dev:vault_Marc" ("", general, rwa), @ "Marc Lamarine", updated at:2023-05-26T13:43:20.232Z</span></code></pre></div>
+<span class="co">#&gt; DELETE https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2475...</span>
+<span class="co">#&gt; Vault "vsim-dev:vault_Karl" ("", general, rwa), @ "Karl Forner", updated at:2023-05-30T10:03:52.920Z</span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="user">User<a class="anchor" aria-label="anchor" href="#user"></a>
@@ -138,19 +138,19 @@
 <span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
 <span class="va">u</span><span class="op">$</span><span class="va">first_name</span>
-<span class="co">#&gt; [1] "Marc"</span>
+<span class="co">#&gt; [1] "Karl"</span>
 <span class="va">u</span><span class="op">$</span><span class="va">last_name</span>
-<span class="co">#&gt; [1] "Lamarine"</span>
+<span class="co">#&gt; [1] "Forner"</span>
 <span class="va">u</span><span class="op">$</span><span class="va">full_name</span>
-<span class="co">#&gt; [1] "Marc Lamarine"</span>
+<span class="co">#&gt; [1] "Karl Forner"</span>
 <span class="va">u</span><span class="op">$</span><span class="va">id</span>
-<span class="co">#&gt; [1] 71</span>
+<span class="co">#&gt; [1] 51</span>
 <span class="va">u</span><span class="op">$</span><span class="va">email</span>
-<span class="co">#&gt; [1] "marc.lamarine@precisionformedicine.com"</span>
+<span class="co">#&gt; [1] "karl.forner@precisionformedicine.com"</span>
 <span class="va">u</span><span class="op">$</span><span class="va">account</span><span class="op">$</span><span class="va">name</span>
 <span class="co">#&gt; [1] "vsim-dev"</span>
 <span class="va">u</span><span class="op">$</span><span class="va">url</span>
-<span class="co">#&gt; [1] "https://vsim-dev.api.edp.aws.quartz.bio/v1/users/71"</span></code></pre></div>
+<span class="co">#&gt; [1] "https://vsim-dev.api.edp.aws.quartz.bio/v1/users/51"</span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="vaults">Vaults<a class="anchor" aria-label="anchor" href="#vaults"></a>
@@ -165,15 +165,15 @@
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
 <span class="co"># personal vault: user-id</span>
 <span class="va">myV</span><span class="op">$</span><span class="va">name</span>
-<span class="co">#&gt; [1] "user-71"</span>
+<span class="co">#&gt; [1] "user-51"</span>
 <span class="va">myV</span><span class="op">$</span><span class="va">full_path</span> 
-<span class="co">#&gt; [1] "vsim-dev:user-71"</span>
+<span class="co">#&gt; [1] "vsim-dev:user-51"</span>
 <span class="va">myV</span><span class="op">$</span><span class="va">has_children</span>  
 <span class="co">#&gt; [1] TRUE</span>
 <span class="va">myV</span><span class="op">$</span><span class="va">has_folder_children</span>
 <span class="co">#&gt; [1] TRUE</span>
 <span class="va">myV</span><span class="op">$</span><span class="va">user</span><span class="op">$</span><span class="va">full_name</span>
-<span class="co">#&gt; [1] "Marc Lamarine"</span>
+<span class="co">#&gt; [1] "Karl Forner"</span>
 <span class="va">myV</span><span class="op">$</span><span class="va">permissions</span>
 <span class="co">#&gt; $read</span>
 <span class="co">#&gt; [1] TRUE</span>
@@ -198,12 +198,12 @@
 <span class="co"># retrieve a vault by name</span>
 <span class="fu"><a href="../reference/Vault.html">Vault</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'vault_test_1'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
-<span class="co">#&gt; Vault "vsim-dev:vault_test_1" ("test_1", general, RWA), @ "Marc Lamarine", updated at:2023-05-26T13:43:21.257Z</span>
+<span class="co">#&gt; Vault "vsim-dev:vault_test_1" ("test_1", general, RWA), @ "Karl Forner", updated at:2023-05-30T10:03:53.832Z</span>
 
 <span class="co"># retrieve a vault by full_path</span>
 <span class="fu"><a href="../reference/Vault.html">Vault</a></span><span class="op">(</span>full_path <span class="op">=</span> <span class="va">v</span><span class="op">$</span><span class="va">full_path</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
-<span class="co">#&gt; Vault "vsim-dev:vault_test_1" ("test_1", general, RWA), @ "Marc Lamarine", updated at:2023-05-26T13:43:21.257Z</span>
+<span class="co">#&gt; Vault "vsim-dev:vault_test_1" ("test_1", general, RWA), @ "Karl Forner", updated at:2023-05-30T10:03:53.832Z</span>
 
 <span class="va">v</span><span class="op">$</span><span class="va">description</span>
 <span class="co">#&gt; [1] "test_1"</span>
@@ -223,10 +223,10 @@
       description <span class="op">=</span> <span class="st">'barabor'</span>, 
       metadata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>meta_1 <span class="op">=</span> <span class="st">'foo'</span><span class="op">)</span>, 
       storage_class <span class="op">=</span> <span class="st">'Performance'</span>, tags <span class="op">=</span> <span class="st">'tag_A'</span><span class="op">)</span>
-<span class="co">#&gt; PUT https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2408...</span>
+<span class="co">#&gt; PUT https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2476...</span>
 
 <span class="va">v3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">v2</span>, storage_class <span class="op">=</span> <span class="st">'Temporary'</span><span class="op">)</span>
-<span class="co">#&gt; PUT https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2408...</span></code></pre></div>
+<span class="co">#&gt; PUT https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2476...</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="vaults-listing-limit-and-paging">Vaults listing, limit and paging<a class="anchor" aria-label="anchor" href="#vaults-listing-limit-and-paging"></a>
@@ -269,16 +269,17 @@ limit</li>
 
 <span class="co"># fetch all remaining vaults by pages of size 2</span>
 <span class="va">all_vlts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fetch_all.html">fetch_all</a></span><span class="op">(</span><span class="va">vs1</span><span class="op">)</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
-<span class="co">#&gt; got all results.</span>
+<span class="co">#&gt; Loading required namespace: debugme</span>
+<span class="co">#&gt; QuartzBio - QBR Library</span>
+<span class="co">#&gt; Lead Architect: Karl Forner (karl.forner@precisionformedicine.com)</span>
+<span class="co">#&gt; © Precision Medicine Group, LLC.., Bethesda Metro Center, Suite 850 | Bethesda, MD 20814</span>
+<span class="co">#&gt; [dev mode enabled].[hooked R loaders].</span>
 <span class="va">all_vlts_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">all_vlts</span><span class="op">)</span>
 
 <span class="co"># delete vault</span>
 <span class="fu"><a href="../reference/generics.html">delete</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>
-<span class="co">#&gt; DELETE https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2408...</span>
-<span class="co">#&gt; Vault "vsim-dev:test_one" ("barabor", general, rwa), @ "Marc Lamarine", updated at:2023-05-26T13:43:23.300Z</span></code></pre></div>
+<span class="co">#&gt; DELETE https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2476...</span>
+<span class="co">#&gt; Vault "vsim-dev:test_one" ("barabor", general, rwa), @ "Karl Forner", updated at:2023-05-30T10:03:55.961Z</span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
@@ -310,65 +311,64 @@ limit</li>
 <span class="va">fdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Folder_create.html">Folder_create</a></span><span class="op">(</span><span class="va">v1</span>, <span class="st">'data'</span><span class="op">)</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="va">fdata</span>
-<span class="co">#&gt; folder "vsim-dev:_an_upload:/data" (application/vnd.solvebio.folder) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:24.626Z</span>
+<span class="co">#&gt; folder "vsim-dev:_an_upload:/data" (application/vnd.solvebio.folder) nb:0 user:Karl Forner accessed:2023-05-30T10:03:57.809Z</span>
 
 <span class="co"># CAUTION, no overwritting per default, folders are renamed incrementally</span>
 <span class="co"># a new folder data-1 is created</span>
 <span class="fu"><a href="../reference/Folder_create.html">Folder_create</a></span><span class="op">(</span><span class="va">v1</span>, <span class="st">'data'</span><span class="op">)</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; folder "vsim-dev:_an_upload:/data-1" (application/vnd.solvebio.folder) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:24.807Z</span>
+<span class="co">#&gt; folder "vsim-dev:_an_upload:/data-1" (application/vnd.solvebio.folder) nb:0 user:Karl Forner accessed:2023-05-30T10:03:57.995Z</span>
 
 <span class="co"># create a hierarchy</span>
 <span class="fu"><a href="../reference/Folder_create.html">Folder_create</a></span><span class="op">(</span><span class="va">v1</span>, <span class="st">'source/code'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; folder "vsim-dev:_an_upload:/source/code" (application/vnd.solvebio.folder) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:25.291Z</span>
+<span class="co">#&gt; folder "vsim-dev:_an_upload:/source/code" (application/vnd.solvebio.folder) nb:0 user:Karl Forner accessed:2023-05-30T10:03:58.591Z</span>
 
 <span class="co"># List folders of a given vault - recursive</span>
 <span class="fu"><a href="../reference/Folders.html">Folders</a></span><span class="op">(</span>vault_id <span class="op">=</span> <span class="va">v1</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; EDP List of 4 Objects</span>
-<span class="co">#&gt;           path object_type vault_name     user_name            last_modified</span>
-<span class="co">#&gt; 1        /data      folder _an_upload Marc Lamarine 2023-05-26T13:43:24.626Z</span>
-<span class="co">#&gt; 2      /data-1      folder _an_upload Marc Lamarine 2023-05-26T13:43:24.807Z</span>
-<span class="co">#&gt; 3      /source      folder _an_upload Marc Lamarine 2023-05-26T13:43:25.111Z</span>
-<span class="co">#&gt; 4 /source/code      folder _an_upload Marc Lamarine 2023-05-26T13:43:25.291Z</span>
+<span class="co">#&gt;           path object_type vault_name   user_name            last_modified</span>
+<span class="co">#&gt; 1        /data      folder _an_upload Karl Forner 2023-05-30T10:03:57.809Z</span>
+<span class="co">#&gt; 2      /data-1      folder _an_upload Karl Forner 2023-05-30T10:03:57.995Z</span>
+<span class="co">#&gt; 3      /source      folder _an_upload Karl Forner 2023-05-30T10:03:58.363Z</span>
+<span class="co">#&gt; 4 /source/code      folder _an_upload Karl Forner 2023-05-30T10:03:58.591Z</span>
 
 <span class="co"># List folders using regex on paths - recursive</span>
 <span class="fu"><a href="../reference/Folders.html">Folders</a></span><span class="op">(</span>regex <span class="op">=</span> <span class="st">'^/data'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; EDP List of 3 Objects</span>
-<span class="co">#&gt;        path object_type vault_name     user_name            last_modified</span>
-<span class="co">#&gt; 1     /data      folder _an_upload Marc Lamarine 2023-05-26T13:43:24.626Z</span>
-<span class="co">#&gt; 2   /data-1      folder _an_upload Marc Lamarine 2023-05-26T13:43:24.807Z</span>
-<span class="co">#&gt; 3 /datasets      folder    user-71 Marc Lamarine 2023-05-10T10:30:47.391Z</span>
+<span class="co">#&gt; EDP List of 2 Objects</span>
+<span class="co">#&gt;      path object_type vault_name   user_name            last_modified</span>
+<span class="co">#&gt; 1   /data      folder _an_upload Karl Forner 2023-05-30T10:03:57.809Z</span>
+<span class="co">#&gt; 2 /data-1      folder _an_upload Karl Forner 2023-05-30T10:03:57.995Z</span>
 <span class="fu"><a href="../reference/Folders.html">Folders</a></span><span class="op">(</span>regex <span class="op">=</span> <span class="st">'code$'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; EDP List of 2 Objects</span>
-<span class="co">#&gt;           path object_type vault_name     user_name            last_modified</span>
-<span class="co">#&gt; 1     /GENCODE      folder     Public  David Caplan 2022-11-13T01:24:41.193Z</span>
-<span class="co">#&gt; 2 /source/code      folder _an_upload Marc Lamarine 2023-05-26T13:43:25.291Z</span>
+<span class="co">#&gt;           path object_type vault_name    user_name            last_modified</span>
+<span class="co">#&gt; 1     /GENCODE      folder     Public David Caplan 2022-11-13T01:24:41.193Z</span>
+<span class="co">#&gt; 2 /source/code      folder _an_upload  Karl Forner 2023-05-30T10:03:58.591Z</span>
 
 <span class="co"># List folders matching paths - recursive</span>
 <span class="fu"><a href="../reference/Folders.html">Folders</a></span><span class="op">(</span>query <span class="op">=</span> <span class="st">'code'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; EDP List of 1 Objects</span>
-<span class="co">#&gt;           path object_type vault_name     user_name            last_modified</span>
-<span class="co">#&gt; 1 /source/code      folder _an_upload Marc Lamarine 2023-05-26T13:43:25.291Z</span>
+<span class="co">#&gt;           path object_type vault_name   user_name            last_modified</span>
+<span class="co">#&gt; 1 /source/code      folder _an_upload Karl Forner 2023-05-30T10:03:58.591Z</span>
 
 <span class="co"># fetch a a folder from a given vault</span>
 <span class="fu"><a href="../reference/Folder.html">Folder</a></span><span class="op">(</span>vault_id <span class="op">=</span> <span class="va">v1</span>, path <span class="op">=</span> <span class="st">'data'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; folder "vsim-dev:_an_upload:/data" (application/vnd.solvebio.folder) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:24.626Z</span>
+<span class="co">#&gt; folder "vsim-dev:_an_upload:/data" (application/vnd.solvebio.folder) nb:0 user:Karl Forner accessed:2023-05-30T10:03:57.809Z</span>
 
 <span class="co"># fetch a folder with its full.path</span>
 <span class="fu"><a href="../reference/Folder.html">Folder</a></span><span class="op">(</span>full_path <span class="op">=</span> <span class="va">fdata</span><span class="op">$</span><span class="va">full_path</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; folder "vsim-dev:_an_upload:/data" (application/vnd.solvebio.folder) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:24.626Z</span>
+<span class="co">#&gt; folder "vsim-dev:_an_upload:/data" (application/vnd.solvebio.folder) nb:0 user:Karl Forner accessed:2023-05-30T10:03:57.809Z</span>
 <span class="fu"><a href="../reference/generics.html">delete</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>
-<span class="co">#&gt; DELETE https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2409...</span>
-<span class="co">#&gt; Vault "vsim-dev:_an_upload" ("upload", general, rwa), @ "Marc Lamarine", updated at:2023-05-26T13:43:26.704Z</span></code></pre></div>
+<span class="co">#&gt; DELETE https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2477...</span>
+<span class="co">#&gt; Vault "vsim-dev:_an_upload" ("upload", general, rwa), @ "Karl Forner", updated at:2023-05-30T10:04:00.356Z</span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="files">Files<a class="anchor" aria-label="anchor" href="#files"></a>
@@ -398,7 +398,7 @@ limit</li>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; uploading file /tmp/RtmpwblcoG/iris.csv...</span>
+<span class="co">#&gt; uploading file /tmp/Rtmpv3OKdg/iris.csv...</span>
 <span class="va">firis</span><span class="op">$</span><span class="va">full_path</span>
 <span class="co">#&gt; [1] "vsim-dev:_iris_upload:/data/iris/v1/iris_10.csv"</span>
 <span class="va">firis</span><span class="op">$</span><span class="va">path</span>
@@ -408,22 +408,22 @@ limit</li>
 
 <span class="co"># File download</span>
 <span class="fu"><a href="../reference/File_download.html">File_download</a></span><span class="op">(</span><span class="va">firis</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">irisp</span><span class="op">)</span>, <span class="st">'iris_10_download.csv'</span><span class="op">)</span><span class="op">)</span> 
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803/download...</span>
-<span class="co">#&gt; Response [https://qb-edp-dev.s3.amazonaws.com/uploads/3/2052289793595114925?response-content-disposition=attachment%3B%20filename%3Diris_10.csv&amp;AWSAccessKeyId=ASIAUY4D3D27HVFKDFOQ&amp;Expires=1685195009&amp;x-amz-security-token=IQoJb3JpZ2luX2VjEPb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIAgT6nejhnxdMrQPoQMg5hr90FyWCvYGmOda4A5qEHKBAiEAmJghimEyA%2BleyfBDm6wMDHbgPEG4qFt2KUNOH8sYLOwq%2FQMILxADGgwzMjgzMDQ2MzE0ODYiDDrSpnWWqHKzbQAnIyraA1wzyUnNWe9rwpvhKSxxwvohBJDEIbK0bHvmkqWRkLn1IPgQSftuYMHXn%2FcacfWbVzNKdCtBuntvy8qF88ryOsBogP6gvPlC1kDqFiWUEVS2CVEzKn%2FQ7p0jN%2FKIQ1kZGIZpVxZiHhQ%2FKZjrtGShtSg5MIZTRxg54WztXQGIWJZ93l%2FK%2FtvmStEdnKmZN91TcCNdSeC5Naxbsw%2F72Yy9f5KtnVbSm%2FFniu5tYendErfxl2lRCZj2TXe7CHTSmJWpGMcb9d5Y%2BgvUenTUlzeosIWnjNBNnKgQO%2BP7NqYiWP%2FAPVtLMf6eZQFOwHE4qdE6pJynLJ1iKbzlWPIBEcMRzi9NOQkk6zIptYx0vQJpQ2pJzDbXATrGqDMahjsyT%2FE8ak%2BODpWO9PjS3oo0hIbseE8vGkxUu4TkjqhP6cBzIQgzJ47br9PsR5XyM%2Fk1Lya6HRWjvf6Wh5rD31L2Cv9R8rspsvteMLrOywbMz3KaFAn%2FYVTQTJN3MLpRXAwGzOkKF6KNsImmuabYk%2BBMVt4eWnUkBgDa80IJfYi0Agh8TidbVj8wiHCG1gLPwyEH5l1KM%2FXO3tdIPbrqp9Lbn5hqVfdlE5ridA0ASDhShisNnQVSMOs5JiZwp7ktqzCK5cKjBjqlAVi2ddUBDs9ljoVmLEah%2Bujn%2FPpPZkggC5LtasSD0rfAdxujpbxfi5E03fx9DQayuayRmlfFl6B3RemdAoXFNLNOEdPGYuFFkSHPKhTKvqQh8dr88dLznpIBXJgGHqq6%2BARjYTe%2B2DQBRDTZSdVDabO4JH8eZ50ecRHfeymwR2qR6ixG%2FkWwROtFsyvK2nQXydrZOXIB1VjcWCwTg2X1l6hK5RHR7Q%3D%3D&amp;Signature=xOXls9fGEykieDfnai%2B7sT9Vr0c%3D]</span>
-<span class="co">#&gt;   Date: 2023-05-26 13:43</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704/download...</span>
+<span class="co">#&gt; Response [https://qb-edp-dev.s3.amazonaws.com/uploads/3/2055078448407290093?response-content-disposition=attachment%3B%20filename%3Diris_10.csv&amp;AWSAccessKeyId=ASIAUY4D3D27AWBIL26Y&amp;Expires=1685527442&amp;x-amz-security-token=IQoJb3JpZ2luX2VjEFIaCXVzLWVhc3QtMSJHMEUCIQDrT4GG0triyw%2F1ZZbkves%2BjXa5Sgt%2FlIxLV2YZC9fdYQIgcU6GkcN0mXwOzHa6edDeW41n%2BFTRRvq3QKPhP4NtPw8qhgQIi%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARADGgwzMjgzMDQ2MzE0ODYiDDdOburUVkufopZ2dSraA%2FM8Eetbs%2Fz447ANt3cHhfWTxTk2EkgGpyHIoyk2r%2Bh3H52rEnULI1032K9WyUUiVhMhXWW8gNBY9ITS6Xr%2FU3PMYmBdwZ8%2Fay13hR4mJob%2F7EXjLwx2IUqiMfFUlSGgkjeH4eqGkwUioQMaXcGaT3QRsbrrP7KDbhV9f3sF5W8iCrGXXOmg1C3KXjVC%2BSjNfZKOvEAtt8Lo1rk1xSzVLN%2B18UOcgpyLztQ6J6ySY37Uzj3qgvsj%2F9a8g%2F7WkKqjkbqmyiDcyw7mxxpoJ8cu5xOH%2FtUqnMunjg6udnu%2FZumY89ikTvalx%2FG7jkRlLse%2Fp4JzODmirYr9XmNYgVoGcR99C58iZSV4UcOwW9jDzwIcsTUPrIVHWiRr2k3eB5gZCBv3Jx9nenpaCwi3jRjuJDeTBPLhp%2F9lg2CAb3a64W0tXQiDd%2FWzU3d3%2BoyjVpcYelAUBU5j2Eu7DJVBRVCOgShfjO%2BK0O%2B7o6CEY6%2Bg1wrcS6mHRNG%2BQEtsTiDjxkYALYPdJYW%2FsSlxJ1uiDP3rCQ9LIWypGxpEuSRsS3sXlS%2BL%2BwO5Z2iZZXe8xrhfxl06kj%2FygJ1eJbWIh29ZpFGvBG6LcJ%2BWuu1YbQYwDLHISDaN76IUJrI6hWQUfTCYhNejBjqlAcmU851mYhEqNGFE%2F3HRLIns4dfmQMrXYXaP%2BiXHih7o1ErzRETa7Shcd4g5AogP6supITBeGTZC6%2BdPTH1JekD6PM6Gfpkt9kCqKh3xnHb3UlF2T6W53whOLts96FPpsksaGyODd9ldanKCZmOFlqpPAHJAGcZUUwKOS%2BDCKi5uBQOPQz74w7dyWz7cDLxllFc5pByLEKM8PqqVwO%2FPMCSltuXicg%3D%3D&amp;Signature=rr4BAfz6BFFtfCpYktl%2FfnYKvGw%3D]</span>
+<span class="co">#&gt;   Date: 2023-05-30 10:04</span>
 <span class="co">#&gt;   Status: 200</span>
 <span class="co">#&gt;   Content-Type: text/csv</span>
 <span class="co">#&gt;   Size: 356 B</span>
-<span class="co">#&gt; &lt;ON DISK&gt;  /tmp/RtmpwblcoG/iris_10_download.csv</span>
+<span class="co">#&gt; &lt;ON DISK&gt;  /tmp/Rtmpv3OKdg/iris_10_download.csv</span>
 <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">irisp</span><span class="op">)</span>, <span class="st">'iris'</span><span class="op">)</span>
 <span class="co">#&gt; [1] "iris.csv"             "iris_10_download.csv"</span>
 
 <span class="co"># fetch a File object</span>
 <span class="fu"><a href="../reference/File.html">File</a></span><span class="op">(</span> full_path <span class="op">=</span> <span class="va">firis</span><span class="op">$</span><span class="va">full_path</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
-<span class="co">#&gt; file "vsim-dev:_iris_upload:/data/iris/v1/iris_10.csv" (text/csv) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:29.807Z</span>
+<span class="co">#&gt; file "vsim-dev:_iris_upload:/data/iris/v1/iris_10.csv" (text/csv) nb:0 user:Karl Forner accessed:2023-05-30T10:04:02.980Z</span>
 <span class="va">firis</span>
-<span class="co">#&gt; file "vsim-dev:_iris_upload:/data/iris/v1/iris_10.csv" (text/csv) nb:0 user:Marc Lamarine accessed:2023-05-26T13:43:28.220Z</span></code></pre></div>
+<span class="co">#&gt; file "vsim-dev:_iris_upload:/data/iris/v1/iris_10.csv" (text/csv) nb:0 user:Karl Forner accessed:2023-05-30T10:04:01.779Z</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="upload-jsonl">upload JSONL<a class="anchor" aria-label="anchor" href="#upload-jsonl"></a>
@@ -447,7 +447,7 @@ processed one record at a time. * <a href="https://jsonlines.org/" class="extern
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; uploading file /tmp/RtmpwblcoG/iris.json...</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; uploading file /tmp/Rtmpv3OKdg/iris.json...</span></span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>fi2<span class="sc">$</span>path</span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "/v1/iris_10.json"</span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>fi2<span class="sc">$</span>mimetype</span>
@@ -455,9 +455,9 @@ processed one record at a time. * <a href="https://jsonlines.org/" class="extern
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="fu">File_query</span>(fi2)</span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; fetching the number of rows of the file...</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289814581496205...</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078466195526152...</span></span>
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; found  lines</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289814581496205/data...</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078466195526152/data...</span></span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1           5.1         3.5          1.4         0.2  setosa</span></span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2           4.9         3.0          1.4         0.2  setosa</span></span>
@@ -475,7 +475,7 @@ processed one record at a time. * <a href="https://jsonlines.org/" class="extern
 <span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14          4.3         3.0          1.1         0.1  setosa</span></span>
 <span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15          5.8         4.0          1.2         0.2  setosa</span></span>
 <span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="fu">File_query</span>(fi2, <span class="at">filters =</span> <span class="fu">filters</span>(<span class="st">"Sepal.Length &gt;= 5"</span>))</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289814581496205/data...</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078466195526152/data...</span></span>
 <span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
 <span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1          5.1         3.5          1.4         0.2  setosa</span></span>
 <span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2          5.0         3.6          1.4         0.2  setosa</span></span>
@@ -497,14 +497,14 @@ the same fetch_next, fetch_all functions.</p>
 <span class="fu"><a href="../reference/Files.html">Files</a></span><span class="op">(</span>limit <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; EDP List of 3 Objects</span>
-<span class="co">#&gt;                                                                                 path</span>
-<span class="co">#&gt; 1                                                                    /bm_mut_cnv.csv</span>
-<span class="co">#&gt; 2                                                                   /boss_3.4_iris.R</span>
-<span class="co">#&gt; 3 /ClinGen/ClinGen-1-0-0-2015-06-02-Genes-1098056416333778650-20230215200640.json.gz</span>
-<span class="co">#&gt;   object_type      vault_name     user_name            last_modified</span>
-<span class="co">#&gt; 1        file         user-71 Marc Lamarine 2023-05-10T10:30:07.085Z</span>
-<span class="co">#&gt; 2        file         user-71 Marc Lamarine 2023-02-08T13:15:36.980Z</span>
-<span class="co">#&gt; 3        file Public Data Dev  David Caplan 2023-02-15T20:07:46.945Z</span>
+<span class="co">#&gt;                                                                                                        path</span>
+<span class="co">#&gt; 1                        /ClinGen/ClinGen-1-0-0-2015-06-02-Genes-1098056416333778650-20230215200640.json.gz</span>
+<span class="co">#&gt; 2 /ClinVar/5.2.0-20210110/ClinVar-5-2-0-20210110-Variants-GRCH37-1425664822266145048-20221110194518.json.gz</span>
+<span class="co">#&gt; 3 /ClinVar/5.2.0-20210110/ClinVar-5-2-0-20210110-Variants-GRCH38-1425664716292714398-20221110194523.json.gz</span>
+<span class="co">#&gt;   object_type      vault_name    user_name            last_modified</span>
+<span class="co">#&gt; 1        file Public Data Dev David Caplan 2023-02-15T20:07:46.945Z</span>
+<span class="co">#&gt; 2        file          Public David Caplan 2022-11-10T19:47:23.197Z</span>
+<span class="co">#&gt; 3        file          Public David Caplan 2022-11-10T19:47:23.188Z</span>
 
 <span class="fu"><a href="../reference/Files.html">Files</a></span><span class="op">(</span>regex <span class="op">=</span> <span class="st">'TCG*'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
@@ -529,12 +529,12 @@ the same fetch_next, fetch_all functions.</p>
 <span class="fu"><a href="../reference/Files.html">Files</a></span><span class="op">(</span>vault_id <span class="op">=</span> <span class="va">v</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; EDP List of 2 Objects</span>
-<span class="co">#&gt;                        path object_type   vault_name     user_name</span>
-<span class="co">#&gt; 1 /data/iris/v1/iris_10.csv        file _iris_upload Marc Lamarine</span>
-<span class="co">#&gt; 2          /v1/iris_10.json        file _iris_upload Marc Lamarine</span>
+<span class="co">#&gt;                        path object_type   vault_name   user_name</span>
+<span class="co">#&gt; 1 /data/iris/v1/iris_10.csv        file _iris_upload Karl Forner</span>
+<span class="co">#&gt; 2          /v1/iris_10.json        file _iris_upload Karl Forner</span>
 <span class="co">#&gt;              last_modified</span>
-<span class="co">#&gt; 1 2023-05-26T13:43:28.220Z</span>
-<span class="co">#&gt; 2 2023-05-26T13:43:30.743Z</span></code></pre></div>
+<span class="co">#&gt; 1 2023-05-30T10:04:01.779Z</span>
+<span class="co">#&gt; 2 2023-05-30T10:04:03.921Z</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="files-move">Files Move<a class="anchor" aria-label="anchor" href="#files-move"></a>
@@ -545,9 +545,9 @@ the same fetch_next, fetch_all functions.</p>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="va">firis_v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Object_update.html">Object_update</a></span><span class="op">(</span><span class="va">firis</span>, parent_object_id <span class="op">=</span> <span class="va">f1</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>
-<span class="co">#&gt; PUT https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803...</span>
+<span class="co">#&gt; PUT https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704...</span>
 <span class="va">firis_v2</span>
-<span class="co">#&gt; file "vsim-dev:_iris_upload:/data/iris/v2/iris_10.csv" (text/csv) nb:10 user:Marc Lamarine accessed:2023-05-26T13:43:29.807Z</span></code></pre></div>
+<span class="co">#&gt; file "vsim-dev:_iris_upload:/data/iris/v2/iris_10.csv" (text/csv) nb:10 user:Karl Forner accessed:2023-05-30T10:04:02.980Z</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="files-querying">Files Querying<a class="anchor" aria-label="anchor" href="#files-querying"></a>
@@ -557,13 +557,13 @@ the same fetch_next, fetch_all functions.</p>
 <code class="sourceCode R"><span class="co"># fetch the two first rows</span>
 <span class="va">f2r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/File_query.html">File_query</a></span><span class="op">(</span><span class="va">firis_v2</span>, limit<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; fetching the number of rows of the file...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704...</span>
 <span class="co">#&gt; found 10 lines</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803/data...</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704/data...</span>
 
 <span class="co"># fetch the two next ones</span>
 <span class="fu"><a href="../reference/fetch_next.html">fetch_next</a></span><span class="op">(</span><span class="va">f2r</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803/data...</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704/data...</span>
 <span class="co">#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1 3          4.7         3.2          1.3         0.2  setosa</span>
 <span class="co">#&gt; 2 4          4.6         3.1          1.5         0.2  setosa</span>
@@ -571,9 +571,9 @@ the same fetch_next, fetch_all functions.</p>
 <span class="co"># fetch row 8</span>
 <span class="fu"><a href="../reference/File_query.html">File_query</a></span><span class="op">(</span><span class="va">firis_v2</span>, limit<span class="op">=</span><span class="fl">1</span>,  offset<span class="op">=</span><span class="fl">7</span><span class="op">)</span>
 <span class="co">#&gt; fetching the number of rows of the file...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704...</span>
 <span class="co">#&gt; found 10 lines</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803/data...</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704/data...</span>
 <span class="co">#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1 8            5         3.4          1.5         0.2  setosa</span>
 <span class="va">iris</span><span class="op">[</span><span class="fl">8</span>,<span class="op">]</span>
@@ -582,7 +582,7 @@ the same fetch_next, fetch_all functions.</p>
 
 <span class="co"># fetch all Setosa </span>
 <span class="fu"><a href="../reference/File_query.html">File_query</a></span><span class="op">(</span><span class="va">firis_v2</span>, filters<span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'Species contains "setosa"'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803/data...</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704/data...</span>
 <span class="co">#&gt;       Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1   1          5.1         3.5          1.4         0.2  setosa</span>
 <span class="co">#&gt; 2   2          4.9           3          1.4         0.2  setosa</span>
@@ -595,7 +595,7 @@ the same fetch_next, fetch_all functions.</p>
 <span class="co">#&gt; 9   9          4.4         2.9          1.4         0.2  setosa</span>
 <span class="co">#&gt; 10 10          4.9         3.1          1.5         0.1  setosa</span>
 <span class="fu"><a href="../reference/File_query.html">File_query</a></span><span class="op">(</span><span class="va">firis_v2</span>, filters<span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'Sepal.Length = 4.7'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2052289793425335803/data...</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/objects/2055078448234093704/data...</span>
 <span class="co">#&gt; data frame with 0 columns and 0 rows</span></code></pre></div>
 </div>
 </div>
@@ -615,28 +615,28 @@ the same fetch_next, fetch_all functions.</p>
 
 <span class="va">import_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_import.html">Dataset_import</a></span><span class="op">(</span><span class="va">iris_2</span>, df <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="op">]</span>, sync <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_imports...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052289883939139555...</span>
-<span class="co">#&gt; waiting for task 2052289883939139555 ("Dataset Import" for "vsim-dev:_iris_upload:/iris_2.ds"),  29 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052289883939139555...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078529492392933...</span>
+<span class="co">#&gt; waiting for task 2055078529492392933 ("Dataset Import" for "vsim-dev:_iris_upload:/iris_2.ds"),  29 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078529492392933...</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052289895868925220...</span>
-<span class="co">#&gt; waiting for task 2052289895868925220 ("Dataset Commit" for "vsim-dev:_iris_upload:/iris_2.ds"),  28 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052289895868925220...</span>
-<span class="co">#&gt; waiting for task 2052289895868925220 ("Dataset Commit" for "vsim-dev:_iris_upload:/iris_2.ds"),  27 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052289895868925220...</span>
-<span class="co">#&gt; waiting for task 2052289895868925220 ("Dataset Commit" for "vsim-dev:_iris_upload:/iris_2.ds"),  26 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052289895868925220...</span>
-<span class="co">#&gt; waiting for task 2052289895868925220 ("Dataset Commit" for "vsim-dev:_iris_upload:/iris_2.ds"),  25 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052289895868925220...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078541380653673...</span>
+<span class="co">#&gt; waiting for task 2055078541380653673 ("Dataset Commit" for "vsim-dev:_iris_upload:/iris_2.ds"),  28 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078541380653673...</span>
+<span class="co">#&gt; waiting for task 2055078541380653673 ("Dataset Commit" for "vsim-dev:_iris_upload:/iris_2.ds"),  27 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078541380653673...</span>
+<span class="co">#&gt; waiting for task 2055078541380653673 ("Dataset Commit" for "vsim-dev:_iris_upload:/iris_2.ds"),  26 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078541380653673...</span>
+<span class="co">#&gt; waiting for task 2055078541380653673 ("Dataset Commit" for "vsim-dev:_iris_upload:/iris_2.ds"),  25 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078541380653673...</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks...</span>
 <span class="va">iris_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.html">Dataset</a></span><span class="op">(</span>vault_id <span class="op">=</span> <span class="va">v</span>, path <span class="op">=</span> <span class="va">iris_2</span><span class="op">$</span><span class="va">path</span><span class="op">)</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="va">i2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">iris_2</span>, limit <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/fields...</span>
-<span class="co">#&gt; took 0.166999999999994 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/fields...</span>
+<span class="co">#&gt; took 0.175999999999995 to process the meta data.</span>
 <span class="fu"><a href="../reference/fetch_next.html">fetch_next</a></span><span class="op">(</span><span class="va">i2</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1          4.9           3          1.4         0.2  setosa</span></code></pre></div>
 </div>
@@ -659,40 +659,36 @@ the same fetch_next, fetch_all functions.</p>
 
 <span class="va">import_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_import.html">Dataset_import</a></span><span class="op">(</span><span class="va">genes_1</span>, records <span class="op">=</span> <span class="va">records</span>, sync <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_imports...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290040822386556...</span>
-<span class="co">#&gt; waiting for task 2052290040822386556 ("Dataset Import" for "vsim-dev:_iris_upload:/genes.ds"),  29 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290040822386556...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078684274137790...</span>
+<span class="co">#&gt; waiting for task 2055078684274137790 ("Dataset Import" for "vsim-dev:_iris_upload:/genes.ds"),  29 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078684274137790...</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290049542108031...</span>
-<span class="co">#&gt; waiting for task 2052290049542108031 ("Dataset Commit" for "vsim-dev:_iris_upload:/genes.ds"),  28 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290049542108031...</span>
-<span class="co">#&gt; waiting for task 2052290049542108031 ("Dataset Commit" for "vsim-dev:_iris_upload:/genes.ds"),  27 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290049542108031...</span>
-<span class="co">#&gt; waiting for task 2052290049542108031 ("Dataset Commit" for "vsim-dev:_iris_upload:/genes.ds"),  26 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290049542108031...</span>
-<span class="co">#&gt; waiting for task 2052290049542108031 ("Dataset Commit" for "vsim-dev:_iris_upload:/genes.ds"),  25 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290049542108031...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078694016550682...</span>
+<span class="co">#&gt; waiting for task 2055078694016550682 ("Dataset Commit" for "vsim-dev:_iris_upload:/genes.ds"),  28 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078694016550682...</span>
+<span class="co">#&gt; waiting for task 2055078694016550682 ("Dataset Commit" for "vsim-dev:_iris_upload:/genes.ds"),  27 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078694016550682...</span>
+<span class="co">#&gt; waiting for task 2055078694016550682 ("Dataset Commit" for "vsim-dev:_iris_upload:/genes.ds"),  26 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078694016550682...</span>
+<span class="co">#&gt; waiting for task 2055078694016550682 ("Dataset Commit" for "vsim-dev:_iris_upload:/genes.ds"),  25 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078694016550682...</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks...</span>
 <span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">genes_1</span>, limit <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052290034102046892/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052290034102046892/fields...</span>
-<span class="co">#&gt; took 0.201999999999998 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078679819743688/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078679819743688/fields...</span>
+<span class="co">#&gt; took 0.161999999999999 to process the meta data.</span>
 <span class="va">g1</span>
 <span class="co">#&gt;   importance gene sample_count</span>
 <span class="co">#&gt; 1          1 CFTR         2104</span>
 <span class="fu"><a href="../reference/fetch_all.html">fetch_all</a></span><span class="op">(</span><span class="va">g1</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052290034102046892/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052290034102046892/data...</span>
-<span class="co">#&gt; got all results.</span>
-<span class="co">#&gt; took 0.343000000000004 to bind the data frames</span>
 <span class="co">#&gt;   importance  gene sample_count</span>
 <span class="co">#&gt; 1          1  CFTR         2104</span>
 <span class="co">#&gt; 2          1 BRCA2         1391</span>
 <span class="co">#&gt; 3          5 CLIC2           14</span>
 <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">genes_1</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'sample_count &lt;= 14'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052290034102046892/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052290034102046892/fields...</span>
-<span class="co">#&gt; took 0.153999999999996 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078679819743688/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078679819743688/fields...</span>
+<span class="co">#&gt; took 0.155000000000001 to process the meta data.</span>
 <span class="co">#&gt;   importance  gene sample_count</span>
 <span class="co">#&gt; 1          5 CLIC2           14</span></code></pre></div>
 <div class="section level3">
@@ -725,24 +721,24 @@ the same fetch_next, fetch_all functions.</p>
   target_fields <span class="op">=</span> <span class="va">target_fields</span>, 
   sync <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_imports...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290203275332833...</span>
-<span class="co">#&gt; waiting for task 2052290203275332833 ("Dataset Import" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  29 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290203275332833...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078850163129268...</span>
+<span class="co">#&gt; waiting for task 2055078850163129268 ("Dataset Import" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  29 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078850163129268...</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290215190166105...</span>
-<span class="co">#&gt; waiting for task 2052290215190166105 ("Dataset Commit" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  28 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290215190166105...</span>
-<span class="co">#&gt; waiting for task 2052290215190166105 ("Dataset Commit" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  27 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290215190166105...</span>
-<span class="co">#&gt; waiting for task 2052290215190166105 ("Dataset Commit" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  26 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290215190166105...</span>
-<span class="co">#&gt; waiting for task 2052290215190166105 ("Dataset Commit" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  25 retries left</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2052290215190166105...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078862296263967...</span>
+<span class="co">#&gt; waiting for task 2055078862296263967 ("Dataset Commit" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  28 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078862296263967...</span>
+<span class="co">#&gt; waiting for task 2055078862296263967 ("Dataset Commit" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  27 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078862296263967...</span>
+<span class="co">#&gt; waiting for task 2055078862296263967 ("Dataset Commit" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  26 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078862296263967...</span>
+<span class="co">#&gt; waiting for task 2055078862296263967 ("Dataset Commit" for "vsim-dev:_iris_upload:/dna_gurus.ds"),  25 retries left</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks/2055078862296263967...</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks...</span>
 <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">nobs</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052290198088039895/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052290198088039895/fields...</span>
-<span class="co">#&gt; took 0.197000000000003 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078844777506753/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078844777506753/fields...</span>
+<span class="co">#&gt; took 0.171999999999997 to process the meta data.</span>
 <span class="co">#&gt;   first_name last_name              name</span>
 <span class="co">#&gt; 1    Francis     Crick     Francis Crick</span>
 <span class="co">#&gt; 2      James    Watson      James Watson</span>
@@ -756,29 +752,16 @@ the same fetch_next, fetch_all functions.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># fetch the first row</span>
 <span class="va">f1r_ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">iris_2</span>, limit<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/fields...</span>
-<span class="co">#&gt; took 0.162999999999997 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/fields...</span>
+<span class="co">#&gt; took 0.171000000000006 to process the meta data.</span>
 
 <span class="fu"><a href="../reference/fetch_next.html">fetch_next</a></span><span class="op">(</span><span class="va">f1r_ds</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1          4.9           3          1.4         0.2  setosa</span>
 
 <span class="fu"><a href="../reference/fetch_all.html">fetch_all</a></span><span class="op">(</span><span class="va">f1r_ds</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; got all results.</span>
-<span class="co">#&gt; took 0.0250000000000057 to bind the data frames</span>
 <span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1           5.1         3.5          1.4         0.2  setosa</span>
 <span class="co">#&gt; 2           4.9         3.0          1.4         0.2  setosa</span>
@@ -795,9 +778,9 @@ the same fetch_next, fetch_all functions.</p>
 
 <span class="co"># Filters acts on column fields that matches the data.frame import.</span>
 <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">iris_2</span>, filters<span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'Species contains "setosa"'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/fields...</span>
-<span class="co">#&gt; took 0.328999999999994 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/fields...</span>
+<span class="co">#&gt; took 0.171999999999997 to process the meta data.</span>
 <span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1           5.1         3.5          1.4         0.2  setosa</span>
 <span class="co">#&gt; 2           4.9         3.0          1.4         0.2  setosa</span>
@@ -813,18 +796,18 @@ the same fetch_next, fetch_all functions.</p>
 <span class="co">#&gt; 12          4.8         3.4          1.6         0.2  setosa</span>
 
 <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">iris_2</span>, filters<span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'Sepal.Length &gt;= 5.1'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/fields...</span>
-<span class="co">#&gt; took 0.194999999999993 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/fields...</span>
+<span class="co">#&gt; took 0.305999999999997 to process the meta data.</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1          5.1         3.5          1.4         0.2  setosa</span>
 <span class="co">#&gt; 2          5.4         3.9          1.7         0.4  setosa</span>
 <span class="co">#&gt; 3          5.4         3.7          1.5         0.2  setosa</span>
 
 <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">iris_2</span>, filters<span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'(Sepal.Length &gt;= 5.1) OR  (Sepal.Width &lt;= 3.0)'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/fields...</span>
-<span class="co">#&gt; took 0.170000000000002 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/fields...</span>
+<span class="co">#&gt; took 0.207999999999998 to process the meta data.</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1          5.1         3.5          1.4         0.2  setosa</span>
 <span class="co">#&gt; 2          4.9         3.0          1.4         0.2  setosa</span>
@@ -836,9 +819,9 @@ the same fetch_next, fetch_all functions.</p>
 <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">iris_2</span>, 
   fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Petal.Width'</span>, <span class="st">'Species'</span><span class="op">)</span>,
   filters<span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'(Sepal.Length &gt;= 5.1) OR  (Sepal.Width &lt;= 3.0)'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/fields...</span>
-<span class="co">#&gt; took 0.364999999999995 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/fields...</span>
+<span class="co">#&gt; took 0.195999999999998 to process the meta data.</span>
 <span class="co">#&gt;   Petal.Width Species</span>
 <span class="co">#&gt; 1         0.2  setosa</span>
 <span class="co">#&gt; 2         0.2  setosa</span>
@@ -850,28 +833,28 @@ the same fetch_next, fetch_all functions.</p>
 <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">iris_2</span>, 
   exclude_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Petal.Width'</span>, <span class="st">'Species'</span><span class="op">)</span>,
   filters<span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'(Sepal.Length &gt;= 5.1) OR  (Sepal.Width &lt;= 3.0)'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/fields...</span>
-<span class="co">#&gt; took 0.170000000000002 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/fields...</span>
+<span class="co">#&gt; took 0.171000000000006 to process the meta data.</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length             _commit</span>
-<span class="co">#&gt; 1          5.1         3.5          1.4 2052289893956238016</span>
-<span class="co">#&gt; 2          4.9         3.0          1.4 2052289893956238016</span>
-<span class="co">#&gt; 3          5.4         3.9          1.7 2052289893956238016</span>
-<span class="co">#&gt; 4          4.4         2.9          1.4 2052289893956238016</span>
-<span class="co">#&gt; 5          5.4         3.7          1.5 2052289893956238016</span>
+<span class="co">#&gt; 1          5.1         3.5          1.4 2055078539392975012</span>
+<span class="co">#&gt; 2          4.9         3.0          1.4 2055078539392975012</span>
+<span class="co">#&gt; 3          5.4         3.9          1.7 2055078539392975012</span>
+<span class="co">#&gt; 4          4.4         2.9          1.4 2055078539392975012</span>
+<span class="co">#&gt; 5          5.4         3.7          1.5 2055078539392975012</span>
 <span class="co">#&gt;                    _id</span>
-<span class="co">#&gt; 1 AYhYTP2DvLX9gu2wmXKe</span>
-<span class="co">#&gt; 2 AYhYTP2DvLX9gu2wmXKf</span>
-<span class="co">#&gt; 3 AYhYTP2DvLX9gu2wmXKj</span>
-<span class="co">#&gt; 4 AYhYTP2DvLX9gu2wmXKm</span>
-<span class="co">#&gt; 5 AYhYTP2DvLX9gu2wmXKo</span>
+<span class="co">#&gt; 1 AYhsHYFwvLX9gu2wmXO1</span>
+<span class="co">#&gt; 2 AYhsHYFwvLX9gu2wmXO2</span>
+<span class="co">#&gt; 3 AYhsHYFwvLX9gu2wmXO6</span>
+<span class="co">#&gt; 4 AYhsHYFwvLX9gu2wmXO9</span>
+<span class="co">#&gt; 5 AYhsHYFwvLX9gu2wmXO_</span>
 
 <span class="co"># Ordering</span>
 <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">iris_2</span>, 
    ordering <span class="op">=</span> <span class="st">'Sepal.Length'</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/data...</span>
-<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2052289879056070801/fields...</span>
-<span class="co">#&gt; took 0.222999999999999 to process the meta data.</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/data...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2055078523848039781/fields...</span>
+<span class="co">#&gt; took 0.199000000000012 to process the meta data.</span>
 <span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1           4.4         2.9          1.4         0.2  setosa</span>
 <span class="co">#&gt; 2           4.6         3.1          1.5         0.2  setosa</span>
@@ -887,8 +870,8 @@ the same fetch_next, fetch_all functions.</p>
 <span class="co">#&gt; 12          5.4         3.7          1.5         0.2  setosa</span>
 
 <span class="fu"><a href="../reference/generics.html">delete</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>
-<span class="co">#&gt; DELETE https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2410...</span>
-<span class="co">#&gt; Vault "vsim-dev:_iris_upload" ("upload", general, rwa), @ "Marc Lamarine", updated at:2023-05-26T13:44:38.843Z</span></code></pre></div>
+<span class="co">#&gt; DELETE https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2478...</span>
+<span class="co">#&gt; Vault "vsim-dev:_iris_upload" ("upload", general, rwa), @ "Karl Forner", updated at:2023-05-30T10:05:11.802Z</span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -898,7 +881,7 @@ the same fetch_next, fetch_all functions.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Karl Forner.</p>
+<p>Developed by David Caplan, Karl Forner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

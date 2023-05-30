@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.00.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,29 +97,29 @@ if no connection are specified in arguments.</p>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">quartzbio.edp</span><span class="op">)</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: RcppSimdJson</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://api.solvebio.com with user "Marc Lamarine" using an API Token</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Karl Forner" using an API Token</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span>
 <span class="va">vlst</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vaults.html">Vaults</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v2/vaults...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
 <span class="va">vlst</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; Vault "qbdev:Comparisons" ("", general, RWA), @ "dandan", updated at:2022-08-19T14:48:53.077Z</span>
+<span class="co">#&gt; Vault "vsim-dev:dandan-test" ("", general, Rwa), @ "Dandan Xu", updated at:2023-02-13T19:13:48.825Z</span>
 
 <span class="va">flds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Folders.html">Folders</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v2/objects...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="va">flds</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; folder "solvebio:public:/1000G" (application/vnd.solvebio.folder) nb:0 user:SolveBio Staff accessed:</span>
+<span class="co">#&gt; folder "vsim-dev:Public Data Dev:/ClinGen" (application/vnd.solvebio.folder) nb:0 user:David Caplan accessed:2023-02-15T20:07:39.539Z</span>
 
 <span class="va">fis</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Files.html">Files</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v2/objects...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="va">fis</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; file "solvebio:public:/CCDS/1.0.0-2019-12-10/CCDS2Sequence.current.txt" (text/plain) nb:0 user:Dandan Xu accessed:2023-01-27T10:38:23.526Z</span>
+<span class="co">#&gt; file "vsim-dev:Public Data Dev:/ClinGen/ClinGen-1-0-0-2015-06-02-Genes-1098056416333778650-20230215200640.json.gz" (gzip) nb:562 user:David Caplan accessed:2023-02-15T20:07:46.945Z</span>
 
 <span class="va">das</span>  <span class="op">&lt;-</span><span class="fu"><a href="../reference/Datasets.html">Datasets</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v2/objects...</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="va">das</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; dataset "solvebio:public:/1000G/1.1.0-2015-01-08/1000G-GRCh37" (application/vnd.solvebio.dataset) nb:170075267 user:Jeff Hull accessed:2023-05-26T13:08:12Z</span></code></pre></div>
+<span class="co">#&gt; dataset "vsim-dev:Public Data Dev:/ClinGen/Genes" (application/vnd.solvebio.dataset) nb:562 user:David Caplan accessed:2023-04-18T22:23:03Z</span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -153,60 +153,58 @@ connection was specified using the environment variables.</li>
 <code class="sourceCode R">
 <span class="co"># use the default profile</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span>
 
 <span class="co"># use explicitely the default profile</span>
 <span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_with_profile.html">connect_with_profile</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://api.solvebio.com with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Karl Forner" using an API Token</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span>
 
 <span class="co"># use  profile named demo-corp defined in the default config file without</span>
 <span class="co"># changing the current connection</span>
 <span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_with_profile.html">connect_with_profile</a></span><span class="op">(</span><span class="st">'demo-corp'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Karl Forner" using an API Token</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine) role:member</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.prod.admin) role:member</span>
 <span class="fu"><a href="../reference/Vaults.html">Vaults</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v2/vaults...</span>
-<span class="co">#&gt; List of 6 Vaults</span>
-<span class="co">#&gt;     id         name              full_path      user_name vault_type</span>
-<span class="co">#&gt; 1 5735  DataSyncDev  demo-corp:DataSyncDev      Dandan Xu    general</span>
-<span class="co">#&gt; 2 5527         GWAS         demo-corp:GWAS   Joseph Henry    general</span>
-<span class="co">#&gt; 3 2956       public        solvebio:public SolveBio Staff    general</span>
-<span class="co">#&gt; 4 6475     test_one     demo-corp:test_one  Marc Lamarine    general</span>
-<span class="co">#&gt; 5 5738    user-4519    demo-corp:user-4519  Marc Lamarine       user</span>
-<span class="co">#&gt; 6 6477 vault_test_1 demo-corp:vault_test_1  Marc Lamarine    general</span>
+<span class="co">#&gt; List of 3 Vaults</span>
+<span class="co">#&gt;     id      name           full_path      user_name vault_type</span>
+<span class="co">#&gt; 1 5527      GWAS      demo-corp:GWAS   Joseph Henry    general</span>
+<span class="co">#&gt; 2 2956    public     solvebio:public SolveBio Staff    general</span>
+<span class="co">#&gt; 3 6489 user-4739 demo-corp:user-4739    Karl Forner       user</span>
 <span class="co">#&gt;                 created_at</span>
-<span class="co">#&gt; 1 2022-10-10T13:48:41.240Z</span>
-<span class="co">#&gt; 2 2022-07-11T20:17:24.029Z</span>
-<span class="co">#&gt; 3 2017-07-28T18:13:37.596Z</span>
-<span class="co">#&gt; 4 2023-05-23T06:36:27.841Z</span>
-<span class="co">#&gt; 5 2022-10-11T12:43:49.956Z</span>
-<span class="co">#&gt; 6 2023-05-23T06:43:28.203Z</span>
+<span class="co">#&gt; 1 2022-07-11T20:17:24.029Z</span>
+<span class="co">#&gt; 2 2017-07-28T18:13:37.596Z</span>
+<span class="co">#&gt; 3 2023-05-30T09:50:56.085Z</span>
 
 <span class="co"># still using the default profile</span>
 <span class="co"># because no explicit profile connection is given in argument</span>
 <span class="fu"><a href="../reference/Vaults.html">Vaults</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v2/vaults...</span>
-<span class="co">#&gt; List of 5 Vaults</span>
-<span class="co">#&gt;     id        name         full_path      user_name vault_type</span>
-<span class="co">#&gt; 1 5601 Comparisons qbdev:Comparisons         dandan    general</span>
-<span class="co">#&gt; 2 5736 DataSyncDev qbdev:DataSyncDev         dandan    general</span>
-<span class="co">#&gt; 3 2956      public   solvebio:public SolveBio Staff    general</span>
-<span class="co">#&gt; 4 5585  Test Vault  qbdev:Test Vault   David Caplan    general</span>
-<span class="co">#&gt; 5 5598   user-4441   qbdev:user-4441  Marc Lamarine       user</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults...</span>
+<span class="co">#&gt; List of 7 Vaults</span>
+<span class="co">#&gt;     id            name                full_path      user_name vault_type</span>
+<span class="co">#&gt; 1    7     dandan-test     vsim-dev:dandan-test      Dandan Xu    general</span>
+<span class="co">#&gt; 2 1133             ICF             vsim-dev:ICF      Dandan Xu    general</span>
+<span class="co">#&gt; 3   19          Public         quartzbio:Public Admin Dev user    general</span>
+<span class="co">#&gt; 4 1300 Public Data Dev vsim-dev:Public Data Dev   David Caplan    general</span>
+<span class="co">#&gt; 5 2236          Repare          vsim-dev:Repare      Dandan Xu    general</span>
+<span class="co">#&gt; 6 1114         user-51         vsim-dev:user-51    Karl Forner       user</span>
+<span class="co">#&gt; 7    8   vSIM SAMPNAME   vsim-dev:vSIM SAMPNAME      Dandan Xu    general</span>
 <span class="co">#&gt;                 created_at</span>
-<span class="co">#&gt; 1 2022-08-19T14:48:53.058Z</span>
-<span class="co">#&gt; 2 2022-10-10T13:50:15.065Z</span>
-<span class="co">#&gt; 3 2017-07-28T18:13:37.596Z</span>
-<span class="co">#&gt; 4 2022-08-16T16:31:32.726Z</span>
-<span class="co">#&gt; 5 2022-08-18T16:00:39.310Z</span></code></pre></div>
+<span class="co">#&gt; 1 2022-10-26T19:29:07.902Z</span>
+<span class="co">#&gt; 2 2023-01-31T14:24:19.228Z</span>
+<span class="co">#&gt; 3 2022-11-02T23:38:43.735Z</span>
+<span class="co">#&gt; 4 2023-02-15T20:07:31.859Z</span>
+<span class="co">#&gt; 5 2023-05-18T23:36:53.859Z</span>
+<span class="co">#&gt; 6 2023-01-27T16:17:17.108Z</span>
+<span class="co">#&gt; 7 2022-10-31T21:20:03.587Z</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="connection-from-system-environment-variables">Connection From System Environment variables<a class="anchor" aria-label="anchor" href="#connection-from-system-environment-variables"></a>
@@ -232,9 +230,9 @@ your scripts. The remaining connections will automatically use it.</p>
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>EDP_PROFILE <span class="op">=</span> <span class="st">'demo-corp'</span><span class="op">)</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Karl Forner" using an API Token</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine) role:member</span></code></pre></div>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.prod.admin) role:member</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="explicit-connection">Explicit connection<a class="anchor" aria-label="anchor" href="#explicit-connection"></a>
@@ -247,11 +245,11 @@ given config.</p>
 <span class="va">secret</span> <span class="op">&lt;-</span> <span class="va">conn</span><span class="op">$</span><span class="va">secret</span>
 <span class="va">host</span> <span class="op">&lt;-</span> <span class="va">conn</span><span class="op">$</span><span class="va">host</span>
 <span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="va">secret</span>, <span class="va">host</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://api.solvebio.com with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Karl Forner" using an API Token</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span></code></pre></div>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="autoconnect">autoconnect()<a class="anchor" aria-label="anchor" href="#autoconnect"></a>
@@ -266,10 +264,10 @@ environment variables <strong>EDP_PROFILE</strong> and
 <span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/autoconnect.html">autoconnect</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine) role:member</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.prod.admin) role:member</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine) role:member</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.prod.admin) role:member</span>
 
 
 <span class="co"># unset the EDP_PROFILE environment variable</span>
@@ -281,13 +279,13 @@ environment variables <strong>EDP_PROFILE</strong> and
 
 <span class="co"># Will used the default profile</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span>conn<span class="op">=</span><span class="va">conn</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://api.solvebio.com with user "Marc Lamarine" using an API Token</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span></code></pre></div>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Karl Forner" using an API Token</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
@@ -313,9 +311,9 @@ autoconnect() to obtain it and sets as the current one.</p></li>
 <span class="co"># explicitely set the connection with a profile</span>
 <span class="fu"><a href="../reference/set_connection.html">set_connection</a></span><span class="op">(</span> <span class="fu"><a href="../reference/connect_with_profile.html">connect_with_profile</a></span><span class="op">(</span><span class="st">'demo-corp'</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Karl Forner" using an API Token</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Karl Forner" using an API Token</span>
 
 <span class="co"># remove the current connection</span>
 <span class="fu"><a href="../reference/set_connection.html">set_connection</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
@@ -324,25 +322,25 @@ autoconnect() to obtain it and sets as the current one.</p></li>
 <span class="co"># both calls will use the current connection</span>
 
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://api.solvebio.com with user "Marc Lamarine" using an API Token</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Karl Forner" using an API Token</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="fu"><a href="../reference/get_connection.html">get_connection</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span>
 
 <span class="co"># the current connection remains the 'default'</span>
 <span class="co"># connecting with a profile did not change it</span>
 <span class="va">conn_corp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_with_profile.html">connect_with_profile</a></span><span class="op">(</span><span class="st">'demo-corp'</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Karl Forner" using an API Token</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="va">conn_corp</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine) role:member</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.prod.admin) role:member</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; GET https://api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine@precisionformedicine.com) role:member</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.test.admin) role:member</span>
 
 <span class="co"># the current connection will be the 'demo-corp' one </span>
 <span class="co"># after unsetting the previous connection and profile environment variables</span>
@@ -350,9 +348,9 @@ autoconnect() to obtain it and sets as the current one.</p></li>
 <span class="fu"><a href="../reference/set_connection.html">set_connection</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
 <span class="fu"><a href="../reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; Connected to https://demo-corp.api.solvebio.com with user "Karl Forner" using an API Token</span>
 <span class="co">#&gt; GET https://demo-corp.api.solvebio.com/v1/user...</span>
-<span class="co">#&gt; EDP user "Marc Lamarine"(marc.lamarine) role:member</span></code></pre></div>
+<span class="co">#&gt; EDP user "Karl Forner"(karl.forner.prod.admin) role:member</span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -363,7 +361,7 @@ autoconnect() to obtain it and sets as the current one.</p></li>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Karl Forner.</p>
+<p>Developed by David Caplan, Karl Forner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

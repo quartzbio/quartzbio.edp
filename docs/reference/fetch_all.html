@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.00.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fetch_all</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fetch_all</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span>, workers <span class="op">=</span> <span class="fl">4</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -62,6 +62,12 @@
 <dd><p>an API result</p></dd>
 <dt>...</dt>
 <dd><p>passed to future.apply::future_lapply()</p></dd>
+<dt>parallel</dt>
+<dd><p>whether to parallelize the API calls.</p></dd>
+<dt>workers</dt>
+<dd><p>in parallel mode, the number of concurrent requests to make</p></dd>
+<dt>verbose</dt>
+<dd><p>whether to output debugging information, mostly for development</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -73,7 +79,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Karl Forner.</p>
+  <p></p><p>Developed by David Caplan, Karl Forner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

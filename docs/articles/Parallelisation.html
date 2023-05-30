@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.00.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +94,7 @@ future package</a>.</li>
 <span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.html">Dataset</a></span><span class="op">(</span>full_path <span class="op">=</span> <span class="st">"quartzbio:Public:/TCGA/2.0.0-2018-mc3-v0.2.8/SomaticMutations-GRCh37"</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: RcppSimdJson</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
-<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Marc Lamarine" using an API Token</span>
+<span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Karl Forner" using an API Token</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="va">ds</span><span class="op">$</span><span class="va">documents_count</span>
 <span class="co">#&gt; [1] 3603497</span>
@@ -112,7 +112,7 @@ future package</a>.</li>
 limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/1959547506112563037/data...</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.029   0.004   0.449</span></code></pre></div>
+<span class="co">#&gt;   0.006   0.004   0.186</span></code></pre></div>
 <div class="section level2">
 <h2 id="read-all-data">Read all data<a class="anchor" aria-label="anchor" href="#read-all-data"></a>
 </h2>
@@ -130,18 +130,19 @@ limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class=
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, fields <span class="op">=</span> <span class="va">COLS</span>, 
 filters <span class="op">=</span> <span class="va">FILTER</span>, limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span>, all <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; got all results.</span>
-<span class="co">#&gt; took 0.402999999999999 to bind the data frames</span>
+<span class="co">#&gt; Loading required namespace: debugme</span>
+<span class="co">#&gt; QuartzBio - QBR Library</span>
+<span class="co">#&gt; Lead Architect: Karl Forner (karl.forner@precisionformedicine.com)</span>
+<span class="co">#&gt; © Precision Medicine Group, LLC.., Bethesda Metro Center, Suite 850 | Bethesda, MD 20814</span>
+<span class="co">#&gt; [dev mode enabled].[hooked R loaders].</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   2.544   0.080  15.367</span>
+<span class="co">#&gt;   3.375   0.143  15.943</span>
 
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multicore</span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, fields <span class="op">=</span> <span class="va">COLS</span>, filters <span class="op">=</span> <span class="va">FILTER</span>, limit <span class="op">=</span> <span class="fl">10000</span>, 
   meta <span class="op">=</span> <span class="cn">FALSE</span>, all <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; got all results.</span>
-<span class="co">#&gt; took 0.0760000000000005 to bind the data frames</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   3.013   0.581   5.392</span></code></pre></div>
+<span class="co">#&gt;   3.353   0.486   5.507</span></code></pre></div>
 </div>
 </div>
   </main>
@@ -151,7 +152,7 @@ filters <span class="op">=</span> <span class="va">FILTER</span>, limit <span cl
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Karl Forner.</p>
+<p>Developed by David Caplan, Karl Forner.</p>
 </div>
 
 <div class="pkgdown-footer-right">
