@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.00.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,6 @@
   commit_mode <span class="op">=</span> <span class="cn">NULL</span>,
   records <span class="op">=</span> <span class="cn">NULL</span>,
   df <span class="op">=</span> <span class="cn">NULL</span>,
-  file_id <span class="op">=</span> <span class="cn">NULL</span>,
   target_fields <span class="op">=</span> <span class="fu">infer_fields_from_df</span><span class="op">(</span><span class="va">df</span><span class="op">)</span>,
   sync <span class="op">=</span> <span class="cn">FALSE</span>,
   conn <span class="op">=</span> <span class="fu"><a href="get_connection.html">get_connection</a></span><span class="op">(</span><span class="op">)</span>,
@@ -77,8 +76,6 @@ append (default), overwrite, upsert, and delete.</p></dd>
 <dd><p>The data to annotate as a data frame.</p></dd>
 <dt>df</dt>
 <dd><p>The data to import as a data.frame</p></dd>
-<dt>file_id</dt>
-<dd><p>a file Object ID.</p></dd>
 <dt>target_fields</dt>
 <dd><p>A list of valid dataset fields to create or override in the import,
 as a character vector.</p></dd>
@@ -96,7 +93,7 @@ sub tasks to finish before returning.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by David Caplan, Karl Forner.</p>
+  <p></p><p>Developed by Karl Forner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

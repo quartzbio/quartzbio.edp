@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.00.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,27 +64,28 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="quartzbio-edp-for-r">QuartzBio EDP for R<a class="anchor" aria-label="anchor" href="#quartzbio-edp-for-r"></a>
 </h1></div>
-<p>This package contains the QuartzBio EDP R language bindings for the
-EDP (Enterprise Data Platform) API.</p>
-<p>Features:</p>
+<p>This package contains the QuartzBio EDP R language bindings.
+QuartzBio EDP makes it easy to access genomic reference data.</p>
+<p>Features of this package include:</p>
 <ul>
-<li>Authentication</li>
-<li>Parallelization of dataset queries</li>
-<li>Progress report</li>
-<li>S3 methods</li>
+<li>Authentication with QuartzBio EDP’s API</li>
+<li>REST API query support</li>
+<li>S3 object system for QuartzBio EDP API resources</li>
 <li>Portability between most platforms: Linux, Windows, OS X.</li>
 </ul>
-<p>Please see the legacy SolveBio <a href="https://docs.solvebio.com" class="external-link">documentation</a> for more information
+<p>Please see the QuartzBio EDP <a href="https://docs.solvebio.com" class="external-link">documentation</a> for more information
 about the platform.</p>
+<p>Authentication Tokens can be obtained from <a href="https://docs.solvebio.com/#authentication" class="external-link">Personal Access
+Tokens</a></p>
 <div class="section level2">
-<h2 id="beta-release">Beta Release<a class="anchor" aria-label="anchor" href="#beta-release"></a>
+<h2 id="alpha---release">ALPHA - RELEASE<a class="anchor" aria-label="anchor" href="#alpha---release"></a>
 </h2>
 <ul>
-<li>on-going migration of legacy solvebio R API to the new
-<strong>quartzbio.edp</strong> package.<br>
+<li>on going migration of former solvebio R API to the new
+package.<br>
 </li>
-<li>backwards compatibility is currently maintained by providing the
-legacy SolveBio R client with the new client.</li>
+<li>backward compatibility has been maintained.<br>
+</li>
 <li>See <a href="https://quartzbio.github.io/quartzbio.edp/news/index.html">ChangeLog</a>
 for updates</li>
 </ul>
@@ -92,62 +93,43 @@ for updates</li>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Installing this package requires an installed R environment.</p>
-<div class="section level3">
-<h3 id="installation-from-github">installation from GitHub<a class="anchor" aria-label="anchor" href="#installation-from-github"></a>
-</h3>
+<p>Installing this package requires an installed <a href="https://www.r-project.org" class="external-link">R environment</a>.</p>
+<p><strong>from github</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"quartzbio/quartzbio.edp"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="complete-reproducible-installation-example-using-a-tidyverse-qbrocker-image">complete reproducible installation example using a tidyverse
-qbrocker image<a class="anchor" aria-label="anchor" href="#complete-reproducible-installation-example-using-a-tidyverse-qbrocker-image"></a>
-</h3>
-<pre><code># run a shell inside the tidyverse container
-docker run -ti --rm rocker/tidyverse  bash
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"devtools"</span>, <span class="st">"httr"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jsonlite"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RcppSimdJson"</span><span class="op">)</span><span class="op">)</span>
 
-# use the pre-installed installGithub.r script
-installGithub.r -d TRUE quartzbio/quartzbio.edp
-
-### OR: run R and use the `install_github()` function
-R
-&gt;remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE)</code></pre>
-</div>
-</div>
-<div class="section level2">
-<h2 id="documentation">documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
-</h2>
-<ul>
-<li>Github public <a href="https://github.com/quartzbio/quartzbio.edp" class="external-link">quartzbio.edp</a>
-source repository</li>
-<li>Github quartzbio.edp online package <a href="https://quartzbio.github.io/quartzbio.edp">documentation</a>
-</li>
-</ul>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"quartzbio/quartzbio.edp"</span>, ref<span class="op">=</span><span class="st">"main"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
+<ul>
+<li><a href="https://github.com/quartzbio/quartzbio.edp" class="external-link">Github
+quartzbio.edp</a></li>
+<li><a href="https://quartzbio.github.io/quartzbio.edp">Github
+quartzbio.edp package documentation</a></li>
+</ul>
 <div class="section level3">
-<h3 id="connectionauthentication">connection/authentication<a class="anchor" aria-label="anchor" href="#connectionauthentication"></a>
+<h3 id="connectionauthentication">Connection/Authentication<a class="anchor" aria-label="anchor" href="#connectionauthentication"></a>
 </h3>
 <p>See the <a href="https://quartzbio.github.io/quartzbio.edp/articles/connection.html">Connection
-to an EDP host vignette</a> for more details.</p>
+to an EDP host vignette</a> Connection to an EDP host vignette for more
+details.</p>
 <ul>
-<li><p>Get an Authentication Token. They can be obtained from <a href="https://docs.solvebio.com/#authentication" class="external-link">Personal Access
-Tokens</a></p></li>
-<li><p>Save it into the <code>~/.qb/edp.json</code> file as the
-<strong>default</strong> EDP configuration profile.<br>
-Your <code>~/.qb/edp.json</code> may look like:</p></li>
+<li>Save into the ** ~/.qb/edp.json files** a default EDP configuration
+profile.</li>
 </ul>
+<p>Functions use it if no connection are specified in arguments.</p>
 <pre><code>{
   "default": {
-    "secret": "PUT_HERE_TOUR_AUTHENTICATION_TOKEN",
+    "secret": "API_TOKEN",
     "host": "https://api.solvebio.com"
   }
 }</code></pre>
-<p>The package functions will use this default profile by default if you
-do not use an explicit configuration. For example:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">quartzbio.edp</span><span class="op">)</span>
 <span class="fu"><a href="reference/User.html">User</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="reference/Vaults.html">Vaults</a></span><span class="op">(</span><span class="op">)</span>
@@ -182,7 +164,6 @@ do not use an explicit configuration. For example:</p>
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>David Caplan <br><small class="roles"> Author </small>  </li>
 <li>Karl Forner <br><small class="roles"> Author, maintainer </small>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
@@ -196,7 +177,7 @@ do not use an explicit configuration. For example:</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by David Caplan, Karl Forner.</p>
+<p>Developed by Karl Forner.</p>
 </div>
 
 <div class="pkgdown-footer-right">
