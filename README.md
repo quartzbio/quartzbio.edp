@@ -1,67 +1,79 @@
 QuartzBio EDP for R
 =========================
 
-This package contains the QuartzBio EDP R language bindings. QuartzBio EDP makes it easy
-to access genomic reference data.
+This package contains the QuartzBio EDP R language bindings for the EDP (Enterprise Data Platform) API.
 
+Features:
 
-Features of this package include:
-
-* Authentication with QuartzBio EDP's API
-* REST API query support
-* S3 object system for QuartzBio EDP API resources
+* Authentication
+* Parallelization of dataset queries
+* Progress report
+* S3 methods
 * Portability between most platforms: Linux, Windows, OS X.
 
-Please see the QuartzBio EDP [documentation](https://docs.solvebio.com) for more
+Please see the legacy SolveBio [documentation](https://docs.solvebio.com) for more
 information about the platform. 
 
-Authentication Tokens can be obtained from [Personal Access Tokens](https://docs.solvebio.com/#authentication)
+## Beta Release
 
-## ALPHA - RELEASE
-
-* on going migration of former solvebio R API to the new package.  
-* backward compatibility has been maintained.  
+* on-going migration of legacy solvebio R API to the new **quartzbio.edp** package.  
+* backwards compatibility is currently maintained by providing the legacy SolveBio R client with the 
+  new client.
 * See [ChangeLog](https://quartzbio.github.io/quartzbio.edp/news/index.html) for updates
+
 
 ## Installation
 
-Installing this package requires an installed [R environment](https://www.r-project.org). 
+Installing this package requires an installed R environment.
 
-**from github**
+### installation from GitHub
 
 ```R
-install.packages(c("devtools", "httr"))
-install.packages(c("jsonlite"))
-install.packages(c("RcppSimdJson"))
-
-library(devtools)
-devtools::install_github("quartzbio/quartzbio.edp", ref="main")
+remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE)
 ```
+
+### complete reproducible installation example using a tidyverse qbrocker image
+
+```
+# run a shell inside the tidyverse container
+docker run -ti --rm rocker/tidyverse  bash
+
+# use the pre-installed installGithub.r script
+installGithub.r -d TRUE quartzbio/quartzbio.edp
+
+### OR: run R and use the `install_github()` function
+R
+>remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE)
+```
+
+## documentation
+
+* Github public [quartzbio.edp](https://github.com/quartzbio/quartzbio.edp) source repository
+* Github quartzbio.edp online package [documentation](https://quartzbio.github.io/quartzbio.edp)
 
 
 ## Usage
 
-* [Github quartzbio.edp](https://github.com/quartzbio/quartzbio.edp)
-* [Github quartzbio.edp package documentation](https://quartzbio.github.io/quartzbio.edp)
+### connection/authentication
+
+See the [Connection to an EDP host vignette](https://quartzbio.github.io/quartzbio.edp/articles/connection.html) for more details.
+
+- Get an Authentication Token. They can be obtained from [Personal Access Tokens](https://docs.solvebio.com/#authentication)
 
 
-### Connection/Authentication
-
-See the [Connection to an EDP host vignette](https://quartzbio.github.io/quartzbio.edp/articles/connection.html)  Connection to an EDP host vignette for more details.
-
-* Save into the ** ~/.qb/edp.json files** a default EDP configuration profile.  
-
-Functions use it if no connection are specified in arguments.
-
-
+* Save it into the `~/.qb/edp.json` file as the **default** EDP configuration profile.  
+Your `~/.qb/edp.json` may look like: 
 ```
 {
   "default": {
-    "secret": "API_TOKEN",
+    "secret": "PUT_HERE_TOUR_AUTHENTICATION_TOKEN",
     "host": "https://api.solvebio.com"
   }
 }
 ```
+
+The package functions will use this default profile by default if you do not use an explicit configuration.
+For example:
 
 ```R
 library(quartzbio.edp)

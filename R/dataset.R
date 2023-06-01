@@ -78,6 +78,7 @@ Dataset_import <- function(
   commit_mode = NULL,
   records = NULL,
   df = NULL,
+  file_id = NULL,
   target_fields = infer_fields_from_df(df),
   sync = FALSE,
   conn = get_connection(),
@@ -95,12 +96,17 @@ Dataset_import <- function(
     rm(df)
   }
 
-  params  <- preprocess_api_params(exclude = c('conn', 'sync'))
+  # creates from a File Object
+  .die_if(!.empty(records) && !.empty(file_id), "records (or df) and file_id cannot both be set")
+  # translate to object_id used by the endpoint
+  object_id <- id(file_id)
+  rm(file_id)
+
+  params <- preprocess_api_params(exclude = c('conn', 'sync'))
   res <- request_edp_api('POST', "v2/dataset_imports", conn = conn, params = params)
 
   if (sync) {
     status <- Task_wait_for_completion(res$task_id, recursive = TRUE, conn = conn, ...)
- 
     if (!status) { # timeout
       warning('got timeout while waiting for dataset import task completion: ', res$task_id)
     }
@@ -191,4 +197,3 @@ print.DatasetList <- function(x, ...) {
 fetch.DatasetId <- function(x,  conn = get_connection()) {
   Dataset(x, conn = conn)
 }
-
