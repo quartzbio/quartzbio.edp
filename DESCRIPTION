@@ -27,7 +27,6 @@ Suggests:
     openssl,
     progressr,
     qb.web,
-    readxl,
     pkgdown,
     RcppSimdJson,
     rmarkdown,
