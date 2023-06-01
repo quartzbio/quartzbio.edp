@@ -23,4 +23,3 @@ BeaconSet.retrieve("1234")
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}

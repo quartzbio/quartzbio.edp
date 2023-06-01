@@ -34,4 +34,3 @@ Evaluate a QuartzBio EDP expression.
 Expression.evaluate("1 + 1", data_type = "integer", is_list = FALSE)
 }
 }
-\concept{solvebio_api}

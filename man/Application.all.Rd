@@ -15,8 +15,5 @@ Application.all(env = get_connection(), ...)
 Retrieve the metadata about all application on QuartzBio EDP available to the current user.
 }
 \examples{
-\dontrun{
-Application.all()
+\dontrun{ Application.all() }
 }
-}
-\concept{solvebio_api}

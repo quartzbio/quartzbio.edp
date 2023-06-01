@@ -4,12 +4,18 @@
 \alias{fetch_all}
 \title{fetch all the pages for a possibly incomplete paginated API result}
 \usage{
-fetch_all(x, ...)
+fetch_all(x, ..., parallel = FALSE, workers = 4, verbose = FALSE)
 }
 \arguments{
 \item{x}{an API result}
 
 \item{...}{passed to future.apply::future_lapply()}
+
+\item{parallel}{whether to parallelize the API calls.}
+
+\item{workers}{in parallel mode, the number of concurrent requests to make}
+
+\item{verbose}{whether to output debugging information, mostly for development}
 }
 \value{
 the object resulting in combining the current object/page and all subsequent pages

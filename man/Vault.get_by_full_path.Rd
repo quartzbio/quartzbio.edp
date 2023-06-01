@@ -25,4 +25,3 @@ Vault.get_by_full_path("QuartzBio EDP:Public")
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}

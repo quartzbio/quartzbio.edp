@@ -12,4 +12,3 @@ User.retrieve(env = get_connection())
 \description{
 Retrieves information about the current user
 }
-\concept{solvebio_api}

@@ -9,7 +9,6 @@ Dataset_import(
   commit_mode = NULL,
   records = NULL,
   df = NULL,
-  file_id = NULL,
   target_fields = infer_fields_from_df(df),
   sync = FALSE,
   conn = get_connection(),
@@ -25,8 +24,6 @@ append (default), overwrite, upsert, and delete.}
 \item{records}{The data to annotate as a data frame.}
 
 \item{df}{The data to import as a data.frame}
-
-\item{file_id}{a file Object ID.}
 
 \item{target_fields}{A list of valid dataset fields to create or override in the import,
 as a character vector.}

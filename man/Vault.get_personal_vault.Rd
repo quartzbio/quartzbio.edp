@@ -21,4 +21,3 @@ Vault.get_personal_vault()
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}

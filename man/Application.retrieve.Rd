@@ -15,8 +15,5 @@ Application.retrieve(client_id, env = get_connection())
 Retrieve the metadata about a specific application QuartzBio EDP.
 }
 \examples{
-\dontrun{
-Application.retrieve("abcd1234")
+\dontrun{  Application.retrieve("abcd1234") }
 }
-}
-\concept{solvebio_api}

@@ -22,12 +22,11 @@ Create a new dataset in a vault.
 }
 \examples{
 \dontrun{
-vault <- Vault.get_personal_vault()
-Vault.create_dataset(vault$id, path = "/", name = "My Dataset")
+vault = Vault.get_personal_vault()
+Vault.create_dataset(vault$id, path="/", name="My Dataset")
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}

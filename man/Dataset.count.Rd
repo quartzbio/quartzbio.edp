@@ -20,11 +20,10 @@ Returns the total number of records for a given QuartzBio EDP dataset.
 \dontrun{
 dataset <- Dataset.get_by_full_path("solvebio:public:/ClinVar/3.7.4-2017-01-30/Variants-GRCh37")
 Dataset.count(dataset)
-Dataset.count(dataset, filters = '[["gene_symbol", "BRCA2"]]')
+Dataset.count(dataset, filters='[["gene_symbol", "BRCA2"]]')
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
