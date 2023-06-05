@@ -55,9 +55,13 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
 
   globals <- list(model = model, p = p, pagination = pagination)
 
+  # if in dev internal mode, qbdev must be loaded by future_lapply()
+  future_packages <- NULL
+  if (isNamespaceLoaded('qbdev')) future_packages <- 'qbdev'
+
   lst <- future.apply::future_lapply(pages, fun, 
     future.seed = NULL,
-    future.packages ='qbdev',
+    future.packages = future_packages,
     future.globals = globals,
      ...)
 
