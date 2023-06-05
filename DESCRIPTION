@@ -27,8 +27,6 @@ Suggests:
     knitr,
     openssl,
     progressr,
-    qb.web,
-    pkgdown,
     RcppSimdJson,
     rmarkdown,
     shiny,
