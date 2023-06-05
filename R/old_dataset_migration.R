@@ -13,6 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetMigration.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/dataset_migrations", query=list(...), env=env)
@@ -33,6 +34,7 @@ DatasetMigration.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetMigration.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -58,6 +60,7 @@ DatasetMigration.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetMigration.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -89,6 +92,7 @@ DatasetMigration.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetMigration.create <- function(
                                     source_id,
