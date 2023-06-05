@@ -13,6 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetExport.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/dataset_exports", query=list(...), env=env)
@@ -32,6 +33,7 @@ DatasetExport.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetExport.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -57,6 +59,7 @@ DatasetExport.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetExport.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -86,6 +89,7 @@ DatasetExport.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetExport.create <- function(
                                  dataset_id,
@@ -129,6 +133,7 @@ DatasetExport.create <- function(
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetExport.get_download_url <- function(id, env = get_connection()) {
     if (missing(id)) {
