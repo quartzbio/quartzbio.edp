@@ -11,6 +11,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/datasets", query=list(...), env=env)
@@ -31,6 +32,7 @@ Dataset.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -56,6 +58,7 @@ Dataset.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -81,6 +84,7 @@ Dataset.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.template <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -107,6 +111,7 @@ Dataset.template <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.data <- function(id, filters,  env = get_connection(), ...) {
     if (missing(id) || !(class(id) %in% c("Dataset", "numeric", "integer", "character"))) {
@@ -160,6 +165,7 @@ Dataset.data <- function(id, filters,  env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = get_connection(), ...) {
     params <- list(...)
@@ -209,6 +215,7 @@ Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = get_c
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.fields <- function(id, env = get_connection(), ...) {
     if (inherits(id, "numeric")) {
@@ -244,6 +251,7 @@ Dataset.fields <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.facets <- function(id, facets, env = get_connection(), ...) {
     if (missing(facets) || is.null(facets) || facets == "") {
@@ -289,6 +297,7 @@ Dataset.facets <- function(id, facets, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.count <- function(id, env = get_connection(), ...) {
     params <- list(...)
@@ -319,6 +328,7 @@ Dataset.count <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_connection(), ...) {
     if (missing(vault_id)) {
@@ -363,6 +373,7 @@ Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_con
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
@@ -390,6 +401,7 @@ Dataset.update <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
     object = Object.get_by_full_path(full_path, env=env)
@@ -414,6 +426,7 @@ Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
     dataset = NULL
@@ -492,6 +505,7 @@ Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection()
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.activity <- function(id, follow=TRUE, env = get_connection()) {
     status <- paste('running', 'queued', 'pending', sep=',')
@@ -529,6 +543,7 @@ Dataset.activity <- function(id, follow=TRUE, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = get_connection()) {
     if (missing(id)) {
@@ -553,6 +568,7 @@ Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env 
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.enable_global_beacon <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -577,6 +593,7 @@ Dataset.enable_global_beacon <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Dataset.disable_global_beacon <- function(id, env = get_connection()) {
     if (missing(id)) {
