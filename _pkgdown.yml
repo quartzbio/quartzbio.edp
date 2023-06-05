@@ -2,11 +2,13 @@ url: https://quartzbio.github.io/quartzbio.edp
 template:
   bootstrap: 5
   bootswatch: lumen
+  
 
 navbar:
   structure:
     left:  [intro, toc, reference, articles, tutorials, authors, news]
     right: [search, github]
+
 reference:
 - title: EDP connections
   desc: > 
