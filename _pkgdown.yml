@@ -42,3 +42,8 @@ reference:
   contents: 
   - lacks_concepts("solvebio_api")
 
+- title: Legacy former solvebio API
+  desc: > 
+    Former solvebio api functions. Compatible with the new connection functions.
+  contents: 
+  - has_concept("solvebio_api")
