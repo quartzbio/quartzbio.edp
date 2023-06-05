@@ -26,6 +26,7 @@ createEnv <- function(token, token_type="Token", host = Sys.getenv('SOLVEBIO_API
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 protectedServer <- function(server, client_id, client_secret=NULL, base_url="https://my.solvebio.com") {
     if (!requireNamespace("shiny", quietly = TRUE)) {
@@ -253,6 +254,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 protectedServerJS <- function() {
     if (!requireNamespace("shinyjs", quietly = TRUE)) {
