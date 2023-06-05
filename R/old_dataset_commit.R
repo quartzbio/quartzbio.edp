@@ -13,6 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetCommit.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/dataset_commits", query=list(...), env=env)
@@ -33,6 +34,7 @@ DatasetCommit.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetCommit.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -58,6 +60,7 @@ DatasetCommit.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 DatasetCommit.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
