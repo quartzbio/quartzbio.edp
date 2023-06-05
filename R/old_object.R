@@ -2,6 +2,7 @@
 #' Retrieves the metadata about all objects on EDP accessible to the current user.
 #'
 #' @inheritParams old_params
+#' @concept  solvebio_api
 #' @export
 Object.all <- function(env = get_connection(), ...) {
   .request('GET', "v2/objects", query=list(...), env = env)
@@ -23,6 +24,7 @@ Object.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -48,6 +50,7 @@ Object.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -82,6 +85,7 @@ Object.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.create <- function(vault_id, parent_object_id, object_type, filename, env = get_connection(), ...) {
     if (missing(vault_id)) {
@@ -129,6 +133,7 @@ Object.create <- function(vault_id, parent_object_id, object_type, filename, env
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
@@ -157,6 +162,7 @@ Object.update <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
     params = list(
@@ -191,6 +197,7 @@ Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.get_by_path <- function(path, env = get_connection(), ...) {
     # Remove trailing backslash from vault_path
@@ -223,6 +230,7 @@ Object.get_by_path <- function(path, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.get_download_url <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -253,6 +261,7 @@ Object.get_download_url <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.upload_file <- function(local_path, vault_id, vault_path, filename, env = get_connection()) {
     if (missing(local_path) || !file.exists(local_path)) {
@@ -339,6 +348,7 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename, env = get_connection()) {
     if (missing(local_path) || !file.exists(local_path)) {
@@ -383,6 +393,7 @@ Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.data <- function(id, filters, col.names = NULL, env = get_connection(), ...) {
     if (missing(id) || !(class(id) %in% c("Object", "numeric", "integer", "character"))) {
@@ -438,6 +449,7 @@ Object.data <- function(id, filters, col.names = NULL, env = get_connection(), .
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.query <- function(id, paginate=FALSE, env = get_connection(), ...) {
     params <- list(...)
@@ -486,6 +498,7 @@ Object.query <- function(id, paginate=FALSE, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.fields <- function(id, env = get_connection(), ...) {
     if (inherits(id, "numeric")) {
@@ -521,6 +534,7 @@ Object.fields <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = get_connection()) {
     if (missing(id)) {
@@ -559,6 +573,7 @@ Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env =
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.enable_global_beacon <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -584,6 +599,7 @@ Object.enable_global_beacon <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Object.disable_global_beacon <- function(id, env = get_connection()) {
     if (missing(id)) {
