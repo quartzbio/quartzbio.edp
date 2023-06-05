@@ -26,3 +26,4 @@ Annotator.annotate(
 \description{
 Annotate a data table/frame with additional fields.
 }
+\concept{solvebio_api}
