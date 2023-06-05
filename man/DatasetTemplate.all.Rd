@@ -23,3 +23,4 @@ DatasetTemplate.all()
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}

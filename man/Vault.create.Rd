@@ -25,3 +25,4 @@ Vault.create(name="my-domain:MyVault")
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}

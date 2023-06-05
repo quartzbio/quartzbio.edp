@@ -35,3 +35,4 @@ Dataset.create(vault_id=vault$id, vault_parent_object_id=NULL, name="My Dataset"
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}
