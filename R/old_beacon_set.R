@@ -13,6 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 BeaconSet.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/beacon_sets", query=list(...), env=env)
@@ -32,6 +33,7 @@ BeaconSet.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 BeaconSet.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -61,6 +63,7 @@ BeaconSet.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 BeaconSet.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
@@ -88,6 +91,7 @@ BeaconSet.update <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 BeaconSet.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -118,6 +122,7 @@ BeaconSet.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 BeaconSet.create <- function(title, description, is_shared=FALSE, env = get_connection(), ...) {
     if (missing(title)) {
@@ -159,6 +164,7 @@ BeaconSet.create <- function(title, description, is_shared=FALSE, env = get_conn
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 BeaconSet.query <- function(id, query, entity_type, env = get_connection(), ...) {
     if (missing(id)) {
