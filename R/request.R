@@ -278,7 +278,8 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
   ret <- check_httr_response(res)
   if (!isTRUE(ret)) return(ret)
 
-  content <- if (options$parse_fast) {
+  use_rcpp_simdjson <- options$parse_fast && requireNamespace('RcppSimdJson')
+  content <- if (use_rcpp_simdjson) {
     max_simplify_lvl <- if (options$parse_as_df) 'data_frame' else 'list'
     RcppSimdJson::fparse(res$content, max_simplify_lvl = max_simplify_lvl, int64_policy = "string")
 
