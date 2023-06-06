@@ -32,6 +32,21 @@ Installing this package requires an installed R environment.
 remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE)
 ```
 
+### RcppSimdJson and CXX17
+
+**quartzbio.edp** uses the [RcppSimdJson](https://cran.r-project.org/web/packages/RcppSimdJson/) R package for speed.
+
+
+But on some older systems, **RcppSimdJson** requires a **CXX17** compatible C++ compiler, even when installed from a pre-compiled binary package..
+
+In this case, you can manually install a **CXX17** compiler. Here are some resources:
+- https://www.geeksforgeeks.org/complete-guide-to-install-c17-in-windows/
+- https://gasparri.org/2020/07/30/installing-c17-and-c20-on-ubuntu-and-amazon-linux/
+
+
+In any case, **RcppSimdJson** is **optional**. If not installed, **quartzbio.edp** will work seamlessly in **degraded mode**. 
+
+
 ### complete reproducible installation example using a tidyverse qbrocker image
 
 ```
