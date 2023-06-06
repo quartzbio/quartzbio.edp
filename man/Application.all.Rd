@@ -17,3 +17,4 @@ Retrieve the metadata about all application on QuartzBio EDP available to the cu
 \examples{
 \dontrun{ Application.all() }
 }
+\concept{solvebio_api}

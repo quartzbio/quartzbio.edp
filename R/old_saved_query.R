@@ -13,6 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 SavedQuery.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/saved_queries", query=list(...), env=env)
@@ -33,6 +34,7 @@ SavedQuery.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 SavedQuery.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -58,6 +60,7 @@ SavedQuery.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 SavedQuery.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -82,6 +85,7 @@ SavedQuery.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 SavedQuery.create <- function(env = get_connection(), ...) {
     .request('POST', path='v2/saved_queries', query=NULL, body=list(...), env=env)
@@ -106,6 +110,7 @@ SavedQuery.create <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 SavedQuery.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {

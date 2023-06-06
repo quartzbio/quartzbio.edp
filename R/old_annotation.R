@@ -2,6 +2,7 @@
 #' Annotate a data table/frame with additional fields.
 #'
 #' @inheritParams old_params
+#' @concept solvebio_api
 #' @export
 Annotator.annotate <- function(records, fields, include_errors = FALSE, raw = FALSE,
                                env = get_connection()) {
@@ -20,6 +21,7 @@ Annotator.annotate <- function(records, fields, include_errors = FALSE, raw = FA
 #' @examples \dontrun{
 #' Expression.evaluate("1 + 1", data_type = "integer", is_list = FALSE)
 #' }
+#' @concept solvebio_api
 #' @export
 Expression.evaluate <- function(expression, data_type = "string", is_list = FALSE,
                                 data = NULL, raw = FALSE, env = get_connection()) {

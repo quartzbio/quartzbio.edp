@@ -13,6 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.all <- function(..., env = get_connection()) {
     .request("GET", "v2/vaults", query=list(...), env=env)
@@ -33,6 +34,7 @@ Vault.all <- function(..., env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -60,6 +62,7 @@ Vault.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -85,6 +88,7 @@ Vault.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.create <- function(name, env = get_connection(), ...) {
     # TODO
@@ -121,6 +125,7 @@ Vault.create <- function(name, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
@@ -154,6 +159,7 @@ Vault.update <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.get_by_full_path <- function(full_path, verbose=TRUE, env = get_connection()) {
     if (missing(full_path)) {
@@ -199,6 +205,7 @@ Vault.get_by_full_path <- function(full_path, verbose=TRUE, env = get_connection
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
     vault = Vault.get_by_full_path(full_path, verbose=FALSE, env=env)
@@ -230,6 +237,7 @@ Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), 
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.get_personal_vault <- function(env = get_connection()) {
     user = User.retrieve(env=env)
@@ -260,6 +268,7 @@ Vault.get_personal_vault <- function(env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.files <- function(id, env = get_connection(), ...) {
     objects = .object_list_helper(id, object_type="file", env=env, ...)
@@ -283,6 +292,7 @@ Vault.files <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.folders <- function(id, env = get_connection(), ...) {
     objects = .object_list_helper(id, object_type="folder", env=env, ...)
@@ -306,6 +316,7 @@ Vault.folders <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.datasets <- function(id, env = get_connection(), ...) {
     objects = .object_list_helper(id, object_type="dataset", env=env, ...)
@@ -329,6 +340,7 @@ Vault.datasets <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.objects <- function(id, env = get_connection(), ...) {
     objects = .object_list_helper(id, env=env, ...)
@@ -353,6 +365,7 @@ Vault.objects <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.search <- function(id, query, env = get_connection(), ...) {
     objects = .object_list_helper(id, query=query, env=env, ...)
@@ -378,6 +391,7 @@ Vault.search <- function(id, query, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.create_dataset <- function(id, path, name, env = get_connection(), ...) {
     if (missing(id)) {
@@ -430,6 +444,7 @@ Vault.create_dataset <- function(id, path, name, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Vault.create_folder <- function(id, path, recursive=FALSE, env = get_connection(), ...) {
     if (missing(id) || is.null(id)) {

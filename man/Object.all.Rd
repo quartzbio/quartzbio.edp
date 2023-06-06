@@ -14,3 +14,4 @@ Object.all(env = get_connection(), ...)
 \description{
 Retrieves the metadata about all objects on EDP accessible to the current user.
 }
+\concept{solvebio_api}

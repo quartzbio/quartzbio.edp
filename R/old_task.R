@@ -13,6 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Task.all <- function(env = get_connection(), ...) {
     .request("GET", "v2/tasks", query = list(...), env = env)
@@ -32,6 +33,7 @@ Task.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Task.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -59,6 +61,7 @@ Task.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Task.follow <- function(id, env = get_connection(), interval = 2) {
     imp <- Task.retrieve(id, env)

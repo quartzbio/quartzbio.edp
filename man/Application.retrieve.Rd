@@ -17,3 +17,4 @@ Retrieve the metadata about a specific application QuartzBio EDP.
 \examples{
 \dontrun{  Application.retrieve("abcd1234") }
 }
+\concept{solvebio_api}

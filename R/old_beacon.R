@@ -13,6 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Beacon.all <- function(env = get_connection(), ...) {
     .request('GET', "v2/beacons", query=list(...), env=env)
@@ -32,6 +33,7 @@ Beacon.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Beacon.retrieve <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -57,6 +59,7 @@ Beacon.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Beacon.delete <- function(id, env = get_connection()) {
     if (missing(id)) {
@@ -89,6 +92,7 @@ Beacon.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Beacon.create <- function(beacon_set_id, vault_object_id, title, env = get_connection(), ...) {
     if (missing(beacon_set_id)) {
@@ -130,6 +134,7 @@ Beacon.create <- function(beacon_set_id, vault_object_id, title, env = get_conne
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Beacon.update <- function(id, env = get_connection(), ...) {
     if (missing(id)) {
@@ -164,6 +169,7 @@ Beacon.update <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @concept  solvebio_api
 #' @export
 Beacon.query <- function(id, query, entity_type, env = get_connection(), ...) {
     if (missing(id)) {

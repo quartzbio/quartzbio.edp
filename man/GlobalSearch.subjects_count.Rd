@@ -23,3 +23,4 @@ GlobalSearch.subjects_count(entities = '[["gene","BRCA2"]]')
 \references{
 \url{https://docs.solvebio.com/}
 }
+\concept{solvebio_api}
