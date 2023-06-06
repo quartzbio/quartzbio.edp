@@ -12,7 +12,8 @@
 <link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Parallelisation">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Parallelisation">
 <meta property="og:description" content="Parallel dataset queries
 ">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -28,7 +29,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +44,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/Filters.html">Filters</a>
     <a class="dropdown-item" href="../articles/Parallelisation.html">Parallelisation</a>
     <a class="dropdown-item" href="../articles/connection.html">Connection to EDP hosts</a>
     <a class="dropdown-item" href="../articles/vaults_and_objects.html">Vaults, Files, Datasets and Objects</a>
@@ -74,78 +76,89 @@
 
     
     
-<div class="section level1">
-<h1 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
-</h1>
-<ul>
-<li>Implemented using <a href="https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html" class="external-link">R
-future package</a>.</li>
-</ul>
-</div>
-<div class="section level1">
-<h1 id="first-read-part-of-data">First read part of data<a class="anchor" aria-label="anchor" href="#first-read-part-of-data"></a>
-</h1>
+<div class="section level2">
+<h2 id="read-only-part-of-data">Read only part of data<a class="anchor" aria-label="anchor" href="#read-only-part-of-data"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">quartzbio.edp</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">quartzbio.edp</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>EDP_PROFILE <span class="op">=</span> <span class="st">"vsim-dev_rw"</span><span class="op">)</span>
 
 
 <span class="co"># contains &gt; 3 millions of rows</span>
-<span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.html">Dataset</a></span><span class="op">(</span>full_path <span class="op">=</span> <span class="st">"quartzbio:Public:/TCGA/2.0.0-2018-mc3-v0.2.8/SomaticMutations-GRCh37"</span><span class="op">)</span>
+<span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.html">Dataset</a></span><span class="op">(</span>full_path <span class="op">=</span>  <span class="st">"quartzbio:Public:/TCGA/2.0.0-2018-mc3-v0.2.8/PatientsDiseases"</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: RcppSimdJson</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v1/user...</span>
 <span class="co">#&gt; Connected to https://vsim-dev.api.edp.aws.quartz.bio with user "Karl Forner" using an API Token</span>
 <span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
 <span class="va">ds</span><span class="op">$</span><span class="va">documents_count</span>
-<span class="co">#&gt; [1] 3603497</span>
-<span class="co"># 3 603 497</span>
-<span class="va">COLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ensp"</span>, <span class="st">"variant_class"</span><span class="op">)</span>
-<span class="va">df0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/1959547506112563037/data...</span>
+<span class="co">#&gt; [1] 9125</span>
 
-
-
-
-<span class="co"># fetch first 10000 rows</span>
-<span class="va">FILTER</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'variant_classification = "Silent"'</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, fields <span class="op">=</span> <span class="va">COLS</span>, filters <span class="op">=</span> <span class="va">FILTER</span>, 
-limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/1959547506112563037/data...</span>
+<span class="co"># fetch first 1000 rows</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, limit <span class="op">=</span> <span class="fl">1000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/1959470796697098463/data...</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.029   0.004   0.187</span></code></pre></div>
+<span class="co">#&gt;   0.006   0.000   0.173</span>
+<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample</a></span><span class="op">(</span><span class="va">df1</span>, n<span class="op">=</span><span class="fl">4</span><span class="op">)</span>
+<span class="co">#&gt;          subtype patient_barcode disease  sample_barcode</span>
+<span class="co">#&gt; 1          Basal    TCGA-AN-A0XU    BRCA TCGA-AN-A0XU-01</span>
+<span class="co">#&gt; 2           Her2    TCGA-A2-A0CX    BRCA TCGA-A2-A0CX-01</span>
+<span class="co">#&gt; 3           LumA    TCGA-AC-A23E    BRCA TCGA-AC-A23E-01</span>
+<span class="co">#&gt; 4 Not_Applicable    TCGA-OR-A5JB     ACC TCGA-OR-A5JB-01</span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="read-all-data">Read all data<a class="anchor" aria-label="anchor" href="#read-all-data"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://progressr.futureverse.org" class="external-link">progressr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: future</span>
+<code class="sourceCode R"><span class="co"># getting all, and showing progression</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://progressr.futureverse.org" class="external-link">progressr</a></span><span class="op">)</span>
 
-<span class="co"># uncomment to see progress bars</span>
-<span class="co">#</span>
-<span class="co">#handlers(global = FALSE)</span>
-<span class="co">#handlers("txtprogressbar")</span>
-
-<span class="co"># sequential - no parallelisation</span>
-<span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, fields <span class="op">=</span> <span class="va">COLS</span>, 
-filters <span class="op">=</span> <span class="va">FILTER</span>, limit <span class="op">=</span> <span class="fl">10000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span>, all <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Loading required namespace: debugme</span>
-<span class="co">#&gt; QuartzBio - QBR Library</span>
-<span class="co">#&gt; Lead Architect: Karl Forner (karl.forner@precisionformedicine.com)</span>
-<span class="co">#&gt; © Precision Medicine Group, LLC.., Bethesda Metro Center, Suite 850 | Bethesda, MD 20814</span>
-<span class="co">#&gt; [dev mode enabled].[hooked R loaders].</span>
+<span class="co"># no parallelisation</span>
+<span class="co"># with_progress: add a progress bar only for specific call</span>
+<span class="fu"><a href="https://progressr.futureverse.org/reference/with_progress.html" class="external-link">with_progress</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fetch_all.html">fetch_all</a></span><span class="op">(</span><span class="va">df1</span>, workers <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   3.185   0.144  15.325</span>
+<span class="co">#&gt;   0.217   0.024   1.811</span>
 
-<span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multicore</span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">ds</span>, fields <span class="op">=</span> <span class="va">COLS</span>, filters <span class="op">=</span> <span class="va">FILTER</span>, limit <span class="op">=</span> <span class="fl">10000</span>, 
-  meta <span class="op">=</span> <span class="cn">FALSE</span>, all <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># using workers to parallelize queries within the EDP host.</span>
+<span class="co"># default is to use 4 workers</span>
+<span class="fu"><a href="https://progressr.futureverse.org/reference/with_progress.html" class="external-link">with_progress</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fetch_all.html">fetch_all</a></span><span class="op">(</span><span class="va">df1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   3.242   0.418   4.952</span></code></pre></div>
+<span class="co">#&gt;   0.167   0.000   1.311</span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="estimate-download-time">Estimate download time<a class="anchor" aria-label="anchor" href="#estimate-download-time"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dsbig</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.html">Dataset</a></span><span class="op">(</span>full_path <span class="op">=</span> <span class="st">"quartzbio:Public:/TCGA/2.0.0-2018-mc3-v0.2.8/SomaticMutations-GRCh37"</span><span class="op">)</span>
+<span class="co">#&gt; GET https://vsim-dev.api.edp.aws.quartz.bio/v2/objects...</span>
+<span class="co"># contains more than 3 millions of rows</span>
+<span class="va">dsbig</span><span class="op">$</span><span class="va">documents_count</span>
+<span class="co">#&gt; [1] 3603497</span>
+<span class="co"># default max page size limit is 10,000 in EDP</span>
+<span class="co"># some attributes can be useful to anticipate the time needed to obtain the complete dataset</span>
+<span class="va">dfb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">dsbig</span>, limit <span class="op">=</span> <span class="fl">1000</span>, meta <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="co">#&gt; POST https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/1959547506112563037/data...</span>
+<span class="va">attrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dfb</span><span class="op">)</span>
+
+<span class="co"># Total number of rows</span>
+<span class="va">attrs</span><span class="op">$</span><span class="va">total</span>
+<span class="co">#&gt; [1] 3603497</span>
+
+<span class="co"># Pagination info: index, number of pages, total number of rows and chosen page size, </span>
+<span class="va">attrs</span><span class="op">$</span><span class="va">pagination</span><span class="op">$</span><span class="va">page_index</span>
+<span class="co">#&gt; $index</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $nb</span>
+<span class="co">#&gt; [1] 3604</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $total</span>
+<span class="co">#&gt; [1] 3603497</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $size</span>
+<span class="co">#&gt; [1] 1000</span></code></pre></div>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
