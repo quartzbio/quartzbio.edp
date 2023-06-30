@@ -182,6 +182,7 @@ create_model_df_from_fields <- function(cols, fields,
   for (x in c('name', 'title',  'description', 'data_type')) {
     attr(df, paste0('field_', x, 's')) <-  .elts(fields, x)
   }
+  attr(df, 'field_entity_types') <-  unlist(.elts(fields, 'entity_type'))
 
   df
 }
@@ -299,7 +300,7 @@ as.data.frame.DatasetField <- function (x,  ...) {
 print.DatasetField <- function(x, ...) {
   df <- as.data.frame(x)
 
-  cols <- c('id', 'name',  'title', 'description',  'ordering', 'is_hidden')
+  cols <- c('id', 'name',  'title', 'description',  'ordering', 'is_hidden', 'entity_type')
   cols <- intersect(cols, names(df))
   df <- df[cols]
   
@@ -311,7 +312,7 @@ print.DatasetFieldList <- function(x, ...) {
   cat('EDP List of' , length(x), 'DatasetFields\n')
 
   df <- as.data.frame(x)
-  cols <- c('id', 'name',  'title', 'description', 'data_type', 'ordering', 'is_hidden')
+  cols <- c('id', 'name',  'title', 'description', 'data_type', 'ordering', 'is_hidden', 'entity_type')
   cols <- intersect(cols, names(df))
   df <- df[cols]
   
