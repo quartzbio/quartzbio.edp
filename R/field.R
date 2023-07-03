@@ -182,7 +182,11 @@ create_model_df_from_fields <- function(cols, fields,
   for (x in c('name', 'title',  'description', 'data_type')) {
     attr(df, paste0('field_', x, 's')) <-  .elts(fields, x)
   }
-  attr(df, 'field_entity_types') <-  unlist(.elts(fields, 'entity_type'))
+
+  # in case some are NULL
+  entity_types <- .elts(fields, 'entity_type')
+  entity_types[sapply(entity_types, is.null)] <- NA_character_
+  attr(df, 'field_entity_types') <-  unlist(entity_types)
 
   df
 }
