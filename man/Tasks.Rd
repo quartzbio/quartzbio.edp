@@ -7,6 +7,7 @@
 Tasks(
   target_object_id = NULL,
   parent_task_id = NULL,
+  task_type = NULL,
   status = NULL,
   alive = NULL,
   limit = NULL,
@@ -18,6 +19,8 @@ Tasks(
 \item{target_object_id}{the object ID to fetch the tasks for}
 
 \item{parent_task_id}{find the children of that task}
+
+\item{task_type}{find tasks of type task_type}
 
 \item{status}{a Task status, one of (running, queued, pending, completed, failed
 )}

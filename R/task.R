@@ -6,12 +6,14 @@
 #' 
 #' @inheritParams params
 #' @param parent_task_id    find the children of that task
+#' @param task_type    find tasks of type task_type
 #' @param target_object_id  the object ID to fetch the tasks for
 #' @return a list of Tasks as a ECSTaskList object.
 #' @export
 Tasks <- function(
   target_object_id = NULL,
   parent_task_id = NULL,
+  task_type = NULL,
   status = NULL,
   alive = NULL,
   limit = NULL, page = NULL,
@@ -19,7 +21,7 @@ Tasks <- function(
 {
   # currently preprocess_api_params does not support multi-valued params
   params  <- preprocess_api_params(exclude = c('conn', 'limit', 'page', 
-    'status', 'parent_task_id', 'alive'))
+    'status', 'alive'))
 
   if (!.empty(alive)) {
     # can not be used with status
@@ -32,20 +34,7 @@ Tasks <- function(
     .die_unless(.empty(bad), 'bad status values: "%s"', bad)
     params$status <- paste0(status, collapse = ',')
   }
-
-  res <- request_edp_api('GET', "v2/tasks", conn = conn, limit = limit, page = page, params = params)
-
-  parent_task_id <- id(parent_task_id)
-  if (.is_nz_string(parent_task_id)) {
-
-    df <- as.data.frame(res)
-    # df$parent_id may be a list with NULL elements
-    .good <- function(x) .is_nz_string(x) && x == parent_task_id
-    children <- vapply(df$parent_id, .good, logical(1))
-    res <- res[children]
-  }
-
-  res
+  request_edp_api('GET', "v2/tasks", conn = conn, limit = limit, page = page, params = params)
 }
 
 #' fetches a task.
@@ -125,12 +114,18 @@ print.ECSTask <- function(x, ...) {
 #' @export
 print.ECSTaskList <- function(x, ...) {
   cat('EDP List of' , length(x), 'ECSTasks\n')
-
   df <- as.data.frame(x)
   df$user <- unlist1(elts(df$user, 'full_name'))
-  df$target_full_path <- unlist1(elts(df$target_object, 'full_path'))
 
-  cols <- c('id', 'target_full_path', 'task_display_name',  'status', 'description', 'user', 'updated_at')
+  # handles the NULL elements, see if we need to include it in unlist1 ?
+  fpels <- elts(df$target_object, 'full_path')
+  .f <- function(x) {
+    ifelse(is.null(x), NA_character_, x)
+  }
+  fpels <- Map(.f, fpels)
+  df$target_full_path <- unlist1(fpels)
+
+  cols <- c('id', 'target_full_path', 'task_display_name',  'status', 'description', 'user', 'updated_at', 'parent_id')
   cols <- intersect(cols, names(df))
   df <- df[cols]
   
