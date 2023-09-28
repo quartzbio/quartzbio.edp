@@ -6,7 +6,7 @@
 #' 
 #' @inheritParams params
 #' @param parent_task_id    find the children of that task
-#' @param task_type    find tasks of type task_type
+#' @param task_type         find tasks of type task_type
 #' @param target_object_id  the object ID to fetch the tasks for
 #' @return a list of Tasks as a ECSTaskList object.
 #' @export
@@ -116,14 +116,9 @@ print.ECSTaskList <- function(x, ...) {
   cat('EDP List of' , length(x), 'ECSTasks\n')
   df <- as.data.frame(x)
   df$user <- unlist1(elts(df$user, 'full_name'))
-
-  # handles the NULL elements, see if we need to include it in unlist1 ?
-  fpels <- elts(df$target_object, 'full_path')
-  .f <- function(x) {
-    ifelse(is.null(x), NA_character_, x)
-  }
-  fpels <- Map(.f, fpels)
-  df$target_full_path <- unlist1(fpels)
+  full_paths <- elts(df$target_object, 'full_path')
+  full_paths[lengths(full_paths) == 0] <- NA_character_
+  df$target_full_path <- as.character(full_paths)
 
   cols <- c('id', 'target_full_path', 'task_display_name',  'status', 'description', 'user', 'updated_at', 'parent_id')
   cols <- intersect(cols, names(df))
