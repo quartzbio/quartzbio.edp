@@ -39,7 +39,7 @@ Object <- function(id = NULL, full_path = NULL, path = NULL,  vault_id = NULL, o
   conn = get_connection()) 
 {
   if (length(id)) {
-    o <- request_edp_api('GET', file.path('v2/objects', id(id)))
+    o <- request_edp_api('GET', file.path('v2/objects', id(id)), conn = conn)
     .die_if(.empty(o), 'entity not found')
     return(o)
   }
