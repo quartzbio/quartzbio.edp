@@ -54,7 +54,8 @@ Vault <- function(id = NULL, full_path = NULL, name = NULL, conn = get_connectio
   
   lst <- fetch_by("v2/vaults", by = by, conn = conn)
 
-  .die_if(any(grepl('Vault',class(lst))) && length(lst) > 1, 'returned multiple vaults')
+  # check does not seem to make sense or work
+  #.die_if(any(grepl('Vault',class(lst))) && length(lst) > 1, 'returned multiple vaults')
 
   lst
 }
