@@ -16,3 +16,4 @@ examples
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^quartzbio\.edp\.Rproj$
