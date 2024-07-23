@@ -1,13 +1,15 @@
-Package: quartzbio.edp
 Type: Package
+Package: quartzbio.edp
 Title: The Official QuartzBio EDP API Client
-Version:  0.99.2
+Version: 0.99.2
 Date: 2023-06-06
-Authors@R: c( 
-    person(given="David", family="Caplan", email="David.Caplan@precisionformedicine.com", role = "aut"),
-    person(given="Karl", family="Forner", email="Karl.Forner@precisionformedicine.com", role = c("aut", "cre")),
-    person(given="Marc", family="Lamarine", email="Marc.Lamarine@precisionformedicine.com", role = "ctb"))
+Authors@R: c(
+    person("David", "Caplan", , "David.Caplan@precisionformedicine.com", role = "aut"),
+    person("Karl", "Forner", , "Karl.Forner@precisionformedicine.com", role = c("aut", "cre")),
+    person("Marc", "Lamarine", , "Marc.Lamarine@precisionformedicine.com", role = "ctb")
+  )
 Description: R client for QuartzBio EDP API.
+License: MIT + file LICENSE
 Imports:
     curl,
     httr,
@@ -15,11 +17,6 @@ Imports:
     methods,
     mime,
     utils
-License: MIT + file LICENSE
-RoxygenNote: 7.1.2
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr
 Suggests:
     dplyr,
     future,
@@ -34,3 +31,8 @@ Suggests:
     stats,
     testthat,
     withr
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
