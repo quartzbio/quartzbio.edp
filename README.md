@@ -1,3 +1,7 @@
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/quartzbio/quartzbio.edp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/quartzbio/quartzbio.edp/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 QuartzBio EDP for R
 =========================
 
