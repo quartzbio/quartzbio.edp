@@ -29,7 +29,7 @@ Installing this package requires an installed R environment.
 ### installation from GitHub
 
 ```R
-remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE)
+remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE, ref = "main")
 ```
 
 ### RcppSimdJson and CXX17
