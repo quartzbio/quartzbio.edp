@@ -1,10 +1,7 @@
 # nocov start
-createEnv <- function(token, token_type="Token", host = Sys.getenv('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST)) {
-    newEnv <- new.env()
-    newEnv$token <- token
-    newEnv$token_type <- token_type
-    newEnv$host <- host
-    return(newEnv)
+createEnv <- function(secret, host = Sys.getenv('EDP_API_HOST', unset = Sys.getenv('SOLVEBIO_API_HOST', EDP_DEFAULT_API_HOST))) {
+  conn <- connect(secret = secret, host = host, check = FALSE)
+  conn
 }
 
 #' protectedServer
@@ -41,7 +38,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
             user <- NULL
         }
         else {
-            env <- createEnv(token=token, token_type=token_type)
+            env <- connect(secret = token)
             user <- User.retrieve(env=env)
         }
 
@@ -194,7 +191,7 @@ protectedServer <- function(server, client_id, client_secret=NULL, base_url="htt
                                                  path="v1/oauth2/token",
                                                  query=NULL,
                                                  body=oauth_params,
-                                                 env=createEnv(token=''),
+                                                 env=createEnv(secret=''),
                                                  content_type="application/x-www-form-urlencoded")
                                     }, error = function(e) {
                                         stop(sprintf("ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n", e))

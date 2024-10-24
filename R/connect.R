@@ -21,8 +21,12 @@ check_connection <- function(conn) {
   .die_unless('host' %in% ns, 'no "host" in connection')
 
   secret <- conn$secret
-  .die_unless(.is_nz_string(secret), 'no "secret" in connection')
   .die_unless(.is_nz_string(conn$host), 'bad "host" in connection')
+  
+  # secret as empty string used by shiny wrapper when requesting a token
+  if (secret == "") {return()}
+  .die_unless(.is_nz_string(secret), 'no "secret" in connection')
+  
 
   .die_unless(looks_like_api_key(secret) || looks_like_api_token(secret), 
     'connection secret does not look like an API key nor token')
