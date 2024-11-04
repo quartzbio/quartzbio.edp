@@ -115,6 +115,101 @@ Dataset_import <- function(
   res
 }
 
+#' get_url_to_parquet
+#' 
+#' Function to extract url of the parquet file for the given Quartzbio EDP dataset
+#' 
+#' @param id The ID of a QuartzBio EDP dataset, or a Dataset object.
+#' @param env (optional) Custom client environment.
+#' @param ... 
+#' @concept  solvebio_api
+get_url_to_parquet <- function(id, env = get_connection(), ...) {
+  # Get the parquet endpoint
+  # path <- paste("v2/endpoint", paste(id), sep ="/")
+  # tryCatch({
+  #   res <- .request('POST', path=path, env=env)
+  #   
+  # })
+  
+  # Using the File download url
+  parquet_url <- File_get_download_url(id)
+  parquet_url
+}
+
+#' Dataset_scehma
+#' 
+#' Retrieves the schema of the Quartzbio EDP dataset.
+#' 
+#' @param id The ID of a QuartzBio EDP dataset.
+#' @param env (optional) Custom client environment.
+#' @concept solvebio_api
+#' @export
+Dataset_scehma <- function(id, env = get_connection()) {
+  if(!requireNamespace("arrow", quietly = TRUE)) {
+    stop("Packages \"arrow\" must be installed to use this function.")
+  }
+  
+  # S3 presigned url for the parquet file of dataset
+  if(is.null(id)) {
+    stop("A dataset ID is required")
+  }
+  parquet_url <- get_url_to_parquet(id)
+  
+  # Create a Parquet file reader
+  pq <- arrow::ParquetFileReader$create(parquet_url)
+  dataset_scehma <-pq$GetSchema()
+  dataset_scehma
+}
+
+#' Dataset_load
+#' 
+#' Loads large Quartzbio EDP dataset and return an R data frame containing all records.
+#' 
+#' @param id The ID of a QuartzBio EDP dataset.
+#' @param full_path a valid dataset full path, including the account, vault and path to EDP Dataset.
+#' @param env (optional) Custom client environment.
+#' @param limit Limit no of records.
+#' @param select_fields Fields to select in the results.
+#' @param exclude_fields A list of fields to exclude in the results, as a character vector.
+#' @param ... 
+#' @concept  solvebio_api
+#' @export
+Dataset_load <- function(id, full_path = NULL, env = get_connection(), fields = NULL,
+                         exclude_fields = NULL) {
+  if(!requireNamespace("arrow", quietly = TRUE)) {
+    stop(paste("Package", shQuote("arrow"), "must be installed to use this function."))
+  }
+  
+  if (is.null(id) && is.null(full_path)) {
+    stop("A dataset ID or full path is required.")
+  }
+  if (!is.null(full_path)) {
+    # Retrieving dataset ID by full path
+    dt <- Dataset.get_by_full_path(full_path = full_path)
+    dataset_id <- dt$id
+  } else {
+    dataset_id <- id
+  }
+  # Form expressions for field selection
+  if (!is.null(fields)) {
+    select_expr <- dplyr::expr(all_of(fields))
+  } else if (!is.null(exclude_fields)) {
+    select_expr <- dplyr::expr(-all_of(exclude_fields))
+  } else{
+    select_expr <- NULL
+  }
+  parquet_url <- get_url_to_parquet(dataset_id)
+  
+  tryCatch({
+    df <- arrow::read_parquet(parquet_url, col_select = !!select_expr)
+  }, error = function(e) {
+    stop(sprintf("Error in reading dataset: %s\n", e$message))
+  })
+  
+  df
+}
+# hgvs <- Dataset_load("2401538393287146373")
+
 #' queries data into a dataset.
 #' @inheritParams params
 #' @param meta    whether to retrieve fields meta data information to properly format, reorder
