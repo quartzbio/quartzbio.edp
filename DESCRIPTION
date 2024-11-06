@@ -9,6 +9,7 @@ Authors@R: c(
     person(given="Marc", family="Lamarine", email="Marc.Lamarine@precisionformedicine.com", role = "ctb"))
 Description: R client for QuartzBio EDP API.
 Imports:
+    arrow (>= 12.0.0),
     curl,
     httr,
     jsonlite,
@@ -21,7 +22,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Suggests:
-    arrow (>= 17.0.0),
     dplyr,
     future,
     future.apply,

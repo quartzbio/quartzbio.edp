@@ -115,36 +115,32 @@ Dataset_import <- function(
   res
 }
 
-#' get_url_to_parquet
+#' Get URL to parquet dataset
 #' 
-#' Function to extract url of the parquet file for the given Quartzbio EDP dataset
+#' Get the associated URL to a parquet file for a given Quartzbio EDP dataset ID.
 #' 
-#' @param id The ID of a QuartzBio EDP dataset, or a Dataset object.
-#' @param env (optional) Custom client environment.
-#' @param ... 
+#' @param id (character) The ID of a QuartzBio EDP dataset, or a Dataset object.
+#' @param conn (optional) Custom client environment.
+#' @return URL to the parquet file for the given EDP dataset. If there is an 
+#' failure, an error will be raised.
 #' @concept  solvebio_api
-get_url_to_parquet <- function(id, env = get_connection(), ...) {
-  # Get the parquet endpoint
-  # path <- paste("v2/endpoint", paste(id), sep ="/")
-  # tryCatch({
-  #   res <- .request('POST', path=path, env=env)
-  #   
-  # })
-  
+get_url_to_parquet <- function(id, conn = get_connection()) {
+
+  # This is a Demo
   # Using the File download url
   parquet_url <- File_get_download_url(id)
   parquet_url
 }
 
-#' Dataset_scehma
+#' Get dataset schema
 #' 
 #' Retrieves the schema of the Quartzbio EDP dataset.
 #' 
 #' @param id The ID of a QuartzBio EDP dataset.
-#' @param env (optional) Custom client environment.
+#' @return A Schema object containing Fields, which maps to the data types.
 #' @concept solvebio_api
 #' @export
-Dataset_scehma <- function(id, env = get_connection()) {
+Dataset_schema <- function(id) {
   if(!requireNamespace("arrow", quietly = TRUE)) {
     stop("Packages \"arrow\" must be installed to use this function.")
   }
@@ -163,23 +159,17 @@ Dataset_scehma <- function(id, env = get_connection()) {
 
 #' Dataset_load
 #' 
-#' Loads large Quartzbio EDP dataset and return an R data frame containing all records.
+#' Loads large Quartzbio EDP dataset and returns an R data frame containing all records.
 #' 
 #' @param id The ID of a QuartzBio EDP dataset.
 #' @param full_path a valid dataset full path, including the account, vault and path to EDP Dataset.
-#' @param env (optional) Custom client environment.
-#' @param limit Limit no of records.
-#' @param select_fields Fields to select in the results.
-#' @param exclude_fields A list of fields to exclude in the results, as a character vector.
-#' @param ... 
+#' @param select_fields A character vector of field names to select in the results. 
+#' Tidy specification of fields can also be used. Check [arrow::read_parquet()]
+#' @inheritParams arrow::read_parquet
 #' @concept  solvebio_api
+#' @return A `tibble` which is the default, or an Arrow Table otherwise.
 #' @export
-Dataset_load <- function(id, full_path = NULL, env = get_connection(), fields = NULL,
-                         exclude_fields = NULL) {
-  if(!requireNamespace("arrow", quietly = TRUE)) {
-    stop(paste("Package", shQuote("arrow"), "must be installed to use this function."))
-  }
-  
+Dataset_load <- function(id = NULL, full_path = NULL, select_fields = NULL, ...) {
   if (is.null(id) && is.null(full_path)) {
     stop("A dataset ID or full path is required.")
   }
@@ -190,18 +180,10 @@ Dataset_load <- function(id, full_path = NULL, env = get_connection(), fields = 
   } else {
     dataset_id <- id
   }
-  # Form expressions for field selection
-  if (!is.null(fields)) {
-    select_expr <- dplyr::expr(all_of(fields))
-  } else if (!is.null(exclude_fields)) {
-    select_expr <- dplyr::expr(-all_of(exclude_fields))
-  } else{
-    select_expr <- NULL
-  }
-  parquet_url <- get_url_to_parquet(dataset_id)
   
+  parquet_url <- get_url_to_parquet(dataset_id)
   tryCatch({
-    df <- arrow::read_parquet(parquet_url, col_select = !!select_expr)
+    df <- arrow::read_parquet(parquet_url, col_select = select_fields, ...)
   }, error = function(e) {
     stop(sprintf("Error in reading dataset: %s\n", e$message))
   })
