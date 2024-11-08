@@ -85,8 +85,12 @@ Dataset_import <- function(
   ...)
 {
   dataset_id <- id(dataset_id)
+  # Allow import of records/data.frame up-to 5k
+  max_records = 5000
 
   if (length(df)) {
+    .die_if(nrow(df) > max_records, 
+            paste("The maximum number of rows in dataframe that can be imported is", max_records))
     records <- split(df, seq(nrow(df)))
     records <- lapply(records, as.list)
     names(records) <- NULL
@@ -95,6 +99,8 @@ Dataset_import <- function(
     force(target_fields)
     rm(df)
   }
+  .die_if(!.empty(records) && length(records) > max_records,
+          paste("The maximum number of records that can be imported is ", max_records))
 
   # creates from a File Object
   .die_if(!.empty(records) && !.empty(file_id), "records (or df) and file_id cannot both be set")
