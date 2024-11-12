@@ -1,3 +1,9 @@
+# version 0.99.1
+
+**Bug Fixes**
+
+* Fixed the shiny wrapper to connect to EDP with the new connection system. Removed `createEnv` to use `connect()` in the shiny wrapper to use the new credential system.
+
 # version 0.99
 
 * beta version of the former solvebio R package.Refactoring ot the former solvebio R package.
