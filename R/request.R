@@ -7,11 +7,11 @@ format_auth_header <- function(secret) {
 
 
 preprocess_api_params <- function(
-  exclude = c('conn', 'limit', 'page', 'offset'), 
+  exclude = c('conn', 'limit', 'page', 'offset'),
   match_args = list(
     capacity = c('small', 'medium', 'large', 'xlarge'),
     commit_mode = c('append', 'overwrite', 'upsert', 'delete'),
-    data_type = c('auto', 'boolean', 'date', 'double', 'float', 'integer', 'long', 'object', 
+    data_type = c('auto', 'boolean', 'date', 'double', 'float', 'integer', 'long', 'object',
       'string', 'text', 'blob'),
     object_type = c('file', 'folder', 'dataset'),
     status = TASK_STATUS,
@@ -38,7 +38,7 @@ preprocess_api_params <- function(
       params[[key]] <- value
     }
   }
-  
+
   params
 }
 
@@ -58,8 +58,8 @@ request_options <- function(content_type = "application/json",
                             postprocess = TRUE,
                             encoding = "UTF-8",
                             verbose = getOption('quartzbio.edp.verbose', TRUE),
-                            parse_fast = getOption('quartzbio.edp.use_fast_parser', require('RcppSimdJson')),
-                            parse_as_df = FALSE, 
+                            parse_fast = getOption('quartzbio.edp.use_fast_parser', requireNamespace('RcppSimdJson')),
+                            parse_as_df = FALSE,
                             retries = 3,
                             default_wait = 10,
                             ...)
@@ -81,7 +81,7 @@ request_options <- function(content_type = "application/json",
 # header value
 send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 10) {
   res <- if (length(fake_response)) fake_response else httr::VERB(...)
-  
+
   if (!length(res) || !'status_code' %in% names(res) || res$status_code != 429) return(res)
 
   ### too many requests --> that's our business to manage that
@@ -89,9 +89,9 @@ send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 
   .die_unless(is.numeric(retries), 'param "retries" must be numeric')
   .die_unless(is.numeric(default_wait), 'param "default_wait" must be numeric')
 
-  .die_unless(retries > 0, 
+  .die_unless(retries > 0,
     'received a "Too many requests" response (429) but retries are exhausted, giving up...')
-  
+
   retry_after <- as.numeric(res$headers[["retry-after"]] %IF_EMPTY_THEN% default_wait)
   msg('retry_after=%s', retry_after)
   wait <- retry_after * (stats::runif(1) + 1) # add some jitter
@@ -106,20 +106,20 @@ send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 
 # wrapper for request_edp_api_no_pager that provides a pager for the request
 # i.e. the ability to fetch the other pages of data, either based on the "page" API param
 # or on the "offset" API param
-# the pager will be stored as the "pager" attribute, and is a function such as: 
+# the pager will be stored as the "pager" attribute, and is a function such as:
 # - pager() return the page index information
 # - pager(NULL) return initial query
-# - pager(i) returns the page #i of data, even if it has to use the "offset" to achieve that 
-request_edp_api <- function(method, api, 
-  params = list(),  
-  options = request_options(...),  
+# - pager(i) returns the page #i of data, even if it has to use the "offset" to achieve that
+request_edp_api <- function(method, api,
+  params = list(),
+  options = request_options(...),
   pointer = request_pointer(...),
   conn = get_connection(),
   ...)
 {
-  # pointer: NB: we only add page and offset params if > 0. 
-  # But we still use them to determine if we are page-based, offset-based or none 
-  # the 
+  # pointer: NB: we only add page and offset params if > 0.
+  # But we still use them to determine if we are page-based, offset-based or none
+  # the
   if (length(pointer$limit)) params$limit <- pointer$limit
   offset <- pointer$offset
   page <- pointer$page
@@ -155,7 +155,7 @@ request_edp_api <- function(method, api,
   page_index <- list(index = index, nb = nb_pages, total = total, size = size)
 
   ### store pagination info as attribute
-  attr(res, 'pagination') <- list(method = method, api = api, params = params, options = options, 
+  attr(res, 'pagination') <- list(method = method, api = api, params = params, options = options,
     page_index = page_index, conn = conn)
 
   res
@@ -177,8 +177,8 @@ request_page <- function(previous, request_args, index, verbose = NA) {
   } else {
     params$page <- index
   }
-  
-  res <- request_edp_api_no_pager(request_args$method, request_args$api, params = params, 
+
+  res <- request_edp_api_no_pager(request_args$method, request_args$api, params = params,
     options = options, conn = request_args$conn)
 
   .die_unless(length(res) > 0, 'request_edp_api_no_pager produced empty results for index=%s', index)
@@ -197,23 +197,23 @@ request_page <- function(previous, request_args, index, verbose = NA) {
 
 
 request_edp_api_no_pager <- function(method, path = '',  params, options,
-  uri = file.path(conn$host, path), 
-  conn = get_connection(), 
+  uri = file.path(conn$host, path),
+  conn = get_connection(),
   fake_response = NULL)
 {
   check_connection(conn)
 
   ### params
 
-  # pointer: NB: we only add page and offset params if > 0. 
-  # But we still use them to determine if we are page-based, offset-based or none 
-  # the 
+  # pointer: NB: we only add page and offset params if > 0.
+  # But we still use them to determine if we are page-based, offset-based or none
+  # the
   # if (length(pointer$limit)) params$limit <- pointer$limit
   # page <- pointer$page
   # offset <- pointer$offset
   # if (length(page) && page > 0) params$page <- page
   # if (length(offset) && offset > 0) params$offset <- offset
-  
+
   query <- list()
   body <- list()
   if (length(params)) {
@@ -261,7 +261,7 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
   }
 
   ### actual API request
-  res <- send_request(  
+  res <- send_request(
     verb = method,
     url = uri,
     httr::add_headers(headers),

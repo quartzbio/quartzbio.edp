@@ -63,7 +63,7 @@ data from datasets, calculate statistics, or run advanced algorithms.}
 
 \item{is_list}{whether the result is expected to be a list.}
 
-\item{url_template}{A URL template with one or more "{value}" sections that will be
+\item{url_template}{A URL template with one or more "value" sections that will be
 interpolated with the field value and displayed as a link
 in the dataset table.}
 

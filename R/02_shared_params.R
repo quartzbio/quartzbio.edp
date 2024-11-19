@@ -84,7 +84,7 @@
 #' @param target_fields             A list of valid dataset fields to create or override in the import, 
 #'                                  as a character vector.
 #' @param task_id                   an (ECS) Task ID as a string.
-#' @param url_template              A URL template with one or more "{value}" sections that will be 
+#' @param url_template              A URL template with one or more "value" sections that will be
 #'                                  interpolated with the field value and displayed as a link 
 #'                                  in the dataset table.
 #' @param user_id                   a user id (or User object) as a string
