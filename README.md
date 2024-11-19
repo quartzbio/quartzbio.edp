@@ -12,12 +12,12 @@ Features:
 * Portability between most platforms: Linux, Windows, OS X.
 
 Please see the legacy SolveBio [documentation](https://docs.solvebio.com) for more
-information about the platform. 
+information about the platform.
 
 ## Beta Release
 
-* on-going migration of legacy solvebio R API to the new **quartzbio.edp** package.  
-* backwards compatibility is currently maintained by providing the legacy SolveBio R client with the 
+* on-going migration of legacy solvebio R API to the new **quartzbio.edp** package.
+* backwards compatibility is currently maintained by providing the legacy SolveBio R client with the
   new client.
 * See [ChangeLog](https://quartzbio.github.io/quartzbio.edp/news/index.html) for updates
 
@@ -34,7 +34,7 @@ remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE, ref = "m
 
 ### RcppSimdJson and CXX17
 
-**quartzbio.edp** uses the [RcppSimdJson](https://cran.r-project.org/web/packages/RcppSimdJson/) R package for speed.
+**quartzbio.edp** uses the [RcppSimdJson](https://cran.r-project.org/package=RcppSimdJson) R package for speed.
 
 
 But on some older systems, **RcppSimdJson** requires a **CXX17** compatible C++ compiler, even when installed from a pre-compiled binary package..
@@ -44,7 +44,7 @@ In this case, you can manually install a **CXX17** compiler. Here are some resou
 - https://gasparri.org/2020/07/30/installing-c17-and-c20-on-ubuntu-and-amazon-linux/
 
 
-In any case, **RcppSimdJson** is **optional**. If not installed, **quartzbio.edp** will work seamlessly in **degraded mode**. 
+In any case, **RcppSimdJson** is **optional**. If not installed, **quartzbio.edp** will work seamlessly in **degraded mode**.
 
 
 ### complete reproducible installation example using a tidyverse qbrocker image
@@ -64,7 +64,7 @@ R
 ## documentation
 
 * Github public [quartzbio.edp](https://github.com/quartzbio/quartzbio.edp) source repository
-* Github quartzbio.edp online package [documentation](https://quartzbio.github.io/quartzbio.edp)
+* Github quartzbio.edp online package [documentation](https://quartzbio.github.io/quartzbio.edp/)
 
 
 ## Usage
@@ -76,8 +76,8 @@ See the [Connection to an EDP host vignette](https://quartzbio.github.io/quartzb
 - Get an Authentication Token. They can be obtained from [Personal Access Tokens](https://docs.solvebio.com/#authentication)
 
 
-* Save it into the `~/.qb/edp.json` file as the **default** EDP configuration profile.  
-Your `~/.qb/edp.json` may look like: 
+* Save it into the `~/.qb/edp.json` file as the **default** EDP configuration profile.
+Your `~/.qb/edp.json` may look like:
 ```
 {
   "default": {
@@ -100,4 +100,4 @@ Folders()
 
 ## Articles
 
-* [Vignettes](https://quartzbio.github.io/quartzbio.edp/articles)
+* [Vignettes](https://quartzbio.github.io/quartzbio.edp/articles/)

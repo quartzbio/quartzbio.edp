@@ -2,8 +2,7 @@ Package: quartzbio.edp
 Type: Package
 Title: The Official QuartzBio EDP API Client
 Version:  0.99.2
-Date: 2023-06-06
-Authors@R: c( 
+Authors@R: c(
     person(given="David", family="Caplan", email="David.Caplan@precisionformedicine.com", role = "aut"),
     person(given="Karl", family="Forner", email="Karl.Forner@precisionformedicine.com", role = c("aut", "cre")),
     person(given="Marc", family="Lamarine", email="Marc.Lamarine@precisionformedicine.com", role = "ctb"))
@@ -16,15 +15,13 @@ Imports:
     mime,
     utils
 License: MIT + file LICENSE
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr
 Suggests:
     dplyr,
     future,
     future.apply,
-    knitr,
     openssl,
     progressr,
     RcppSimdJson,
