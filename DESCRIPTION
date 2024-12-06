@@ -8,26 +8,26 @@ Authors@R: c(
     person(given="Marc", family="Lamarine", email="Marc.Lamarine@precisionformedicine.com", role = "ctb"))
 Description: R client for QuartzBio EDP API.
 Imports:
-    curl,
+    dplyr,
+    future,
+    future.apply,
     httr,
     jsonlite,
     methods,
     mime,
+    openssl,
+    progressr,
+    stats,
+    tools,
     utils
 License: MIT + file LICENSE
 RoxygenNote: 7.3.2
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests:
-    dplyr,
-    future,
-    future.apply,
-    openssl,
-    progressr,
     RcppSimdJson,
     rmarkdown,
     shiny,
     shinyjs,
-    stats,
     testthat,
     withr
