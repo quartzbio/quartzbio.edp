@@ -25,7 +25,7 @@ Create a new dataset import. Either an object_id, manifest, or data_records is r
 }
 \examples{
 \dontrun{
-DatasetImport.create(dataset_id=<ID>, upload_id=<ID>)
+DatasetImport.create(dataset_id = 12345, upload_id = 12345)
 }
 
 }

@@ -23,10 +23,10 @@ Query a beacon set (i.e. all the beacons within a beacon set).
 \examples{
 \dontrun{
 BeaconSet.query(
-                id="1234",
-                query="BRCA2",
-                entity_type="gene"
-                )
+  id = "1234",
+  query = "BRCA2",
+  entity_type = "gene"
+)
 }
 
 }

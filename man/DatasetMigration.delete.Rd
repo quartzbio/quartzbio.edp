@@ -16,7 +16,7 @@ Deletes specific dataset migration on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-DatasetMigration.delete(<ID>)
+DatasetMigration.delete(12345)
 }
 
 }

@@ -1,7 +1,6 @@
-
 bless <- function(o, ...) {
   if (!length(o)) o <- data.frame()
-    class(o) <- c(list(...), class(o))
+  class(o) <- c(list(...), class(o))
   o
 }
 
@@ -9,11 +8,15 @@ bless <- function(o, ...) {
 # by repeating the names if needed
 # e.g. list(a = 1, b = 1:3) --> list(a = 1, b = 1, b = 2, b = 3)
 scalarize_list <- function(lst) {
-  if (.empty(lst)) return(lst)
+  if (.empty(lst)) {
+    return(lst)
+  }
 
   # locate the multi-valued entries
   multi_idx <- which(lengths(lst) > 1)
-  if (.empty(multi_idx)) return(lst)
+  if (.empty(multi_idx)) {
+    return(lst)
+  }
 
   .scalarize <- function(idx) {
     v <- unlist(lst[[idx]], recursive = TRUE, use.names = FALSE)
@@ -23,7 +26,7 @@ scalarize_list <- function(lst) {
 
     v
   }
-  
+
   res <- lapply(multi_idx, .scalarize)
   scalar_lst <- Reduce(c, res, list())
 
@@ -33,20 +36,19 @@ scalarize_list <- function(lst) {
 
 
 # inspired by from wkb:::.hex2raw
-hex2raw <- function(hex) 
-{
+hex2raw <- function(hex) {
   msg <- "hex is not a valid hexadecimal representation"
   .die_unless(length(hex) > 0, msg)
-  
+
   # sanitize
   hex <- gsub("[^0-9a-fA-F]", "", hex)
   if (length(hex) == 1) { # single string, split it to a vector of strings
     nb <- nchar(hex)
-    .die_unless(nb > 0 && nb %%2 == 0, msg)
-    hex <- strsplit(hex, '')[[1]]
+    .die_unless(nb > 0 && nb %% 2 == 0, msg)
+    hex <- strsplit(hex, "")[[1]]
     hex <- paste0(hex[c(TRUE, FALSE)], hex[c(FALSE, TRUE)])
   }
-  .die_unless(all(nchar(hex) ==  2), msg)
+  .die_unless(all(nchar(hex) == 2), msg)
 
   as.raw(as.hexmode(hex))
 }
@@ -56,27 +58,31 @@ capitalize <- function(s) paste0(toupper(substring(s, 1, 1)), substring(s, 2))
 # convert an EDP list to df
 # - the types are applied from the first row
 convert_edp_list_to_df <- function(lst) {
-  if (!length(lst)) return(NULL)
+  if (!length(lst)) {
+    return(NULL)
+  }
 
-  df <- as.data.frame(do.call(rbind,  lst), stringsAsFactors = FALSE)
+  df <- as.data.frame(do.call(rbind, lst), stringsAsFactors = FALSE)
 
   # N.B: use the first row to infer types
   row1 <- lst[[1]]
 
   for (col in seq_along(df)) {
     # only if all scalars
-    if (all(lengths(df[[col]]) == 1)) 
+    if (all(lengths(df[[col]]) == 1)) {
       df[[col]] <- as(df[[col]], typeof(row1[[col]]))
+    }
   }
 
   df
 }
 
 retrieve_connection <- function(x) {
-  conn <- attr(x, 'connection')
-  if (!length(conn)) 
+  conn <- attr(x, "connection")
+  if (!length(conn)) {
     conn <- get_connection()
-  
+  }
+
   conn
 }
 
@@ -89,7 +95,7 @@ summary_string <- function(lst) {
   }
   res <- lapply(ns, .fetch_value)
 
-  paste0(res, collapse = '')
+  paste0(res, collapse = "")
 }
 
 
@@ -101,9 +107,12 @@ id <- function(x) {
 }
 
 path_make_absolute <- function(path) {
-  if (!.is_nz_string(path)) return('/')
-  if (substring(path, 1, 1) != '/') 
-    path <- file.path('', path)
+  if (!.is_nz_string(path)) {
+    return("/")
+  }
+  if (substring(path, 1, 1) != "/") {
+    path <- file.path("", path)
+  }
   path
 }
 
@@ -118,15 +127,15 @@ msg <- function(...) {
   message(.safe_sprintf(...))
 }
 
-build_httr_response <- function(url, 
-  code = 200L, 
-  headers =  list(`content-type` = "application/json"),
-  content = NULL)
-{
+build_httr_response <- function(
+    url,
+    code = 200L,
+    headers = list(`content-type` = "application/json"),
+    content = NULL) {
   structure(
     list(
-      url = url, 
-      status_code = code, 
+      url = url,
+      status_code = code,
       headers = headers,
       content = content
     ),
@@ -143,5 +152,5 @@ is_defined_scalar_integer <- function(x) {
 }
 
 `%UNLESS_TRUE_INT%` <- function(a, b) {
-  if (is_defined_scalar_integer(a)) a else b 
+  if (is_defined_scalar_integer(a)) a else b
 }

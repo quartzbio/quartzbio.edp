@@ -16,7 +16,7 @@ Deletes a specific saved query on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-SavedQuery.delete(<ID>)
+SavedQuery.delete(12345)
 }
 
 }

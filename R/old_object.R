@@ -5,7 +5,7 @@
 #' @concept  solvebio_api
 #' @export
 Object.all <- function(env = get_connection(), ...) {
-  .request('GET', "v2/objects", query=list(...), env = env)
+  .request("GET", "v2/objects", query = list(...), env = env)
 }
 
 
@@ -27,12 +27,12 @@ Object.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Object.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A object ID is required.")
-    }
+  if (missing(id)) {
+    stop("A object ID is required.")
+  }
 
-    path <- paste("v2/objects", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/objects", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -53,12 +53,12 @@ Object.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Object.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A object ID is required.")
-    }
+  if (missing(id)) {
+    stop("A object ID is required.")
+  }
 
-    path <- paste("v2/objects", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/objects", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -75,11 +75,11 @@ Object.delete <- function(id, env = get_connection()) {
 #'
 #' @examples \dontrun{
 #' Object.create(
-#'               vault_id="1234567890",
-#'               parent_object_id=NULL,
-#'               object_type="folder",
-#'               filename="My Folder"
-#'               )
+#'   vault_id = "1234567890",
+#'   parent_object_id = NULL,
+#'   object_type = "folder",
+#'   filename = "My Folder"
+#' )
 #' }
 #'
 #' @references
@@ -88,30 +88,30 @@ Object.delete <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Object.create <- function(vault_id, parent_object_id, object_type, filename, env = get_connection(), ...) {
-    if (missing(vault_id)) {
-        stop("A vault ID is required.")
-    }
-    if (missing(parent_object_id)) {
-        parent_object_id = NULL
-    }
-    if (missing(object_type)) {
-        stop("An object type is required: folder, dataset, file")
-    }
-    if (missing(filename)) {
-        stop("A name is required.")
-    }
+  if (missing(vault_id)) {
+    stop("A vault ID is required.")
+  }
+  if (missing(parent_object_id)) {
+    parent_object_id <- NULL
+  }
+  if (missing(object_type)) {
+    stop("An object type is required: folder, dataset, file")
+  }
+  if (missing(filename)) {
+    stop("A name is required.")
+  }
 
-    params = list(
-                  vault_id=vault_id,
-                  parent_object_id=parent_object_id,
-                  object_type=object_type,
-                  filename=filename,
-                  ...
-                  )
+  params <- list(
+    vault_id = vault_id,
+    parent_object_id = parent_object_id,
+    object_type = object_type,
+    filename = filename,
+    ...
+  )
 
-    object <- .request('POST', path='v2/objects', query=NULL, body=params, env=env)
+  object <- .request("POST", path = "v2/objects", query = NULL, body = params, env = env)
 
-    return(object)
+  return(object)
 }
 
 
@@ -125,9 +125,9 @@ Object.create <- function(vault_id, parent_object_id, object_type, filename, env
 #'
 #' @examples \dontrun{
 #' Object.update(
-#'               id="1234",
-#'               filename="New Name",
-#'              )
+#'   id = "1234",
+#'   filename = "New Name",
+#' )
 #' }
 #'
 #' @references
@@ -136,14 +136,14 @@ Object.create <- function(vault_id, parent_object_id, object_type, filename, env
 #' @concept  solvebio_api
 #' @export
 Object.update <- function(id, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("An object ID is required.")
-    }
+  if (missing(id)) {
+    stop("An object ID is required.")
+  }
 
-    params = list(...)
+  params <- list(...)
 
-    path <- paste("v2/objects", paste(id), sep="/")
-    .request('PATCH', path=path, query=NULL, body=params, env=env)
+  path <- paste("v2/objects", paste(id), sep = "/")
+  .request("PATCH", path = path, query = NULL, body = params, env = env)
 }
 
 
@@ -165,20 +165,20 @@ Object.update <- function(id, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
-    params = list(
-                  full_path=full_path,
-                  ...
-                  )
-    response <- .request('GET', path='v2/objects', query=params, env=env)
+  params <- list(
+    full_path = full_path,
+    ...
+  )
+  response <- .request("GET", path = "v2/objects", query = params, env = env)
 
-    if (response$total == 0) {
-        stop(sprintf("Error: No object found with full path: %s\n", full_path))
-    }
-    if (response$total > 1) {
-        cat(sprintf("Warning: Multiple object found with full path: %s\n", full_path))
-    }
+  if (response$total == 0) {
+    stop(sprintf("Error: No object found with full path: %s\n", full_path))
+  }
+  if (response$total > 1) {
+    cat(sprintf("Warning: Multiple object found with full path: %s\n", full_path))
+  }
 
-    return(response$data)
+  return(response$data)
 }
 
 
@@ -200,19 +200,19 @@ Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Object.get_by_path <- function(path, env = get_connection(), ...) {
-    # Remove trailing backslash from vault_path
-    path = sub("/$", "", path)
+  # Remove trailing backslash from vault_path
+  path <- sub("/$", "", path)
 
-    params = list(
-                  path=path,
-                  ...
-                  )
-    response <- .request('GET', path='v2/objects', query=params, env=env)
-    if (response$total > 0) {
-        return(response$data[1, ])
-    }
+  params <- list(
+    path = path,
+    ...
+  )
+  response <- .request("GET", path = "v2/objects", query = params, env = env)
+  if (response$total > 0) {
+    return(response$data[1, ])
+  }
 
-    return(NULL)
+  return(NULL)
 }
 
 
@@ -233,25 +233,27 @@ Object.get_by_path <- function(path, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Object.get_download_url <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A object ID is required.")
-    }
+  if (missing(id)) {
+    stop("A object ID is required.")
+  }
 
-    path <- paste("v2/objects", paste(id), "download", sep="/")
-    response <- .request('GET', path=path, query=list(redirect=NULL), env=env)
+  path <- paste("v2/objects", paste(id), "download", sep = "/")
+  response <- .request("GET", path = path, query = list(redirect = NULL), env = env)
 
-    return(response$download_url)
+  return(response$download_url)
 }
 
 
 #' Object.upload_file
 #'
-#' Upload a local file to a vault on QuartzBio EDP. The vault path provided is the parent directory for uploaded file.
+#' Upload a local file to a vault on QuartzBio EDP.
+#' The vault path provided is the parent directory for uploaded file.
 #'
 #' @param local_path The path to the local file
 #' @param vault_id The QuartzBio EDP vault ID
 #' @param vault_path The remote path in the vault
-#' @param filename (optional) The filename for the uploaded file in the vault (default: the basename of the local_path)
+#' @param filename (optional) The filename for the uploaded file in the vault
+#'   (default: the basename of the local_path)
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
@@ -264,76 +266,77 @@ Object.get_download_url <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Object.upload_file <- function(local_path, vault_id, vault_path, filename, env = get_connection()) {
-    if (missing(local_path) || !file.exists(local_path)) {
-        stop("A valid path to a local file is required.")
+  if (missing(local_path) || !file.exists(local_path)) {
+    stop("A valid path to a local file is required.")
+  }
+  if (missing(vault_id)) {
+    stop("A valid vault ID is required.")
+  }
+
+  if (missing(filename) || is.null(filename)) {
+    filename <- basename(local_path)
+  }
+
+  if (missing(vault_path) || is.null(vault_path) || vault_path == "/" || vault_path == "") {
+    parent_object_id <- NULL
+  } else {
+    # Create all folders as necessary in the vault path
+    parent_object <- Object.get_by_path(path = vault_path, vault_id = vault_id, env = env)
+    if (is.null(parent_object)) {
+      parent_object <- Vault.create_folder(
+        id = vault_id,
+        path = vault_path,
+        recursive = TRUE,
+        env = env
+      )
     }
-    if (missing(vault_id)) {
-        stop("A valid vault ID is required.")
+    if (parent_object$object_type != "folder") {
+      stop(sprintf("Error: Vault path is not a valid folder: %s\n", vault_path))
     }
+    parent_object_id <- parent_object$id
+  }
 
-    if (missing(filename) || is.null(filename)) {
-        filename = basename(local_path)
-    }
+  # Create the file, and upload it to the Upload URL
+  obj <- Object.create(
+    vault_id = vault_id,
+    parent_object_id = parent_object_id,
+    object_type = "file",
+    filename = filename,
+    # md5=digest::digest(file=local_path),
+    size = file.size(local_path),
+    mimetype = mime::guess_type(local_path),
+    env = env
+  )
 
-    if (missing(vault_path) || is.null(vault_path) || vault_path == '/' || vault_path == '') {
-        parent_object_id = NULL
-    }
-    else {
-        # Create all folders as necessary in the vault path
-        parent_object = Object.get_by_path(path=vault_path, vault_id=vault_id, env=env)
-        if (is.null(parent_object)) {
-            parent_object = Vault.create_folder(
-                                                id=vault_id,
-                                                path=vault_path,
-                                                recursive=TRUE,
-                                                env=env
-                                                )
-        }
-        if (parent_object$object_type != 'folder') {
-            stop(sprintf("Error: Vault path is not a valid folder: %s\n", vault_path))
-        }
-        parent_object_id = parent_object$id
-    }
-
-    # Create the file, and upload it to the Upload URL
-    obj = Object.create(
-                        vault_id=vault_id,
-                        parent_object_id=parent_object_id,
-                        object_type='file',
-                        filename=filename,
-                        # md5=digest::digest(file=local_path),
-                        size=file.size(local_path),
-                        mimetype=mime::guess_type(local_path),
-                        env=env
-                        )
-
-    # TODO: Get base64_md5 from API
-    # base64_md5 = jsonlite::base64_enc(hex2bin(obj$md5))
-    headers <- c(
-                 # 'Content-MD5'=base64_md5,
-                 'Content-Type'=obj$mimetype,
-                 'Content-Length'=obj$size
-                 )
+  # TODO: Get base64_md5 from API
+  # base64_md5 = jsonlite::base64_enc(hex2bin(obj$md5))
+  headers <- c(
+    "Content-Type" = obj$mimetype,
+    "Content-Length" = obj$size
+  )
 
 
-    res <- httr::PUT(
-                     obj$upload_url,
-                     httr::add_headers(headers),
-                     body=httr::upload_file(local_path, type=obj$mimetype)
-                     )
-    if (res$status != 200) {
-        # Clean up after a failed upload
-        Object.delete(obj$id, env=env)
-        stop(sprintf("Error: Failed to upload file"))
-    }
+  res <- httr::PUT(
+    obj$upload_url,
+    httr::add_headers(headers),
+    body = httr::upload_file(local_path, type = obj$mimetype)
+  )
+  if (res$status != 200) {
+    # Clean up after a failed upload
+    Object.delete(obj$id, env = env)
+    stop(sprintf("Error: Failed to upload file"))
+  }
 
-    return(obj)
+  return(obj)
 }
 
 
 #' Object.get_or_upload_file
 #'
-#' Upload a local file to a vault on QuartzBio EDP only if it does not yet exist (by name, at the provided path). The vault path provided is the parent directory for uploaded file. Accepts the same arguments as `Object.upload_file`.
+#' Upload a local file to a vault on QuartzBio EDP only,
+#' if it does not yet exist (by name, at the provided path).
+#' The vault path provided is the parent directory for uploaded file.
+#' Accepts the same arguments as `Object.upload_file`.
 #'
 #' @param local_path The path to the local file
 #' @param vault_id The QuartzBio EDP vault ID
@@ -351,29 +354,29 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
 #' @concept  solvebio_api
 #' @export
 Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename, env = get_connection()) {
-    if (missing(local_path) || !file.exists(local_path)) {
-        stop("A valid path to a local file is required.")
-    }
-    if (missing(vault_id)) {
-        stop("A vault ID is required.")
-    }
-    if (missing(vault_path)) {
-        stop("A vault path is required.")
-    }
-    if (missing(filename) || is.null(filename)) {
-        filename <- basename(local_path)
-    }
+  if (missing(local_path) || !file.exists(local_path)) {
+    stop("A valid path to a local file is required.")
+  }
+  if (missing(vault_id)) {
+    stop("A vault ID is required.")
+  }
+  if (missing(vault_path)) {
+    stop("A vault path is required.")
+  }
+  if (missing(filename) || is.null(filename)) {
+    filename <- basename(local_path)
+  }
 
-    object_path <- paste(vault_path, filename, sep="/")
-    # Remove double slashes
-    object_path <- sub("//", "/", object_path)
-    object <- Object.get_by_path(path=object_path, vault_id=vault_id, env=env)
+  object_path <- paste(vault_path, filename, sep = "/")
+  # Remove double slashes
+  object_path <- sub("//", "/", object_path)
+  object <- Object.get_by_path(path = object_path, vault_id = vault_id, env = env)
 
-    if (is.null(object)) {
-        object <- Object.upload_file(local_path, vault_id, vault_path, filename, env=env)
-    }
+  if (is.null(object)) {
+    object <- Object.upload_file(local_path, vault_id, vault_path, filename, env = env)
+  }
 
-    return(object)
+  return(object)
 }
 
 
@@ -396,39 +399,43 @@ Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename
 #' @concept  solvebio_api
 #' @export
 Object.data <- function(id, filters, col.names = NULL, env = get_connection(), ...) {
-    if (missing(id) || !(class(id) %in% c("Object", "numeric", "integer", "character"))) {
-        stop("An object ID is required.")
+  if (missing(id) || !(class(id) %in% c("Object", "numeric", "integer", "character"))) {
+    stop("An object ID is required.")
+  }
+  if (inherits(id, "Object")) {
+    id <- id$id
+  }
+
+  body <- list(...)
+  # Only JSON is supported right now as the results
+  # are formatted into a dataframe.
+  body$output_format <- "json"
+
+  # Filters can be passed as a JSON string
+  if (!missing(filters) && !is.null(filters) && length(filters) > 0) {
+    if (inherits(filters, "character")) {
+      # Convert JSON string to an R structure
+      filters <- jsonlite::fromJSON(filters,
+        simplifyVector = FALSE,
+        simplifyDataFrame = TRUE,
+        simplifyMatrix = FALSE
+      )
     }
-    if (inherits(id, "Object")) {
-        id <- id$id
+    # Add filters to request body
+    body <- modifyList(body, list(filters = filters))
+  }
+
+  path <- paste("v2/objects", paste(id), "data", sep = "/")
+
+  tryCatch(
+    {
+      res <- .request("POST", path = path, body = body, env = env)
+      return(formatEDPQueryResponse(res, col.names = col.names))
+    },
+    error = function(e) {
+      cat(sprintf("Query failed: %s\n", e$message))
     }
-
-    body = list(...)
-    # Only JSON is supported right now as the results
-    # are formatted into a dataframe.
-    body$output_format = "json"
-
-    # Filters can be passed as a JSON string
-    if (!missing(filters) && !is.null(filters) && length(filters) > 0) {
-        if (inherits(filters, "character")) {
-            # Convert JSON string to an R structure
-            filters <- jsonlite::fromJSON(filters,
-                                          simplifyVector = FALSE,
-                                          simplifyDataFrame = TRUE,
-                                          simplifyMatrix = FALSE)
-        }
-        # Add filters to request body
-        body = modifyList(body, list(filters=filters))
-    }
-
-    path <- paste("v2/objects", paste(id), "data", sep="/")
-
-    tryCatch({
-        res <- .request('POST', path=path, body=body, env=env)
-        return(formatEDPQueryResponse(res, col.names = col.names))
-    }, error = function(e) {
-        cat(sprintf("Query failed: %s\n", e$message))
-    })
+  )
 }
 
 
@@ -443,7 +450,7 @@ Object.data <- function(id, filters, col.names = NULL, env = get_connection(), .
 #' @param ... (optional) Additional query parameters (e.g. filters, limit, offset).
 #'
 #' @examples \dontrun{
-#' Object.query("12345678790", paginate=TRUE)
+#' Object.query("12345678790", paginate = TRUE)
 #' }
 #'
 #' @references
@@ -451,35 +458,37 @@ Object.data <- function(id, filters, col.names = NULL, env = get_connection(), .
 #'
 #' @concept  solvebio_api
 #' @export
-Object.query <- function(id, paginate=FALSE, env = get_connection(), ...) {
-    params <- list(...)
-    params$id <- id
-    params$env <- env
+Object.query <- function(id, paginate = FALSE, env = get_connection(), ...) {
+  params <- list(...)
+  params$id <- id
+  params$env <- env
 
-    # Retrieve the list of fields
-    # NOTE: There is no inherent order to these fields, unless the file is a TSV or CSV.
-    params$col.names <- do.call(Object.fields, list(id, env=env))
+  # Retrieve the list of fields
+  # NOTE: There is no inherent order to these fields, unless the file is a TSV or CSV.
+  params$col.names <- do.call(Object.fields, list(id, env = env))
 
-    # Retrieve the first page of results
+  # Retrieve the first page of results
+  response <- do.call(Object.data, params)
+  df <- response$result
+  offset <- response$offset
+  total <- response$total
+
+  # Continue to make requests for data if pagination is enabled and there are more records
+  while (isTRUE(paginate) && !is.null(offset)) {
+    params$offset <- offset
     response <- do.call(Object.data, params)
-    df <- response$result
+    df <- jsonlite::rbind_pages(list(df, response$results))
     offset <- response$offset
-    total <- response$total
+  }
 
-    # Continue to make requests for data if pagination is enabled and there are more records
-    while (isTRUE(paginate) && !is.null(offset)) {
-        params$offset <- offset
-        response <- do.call(Object.data, params)
-        df <- jsonlite::rbind_pages(list(df, response$results))
-        offset <- response$offset
-    }
+  if (!isTRUE(paginate) && is.null(total)) {
+    warning(paste("This call returned only the first page of records. To retrieve more pages automatically,",
+      "please set paginate=TRUE when calling Object.query().",
+      call. = FALSE
+    ))
+  }
 
-    if (!isTRUE(paginate) && is.null(total)) {
-        warning(paste("This call returned only the first page of records. To retrieve more pages automatically,",
-                      "please set paginate=TRUE when calling Object.query().", call. = FALSE))
-    }
-
-    return(df)
+  return(df)
 }
 
 
@@ -501,20 +510,20 @@ Object.query <- function(id, paginate=FALSE, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Object.fields <- function(id, env = get_connection(), ...) {
-    if (inherits(id, "numeric")) {
-        warning("Please use string IDs instead of numeric IDs.")
-    }
+  if (inherits(id, "numeric")) {
+    warning("Please use string IDs instead of numeric IDs.")
+  }
 
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    if (inherits(id, "Object")) {
-        id <- id$id
-    }
+  if (inherits(id, "Object")) {
+    id <- id$id
+  }
 
-    path <- paste("v2/objects", paste(id), "fields", sep="/")
-    .request('GET', path=path, query=list(...), env=env)$fields
+  path <- paste("v2/objects", paste(id), "fields", sep = "/")
+  .request("GET", path = path, query = list(...), env = env)$fields
 }
 
 
@@ -528,7 +537,7 @@ Object.fields <- function(id, env = get_connection(), ...) {
 #'
 #' @examples \dontrun{
 #' Object.get_global_beacon_status("1234567890")
-#' Object.get_global_beacon_status("1234567890", raise_on_disabled=TRUE)
+#' Object.get_global_beacon_status("1234567890", raise_on_disabled = TRUE)
 #' }
 #'
 #' @references
@@ -537,25 +546,27 @@ Object.fields <- function(id, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
+
+  path <- paste("v2/objects", paste(id), "beacon", sep = "/")
+  response <- NULL
+
+  tryCatch(
+    {
+      response <- .request("GET", path, query = NULL, env = env)
+    },
+    error = function(e) {
+      if (raise_on_disabled) {
+        stop(e)
+      } else {
+        response <- NULL
+      }
     }
+  )
 
-    path <- paste("v2/objects", paste(id), "beacon", sep="/")
-    response <- NULL
-
-    tryCatch({
-        response <- .request('GET', path, query=NULL, env=env)
-    }, error = function(e) {
-        if(raise_on_disabled){
-            stop(e)
-        }
-        else{
-            response <- NULL
-        }
-    })
-
-    return(response)
+  return(response)
 }
 
 
@@ -576,12 +587,12 @@ Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env =
 #' @concept  solvebio_api
 #' @export
 Object.enable_global_beacon <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    path <- paste("v2/objects", paste(id), "beacon", sep="/")
-    .request('POST', path, query=NULL, body=NULL, env=env)
+  path <- paste("v2/objects", paste(id), "beacon", sep = "/")
+  .request("POST", path, query = NULL, body = NULL, env = env)
 }
 
 
@@ -602,12 +613,12 @@ Object.enable_global_beacon <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Object.disable_global_beacon <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    path <- paste("v2/objects", paste(id), "beacon", sep="/")
-    .request('DELETE', path, query=NULL, body=NULL, env=env)
+  path <- paste("v2/objects", paste(id), "beacon", sep = "/")
+  .request("DELETE", path, query = NULL, body = NULL, env = env)
 }
 
 

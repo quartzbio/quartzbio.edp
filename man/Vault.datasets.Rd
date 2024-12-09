@@ -18,7 +18,7 @@ Retrieves all datasets in a specific vault.
 }
 \examples{
 \dontrun{
-vault = Vault.get_personal_vault()
+vault <- Vault.get_personal_vault()
 Vault.datasets(vault$id)
 }
 

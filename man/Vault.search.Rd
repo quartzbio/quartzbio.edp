@@ -20,8 +20,8 @@ Search for objects in a specific vault.
 }
 \examples{
 \dontrun{
-vault = Vault.get_personal_vault()
-Vault.search('test')
+vault <- Vault.get_personal_vault()
+Vault.search("test")
 }
 
 }

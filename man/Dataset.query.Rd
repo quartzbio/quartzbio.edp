@@ -29,7 +29,7 @@ Returns a single page of results otherwise (default).
 }
 \examples{
 \dontrun{
-Dataset.query("12345678790", paginate=TRUE)
+Dataset.query("12345678790", paginate = TRUE)
 }
 
 }

@@ -1,34 +1,36 @@
 # N.B: these are function copy-pasted from qbutils, where there are already tested.
-# that's why we exclude them from the code coverage 
+# that's why we exclude them from the code coverage
 # nocov start
 
-.is_nz_string  <- function(x) { length(x) == 1 && !is.na(x) && is.character(x) && nzchar(x)  }
+.is_nz_string <- function(x) {
+  length(x) == 1 && !is.na(x) && is.character(x) && nzchar(x)
+}
 
-.die_if  <- function(cond, ..., .envir = parent.frame()) .die_unless(!cond, ..., .envir = .envir)
+.die_if <- function(cond, ..., .envir = parent.frame()) .die_unless(!cond, ..., .envir = .envir)
 .die_unless <- function(cond, ..., .envir = parent.frame()) {
-	if (!is.logical(cond) || .empty(cond)) {
-		stop("Bad logical argument cond: ", cond)
-	}
+  if (!is.logical(cond) || .empty(cond)) {
+    stop("Bad logical argument cond: ", cond)
+  }
 
   # check that the dots are not forgotten
-  if (missing(...)) stop('missing message')
+  if (missing(...)) stop("missing message")
 
-	if (any(!cond)) .die(..., .envir = .envir)
+  if (any(!cond)) .die(..., .envir = .envir)
 
-	invisible()
+  invisible()
 }
 
 .empty <- function(x) {
-  if (is.data.frame(x))
-     nrow(x) == 0
-   else
+  if (is.data.frame(x)) {
+    nrow(x) == 0
+  } else {
     length(x) == 0
+  }
 }
 
 .die <- function(..., .envir = parent.frame()) {
-  
-	msg <- .build_error_message(..., .envir = .envir)
-	stop(msg, call. = FALSE)
+  msg <- .build_error_message(..., .envir = .envir)
+  stop(msg, call. = FALSE)
 }
 
 .build_error_message <- function(fmt, ..., .envir = parent.frame()) {
@@ -42,11 +44,11 @@
 }
 
 .is_error <- function(x) {
-  inherits(x, 'try-error')
+  inherits(x, "try-error")
 }
 .get_error <- function(x) {
-  .die_unless(.is_error(x), 'x must be an error')
-  attr(x, 'condition')
+  .die_unless(.is_error(x), "x must be an error")
+  attr(x, "condition")
 }
 .get_error_msg <- function(x) {
   conditionMessage(.get_error(x))
@@ -58,11 +60,12 @@
   }
 
   dots <- list(...)
-  if (.empty(dots)) return(fmt)
+  if (.empty(dots)) {
+    return(fmt)
+  }
 
   .collapse_args <- function(x) {
-    if (length(x) > 1) paste0(x, collapse = ',') else
-      if (length(x) == 0) '' else x
+    if (length(x) > 1) paste0(x, collapse = ",") else if (length(x) == 0) "" else x
   }
   fixed_dots <- lapply(dots, .collapse_args)
 

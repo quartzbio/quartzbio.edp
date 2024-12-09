@@ -19,9 +19,9 @@ Updates the attributes of an existing dataset.
 \examples{
 \dontrun{
 Dataset.update(
-               id="1234",
-               name="New Dataset Name",
-              )
+  id = "1234",
+  name = "New Dataset Name",
+)
 }
 
 }

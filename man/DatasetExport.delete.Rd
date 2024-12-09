@@ -16,7 +16,7 @@ Deletes a specific dataset export on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-DatasetExport.delete(<ID>)
+DatasetExport.delete(12345)
 }
 
 }

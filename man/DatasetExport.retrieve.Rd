@@ -16,7 +16,7 @@ Retrieves the metadata about a specific dataset export on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-DatasetExport.retrieve(<ID>)
+DatasetExport.retrieve(12345)
 }
 
 }

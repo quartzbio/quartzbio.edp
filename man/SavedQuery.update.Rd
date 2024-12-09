@@ -19,9 +19,9 @@ Updates the attributes of an existing saved query.
 \examples{
 \dontrun{
 SavedQuery.update(
-               id="1234",
-               name="New query Name",
-              )
+  id = "1234",
+  name = "New query Name",
+)
 }
 
 }

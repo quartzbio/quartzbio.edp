@@ -19,9 +19,9 @@ Updates the attributes of an existing vault object.
 \examples{
 \dontrun{
 Object.update(
-              id="1234",
-              filename="New Name",
-             )
+  id = "1234",
+  filename = "New Name",
+)
 }
 
 }

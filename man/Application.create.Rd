@@ -21,9 +21,9 @@ Create a new QuartzBio EDP application.
 \examples{
 \dontrun{
 Application.create(
-                   name="My new application",
-                   redirect_uris="http://localhost:3838/"
-                   )
+  name = "My new application",
+  redirect_uris = "http://localhost:3838/"
+)
 }
 
 }

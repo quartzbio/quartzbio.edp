@@ -16,7 +16,7 @@
 #' @concept  solvebio_api
 #' @export
 SavedQuery.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/saved_queries", query=list(...), env=env)
+  .request("GET", "v2/saved_queries", query = list(...), env = env)
 }
 
 
@@ -28,7 +28,7 @@ SavedQuery.all <- function(env = get_connection(), ...) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' SavedQuery.retrieve(<ID>)
+#' SavedQuery.retrieve(12345)
 #' }
 #'
 #' @references
@@ -37,12 +37,12 @@ SavedQuery.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 SavedQuery.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A saved query ID is required.")
-    }
+  if (missing(id)) {
+    stop("A saved query ID is required.")
+  }
 
-    path <- paste("v2/saved_queries", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/saved_queries", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -54,7 +54,7 @@ SavedQuery.retrieve <- function(id, env = get_connection()) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' SavedQuery.delete(<ID>)
+#' SavedQuery.delete(12345)
 #' }
 #'
 #' @references
@@ -63,12 +63,12 @@ SavedQuery.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 SavedQuery.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A saved query ID is required.")
-    }
+  if (missing(id)) {
+    stop("A saved query ID is required.")
+  }
 
-    path <- paste("v2/saved_queries", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/saved_queries", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -79,7 +79,7 @@ SavedQuery.delete <- function(id, env = get_connection()) {
 #' @param ... (optional) Saved query attributes.
 #'
 #' @examples \dontrun{
-#' SavedQuery.create(name="My Dataset Template")
+#' SavedQuery.create(name = "My Dataset Template")
 #' }
 #'
 #' @references
@@ -88,7 +88,7 @@ SavedQuery.delete <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 SavedQuery.create <- function(env = get_connection(), ...) {
-    .request('POST', path='v2/saved_queries', query=NULL, body=list(...), env=env)
+  .request("POST", path = "v2/saved_queries", query = NULL, body = list(...), env = env)
 }
 
 
@@ -102,9 +102,9 @@ SavedQuery.create <- function(env = get_connection(), ...) {
 #'
 #' @examples \dontrun{
 #' SavedQuery.update(
-#'                id="1234",
-#'                name="New query Name",
-#'               )
+#'   id = "1234",
+#'   name = "New query Name",
+#' )
 #' }
 #'
 #' @references
@@ -113,11 +113,11 @@ SavedQuery.create <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 SavedQuery.update <- function(id, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("A saved query ID is required.")
-    }
+  if (missing(id)) {
+    stop("A saved query ID is required.")
+  }
 
-    path <- paste("v2/saved_queries", paste(id), sep="/")
-    .request('PATCH', path=path, query=NULL, body=list(...), env=env)
+  path <- paste("v2/saved_queries", paste(id), sep = "/")
+  .request("PATCH", path = path, query = NULL, body = list(...), env = env)
 }
 # nocov end

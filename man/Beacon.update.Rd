@@ -19,9 +19,9 @@ Updates the attributes of an existing beacon.
 \examples{
 \dontrun{
 Beacon.update(
-              id="1234",
-              title="New Beacon Title"
-             )
+  id = "1234",
+  title = "New Beacon Title"
+)
 }
 
 }

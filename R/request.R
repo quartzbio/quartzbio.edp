@@ -1,24 +1,25 @@
-  JSON <- "application/json"
+JSON <- "application/json"
 
 format_auth_header <- function(secret) {
-  token_type <- if (looks_like_api_key(secret)) 'Token' else 'Bearer'
+  token_type <- if (looks_like_api_key(secret)) "Token" else "Bearer"
   c(Authorization = paste(token_type, secret, sep = " "))
 }
 
 
 preprocess_api_params <- function(
-  exclude = c('conn', 'limit', 'page', 'offset'),
-  match_args = list(
-    capacity = c('small', 'medium', 'large', 'xlarge'),
-    commit_mode = c('append', 'overwrite', 'upsert', 'delete'),
-    data_type = c('auto', 'boolean', 'date', 'double', 'float', 'integer', 'long', 'object',
-      'string', 'text', 'blob'),
-    object_type = c('file', 'folder', 'dataset'),
-    status = TASK_STATUS,
-    vault_type = c('user', 'general'),
-    storage_class =  c('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive')
-  )
-) {
+    exclude = c("conn", "limit", "page", "offset"),
+    match_args = list(
+      capacity = c("small", "medium", "large", "xlarge"),
+      commit_mode = c("append", "overwrite", "upsert", "delete"),
+      data_type = c(
+        "auto", "boolean", "date", "double", "float", "integer", "long", "object",
+        "string", "text", "blob"
+      ),
+      object_type = c("file", "folder", "dataset"),
+      status = TASK_STATUS,
+      vault_type = c("user", "general"),
+      storage_class = c("Standard", "Standard-IA", "Essential", "Temporary", "Performance", "Archive")
+    )) {
   env <- parent.frame()
   # remove common args
   keys <- setdiff(ls(env), exclude)
@@ -32,7 +33,7 @@ preprocess_api_params <- function(
       if (length(args)) {
         value <- match.arg(value, args)
       }
-      if (grepl('id$', key)) {
+      if (grepl("id$", key)) {
         value <- id(value)
       }
       params[[key]] <- value
@@ -57,13 +58,12 @@ request_options <- function(content_type = "application/json",
                             raw = FALSE,
                             postprocess = TRUE,
                             encoding = "UTF-8",
-                            verbose = getOption('quartzbio.edp.verbose', TRUE),
-                            parse_fast = getOption('quartzbio.edp.use_fast_parser', requireNamespace('RcppSimdJson')),
+                            verbose = getOption("quartzbio.edp.verbose", TRUE),
+                            parse_fast = getOption("quartzbio.edp.use_fast_parser", requireNamespace("RcppSimdJson")),
                             parse_as_df = FALSE,
                             retries = 3,
                             default_wait = 10,
-                            ...)
-{
+                            ...) {
   list(
     content_type = content_type,
     raw = raw,
@@ -82,18 +82,22 @@ request_options <- function(content_type = "application/json",
 send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 10) {
   res <- if (length(fake_response)) fake_response else httr::VERB(...)
 
-  if (!length(res) || !'status_code' %in% names(res) || res$status_code != 429) return(res)
+  if (!length(res) || !"status_code" %in% names(res) || res$status_code != 429) {
+    return(res)
+  }
 
   ### too many requests --> that's our business to manage that
   # defensive programming
   .die_unless(is.numeric(retries), 'param "retries" must be numeric')
   .die_unless(is.numeric(default_wait), 'param "default_wait" must be numeric')
 
-  .die_unless(retries > 0,
-    'received a "Too many requests" response (429) but retries are exhausted, giving up...')
+  .die_unless(
+    retries > 0,
+    'received a "Too many requests" response (429) but retries are exhausted, giving up...'
+  )
 
   retry_after <- as.numeric(res$headers[["retry-after"]] %IF_EMPTY_THEN% default_wait)
-  msg('retry_after=%s', retry_after)
+  msg("retry_after=%s", retry_after)
   wait <- retry_after * (stats::runif(1) + 1) # add some jitter
   msg('received a "Too many requests" response (429). will retry in %ss...', wait)
 
@@ -110,13 +114,13 @@ send_request <- function(..., fake_response = NULL, retries = 3, default_wait = 
 # - pager() return the page index information
 # - pager(NULL) return initial query
 # - pager(i) returns the page #i of data, even if it has to use the "offset" to achieve that
-request_edp_api <- function(method, api,
-  params = list(),
-  options = request_options(...),
-  pointer = request_pointer(...),
-  conn = get_connection(),
-  ...)
-{
+request_edp_api <- function(
+    method, api,
+    params = list(),
+    options = request_options(...),
+    pointer = request_pointer(...),
+    conn = get_connection(),
+    ...) {
   # pointer: NB: we only add page and offset params if > 0.
   # But we still use them to determine if we are page-based, offset-based or none
   # the
@@ -134,7 +138,7 @@ request_edp_api <- function(method, api,
   res <- request_edp_api_no_pager(method, api, params = params0, options = options, conn = conn)
 
   # N.B: sometimes the total can be explicitly given with the request, it ends up in pointer$total
-  total <- attr(res, 'total') %UNLESS_TRUE_INT% pointer$total
+  total <- attr(res, "total") %UNLESS_TRUE_INT% pointer$total
   if (!length(total) || is.na(total)) { # no subsequent pages --> no pager to manage
     return(res)
   }
@@ -144,19 +148,23 @@ request_edp_api <- function(method, api,
 
   index <- 1L
   if (options$parse_as_df) { # endpoints that return tables use `offset` instead of `page`
-    if (length(offset))
+    if (length(offset)) {
       index <- offset_to_page(offset, size)
+    }
   } else {
-    if (length(page))
+    if (length(page)) {
       index <- page
+    }
   }
 
   nb_pages <- ceiling(total / size)
   page_index <- list(index = index, nb = nb_pages, total = total, size = size)
 
   ### store pagination info as attribute
-  attr(res, 'pagination') <- list(method = method, api = api, params = params, options = options,
-    page_index = page_index, conn = conn)
+  attr(res, "pagination") <- list(
+    method = method, api = api, params = params, options = options,
+    page_index = page_index, conn = conn
+  )
 
   res
 }
@@ -169,7 +177,7 @@ request_page <- function(previous, request_args, index, verbose = NA) {
   if (!is.na(verbose)) options$verbose <- verbose
   # endpoints that return a table/df use offset instead of page
 
-  .die_unless(length(index) > 0, 'empty index!')
+  .die_unless(length(index) > 0, "empty index!")
 
   # we have an index
   if (options$parse_as_df) { # convert if to offset if needed
@@ -178,29 +186,31 @@ request_page <- function(previous, request_args, index, verbose = NA) {
     params$page <- index
   }
 
-  res <- request_edp_api_no_pager(request_args$method, request_args$api, params = params,
-    options = options, conn = request_args$conn)
+  res <- request_edp_api_no_pager(request_args$method, request_args$api,
+    params = params,
+    options = options, conn = request_args$conn
+  )
 
-  .die_unless(length(res) > 0, 'request_edp_api_no_pager produced empty results for index=%s', index)
+  .die_unless(length(res) > 0, "request_edp_api_no_pager produced empty results for index=%s", index)
 
   if (is.data.frame(previous) && is.data.frame(res)) {
     res <- format_df_like_model(res, previous)
-    .die_unless(length(res) > 0, 'format_df_like_model() produced empty results')
+    .die_unless(length(res) > 0, "format_df_like_model() produced empty results")
   }
 
   # update page_index
   request_args$page_index$index <- index
-  attr(res, 'pagination') <- request_args
+  attr(res, "pagination") <- request_args
 
   res
 }
 
 
-request_edp_api_no_pager <- function(method, path = '',  params, options,
-  uri = file.path(conn$host, path),
-  conn = get_connection(),
-  fake_response = NULL)
-{
+request_edp_api_no_pager <- function(
+    method, path = "", params, options,
+    uri = file.path(conn$host, path),
+    conn = get_connection(),
+    fake_response = NULL) {
   check_connection(conn)
 
   ### params
@@ -217,7 +227,7 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
   query <- list()
   body <- list()
   if (length(params)) {
-    if (method == 'GET') {
+    if (method == "GET") {
       query <- params
     } else {
       body <- params
@@ -238,7 +248,7 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
   }
   force(uri)
   if (options$verbose) {
-    msg <- sprintf('%s %s...', method, uri)
+    msg <- sprintf("%s %s...", method, uri)
     message(msg)
   }
 
@@ -273,16 +283,19 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
     retries = options$retries,
     default_wait = options$default_wait
   )
-  if (options$raw) return(res)
+  if (options$raw) {
+    return(res)
+  }
   # N.B: may die with an appropriate error message
   ret <- check_httr_response(res)
-  if (!isTRUE(ret)) return(ret)
+  if (!isTRUE(ret)) {
+    return(ret)
+  }
 
-  use_rcpp_simdjson <- options$parse_fast && requireNamespace('RcppSimdJson')
+  use_rcpp_simdjson <- options$parse_fast && requireNamespace("RcppSimdJson")
   content <- if (use_rcpp_simdjson) {
-    max_simplify_lvl <- if (options$parse_as_df) 'data_frame' else 'list'
+    max_simplify_lvl <- if (options$parse_as_df) "data_frame" else "list"
     RcppSimdJson::fparse(res$content, max_simplify_lvl = max_simplify_lvl, int64_policy = "string")
-
   } else {
     httr::content(res, encoding = options$encoding, simplifyDataFrame = options$parse_as_df)
   }
@@ -298,16 +311,18 @@ request_edp_api_no_pager <- function(method, path = '',  params, options,
 # process a list of params, which may have been set or not.
 # apply the constraints (unique, empty) to check those params, and return the appropriate ones
 # a param may be a sublist, in which case it is deemed set iff all its items are set
-process_by_params <- function(by,  unique = !empty, empty = FALSE) {
+process_by_params <- function(by, unique = !empty, empty = FALSE) {
   keys <- names(by)
   .die_unless(length(keys) == length(by) && all(nzchar(keys)), '"by" must be a named list')
   .die_unless(length(by) > 0, '"by" can not be empty')
-    # also process sublists
+  # also process sublists
   .is_set <- function(x) {
     if (is.list(x)) { # sublist
       # a sublist is set if all its items are set, otherwise it is an error
       nb_set <- sum(lengths(x) > 0)
-      if (nb_set == 0) return(FALSE)
+      if (nb_set == 0) {
+        return(FALSE)
+      }
       .die_unless(nb_set == length(x), 'all items "%s" must be set', names(x))
       return(TRUE)
     }
@@ -320,14 +335,16 @@ process_by_params <- function(by,  unique = !empty, empty = FALSE) {
   # number of params which have been set/given
   nb_set <- sum(with_values)
 
-  .die_unless(!unique || nb_set == 1, 'you must give exactly one parameter among %s', keys)
-  .die_if(nb_set == 0 && !empty, 'you must give at least one parameter among %s', keys)
-  if (nb_set == 0) return(list())
+  .die_unless(!unique || nb_set == 1, "you must give exactly one parameter among %s", keys)
+  .die_if(nb_set == 0 && !empty, "you must give at least one parameter among %s", keys)
+  if (nb_set == 0) {
+    return(list())
+  }
 
   params <- list()
   for (key in keys[with_values]) {
     value <- by[[key]]
-    if (endsWith(key, 'id')) value <- unclass(id(value))
+    if (endsWith(key, "id")) value <- unclass(id(value))
     if (is.list(value)) params <- c(params, value) else params[[key]] <- value
   }
 
@@ -346,10 +363,10 @@ fetch_by <- function(path, by, conn, all = FALSE, unique = !empty, empty = FALSE
     params$id <- NULL
   }
 
-  o <- request_edp_api('GET', path, conn = conn,  params = params, ...)
+  o <- request_edp_api("GET", path, conn = conn, params = params, ...)
 
   if (!all) {
-    .die_if(.empty(o), 'entity not found')
+    .die_if(.empty(o), "entity not found")
     if (!length(id)) {
       o <- o[[1]]
     }

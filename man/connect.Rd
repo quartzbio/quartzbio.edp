@@ -31,12 +31,12 @@ connect to the QuartzBio EDP API and return the connection
 }
 \examples{
 \dontrun{
-   #  using API key
-   conn <- connect('MYKEY')
-   # using env vars
-   conn <- connect()
-   # using token and explicit host
-   conn <- connect('MYTOKEN', 'https://xxxx.yy.com')
+#  using API key
+conn <- connect("MYKEY")
+# using env vars
+conn <- connect()
+# using token and explicit host
+conn <- connect("MYTOKEN", "https://xxxx.yy.com")
 }
 
 }

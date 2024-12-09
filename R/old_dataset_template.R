@@ -16,7 +16,7 @@
 #' @concept  solvebio_api
 #' @export
 DatasetTemplate.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/dataset_templates", query=list(...), env=env)
+  .request("GET", "v2/dataset_templates", query = list(...), env = env)
 }
 
 
@@ -28,7 +28,7 @@ DatasetTemplate.all <- function(env = get_connection(), ...) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetTemplate.retrieve(<ID>)
+#' DatasetTemplate.retrieve(12345)
 #' }
 #'
 #' @references
@@ -37,12 +37,12 @@ DatasetTemplate.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 DatasetTemplate.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset template ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset template ID is required.")
+  }
 
-    path <- paste("v2/dataset_templates", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/dataset_templates", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -54,7 +54,7 @@ DatasetTemplate.retrieve <- function(id, env = get_connection()) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetTemplate.delete(<ID>)
+#' DatasetTemplate.delete(12345)
 #' }
 #'
 #' @references
@@ -63,12 +63,12 @@ DatasetTemplate.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 DatasetTemplate.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset template ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset template ID is required.")
+  }
 
-    path <- paste("v2/dataset_templates", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/dataset_templates", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -79,7 +79,7 @@ DatasetTemplate.delete <- function(id, env = get_connection()) {
 #' @param ... (optional) Dataset template attributes.
 #'
 #' @examples \dontrun{
-#' DatasetTemplate.create(name="My Dataset Template")
+#' DatasetTemplate.create(name = "My Dataset Template")
 #' }
 #'
 #' @references
@@ -88,7 +88,7 @@ DatasetTemplate.delete <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 DatasetTemplate.create <- function(env = get_connection(), ...) {
-    .request('POST', path='v2/dataset_templates', query=NULL, body=list(...), env=env)
+  .request("POST", path = "v2/dataset_templates", query = NULL, body = list(...), env = env)
 }
 
 
@@ -102,9 +102,9 @@ DatasetTemplate.create <- function(env = get_connection(), ...) {
 #'
 #' @examples \dontrun{
 #' DatasetTemplate.update(
-#'                id="1234",
-#'                name="New Template Name",
-#'               )
+#'   id = "1234",
+#'   name = "New Template Name",
+#' )
 #' }
 #'
 #' @references
@@ -113,11 +113,11 @@ DatasetTemplate.create <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 DatasetTemplate.update <- function(id, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("A dataset template ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset template ID is required.")
+  }
 
-    path <- paste("v2/dataset_templates", paste(id), sep="/")
-    .request('PATCH', path=path, query=NULL, body=list(...), env=env)
+  path <- paste("v2/dataset_templates", paste(id), sep = "/")
+  .request("PATCH", path = path, query = NULL, body = list(...), env = env)
 }
 # nocov end

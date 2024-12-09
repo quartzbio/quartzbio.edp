@@ -16,7 +16,7 @@
 #' @concept  solvebio_api
 #' @export
 BeaconSet.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/beacon_sets", query=list(...), env=env)
+  .request("GET", "v2/beacon_sets", query = list(...), env = env)
 }
 
 #' BeaconSet.retrieve
@@ -36,12 +36,12 @@ BeaconSet.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 BeaconSet.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A beacon set ID is required.")
-    }
+  if (missing(id)) {
+    stop("A beacon set ID is required.")
+  }
 
-    path <- paste("v2/beacon_sets", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/beacon_sets", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -55,9 +55,9 @@ BeaconSet.retrieve <- function(id, env = get_connection()) {
 #'
 #' @examples \dontrun{
 #' BeaconSet.update(
-#'                  id="1234",
-#'                  title="New Beacon Set Title"
-#'                 )
+#'   id = "1234",
+#'   title = "New Beacon Set Title"
+#' )
 #' }
 #'
 #' @references
@@ -66,14 +66,14 @@ BeaconSet.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 BeaconSet.update <- function(id, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("A beacon set ID is required.")
-    }
+  if (missing(id)) {
+    stop("A beacon set ID is required.")
+  }
 
-    params = list(...)
+  params <- list(...)
 
-    path <- paste("v2/beacon_sets", paste(id), sep="/")
-    .request('PATCH', path=path, query=NULL, body=params, env=env)
+  path <- paste("v2/beacon_sets", paste(id), sep = "/")
+  .request("PATCH", path = path, query = NULL, body = params, env = env)
 }
 
 
@@ -94,12 +94,12 @@ BeaconSet.update <- function(id, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 BeaconSet.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A beacon set ID is required.")
-    }
+  if (missing(id)) {
+    stop("A beacon set ID is required.")
+  }
 
-    path <- paste("v2/beacon_sets", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/beacon_sets", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -115,8 +115,8 @@ BeaconSet.delete <- function(id, env = get_connection()) {
 #'
 #' @examples \dontrun{
 #' BeaconSet.create(
-#'                  title="My new beacon set",
-#'                  )
+#'   title = "My new beacon set",
+#' )
 #' }
 #'
 #' @references
@@ -124,22 +124,22 @@ BeaconSet.delete <- function(id, env = get_connection()) {
 #'
 #' @concept  solvebio_api
 #' @export
-BeaconSet.create <- function(title, description, is_shared=FALSE, env = get_connection(), ...) {
-    if (missing(title)) {
-        stop("A title is required.")
-    }
-    if (missing(description)) {
-        description = ""
-    }
+BeaconSet.create <- function(title, description, is_shared = FALSE, env = get_connection(), ...) {
+  if (missing(title)) {
+    stop("A title is required.")
+  }
+  if (missing(description)) {
+    description <- ""
+  }
 
-    params = list(
-                  title=title,
-                  description=description,
-                  is_shared=is_shared,
-                  ...
-                  )
+  params <- list(
+    title = title,
+    description = description,
+    is_shared = is_shared,
+    ...
+  )
 
-    .request('POST', path='v2/beacon_sets', query=NULL, body=params, env=env)
+  .request("POST", path = "v2/beacon_sets", query = NULL, body = params, env = env)
 }
 
 
@@ -155,10 +155,10 @@ BeaconSet.create <- function(title, description, is_shared=FALSE, env = get_conn
 #'
 #' @examples \dontrun{
 #' BeaconSet.query(
-#'                 id="1234",
-#'                 query="BRCA2",
-#'                 entity_type="gene"
-#'                 )
+#'   id = "1234",
+#'   query = "BRCA2",
+#'   entity_type = "gene"
+#' )
 #' }
 #'
 #' @references
@@ -167,24 +167,24 @@ BeaconSet.create <- function(title, description, is_shared=FALSE, env = get_conn
 #' @concept  solvebio_api
 #' @export
 BeaconSet.query <- function(id, query, entity_type, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("A beacon set ID is required.")
-    }
-    if (missing(query)) {
-        stop("A query is required.")
-    }
-    if (missing(entity_type)) {
-        entity_type = NULL
-    }
+  if (missing(id)) {
+    stop("A beacon set ID is required.")
+  }
+  if (missing(query)) {
+    stop("A query is required.")
+  }
+  if (missing(entity_type)) {
+    entity_type <- NULL
+  }
 
-    params = list(
-                  query=query,
-                  entity_type=entity_type,
-                  ...
-                  )
+  params <- list(
+    query = query,
+    entity_type = entity_type,
+    ...
+  )
 
-    path <- paste("v2/beacon_sets", paste(id), "query", sep="/")
+  path <- paste("v2/beacon_sets", paste(id), "query", sep = "/")
 
-    .request('POST', path=path, query=NULL, body=params, env=env)
+  .request("POST", path = path, query = NULL, body = params, env = env)
 }
 # nocov end

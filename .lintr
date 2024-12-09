@@ -1,0 +1,10 @@
+linters: linters_with_defaults(
+  line_length_linter(240) ,
+  object_name_linter = NULL,
+  cyclocomp_linter = NULL,
+  object_usage_linter = NULL, # to remove some day
+  vector_logic_linter = NULL, # to remove some day
+  commented_code_linter = NULL, # to remove some day
+  object_length_linter = NULL, # to remove some day
+  seq_linter = NULL # to remove some day
+  )

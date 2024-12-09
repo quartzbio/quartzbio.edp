@@ -29,10 +29,10 @@ Add a new beacon to an existing beacon set. The beacon set must already exist in
 \examples{
 \dontrun{
 Beacon.create(
-              beacon_set_id="1234",
-              vault_object_id="1234567890",
-              title="My new beacon"
-              )
+  beacon_set_id = "1234",
+  vault_object_id = "1234567890",
+  title = "My new beacon"
+)
 }
 
 }

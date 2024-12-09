@@ -2,23 +2,27 @@
 #' Retrieve the metadata about all application on QuartzBio EDP available to the current user.
 #'
 #' @inheritParams params
-#' @examples \dontrun{ Application.all() }
+#' @examples \dontrun{
+#' Application.all()
+#' }
 #' @concept  solvebio_api
 #' @export
 Application.all <- function(env = get_connection(), ...) {
-  .request('GET', "v2/applications", query=list(...), env = env)  
+  .request("GET", "v2/applications", query = list(...), env = env)
 }
 
 
 #' Retrieve the metadata about a specific application QuartzBio EDP.
 #'
 #' @inheritParams params
-#' @examples \dontrun{  Application.retrieve("abcd1234") }
+#' @examples \dontrun{
+#' Application.retrieve("abcd1234")
+#' }
 #' @concept  solvebio_api
 #' @export
 Application.retrieve <- function(client_id, env = get_connection()) {
-  path <- paste("v2/applications", client_id, sep="/")
-  .request('GET', path = path, env = env)
+  path <- paste("v2/applications", client_id, sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -32,9 +36,9 @@ Application.retrieve <- function(client_id, env = get_connection()) {
 #'
 #' @examples \dontrun{
 #' Application.update(
-#'                    "abcd1234",
-#'                    name="New app name"
-#'                    )
+#'   "abcd1234",
+#'   name = "New app name"
+#' )
 #' }
 #'
 #' @references
@@ -43,14 +47,14 @@ Application.retrieve <- function(client_id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Application.update <- function(client_id, env = get_connection(), ...) {
-    if (missing(client_id)) {
-        stop("A client ID is required.")
-    }
+  if (missing(client_id)) {
+    stop("A client ID is required.")
+  }
 
-    params = list(...)
+  params <- list(...)
 
-    path <- paste("v2/applications", paste(client_id), sep="/")
-    .request('PATCH', path=path, query=NULL, body=params, env=env)
+  path <- paste("v2/applications", paste(client_id), sep = "/")
+  .request("PATCH", path = path, query = NULL, body = params, env = env)
 }
 
 
@@ -71,12 +75,12 @@ Application.update <- function(client_id, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Application.delete <- function(client_id, env = get_connection()) {
-    if (missing(client_id)) {
-        stop("A client ID is required.")
-    }
+  if (missing(client_id)) {
+    stop("A client ID is required.")
+  }
 
-    path <- paste("v2/applications", paste(client_id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/applications", paste(client_id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -91,9 +95,9 @@ Application.delete <- function(client_id, env = get_connection()) {
 #'
 #' @examples \dontrun{
 #' Application.create(
-#'                    name="My new application",
-#'                    redirect_uris="http://localhost:3838/"
-#'                    )
+#'   name = "My new application",
+#'   redirect_uris = "http://localhost:3838/"
+#' )
 #' }
 #'
 #' @references
@@ -102,19 +106,19 @@ Application.delete <- function(client_id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Application.create <- function(name, redirect_uris, env = get_connection(), ...) {
-    if (missing(name)) {
-        stop("A name is required.")
-    }
-    if (missing(redirect_uris)) {
-        stop("A redirect URI is required.")
-    }
+  if (missing(name)) {
+    stop("A name is required.")
+  }
+  if (missing(redirect_uris)) {
+    stop("A redirect URI is required.")
+  }
 
-    params = list(
-                  name=name,
-                  redirect_uris=redirect_uris,
-                  ...
-                  )
+  params <- list(
+    name = name,
+    redirect_uris = redirect_uris,
+    ...
+  )
 
-    .request('POST', path='v2/applications', query=NULL, body=params, env=env)
+  .request("POST", path = "v2/applications", query = NULL, body = params, env = env)
 }
 # nocov end

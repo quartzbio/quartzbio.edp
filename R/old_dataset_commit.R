@@ -16,7 +16,7 @@
 #' @concept  solvebio_api
 #' @export
 DatasetCommit.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/dataset_commits", query=list(...), env=env)
+  .request("GET", "v2/dataset_commits", query = list(...), env = env)
 }
 
 
@@ -28,7 +28,7 @@ DatasetCommit.all <- function(env = get_connection(), ...) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetCommit.retrieve(<ID>)
+#' DatasetCommit.retrieve(12345)
 #' }
 #'
 #' @references
@@ -37,12 +37,12 @@ DatasetCommit.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 DatasetCommit.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset commit ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset commit ID is required.")
+  }
 
-    path <- paste("v2/dataset_commits", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/dataset_commits", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -54,7 +54,7 @@ DatasetCommit.retrieve <- function(id, env = get_connection()) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetCommit.delete(<ID>)
+#' DatasetCommit.delete(12345)
 #' }
 #'
 #' @references
@@ -63,11 +63,11 @@ DatasetCommit.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 DatasetCommit.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset commit ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset commit ID is required.")
+  }
 
-    path <- paste("v2/dataset_commits", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/dataset_commits", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 # nocov end

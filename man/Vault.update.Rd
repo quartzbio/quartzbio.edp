@@ -19,9 +19,9 @@ Updates the attributes of an existing vault.
 \examples{
 \dontrun{
 Vault.update(
-             id="1234",
-             name="New Vault Name",
-            )
+  id = "1234",
+  name = "New Vault Name",
+)
 }
 
 }

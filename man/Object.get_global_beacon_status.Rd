@@ -23,7 +23,7 @@ Retrieves the global beacon status for the specified dataset.
 \examples{
 \dontrun{
 Object.get_global_beacon_status("1234567890")
-Object.get_global_beacon_status("1234567890", raise_on_disabled=TRUE)
+Object.get_global_beacon_status("1234567890", raise_on_disabled = TRUE)
 }
 
 }

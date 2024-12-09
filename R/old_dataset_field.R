@@ -16,7 +16,7 @@
 #' @concept  solvebio_api
 #' @export
 DatasetField.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/dataset_fields", query=list(...), env=env)
+  .request("GET", "v2/dataset_fields", query = list(...), env = env)
 }
 
 
@@ -37,12 +37,12 @@ DatasetField.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 DatasetField.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset field ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset field ID is required.")
+  }
 
-    path <- paste("v2/dataset_fields", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/dataset_fields", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -64,15 +64,15 @@ DatasetField.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 DatasetField.facets <- function(id, env = get_connection(), ...) {
-    if (missing(id) | !(class(id) %in% c("DatasetField", "numeric", "character"))) {
-        stop("A dataset field ID is required.")
-    }
-    if (inherits(id, "DatasetField")) {
-        id <- id$id
-    }
+  if (missing(id) | !(class(id) %in% c("DatasetField", "numeric", "character"))) {
+    stop("A dataset field ID is required.")
+  }
+  if (inherits(id, "DatasetField")) {
+    id <- id$id
+  }
 
-    path <- paste("v2/dataset_fields", paste(id), "facets", sep="/")
-    .request('GET', path=path, query=list(...), env=env)
+  path <- paste("v2/dataset_fields", paste(id), "facets", sep = "/")
+  .request("GET", path = path, query = list(...), env = env)
 }
 
 
@@ -87,7 +87,7 @@ DatasetField.facets <- function(id, env = get_connection(), ...) {
 #' @param ... (optional) Additional dataset import attributes.
 #'
 #' @examples \dontrun{
-#' DatasetField.create(dataset_id=<ID>, name="my_field", title="My Field", data_type="string")
+#' DatasetField.create(dataset_id = 12345, name = "my_field", title = "My Field", data_type = "string")
 #' }
 #'
 #' @references
@@ -95,24 +95,24 @@ DatasetField.facets <- function(id, env = get_connection(), ...) {
 #'
 #' @concept  solvebio_api
 #' @export
-DatasetField.create <- function(dataset_id, name, data_type = 'auto', env = get_connection(), ...) {
-    if (missing(dataset_id)) {
-        stop("A dataset ID is required.")
-    }
-    if (missing(name)) {
-        stop("A field name is required.")
-    }
+DatasetField.create <- function(dataset_id, name, data_type = "auto", env = get_connection(), ...) {
+  if (missing(dataset_id)) {
+    stop("A dataset ID is required.")
+  }
+  if (missing(name)) {
+    stop("A field name is required.")
+  }
 
-    params = list(
-                  dataset_id=dataset_id,
-                  name=name,
-                  data_type=data_type,
-                  ...
-                  )
+  params <- list(
+    dataset_id = dataset_id,
+    name = name,
+    data_type = data_type,
+    ...
+  )
 
-    dataset_field <- .request('POST', path='v2/dataset_fields', query=NULL, body=params, env=env)
+  dataset_field <- .request("POST", path = "v2/dataset_fields", query = NULL, body = params, env = env)
 
-    return(dataset_field)
+  return(dataset_field)
 }
 
 
@@ -126,9 +126,9 @@ DatasetField.create <- function(dataset_id, name, data_type = 'auto', env = get_
 #'
 #' @examples \dontrun{
 #' DatasetField.update(
-#'                     id="1234",
-#'                     title="New Field Title"
-#'                    )
+#'   id = "1234",
+#'   title = "New Field Title"
+#' )
 #' }
 #'
 #' @references
@@ -137,13 +137,13 @@ DatasetField.create <- function(dataset_id, name, data_type = 'auto', env = get_
 #' @concept  solvebio_api
 #' @export
 DatasetField.update <- function(id, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("A dataset field ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset field ID is required.")
+  }
 
-    params = list(...)
+  params <- list(...)
 
-    path <- paste("v2/dataset_fields", paste(id), sep="/")
-    .request('PATCH', path=path, query=NULL, body=params, env=env)
+  path <- paste("v2/dataset_fields", paste(id), sep = "/")
+  .request("PATCH", path = path, query = NULL, body = params, env = env)
 }
 # nocov end

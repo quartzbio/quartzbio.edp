@@ -28,7 +28,7 @@ Create a new dataset field.
 }
 \examples{
 \dontrun{
-DatasetField.create(dataset_id=<ID>, name="my_field", title="My Field", data_type="string")
+DatasetField.create(dataset_id = 12345, name = "my_field", title = "My Field", data_type = "string")
 }
 
 }
