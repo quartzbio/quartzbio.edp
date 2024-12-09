@@ -19,9 +19,9 @@ Updates the attributes of an existing dataset template.
 \examples{
 \dontrun{
 DatasetTemplate.update(
-               id="1234",
-               name="New Template Name",
-              )
+  id = "1234",
+  name = "New Template Name",
+)
 }
 
 }

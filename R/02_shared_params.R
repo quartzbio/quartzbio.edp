@@ -1,18 +1,18 @@
 #' shared roxygen params
-#' 
+#'
 #' @param account_id                an Account ID as a string.
-#' @param alive                     whether to select the Tasks that are alive, i.e. not finished 
-#'                                  or failed. 
+#' @param alive                     whether to select the Tasks that are alive, i.e. not finished
+#'                                  or failed.
 #' @param all                       whether to fetch all data, by iterating if needed.
-#' @param ancestor_id               an object ID of an ancestor, for filtering. 
-#' @param as_data_frame             whether to convert the results as a data frame.     
+#' @param ancestor_id               an object ID of an ancestor, for filtering.
+#' @param as_data_frame             whether to convert the results as a data frame.
 #' @param capacity                  The dataset capacity level (small, medium, or large).
 #' @param client_id                 the client ID for the application.
 #' @param commit_mode               There are four commit modes that can be selected depending on the scenario:
-#'                                   append (default), overwrite, upsert, and delete. 
+#'                                   append (default), overwrite, upsert, and delete.
 #' @param conn                      a EDP connection object (as a named list or environment)
 #' @param dataset_id                a Dataset ID as a string
-#' @param data_type                 the data type. one of: 
+#' @param data_type                 the data type. one of:
 #' * auto (the default)
 #' * boolean - Either True, False, or null
 #' * date - A string in ISO 8601 format, for example: `2017-03-29T14:52:01`
@@ -35,8 +35,8 @@
 #' * variant - A genomic variant (GRCH38-7-55181378-55181378-T)
 #' @param env                       Custom client environment.
 #' @param exclude_fields            A list of fields to exclude in the results, as a character vector.
-#' @param exclude_group_id          a group ID to exclude. 
-#' @param expression                EDP xpressions are Python-like formulas that can be used to pull 
+#' @param exclude_group_id          a group ID to exclude.
+#' @param expression                EDP xpressions are Python-like formulas that can be used to pull
 #'                                  data from datasets, calculate statistics, or run advanced algorithms.
 #' @param facets                    A valid facets objects.
 #' @param fields                    The fields to add.
@@ -45,11 +45,11 @@
 #' @param filename                  an Object filename, without the parent folder (e.g. "foo.csv")
 #' @param filters                   a filter expression as a JSON string.
 #' @param full_path                 an Object full path, including the account, vault and path.
-#' @param glob                      a glob (full path with wildcard characters) which searches 
+#' @param glob                      a glob (full path with wildcard characters) which searches
 #'                                  objects for matching paths (case-insensitive).
 #' @param include_errors            whether to include errors in the output.
 #' @param is_list                   whether the result is expected to be a list.
-#' @param limit                     The maximum number of elements to fetch, as an integer. 
+#' @param limit                     The maximum number of elements to fetch, as an integer.
 #'                                  See also `page`.
 #' @param local_path                the path of a local file.
 #' @param md5                       a MD5 fingerprint, as a string.
@@ -77,15 +77,15 @@
 #' )
 #' @param storage_class             The Storage class of the vault `('Standard', 'Standard-IA',
 #'                                   'Essential', 'Temporary', 'Performance', 'Archive')` as a string.
-#' @param sync                      whether to proceed in synchronous mode, i.e to wait for all 
+#' @param sync                      whether to proceed in synchronous mode, i.e to wait for all
 #'                                  sub tasks to finish before returning.
 #' @param tag                       a single tag as a string.
 #' @param tags                      a list of tags as a character vector.
-#' @param target_fields             A list of valid dataset fields to create or override in the import, 
+#' @param target_fields             A list of valid dataset fields to create or override in the import,
 #'                                  as a character vector.
 #' @param task_id                   an (ECS) Task ID as a string.
 #' @param url_template              A URL template with one or more "value" sections that will be
-#'                                  interpolated with the field value and displayed as a link 
+#'                                  interpolated with the field value and displayed as a link
 #'                                  in the dataset table.
 #' @param user_id                   a user id (or User object) as a string
 #' @param vault_id                  a Vault ID as a string (e.g. "19").
@@ -95,14 +95,14 @@
 #' @param vault_type                the type of vault ('user', 'general') as a string
 #' @param workers                   in parallel mode, the number of concurrent requests to make
 #' @param ...                       Additional query parameters, passed to .request().
-#' 
-#' @references \url{https://docs.solvebio.com/} 
-#' 
+#'
+#' @references \url{https://docs.solvebio.com/}
+#'
 #' @name params
 NULL
 
 #' shared old roxygen params
-#' 
+#'
 #' @param client_id                 The client ID for the application.
 #' @param conn                      a EDP connection object (as a named list or environment)
 #' @param data                      TODO
@@ -115,12 +115,12 @@ NULL
 #' @param raw                       whether to return the raw response.
 #' @param records                   The data to annotate as a data frame.
 #' @param ...                       Additional query parameters, passed to .request().
-#' 
-#' @references \url{https://docs.solvebio.com/} 
-#' 
+#'
+#' @references \url{https://docs.solvebio.com/}
+#'
 #' @name old_params
 NULL
 
 
-TASK_STATUS <- c('running', 'queued', 'pending', 'completed', 'failed')
+TASK_STATUS <- c("running", "queued", "pending", "completed", "failed")
 TASK_STATUS_ALIVE <- c("pending", "queued", "running")

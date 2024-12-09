@@ -26,9 +26,9 @@ Wraps an existing Shiny server in an OAuth2 flow.
 \examples{
 \dontrun{
 protectedServer(
-                server=server,
-                client_id="abcd1234"
-                )
+  server = server,
+  client_id = "abcd1234"
+)
 }
 
 }

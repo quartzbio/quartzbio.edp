@@ -1,4 +1,3 @@
-.*
 .DS_Store
 .Rproj.user
 .Rhistory
@@ -15,4 +14,4 @@
 .qbrocker_bash_history
 man/.roxygen.md5
 docs/
-
+coverage.xml

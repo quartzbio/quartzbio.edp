@@ -29,8 +29,8 @@ Create a new beacon set.
 \examples{
 \dontrun{
 BeaconSet.create(
-                 title="My new beacon set",
-                 )
+  title = "My new beacon set",
+)
 }
 
 }

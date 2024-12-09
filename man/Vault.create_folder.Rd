@@ -22,7 +22,7 @@ Create a new folder in a vault.
 }
 \examples{
 \dontrun{
-vault = Vault.get_personal_vault()
+vault <- Vault.get_personal_vault()
 Vault.create_folder(vault$id, "/My Folder")
 }
 

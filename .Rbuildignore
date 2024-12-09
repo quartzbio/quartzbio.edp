@@ -17,3 +17,8 @@ examples
 ^docs$
 ^pkgdown$
 ^LICENSE\.md$
+^\.gitlab-ci\.yml$
+^ci$
+^\.lintr$
+^public$
+^coverage\.xml$

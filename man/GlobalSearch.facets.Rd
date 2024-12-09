@@ -18,7 +18,7 @@ Performs a Global Search based on provided filters, entities, queries, and retur
 }
 \examples{
 \dontrun{
-GlobalSearch.facets(facets="study")
+GlobalSearch.facets(facets = "study")
 }
 
 }

@@ -1,11 +1,13 @@
-
-
-offset_to_page <- function(offset, size) { ceiling(offset / size) + 1 }
-page_to_offset <- function(page, size) {  (page - 1) * size }
+offset_to_page <- function(offset, size) {
+  ceiling(offset / size) + 1
+}
+page_to_offset <- function(page, size) {
+  (page - 1) * size
+}
 
 
 #' fetch all the pages for a possibly incomplete paginated API result
-#' 
+#'
 #' @param x   an API result
 #' @param verbose     whether to output debugging information, mostly for development
 #' @param ... passed to future.apply::future_lapply()
@@ -20,36 +22,36 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
     on.exit(future::plan(old_plan), add = TRUE)
   }
 
-  pagination <- attr(x, 'pagination') %IF_EMPTY_THEN% return(NULL)
+  pagination <- attr(x, "pagination") %IF_EMPTY_THEN% return(NULL)
   page_index <- pagination$page_index
 
   pages <- compute_next_pages(page_index)
-  if (!length(pages)) return(x)
+  if (!length(pages)) {
+    return(x)
+  }
 
   p <- progressr::progressor(along = pages)
 
   fun <- function(page) {
-
     # this code is for multisession on dev when quartzbio.edp is not installed
     # it is not testable with covr so we exclude it from coverage
     # nocov start
-    if (!require('quartzbio.edp', quietly = TRUE)) {
-     
+    if (!require("quartzbio.edp", quietly = TRUE)) {
       # # we need to load quartzbio.edp in multisession plans
       # # the problem is that in dev it is not installed so we have to load it
       # # from source using qbdev
       REQUIRE <- require
-      stopifnot(REQUIRE('qbdev'), 'the qbdev R package was not found in future_lapply()')
-      cat('loading quartzbio.edp...\n')
-      load_pkg <- utils::getFromNamespace('load_pkg', 'qbdev')
-      load_pkg('quartzbio.edp')
+      stopifnot(REQUIRE("qbdev"), "the qbdev R package was not found in future_lapply()")
+      cat("loading quartzbio.edp...\n")
+      load_pkg <- utils::getFromNamespace("load_pkg", "qbdev")
+      load_pkg("quartzbio.edp")
     }
     # nocov end
-    
-    p(message = sprintf('page=%s', page))
 
-    request_page <- utils::getFromNamespace('request_page', 'quartzbio.edp')
-    
+    p(message = sprintf("page=%s", page))
+
+    request_page <- utils::getFromNamespace("request_page", "quartzbio.edp")
+
     request_page(model, pagination, page, verbose = verbose)
   }
 
@@ -57,16 +59,17 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
 
   # if in dev internal mode, qbdev must be loaded by future_lapply()
   future_packages <- NULL
-  if (isNamespaceLoaded('qbdev')) future_packages <- 'qbdev'
+  if (isNamespaceLoaded("qbdev")) future_packages <- "qbdev"
 
-  lst <- future.apply::future_lapply(pages, fun, 
+  lst <- future.apply::future_lapply(pages, fun,
     future.seed = NULL,
     future.packages = future_packages,
     future.globals = globals,
-     ...)
+    ...
+  )
 
   lst <- c(list(x), lst)
-  verbose && msg('got all results.')
+  verbose && msg("got all results.")
   # how to bind results ?
   # current naive implementation
   res <- NULL
@@ -76,13 +79,15 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
     if (.is_error(res)) {
       # errors may happen for example if the JSON data type vary across pages
       # cf https://precisionformedicine.atlassian.net/browse/SBP-536
-      warning(.safe_sprintf('got error using dplyr::bind_rows() to aggregate the paginated results: "%s"', 
-        .get_error_msg(res)))
+      warning(.safe_sprintf(
+        'got error using dplyr::bind_rows() to aggregate the paginated results: "%s"',
+        .get_error_msg(res)
+      ))
 
-      msg('got error using dplyr::bind_rows() to aggregate the paginated results, retrying with rbind.data.frame()...')
+      msg("got error using dplyr::bind_rows() to aggregate the paginated results, retrying with rbind.data.frame()...")
       tt <- system.time(res <- do.call(rbind.data.frame, lst), FALSE)
     }
-    verbose && msg('took %s to bind the data frames', tt[3])
+    verbose && msg("took %s to bind the data frames", tt[3])
   } else {
     res <- do.call(c, lst)
     # apply class from x
@@ -90,18 +95,19 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
   }
 
   # remove obsolete attributes
-  attr(res, 'pagination')  <- attr(res, 'offset') <- attr(res, 'page')  <- attr(res, 'took') <- NULL
-  
+  attr(res, "pagination") <- attr(res, "offset") <- attr(res, "page") <- attr(res, "took") <- NULL
+
   res
 }
 
 fetch_page <- function(x, delta) {
-  pagination <- attr(x, 'pagination') %IF_EMPTY_THEN% return(NULL)
+  pagination <- attr(x, "pagination") %IF_EMPTY_THEN% return(NULL)
 
   page_index <- pagination$page_index
   index <- page_index$index + delta
-  if (index < 1 || index > page_index$nb) # out of range
+  if (index < 1 || index > page_index$nb) { # out of range
     return(NULL)
+  }
 
   res <- request_page(x, pagination, index)
 
@@ -109,18 +115,18 @@ fetch_page <- function(x, delta) {
 }
 
 #' fetch the next page of data if any
-#' 
+#'
 #' @inheritParams fetch_all
-#' @return the next page of data, or NULL if none 
+#' @return the next page of data, or NULL if none
 #' @export
 fetch_next <- function(x) {
   fetch_page(x, 1L)
 }
 
 #' fetch the previous page of data if any
-#' 
+#'
 #' @inheritParams fetch_all
-#' @return the previous page of data, or NULL if none 
+#' @return the previous page of data, or NULL if none
 #' @export
 fetch_prev <- function(x) {
   fetch_page(x, -1L)

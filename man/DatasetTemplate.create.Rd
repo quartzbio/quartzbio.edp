@@ -16,7 +16,7 @@ Create a QuartzBio EDP dataset template.
 }
 \examples{
 \dontrun{
-DatasetTemplate.create(name="My Dataset Template")
+DatasetTemplate.create(name = "My Dataset Template")
 }
 
 }

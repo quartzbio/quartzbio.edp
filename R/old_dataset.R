@@ -14,7 +14,7 @@
 #' @concept  solvebio_api
 #' @export
 Dataset.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/datasets", query=list(...), env=env)
+  .request("GET", "v2/datasets", query = list(...), env = env)
 }
 
 
@@ -35,12 +35,12 @@ Dataset.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Dataset.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    path <- paste("v2/datasets", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/datasets", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -61,12 +61,12 @@ Dataset.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Dataset.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    path <- paste("v2/datasets", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/datasets", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -87,12 +87,12 @@ Dataset.delete <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Dataset.template <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    path <- paste("v2/datasets", paste(id), "template", sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/datasets", paste(id), "template", sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -113,37 +113,41 @@ Dataset.template <- function(id, env = get_connection()) {
 #'
 #' @concept  solvebio_api
 #' @export
-Dataset.data <- function(id, filters,  env = get_connection(), ...) {
-    if (missing(id) || !(class(id) %in% c("Dataset", "numeric", "integer", "character"))) {
-        stop("A dataset ID (or object) is required.")
+Dataset.data <- function(id, filters, env = get_connection(), ...) {
+  if (missing(id) || !(class(id) %in% c("Dataset", "numeric", "integer", "character"))) {
+    stop("A dataset ID (or object) is required.")
+  }
+  if (inherits(id, "Dataset") || inherits(id, "Object")) {
+    id <- id$id
+  }
+  body <- list(...)
+  # Filters can be passed as a JSON string
+  if (!missing(filters) && !is.null(filters) && length(filters) > 0) {
+    if (inherits(filters, "character")) {
+      # Convert JSON string to an R structure
+      filters <- jsonlite::fromJSON(filters,
+        simplifyVector = FALSE,
+        simplifyDataFrame = TRUE,
+        simplifyMatrix = FALSE
+      )
     }
-    if (inherits(id, "Dataset") || inherits(id, "Object")) {
-        id <- id$id
+    # Add filters to request body
+    body <- modifyList(body, list(filters = filters))
+  }
+
+  path <- paste("v2/datasets", paste(id), "data", sep = "/")
+
+  tryCatch(
+    {
+      res <- .request("POST", path = path, body = body, env = env)
+      res <- formatEDPQueryResponse(res)
+
+      return(res)
+    },
+    error = function(e) {
+      cat(sprintf("Query failed: %s\n", e$message))
     }
-    body = list(...)
-    # Filters can be passed as a JSON string
-    if (!missing(filters) && !is.null(filters) && length(filters) > 0) {
-        if (inherits(filters, "character")) {
-            # Convert JSON string to an R structure
-            filters <- jsonlite::fromJSON(filters,
-                                          simplifyVector = FALSE,
-                                          simplifyDataFrame = TRUE,
-                                          simplifyMatrix = FALSE)
-        }
-        # Add filters to request body
-        body = modifyList(body, list(filters=filters))
-    }
-
-    path <- paste("v2/datasets", paste(id), "data", sep="/")
-
-    tryCatch({
-        res <- .request('POST', path=path, body=body, env=env)
-        res <- formatEDPQueryResponse(res)
-
-        return(res)
-    }, error = function(e) {
-        cat(sprintf("Query failed: %s\n", e$message))
-    })
+  )
 }
 
 
@@ -159,7 +163,7 @@ Dataset.data <- function(id, filters,  env = get_connection(), ...) {
 #' @param ... (optional) Additional query parameters (e.g. filters, limit, offset).
 #'
 #' @examples \dontrun{
-#' Dataset.query("12345678790", paginate=TRUE)
+#' Dataset.query("12345678790", paginate = TRUE)
 #' }
 #'
 #' @references
@@ -167,36 +171,38 @@ Dataset.data <- function(id, filters,  env = get_connection(), ...) {
 #'
 #' @concept  solvebio_api
 #' @export
-Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = get_connection(), ...) {
-    params <- list(...)
-    params$id <- id
-    params$env <- env
+Dataset.query <- function(id, paginate = FALSE, use_field_titles = TRUE, env = get_connection(), ...) {
+  params <- list(...)
+  params$id <- id
+  params$env <- env
 
-    # Retrieve the first page of results
+  # Retrieve the first page of results
+  response <- do.call(Dataset.data, params)
+  df <- response$result
+  offset <- response$offset
+
+  if (response$total > 100000 && isTRUE(paginate)) {
+    warning(paste("This query will retrieve ", response$total, " records, which may take some time..."), call. = FALSE)
+  }
+
+  # Continue to make requests for data if pagination is enabled and there are more records
+  while (isTRUE(paginate) && !is.null(offset)) {
+    params$offset <- offset
     response <- do.call(Dataset.data, params)
-    df <- response$result
+    df <- jsonlite::rbind_pages(list(df, response$results))
     offset <- response$offset
+  }
 
-    if (response$total > 100000 && isTRUE(paginate)) {
-        warning(paste("This query will retrieve ", response$total, " records, which may take some time..."), call. = FALSE)
-    }
+  if (!isTRUE(paginate) && !is.null(offset)) {
+    warning(paste("This call returned only the first page of records. To retrieve more pages automatically,",
+      "please set paginate=TRUE when calling Dataset.query().",
+      call. = FALSE
+    ))
+  }
 
-    # Continue to make requests for data if pagination is enabled and there are more records
-    while (isTRUE(paginate) && !is.null(offset)) {
-        params$offset <- offset
-        response <- do.call(Dataset.data, params)
-        df <- jsonlite::rbind_pages(list(df, response$results))
-        offset <- response$offset
-    }
+  df <- formatQueryColumns(id, env, df, use_field_titles)
 
-    if (!isTRUE(paginate) && !is.null(offset)) {
-        warning(paste("This call returned only the first page of records. To retrieve more pages automatically,",
-                      "please set paginate=TRUE when calling Dataset.query().", call. = FALSE))
-    }
-
-    df <- formatQueryColumns(id, env, df, use_field_titles)
-
-    return(df)
+  return(df)
 }
 
 
@@ -218,20 +224,20 @@ Dataset.query <- function(id, paginate=FALSE, use_field_titles=TRUE, env = get_c
 #' @concept  solvebio_api
 #' @export
 Dataset.fields <- function(id, env = get_connection(), ...) {
-    if (inherits(id, "numeric")) {
-        warning("Please use string IDs instead of numeric IDs.")
-    }
+  if (inherits(id, "numeric")) {
+    warning("Please use string IDs instead of numeric IDs.")
+  }
 
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    if (inherits(id, "Dataset") || inherits(id, "Object")) {
-        id <- id$id
-    }
+  if (inherits(id, "Dataset") || inherits(id, "Object")) {
+    id <- id$id
+  }
 
-    path <- paste("v2/datasets", paste(id), "fields", sep="/")
-    .request('GET', path=path, query=list(...), env=env)
+  path <- paste("v2/datasets", paste(id), "fields", sep = "/")
+  .request("GET", path = path, query = list(...), env = env)
 }
 
 
@@ -254,30 +260,31 @@ Dataset.fields <- function(id, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Dataset.facets <- function(id, facets, env = get_connection(), ...) {
-    if (missing(facets) || is.null(facets) || facets == "") {
-        stop("A list of one or more facets is required.")
+  if (missing(facets) || is.null(facets) || facets == "") {
+    stop("A list of one or more facets is required.")
+  }
+
+  if (inherits(facets, "character")) {
+    if (grepl("[[{]", facets)) {
+      # If it looks like JSON, try to convert to an R structure
+      facets <- jsonlite::fromJSON(facets,
+        simplifyVector = FALSE,
+        simplifyDataFrame = TRUE,
+        simplifyMatrix = FALSE
+      )
     }
+  }
 
-    if (inherits(facets, "character")) {
-        if (grepl("[[{]", facets)) {
-            # If it looks like JSON, try to convert to an R structure
-            facets <- jsonlite::fromJSON(facets,
-                                         simplifyVector = FALSE,
-                                         simplifyDataFrame = TRUE,
-                                         simplifyMatrix = FALSE)
-        }
-    }
+  params <- list(...)
+  # Facet queries should not return results
+  params$limit <- 0
+  params$id <- id
+  params$env <- env
+  params <- modifyList(params, list(facets = facets))
 
-    params <- list(...)
-    # Facet queries should not return results
-    params$limit <- 0
-    params$id <- id
-    params$env <- env
-    params <- modifyList(params, list(facets=facets))
+  response <- do.call(Dataset.data, params)
 
-    response <- do.call(Dataset.data, params)
-
-    return(response$facets)
+  return(response$facets)
 }
 
 
@@ -291,7 +298,7 @@ Dataset.facets <- function(id, facets, env = get_connection(), ...) {
 #' @examples \dontrun{
 #' dataset <- Dataset.get_by_full_path("solvebio:public:/ClinVar/3.7.4-2017-01-30/Variants-GRCh37")
 #' Dataset.count(dataset)
-#' Dataset.count(dataset, filters='[["gene_symbol", "BRCA2"]]')
+#' Dataset.count(dataset, filters = '[["gene_symbol", "BRCA2"]]')
 #' }
 #'
 #' @references
@@ -300,15 +307,15 @@ Dataset.facets <- function(id, facets, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Dataset.count <- function(id, env = get_connection(), ...) {
-    params <- list(...)
-    # Count queries should not return results
-    params$limit <- 0
-    params$id <- id
-    params$env <- env
+  params <- list(...)
+  # Count queries should not return results
+  params$limit <- 0
+  params$id <- id
+  params$env <- env
 
-    response <- do.call(Dataset.data, params)
+  response <- do.call(Dataset.data, params)
 
-    return(response$total)
+  return(response$total)
 }
 
 
@@ -322,7 +329,7 @@ Dataset.count <- function(id, env = get_connection(), ...) {
 #' @param ... (optional) Additional dataset attributes.
 #'
 #' @examples \dontrun{
-#' Dataset.create(vault_id=vault$id, vault_parent_object_id=NULL, name="My Dataset")
+#' Dataset.create(vault_id = vault$id, vault_parent_object_id = NULL, name = "My Dataset")
 #' }
 #'
 #' @references
@@ -331,27 +338,27 @@ Dataset.count <- function(id, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_connection(), ...) {
-    if (missing(vault_id)) {
-        stop("A vault ID is required.")
-    }
-    if (missing(name)) {
-        stop("A dataset name is required")
-    }
-    if (missing(vault_parent_object_id)) {
-        # Use the root of the vault (/)
-        vault_parent_object_id = NULL
-    }
+  if (missing(vault_id)) {
+    stop("A vault ID is required.")
+  }
+  if (missing(name)) {
+    stop("A dataset name is required")
+  }
+  if (missing(vault_parent_object_id)) {
+    # Use the root of the vault (/)
+    vault_parent_object_id <- NULL
+  }
 
-    params = list(
-                  vault_id=vault_id,
-                  vault_parent_object_id=vault_parent_object_id,
-                  name=name,
-                  ...
-                  )
+  params <- list(
+    vault_id = vault_id,
+    vault_parent_object_id = vault_parent_object_id,
+    name = name,
+    ...
+  )
 
-    dataset <- .request('POST', path='v2/datasets', query=NULL, body=params, env=env)
+  dataset <- .request("POST", path = "v2/datasets", query = NULL, body = params, env = env)
 
-    return(dataset)
+  return(dataset)
 }
 
 
@@ -365,9 +372,9 @@ Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_con
 #'
 #' @examples \dontrun{
 #' Dataset.update(
-#'                id="1234",
-#'                name="New Dataset Name",
-#'               )
+#'   id = "1234",
+#'   name = "New Dataset Name",
+#' )
 #' }
 #'
 #' @references
@@ -376,14 +383,14 @@ Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_con
 #' @concept  solvebio_api
 #' @export
 Dataset.update <- function(id, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    params = list(...)
+  params <- list(...)
 
-    path <- paste("v2/datasets", paste(id), sep="/")
-    .request('PATCH', path=path, query=NULL, body=params, env=env)
+  path <- paste("v2/datasets", paste(id), sep = "/")
+  .request("PATCH", path = path, query = NULL, body = params, env = env)
 }
 
 
@@ -404,10 +411,10 @@ Dataset.update <- function(id, env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
-    object = Object.get_by_full_path(full_path, env=env)
+  object <- Object.get_by_full_path(full_path, env = env)
 
-    dataset = do.call(Dataset.retrieve, list(id=object$dataset_id, env=env))
-    return(dataset)
+  dataset <- do.call(Dataset.retrieve, list(id = object$dataset_id, env = env))
+  return(dataset)
 }
 
 
@@ -429,64 +436,66 @@ Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
-    dataset = NULL
-    tryCatch({
-        dataset <- Dataset.get_by_full_path(full_path=full_path, env=env)
-        if (!is.null(dataset)) {
-            return(dataset)
-        }
-    }, error = function(e) {})
+  dataset <- NULL
+  tryCatch(
+    {
+      dataset <- Dataset.get_by_full_path(full_path = full_path, env = env)
+      if (!is.null(dataset)) {
+        return(dataset)
+      }
+    },
+    error = function(e) {}
+  )
 
-    vault <- Vault.get_by_full_path(full_path, env=env)
-    if (is.null(vault)) {
-        stop(sprintf("Invalid vault in full path: %s\n", full_path))
+  vault <- Vault.get_by_full_path(full_path, env = env)
+  if (is.null(vault)) {
+    stop(sprintf("Invalid vault in full path: %s\n", full_path))
+  }
+
+  # Replace double slashes
+  full_path <- sub("//+", "/", full_path)
+
+  # Extract the object path (everything after the first forward slash)
+  object_path <- sub(".*?/", "/", full_path)
+  if (object_path == full_path) {
+    stop(sprintf("Invalid full path: must contain at least one forward slash"))
+  }
+
+  # Remove the filename from the path to get the parent directory
+  parts <- strsplit(object_path, split = "/", fixed = TRUE)[[1]]
+  dataset_name <- parts[[length(parts)]]
+  if (is.null(dataset_name) || dataset_name == "") {
+    stop(sprintf("Dataset name cannot be blank"))
+  }
+  dirs <- utils::head(parts, -1)
+  parent_path <- paste(dirs, collapse = "/")
+
+  if (parent_path == "") {
+    parent_object_id <- NULL
+  } else {
+    # Get or create the parent folder
+    parent_object <- Object.get_by_path(path = parent_path, vault_id = vault$id, env = env)
+    if (is.null(parent_object) || (is.data.frame(parent_object) && nrow(parent_object) == 0)) {
+      parent_object <- Vault.create_folder(
+        id = vault$id,
+        path = parent_path,
+        recursive = TRUE,
+        env = env
+      )
     }
+    parent_object_id <- parent_object$id
+  }
 
-    # Replace double slashes
-    full_path <- sub('//+', '/', full_path)
+  # Create the dataset under parent_object_id
+  dataset <- Dataset.create(
+    vault_id = vault$id,
+    vault_parent_object_id = parent_object_id,
+    name = dataset_name,
+    env = env,
+    ...
+  )
 
-    # Extract the object path (everything after the first forward slash)
-    object_path <- sub(".*?/", "/", full_path)
-    if (object_path == full_path) {
-        stop(sprintf("Invalid full path: must contain at least one forward slash"))
-    }
-
-    # Remove the filename from the path to get the parent directory
-    parts <- strsplit(object_path, split='/', fixed=TRUE)[[1]]
-    dataset_name = parts[[length(parts)]]
-    if (is.null(dataset_name) || dataset_name == "") {
-        stop(sprintf("Dataset name cannot be blank"))
-    }
-    dirs = utils::head(parts, -1)
-    parent_path = paste(dirs, collapse="/")
-
-    if (parent_path == "") {
-        parent_object_id = NULL
-    }
-    else {
-        # Get or create the parent folder
-        parent_object = Object.get_by_path(path=parent_path, vault_id=vault$id, env=env)
-        if (is.null(parent_object) || (is.data.frame(parent_object) && nrow(parent_object) == 0)) {
-            parent_object = Vault.create_folder(
-                                                id=vault$id,
-                                                path=parent_path,
-                                                recursive=TRUE,
-                                                env=env
-                                                )
-        }
-        parent_object_id = parent_object$id
-    }
-
-    # Create the dataset under parent_object_id
-    dataset = Dataset.create(
-                             vault_id=vault$id,
-                             vault_parent_object_id=parent_object_id,
-                             name=dataset_name,
-                             env=env,
-                             ...
-                             )
-
-    return(dataset)
+  return(dataset)
 }
 
 
@@ -507,25 +516,25 @@ Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection()
 #'
 #' @concept  solvebio_api
 #' @export
-Dataset.activity <- function(id, follow=TRUE, env = get_connection()) {
-    status <- paste('running', 'queued', 'pending', sep=',')
-    tasks <- Task.all(target_object_id=id, status=status, env=env)$data
+Dataset.activity <- function(id, follow = TRUE, env = get_connection()) {
+  status <- paste("running", "queued", "pending", sep = ",")
+  tasks <- Task.all(target_object_id = id, status = status, env = env)$data
 
-    if (!follow) {
-        return(tasks)
+  if (!follow) {
+    return(tasks)
+  }
+
+  while (!is.null(nrow(tasks)) && nrow(tasks) > 0) {
+    cat(paste("Following", nrow(tasks), "task(s)...\n", sep = " "))
+    for (i in 1:length(tasks$id)) {
+      Task.follow(tasks$id[i])
     }
 
-    while (!is.null(nrow(tasks)) && nrow(tasks) > 0) {
-        cat(paste("Following", nrow(tasks), "task(s)...\n", sep=" "))
-        for(i in 1:length(tasks$id)){
-            Task.follow(tasks$id[i])
-        }
+    Sys.sleep(4)
+    tasks <- Task.all(target_object_id = id, status = status, env = env)$data
+  }
 
-        Sys.sleep(4)
-        tasks <- Task.all(target_object_id=id, status=status, env=env)$data
-    }
-
-    cat("No active tasks found.\n")
+  cat("No active tasks found.\n")
 }
 
 #' Dataset.get_global_beacon_status
@@ -546,11 +555,11 @@ Dataset.activity <- function(id, follow=TRUE, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    return(Object.get_global_beacon_status(id, raise_on_disabled=raise_on_disabled, env=env))
+  return(Object.get_global_beacon_status(id, raise_on_disabled = raise_on_disabled, env = env))
 }
 
 
@@ -571,11 +580,11 @@ Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env 
 #' @concept  solvebio_api
 #' @export
 Dataset.enable_global_beacon <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    return(Object.enable_global_beacon(id, env=env))
+  return(Object.enable_global_beacon(id, env = env))
 }
 
 
@@ -596,11 +605,11 @@ Dataset.enable_global_beacon <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Dataset.disable_global_beacon <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset ID is required.")
+  }
 
-    return(Object.disable_global_beacon(id, env=env))
+  return(Object.disable_global_beacon(id, env = env))
 }
 
 

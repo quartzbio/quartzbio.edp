@@ -16,7 +16,7 @@
 #' @concept  solvebio_api
 #' @export
 DatasetImport.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/dataset_imports", query=list(...), env=env)
+  .request("GET", "v2/dataset_imports", query = list(...), env = env)
 }
 
 
@@ -28,7 +28,7 @@ DatasetImport.all <- function(env = get_connection(), ...) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetImport.retrieve(<ID>)
+#' DatasetImport.retrieve(12345)
 #' }
 #'
 #' @references
@@ -37,12 +37,12 @@ DatasetImport.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 DatasetImport.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset import ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset import ID is required.")
+  }
 
-    path <- paste("v2/dataset_imports", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/dataset_imports", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -54,7 +54,7 @@ DatasetImport.retrieve <- function(id, env = get_connection()) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetImport.delete(<ID>)
+#' DatasetImport.delete(12345)
 #' }
 #'
 #' @references
@@ -63,12 +63,12 @@ DatasetImport.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 DatasetImport.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset import ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset import ID is required.")
+  }
 
-    path <- paste("v2/dataset_imports", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/dataset_imports", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -82,7 +82,7 @@ DatasetImport.delete <- function(id, env = get_connection()) {
 #' @param ... (optional) Additional dataset import attributes.
 #'
 #' @examples \dontrun{
-#' DatasetImport.create(dataset_id=<ID>, upload_id=<ID>)
+#' DatasetImport.create(dataset_id = 12345, upload_id = 12345)
 #' }
 #'
 #' @references
@@ -90,23 +90,22 @@ DatasetImport.delete <- function(id, env = get_connection()) {
 #'
 #' @concept  solvebio_api
 #' @export
-DatasetImport.create <- function(
-                                 dataset_id,
-                                 commit_mode = 'append',
+DatasetImport.create <- function(dataset_id,
+                                 commit_mode = "append",
                                  env = get_connection(),
                                  ...) {
-    if (missing(dataset_id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(dataset_id)) {
+    stop("A dataset ID is required.")
+  }
 
-    params = list(
-                  dataset_id=dataset_id,
-                  commit_mode=commit_mode,
-                  ...
-                  )
+  params <- list(
+    dataset_id = dataset_id,
+    commit_mode = commit_mode,
+    ...
+  )
 
-    dataset_import <- .request('POST', path='v2/dataset_imports', query=NULL, body=params, env=env)
+  dataset_import <- .request("POST", path = "v2/dataset_imports", query = NULL, body = params, env = env)
 
-    return(dataset_import)
+  return(dataset_import)
 }
 # nocov end

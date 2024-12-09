@@ -16,7 +16,7 @@
 #' @concept  solvebio_api
 #' @export
 Task.all <- function(env = get_connection(), ...) {
-    .request("GET", "v2/tasks", query = list(...), env = env)
+  .request("GET", "v2/tasks", query = list(...), env = env)
 }
 
 #' Task.retrieve
@@ -36,12 +36,12 @@ Task.all <- function(env = get_connection(), ...) {
 #' @concept  solvebio_api
 #' @export
 Task.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A task ID is required.")
-    }
+  if (missing(id)) {
+    stop("A task ID is required.")
+  }
 
-    path <- paste("v2/tasks", paste(id), sep = "/")
-    .request("GET", path = path, env = env)
+  path <- paste("v2/tasks", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -64,11 +64,12 @@ Task.retrieve <- function(id, env = get_connection()) {
 #' @concept  solvebio_api
 #' @export
 Task.follow <- function(id, env = get_connection(), interval = 2) {
+  imp <- Task.retrieve(id, env)
+  while (imp$status == "pending" || imp$status == "queued" || imp$status == "running") {
     imp <- Task.retrieve(id, env)
-    while (imp$status == "pending" || imp$status == "queued" || imp$status == "running") {
-        imp <- Task.retrieve(id, env)
-        cat(paste("Task", id, "status:", imp$status, "\n", sep = " "))
-        Sys.sleep(interval)
-    }
-    return(imp)
-}# nocov end
+    cat(paste("Task", id, "status:", imp$status, "\n", sep = " "))
+    Sys.sleep(interval)
+  }
+  return(imp)
+}
+# nocov end

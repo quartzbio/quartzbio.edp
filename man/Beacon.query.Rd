@@ -23,10 +23,10 @@ Query an individual beacon.
 \examples{
 \dontrun{
 Beacon.query(
-             id="1234",
-             query="BRCA2",
-             entity_type="gene"
-             )
+  id = "1234",
+  query = "BRCA2",
+  entity_type = "gene"
+)
 }
 
 }

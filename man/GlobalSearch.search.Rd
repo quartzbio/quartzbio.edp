@@ -22,9 +22,10 @@ Returns a single page of results otherwise (default).
 # No filters applied
 GlobalSearch.search()
 
-#Global Beacon search
+# Global Beacon search
 GlobalSearch.search(entities = '[["gene","BRCA2"]]')
 
+# #Type filter (only vaults)
 GlobalSearch.search(filters = '[{"and":[["type__in",["vault"]]]}]')
 
 # Advanced search

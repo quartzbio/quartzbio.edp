@@ -1,5 +1,3 @@
 edpdf <- function(x) {
-  bless(x, 'edpdf', 'edp') 
+  bless(x, "edpdf", "edp")
 }
-
-

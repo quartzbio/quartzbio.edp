@@ -32,11 +32,11 @@ Create a QuartzBio EDP object.
 \examples{
 \dontrun{
 Object.create(
-              vault_id="1234567890",
-              parent_object_id=NULL,
-              object_type="folder",
-              filename="My Folder"
-              )
+  vault_id = "1234567890",
+  parent_object_id = NULL,
+  object_type = "folder",
+  filename = "My Folder"
+)
 }
 
 }
