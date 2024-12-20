@@ -1,5 +1,9 @@
 # version 0.99.1.9000
 
+**Improvements**
+
+* add GitHub workflows to run R CMD check. ([EDPDEV-2381](https://precisionformedicine.atlassian.net/browse/EDPDEV-2381))
+
 **Bug Fixes**
 
 * Fixed the shiny wrapper to connect to EDP with the new connection system. Removed `createEnv` to use `connect()` in the shiny wrapper to use the new credential system. [EDPDEV-2141](https://precisionformedicine.atlassian.net/browse/EDPDEV-2141)
