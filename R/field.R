@@ -123,14 +123,18 @@ R_TO_DATA_TYPES <- list(
   factor = "string"
 )
 
+#' create a model data frame from a list of column names and some meta data fields.
+#'
+#' @description
+#' Creates a model empty data frame from a list of column names and meta data fields
+#' of the EDP dataset.
+#'
+#' @param cols list of column names
+#' @param fields meta data fields from EDP dataset
+#' @param titles Set the dataframe column names as per titles. Default is TRUE
+#' @param ordering Set the order of columns based on ordering. Default is TRUE
+#' @return A model empty R dataframe
 
-
-# create a model data frame (empty) from a list of colum names and some meta data fields
-# actions:
-# - order columns based on ordering
-# - type the data frame using the field types
-# - set the column names to the titles
-# - store the names, titles and descriptions as attributes
 create_model_df_from_fields <- function(
     cols, fields,
     titles = TRUE,
@@ -138,7 +142,6 @@ create_model_df_from_fields <- function(
   if (.empty(cols)) {
     return(NULL)
   }
-
   .elts <- function(lst, name) unname(sapply(lst, getElement, name))
 
   # the fields may not cover all columns, e.g. the _id, _commit ones
@@ -194,17 +197,15 @@ create_model_df_from_fields <- function(
   df
 }
 
-# format a data frame like a model data frame: i.e copy
-# - the columns order
-# - the field types
-# - the column names
-# - the "field_" attributes
-# the "model" data frame is assumed to have been generated either by create_model_df_from_fields()
-# or by this very same function
-# N.B: the mapping of columns between the df and the model is performed using
-# the "field_names" attribute of the model
-# N.B 2: tested with create_model_df_from_fields()
-# N.B 3: both data franes must have the same fields
+#' Format a data frame like the model data frame
+#'
+#' @description
+#' format the dataframe like the model data frame with the same columns order,
+#' field types, column names, and the "field_" attributes
+#' @param df dataframe to be formatted
+#' @param model model dataframe
+#' @return formatted dataframe
+
 format_df_like_model <- function(df, model) {
   ### mapping
   field_names <- attr(model, "field_names")
@@ -225,7 +226,14 @@ format_df_like_model <- function(df, model) {
   ### set field types
   for (i in seq_along(df)) {
     if (class(df[[i]]) != class(model[[i]])) {
-      class(df[[i]]) <- class(model[[i]])
+      if (!inherits(df[[i]], "list")) {
+        class(df[[i]]) <- class(model[[i]])
+      } else {
+        df[[i]] <- lapply(df[[i]], function(x) {
+          class(x) <- class(model[[i]])
+          return(x)
+        })
+      }
     }
   }
 
