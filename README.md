@@ -1,4 +1,6 @@
-QuartzBio EDP for R
+ QuartzBio EDP for R [![pipeline status](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/badges/main/pipeline.svg)](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/-/commits/main)
+[![coverage report](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/badges/main/coverage.svg)](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/-/commits/main)
+[![Latest Release](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/-/badges/release.svg)](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/-/releases)
 =========================
 
 This package contains the QuartzBio EDP R language bindings for the EDP (Enterprise Data Platform) API.
