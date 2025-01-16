@@ -5,7 +5,7 @@
 #' @examples \dontrun{
 #' Application.all()
 #' }
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Application.all <- function(env = get_connection(), ...) {
   .request("GET", "v2/applications", query = list(...), env = env)
@@ -18,7 +18,7 @@ Application.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' Application.retrieve("abcd1234")
 #' }
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Application.retrieve <- function(client_id, env = get_connection()) {
   path <- paste("v2/applications", client_id, sep = "/")
@@ -44,7 +44,7 @@ Application.retrieve <- function(client_id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Application.update <- function(client_id, env = get_connection(), ...) {
   if (missing(client_id)) {
@@ -72,7 +72,7 @@ Application.update <- function(client_id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Application.delete <- function(client_id, env = get_connection()) {
   if (missing(client_id)) {
@@ -103,7 +103,7 @@ Application.delete <- function(client_id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Application.create <- function(name, redirect_uris, env = get_connection(), ...) {
   if (missing(name)) {

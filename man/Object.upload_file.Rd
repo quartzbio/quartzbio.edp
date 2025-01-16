@@ -37,4 +37,4 @@ Object.upload_file("my_file.json.gz", vault$id, "/parent/directory/")
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

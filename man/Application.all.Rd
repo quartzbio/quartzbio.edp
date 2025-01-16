@@ -19,4 +19,4 @@ Retrieve the metadata about all application on QuartzBio EDP available to the cu
 Application.all()
 }
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

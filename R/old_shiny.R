@@ -19,7 +19,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 protectedServer <- function(server, client_id, client_secret = NULL, base_url = "https://my.solvebio.com") {
   if (!requireNamespace("shiny", quietly = TRUE)) {
@@ -259,7 +259,7 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 protectedServerJS <- function() {
   if (!requireNamespace("shinyjs", quietly = TRUE)) {

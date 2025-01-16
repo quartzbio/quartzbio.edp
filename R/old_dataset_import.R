@@ -13,7 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetImport.all <- function(env = get_connection(), ...) {
   .request("GET", "v2/dataset_imports", query = list(...), env = env)
@@ -34,7 +34,7 @@ DatasetImport.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetImport.retrieve <- function(id, env = get_connection()) {
   if (missing(id)) {
@@ -60,7 +60,7 @@ DatasetImport.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetImport.delete <- function(id, env = get_connection()) {
   if (missing(id)) {
@@ -88,7 +88,7 @@ DatasetImport.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetImport.create <- function(dataset_id,
                                  commit_mode = "append",
