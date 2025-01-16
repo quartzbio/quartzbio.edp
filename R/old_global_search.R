@@ -25,7 +25,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 GlobalSearch.search <- function(paginate = FALSE, env = get_connection(), ...) {
   params <- list(...)
@@ -74,7 +74,7 @@ GlobalSearch.search <- function(paginate = FALSE, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
   if (missing(facets) || is.null(facets) || facets == "") {
@@ -116,7 +116,7 @@ GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 GlobalSearch.subjects <- function(env = get_connection(), ...) {
   params <- list(...)
@@ -144,7 +144,7 @@ GlobalSearch.subjects <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 GlobalSearch.subjects_count <- function(env = get_connection(), ...) {
   params <- list(...)
@@ -201,7 +201,7 @@ GlobalSearch.subjects_count <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 GlobalSearch.request <- function(query = NULL, filters, entities, env = get_connection(), ...) {
   body <- list(...)

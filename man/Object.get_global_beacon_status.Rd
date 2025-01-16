@@ -30,4 +30,4 @@ Object.get_global_beacon_status("1234567890", raise_on_disabled = TRUE)
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

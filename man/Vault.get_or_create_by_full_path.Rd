@@ -25,4 +25,4 @@ Vault.get_or_create_by_full_path("My New Vault")
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

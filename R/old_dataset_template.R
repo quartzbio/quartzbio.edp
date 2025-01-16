@@ -13,7 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetTemplate.all <- function(env = get_connection(), ...) {
   .request("GET", "v2/dataset_templates", query = list(...), env = env)
@@ -34,7 +34,7 @@ DatasetTemplate.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetTemplate.retrieve <- function(id, env = get_connection()) {
   if (missing(id)) {
@@ -60,7 +60,7 @@ DatasetTemplate.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetTemplate.delete <- function(id, env = get_connection()) {
   if (missing(id)) {
@@ -85,7 +85,7 @@ DatasetTemplate.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetTemplate.create <- function(env = get_connection(), ...) {
   .request("POST", path = "v2/dataset_templates", query = NULL, body = list(...), env = env)
@@ -110,7 +110,7 @@ DatasetTemplate.create <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetTemplate.update <- function(id, env = get_connection(), ...) {
   if (missing(id)) {

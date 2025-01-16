@@ -1,4 +1,3 @@
-EDP_DEFAULT_API_HOST <- "https://api.solvebio.com"
 
 # Sys.getenv does not return unser if the variable is set but empty
 get_env <- function(name, unset = "") {
@@ -97,12 +96,13 @@ get_connection <- function(auto = TRUE) {
 #'
 #' @param secret      a QuartzBio EDP **API key**  or **token** as a string.
 #'                    Defaults to the `EDP_API_SECRET` environment variable if set,
-#'                    otherwise to the legacy `SOLVEBIO_ACCESS_TOKEN` var, then to
+#'                    otherwise to the `QUARTZBIO_ACCESS_TOKEN` var, then to `QUARTZBIO_API_KEY`, then to
+#'                    legacy `SOLVEBIO_ACCESS_TOKEN` var, then to
 #'                    to the `SOLVEBIO_API_KEY` var.
 
 #' @param host        the QuartzBio EDP **API host** as a string.
 #'                    Defaults to the `EDP_API_HOST` environment variable if set, otherwise to the
-#'                    legacy `SOLVEBIO_API_HOST` var.
+#'                    `QUARTZBIO_API_HOST` var, then to the legacy `SOLVEBIO_API_HOST` var.
 #' @param check       whether to check the connection, mostly for debugging purposes
 #' @return a connection object
 #'
@@ -117,8 +117,20 @@ get_connection <- function(auto = TRUE) {
 #'
 #' @export
 connect <- function(
-    secret = get_env("EDP_API_SECRET", get_env("SOLVEBIO_ACCESS_TOKEN", get_env("SOLVEBIO_API_KEY"))),
-    host = get_env("EDP_API_HOST", get_env("SOLVEBIO_API_HOST", EDP_DEFAULT_API_HOST)),
+    secret = get_env(
+      "EDP_API_SECRET",
+      get_env(
+        "QUARTZBIO_ACCESS_TOKEN",
+        get_env(
+          "QUARTZBIO_API_KEY",
+          get_env(
+            "SOLVEBIO_ACCESS_TOKEN",
+            get_env("SOLVEBIO_API_KEY")
+          )
+        )
+      )
+    ),
+    host = get_env("EDP_API_HOST", get_env("QUARTZBIO_API_HOST", get_env("SOLVEBIO_API_HOST"))),
     check = TRUE) {
   conn <- list(secret = secret, host = host)
   check_connection(conn)

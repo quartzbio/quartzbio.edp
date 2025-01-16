@@ -25,7 +25,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 login <- function(
     api_key = Sys.getenv("SOLVEBIO_API_KEY"),

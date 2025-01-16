@@ -13,7 +13,7 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetField.all <- function(env = get_connection(), ...) {
   .request("GET", "v2/dataset_fields", query = list(...), env = env)
@@ -34,7 +34,7 @@ DatasetField.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetField.retrieve <- function(id, env = get_connection()) {
   if (missing(id)) {
@@ -61,7 +61,7 @@ DatasetField.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetField.facets <- function(id, env = get_connection(), ...) {
   if (missing(id) | !(class(id) %in% c("DatasetField", "numeric", "character"))) {
@@ -93,7 +93,7 @@ DatasetField.facets <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetField.create <- function(dataset_id, name, data_type = "auto", env = get_connection(), ...) {
   if (missing(dataset_id)) {
@@ -134,7 +134,7 @@ DatasetField.create <- function(dataset_id, name, data_type = "auto", env = get_
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetField.update <- function(id, env = get_connection(), ...) {
   if (missing(id)) {

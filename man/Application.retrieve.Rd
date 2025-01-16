@@ -19,4 +19,4 @@ Retrieve the metadata about a specific application QuartzBio EDP.
 Application.retrieve("abcd1234")
 }
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}
