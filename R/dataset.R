@@ -124,16 +124,15 @@ Dataset_import <- function(
 }
 
 #' Get URL to parquet dataset
-#' 
+#'
 #' Get the associated URL to a parquet file for a given Quartzbio EDP dataset ID.
-#' 
+#'
 #' @param id (character) The ID of a QuartzBio EDP dataset, or a Dataset object.
 #' @param conn (optional) Custom client environment.
-#' @return URL to the parquet file for the given EDP dataset. If there is an 
+#' @return URL to the parquet file for the given EDP dataset. If there is an
 #' failure, an error will be raised.
 #' @concept  solvebio_api
 get_url_to_parquet <- function(id, conn = get_connection()) {
-
   # This is a Demo
   # Using the File download url
   parquet_url <- File_get_download_url(id)
@@ -141,37 +140,37 @@ get_url_to_parquet <- function(id, conn = get_connection()) {
 }
 
 #' Get dataset schema
-#' 
+#'
 #' Retrieves the schema of the Quartzbio EDP dataset.
-#' 
+#'
 #' @param id The ID of a QuartzBio EDP dataset.
 #' @return A Schema object containing Fields, which maps to the data types.
 #' @concept solvebio_api
 #' @export
 Dataset_schema <- function(id) {
-  if(!requireNamespace("arrow", quietly = TRUE)) {
+  if (!requireNamespace("arrow", quietly = TRUE)) {
     stop("Packages \"arrow\" must be installed to use this function.")
   }
-  
+
   # S3 presigned url for the parquet file of dataset
-  if(is.null(id)) {
+  if (is.null(id)) {
     stop("A dataset ID is required")
   }
   parquet_url <- get_url_to_parquet(id)
-  
+
   # Create a Parquet file reader
   pq <- arrow::ParquetFileReader$create(parquet_url)
-  dataset_scehma <-pq$GetSchema()
+  dataset_scehma <- pq$GetSchema()
   dataset_scehma
 }
 
 #' Dataset_load
-#' 
+#'
 #' Loads large Quartzbio EDP dataset and returns an R data frame containing all records.
-#' 
+#'
 #' @param id The ID of a QuartzBio EDP dataset.
 #' @param full_path a valid dataset full path, including the account, vault and path to EDP Dataset.
-#' @param select_fields A character vector of field names to select in the results. 
+#' @param select_fields A character vector of field names to select in the results.
 #' Tidy specification of fields can also be used. Check [arrow::read_parquet()]
 #' @inheritParams arrow::read_parquet
 #' @concept  solvebio_api
@@ -188,14 +187,17 @@ Dataset_load <- function(id = NULL, full_path = NULL, select_fields = NULL, ...)
   } else {
     dataset_id <- id
   }
-  
+
   parquet_url <- get_url_to_parquet(dataset_id)
-  tryCatch({
-    df <- arrow::read_parquet(parquet_url, col_select = select_fields, ...)
-  }, error = function(e) {
-    stop(sprintf("Error in reading dataset: %s\n", e$message))
-  })
-  
+  tryCatch(
+    {
+      df <- arrow::read_parquet(parquet_url, col_select = select_fields, ...)
+    },
+    error = function(e) {
+      stop(sprintf("Error in reading dataset: %s\n", e$message))
+    }
+  )
+
   df
 }
 # hgvs <- Dataset_load("2401538393287146373")
