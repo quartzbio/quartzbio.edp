@@ -19,13 +19,13 @@ Updates the attributes of an existing application.
 \examples{
 \dontrun{
 Application.update(
-                   "abcd1234",
-                   name="New app name"
-                   )
+  "abcd1234",
+  name = "New app name"
+)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

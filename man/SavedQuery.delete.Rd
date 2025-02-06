@@ -16,11 +16,11 @@ Deletes a specific saved query on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-SavedQuery.delete(<ID>)
+SavedQuery.delete(12345)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

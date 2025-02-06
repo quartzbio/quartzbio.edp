@@ -16,11 +16,11 @@ Retrieves the metadata about a specific dataset template on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-DatasetTemplate.retrieve(<ID>)
+DatasetTemplate.retrieve(12345)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

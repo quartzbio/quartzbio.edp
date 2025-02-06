@@ -20,12 +20,12 @@ Search for objects in a specific vault.
 }
 \examples{
 \dontrun{
-vault = Vault.get_personal_vault()
-Vault.search('test')
+vault <- Vault.get_personal_vault()
+Vault.search("test")
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

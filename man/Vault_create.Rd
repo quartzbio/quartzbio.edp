@@ -36,15 +36,16 @@ the vault with the corresponding id
 \examples{
 \dontrun{
 # simplest form
-v <- Vault_create('my.new.vault')
+v <- Vault_create("my.new.vault")
 
 # using all params
-v <- Vault_create(name = 'my.new.vault', 
-   description = 'This is my own vault', 
-   metadata = list(a = 1, b = 'toto', sublist = list(x = 'str')), 
-   tags = c('TEST', 'DATA'), 
-   storage_class = 'Performance', 
-   conn = conn)
-
+v <- Vault_create(
+  name = "my.new.vault",
+  description = "This is my own vault",
+  metadata = list(a = 1, b = "toto", sublist = list(x = "str")),
+  tags = c("TEST", "DATA"),
+  storage_class = "Performance",
+  conn = conn
+)
 }
 }

@@ -18,11 +18,11 @@ Create a new QuartzBio EDP vault.
 }
 \examples{
 \dontrun{
-Vault.create(name="my-domain:MyVault")
+Vault.create(name = "my-domain:MyVault")
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

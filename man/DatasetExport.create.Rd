@@ -31,11 +31,15 @@ Create a new dataset export.
 }
 \examples{
 \dontrun{
-DatasetExport.create(dataset_id=<ID>, format='json', params=list(fields=c("field_1"), limit=100))
+DatasetExport.create(
+  dataset_id = 12345,
+  format = "json",
+  params = list(fields = c("field_1"), limit = 100)
+)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

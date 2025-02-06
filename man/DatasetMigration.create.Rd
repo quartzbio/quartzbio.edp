@@ -37,11 +37,11 @@ Create a new dataset migration.
 }
 \examples{
 \dontrun{
-DatasetMigration.create(dataset_id=<ID>, upload_id=<ID>)
+DatasetMigration.create(dataset_id = 12345, upload_id = 12345)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

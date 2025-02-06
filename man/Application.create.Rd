@@ -21,13 +21,13 @@ Create a new QuartzBio EDP application.
 \examples{
 \dontrun{
 Application.create(
-                   name="My new application",
-                   redirect_uris="http://localhost:3838/"
-                   )
+  name = "My new application",
+  redirect_uris = "http://localhost:3838/"
+)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

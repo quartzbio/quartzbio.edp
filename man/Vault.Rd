@@ -39,6 +39,5 @@ v2 <- Vault(full_path = v$full_path)
 
 # by name
 v2 <- Vault(name = "Public")
-
 }
 }

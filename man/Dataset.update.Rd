@@ -19,13 +19,13 @@ Updates the attributes of an existing dataset.
 \examples{
 \dontrun{
 Dataset.update(
-               id="1234",
-               name="New Dataset Name",
-              )
+  id = "1234",
+  name = "New Dataset Name",
+)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

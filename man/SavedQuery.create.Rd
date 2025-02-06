@@ -16,11 +16,11 @@ Create a QuartzBio EDP saved query.
 }
 \examples{
 \dontrun{
-SavedQuery.create(name="My Dataset Template")
+SavedQuery.create(name = "My Dataset Template")
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

@@ -26,13 +26,13 @@ Wraps an existing Shiny server in an OAuth2 flow.
 \examples{
 \dontrun{
 protectedServer(
-                server=server,
-                client_id="abcd1234"
-                )
+  server = server,
+  client_id = "abcd1234"
+)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

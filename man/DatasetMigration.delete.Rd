@@ -16,11 +16,11 @@ Deletes specific dataset migration on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-DatasetMigration.delete(<ID>)
+DatasetMigration.delete(12345)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

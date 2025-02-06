@@ -13,10 +13,10 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetExport.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/dataset_exports", query=list(...), env=env)
+  .request("GET", "v2/dataset_exports", query = list(...), env = env)
 }
 
 #' DatasetExport.retrieve
@@ -27,21 +27,21 @@ DatasetExport.all <- function(env = get_connection(), ...) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetExport.retrieve(<ID>)
+#' DatasetExport.retrieve(12345)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetExport.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset export ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset export ID is required.")
+  }
 
-    path <- paste("v2/dataset_exports", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/dataset_exports", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -53,21 +53,21 @@ DatasetExport.retrieve <- function(id, env = get_connection()) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetExport.delete(<ID>)
+#' DatasetExport.delete(12345)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetExport.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset export ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset export ID is required.")
+  }
 
-    path <- paste("v2/dataset_exports", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/dataset_exports", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -83,39 +83,42 @@ DatasetExport.delete <- function(id, env = get_connection()) {
 #' @param ... (optional) Additional dataset export parameters.
 #'
 #' @examples \dontrun{
-#' DatasetExport.create(dataset_id=<ID>, format='json', params=list(fields=c("field_1"), limit=100))
+#' DatasetExport.create(
+#'   dataset_id = 12345,
+#'   format = "json",
+#'   params = list(fields = c("field_1"), limit = 100)
+#' )
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
-DatasetExport.create <- function(
-                                 dataset_id,
-                                 format = 'json',
+DatasetExport.create <- function(dataset_id,
+                                 format = "json",
                                  params = list(),
                                  follow = FALSE,
                                  env = get_connection(),
                                  ...) {
-    if (missing(dataset_id)) {
-        stop("A dataset ID is required.")
-    }
+  if (missing(dataset_id)) {
+    stop("A dataset ID is required.")
+  }
 
-    params = list(
-                  dataset_id=dataset_id,
-                  format=format,
-                  params=params,
-                  ...
-                  )
+  params <- list(
+    dataset_id = dataset_id,
+    format = format,
+    params = params,
+    ...
+  )
 
-    dataset_export <- .request('POST', path='v2/dataset_exports', query=NULL, body=params, env=env)
+  dataset_export <- .request("POST", path = "v2/dataset_exports", query = NULL, body = params, env = env)
 
-    if (follow) {
-        Task.follow(dataset_export$task_id)
-    }
+  if (follow) {
+    Task.follow(dataset_export$task_id)
+  }
 
-    return(dataset_export)
+  return(dataset_export)
 }
 
 
@@ -133,16 +136,16 @@ DatasetExport.create <- function(
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetExport.get_download_url <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset export ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset export ID is required.")
+  }
 
-    path <- paste("v2/dataset_exports", paste(id), "download", sep="/")
-    response <- .request('GET', path=path, query=list(redirect=""), env=env)
+  path <- paste("v2/dataset_exports", paste(id), "download", sep = "/")
+  response <- .request("GET", path = path, query = list(redirect = ""), env = env)
 
-    return(response$url)
+  return(response$url)
 }
 # nocov end

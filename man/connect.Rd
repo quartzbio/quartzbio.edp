@@ -5,21 +5,24 @@
 \title{connect to the QuartzBio EDP API and return the connection}
 \usage{
 connect(
-  secret = get_env("EDP_API_SECRET", get_env("SOLVEBIO_ACCESS_TOKEN",
-    get_env("SOLVEBIO_API_KEY"))),
-  host = get_env("EDP_API_HOST", get_env("SOLVEBIO_API_HOST", EDP_DEFAULT_API_HOST)),
+  secret = get_env("EDP_API_SECRET", get_env("QUARTZBIO_ACCESS_TOKEN",
+    get_env("QUARTZBIO_API_KEY", get_env("SOLVEBIO_ACCESS_TOKEN",
+    get_env("SOLVEBIO_API_KEY"))))),
+  host = get_env("EDP_API_HOST", get_env("QUARTZBIO_API_HOST",
+    get_env("SOLVEBIO_API_HOST"))),
   check = TRUE
 )
 }
 \arguments{
 \item{secret}{a QuartzBio EDP \strong{API key}  or \strong{token} as a string.
 Defaults to the \code{EDP_API_SECRET} environment variable if set,
-otherwise to the legacy \code{SOLVEBIO_ACCESS_TOKEN} var, then to
+otherwise to the \code{QUARTZBIO_ACCESS_TOKEN} var, then to \code{QUARTZBIO_API_KEY}, then to
+legacy \code{SOLVEBIO_ACCESS_TOKEN} var, then to
 to the \code{SOLVEBIO_API_KEY} var.}
 
 \item{host}{the QuartzBio EDP \strong{API host} as a string.
 Defaults to the \code{EDP_API_HOST} environment variable if set, otherwise to the
-legacy \code{SOLVEBIO_API_HOST} var.}
+\code{QUARTZBIO_API_HOST} var, then to the legacy \code{SOLVEBIO_API_HOST} var.}
 
 \item{check}{whether to check the connection, mostly for debugging purposes}
 }
@@ -31,12 +34,12 @@ connect to the QuartzBio EDP API and return the connection
 }
 \examples{
 \dontrun{
-   #  using API key
-   conn <- connect('MYKEY')
-   # using env vars
-   conn <- connect()
-   # using token and explicit host
-   conn <- connect('MYTOKEN', 'https://xxxx.yy.com')
+#  using API key
+conn <- connect("MYKEY")
+# using env vars
+conn <- connect()
+# using token and explicit host
+conn <- connect("MYTOKEN", "https://xxxx.yy.com")
 }
 
 }

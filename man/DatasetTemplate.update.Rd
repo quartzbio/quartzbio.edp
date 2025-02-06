@@ -19,13 +19,13 @@ Updates the attributes of an existing dataset template.
 \examples{
 \dontrun{
 DatasetTemplate.update(
-               id="1234",
-               name="New Template Name",
-              )
+  id = "1234",
+  name = "New Template Name",
+)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

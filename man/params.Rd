@@ -141,7 +141,7 @@ as a character vector.}
 
 \item{task_id}{an (ECS) Task ID as a string.}
 
-\item{url_template}{A URL template with one or more "{value}" sections that will be
+\item{url_template}{A URL template with one or more "value" sections that will be
 interpolated with the field value and displayed as a link
 in the dataset table.}
 

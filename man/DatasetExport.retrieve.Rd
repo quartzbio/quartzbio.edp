@@ -16,11 +16,11 @@ Retrieves the metadata about a specific dataset export on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-DatasetExport.retrieve(<ID>)
+DatasetExport.retrieve(12345)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

@@ -41,10 +41,12 @@ N.B:
 }
 \examples{
 \dontrun{
-  v2 <- Vault_update(v$id, name = name, description = 'desc',    
-   metadata = list(meta1 = 'toto'), storage_class = 'Performance', tags = 'A')
+v2 <- Vault_update(v$id,
+  name = name, description = "desc",
+  metadata = list(meta1 = "toto"), storage_class = "Performance", tags = "A"
+)
 # using methods
-v3 <- update(v2, name = name, storage_class = 'Temporary')
+v3 <- update(v2, name = name, storage_class = "Temporary")
 v4 <- update(vault_id, tags = LETTERS[1:5])
 }
 }

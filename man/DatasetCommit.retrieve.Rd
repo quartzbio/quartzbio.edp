@@ -16,11 +16,11 @@ Retrieves the metadata about a specific dataset commit on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-DatasetCommit.retrieve(<ID>)
+DatasetCommit.retrieve(12345)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

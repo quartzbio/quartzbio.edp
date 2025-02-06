@@ -29,11 +29,11 @@ Returns a single page of results otherwise (default).
 }
 \examples{
 \dontrun{
-Dataset.query("12345678790", paginate=TRUE)
+Dataset.query("12345678790", paginate = TRUE)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

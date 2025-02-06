@@ -19,13 +19,13 @@ Updates the attributes of an existing dataset field. NOTE: The data_type of a fi
 \examples{
 \dontrun{
 DatasetField.update(
-                    id="1234",
-                    title="New Field Title"
-                   )
+  id = "1234",
+  title = "New Field Title"
+)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

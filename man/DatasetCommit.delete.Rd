@@ -16,11 +16,11 @@ Deletes a specific dataset commit on QuartzBio EDP.
 }
 \examples{
 \dontrun{
-DatasetCommit.delete(<ID>)
+DatasetCommit.delete(12345)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

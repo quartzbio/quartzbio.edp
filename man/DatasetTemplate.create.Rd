@@ -16,11 +16,11 @@ Create a QuartzBio EDP dataset template.
 }
 \examples{
 \dontrun{
-DatasetTemplate.create(name="My Dataset Template")
+DatasetTemplate.create(name = "My Dataset Template")
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

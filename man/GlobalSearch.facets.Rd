@@ -18,11 +18,11 @@ Performs a Global Search based on provided filters, entities, queries, and retur
 }
 \examples{
 \dontrun{
-GlobalSearch.facets(facets="study")
+GlobalSearch.facets(facets = "study")
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

@@ -29,12 +29,12 @@ Create a new beacon set.
 \examples{
 \dontrun{
 BeaconSet.create(
-                 title="My new beacon set",
-                 )
+  title = "My new beacon set",
+)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

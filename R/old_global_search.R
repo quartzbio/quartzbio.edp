@@ -12,10 +12,10 @@
 #' # No filters applied
 #' GlobalSearch.search()
 #'
-#' #Global Beacon search
+#' # Global Beacon search
 #' GlobalSearch.search(entities = '[["gene","BRCA2"]]')
 #'
-#  #Type filter (only vaults)
+#' # #Type filter (only vaults)
 #' GlobalSearch.search(filters = '[{"and":[["type__in",["vault"]]]}]')
 #'
 #' # Advanced search
@@ -25,9 +25,9 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
-GlobalSearch.search <- function(paginate=FALSE, env = get_connection(), ...) {
+GlobalSearch.search <- function(paginate = FALSE, env = get_connection(), ...) {
   params <- list(...)
   params$env <- env
 
@@ -50,7 +50,9 @@ GlobalSearch.search <- function(paginate=FALSE, env = get_connection(), ...) {
 
   if (!isTRUE(paginate) && !is.null(offset)) {
     warning(paste("This call returned only the first page of records. To retrieve more pages automatically,",
-                  "please set paginate=TRUE when calling GlobalSearch.search().", call. = FALSE))
+      "please set paginate=TRUE when calling GlobalSearch.search().",
+      call. = FALSE
+    ))
   }
 
   return(df)
@@ -66,37 +68,38 @@ GlobalSearch.search <- function(paginate=FALSE, env = get_connection(), ...) {
 #' @param ... (optional) Additional query parameters (e.g. filters, entities, query).
 #'
 #' @examples \dontrun{
-#' GlobalSearch.facets(facets="study")
+#' GlobalSearch.facets(facets = "study")
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
-    if (missing(facets) || is.null(facets) || facets == "") {
-        stop("A list of one or more facets is required.")
+  if (missing(facets) || is.null(facets) || facets == "") {
+    stop("A list of one or more facets is required.")
+  }
+
+  if (inherits(facets, "character")) {
+    if (grepl("[[{]", facets)) {
+      # If it looks like JSON, try to convert to an R structure
+      facets <- jsonlite::fromJSON(facets,
+        simplifyVector = FALSE,
+        simplifyDataFrame = TRUE,
+        simplifyMatrix = FALSE
+      )
     }
+  }
 
-    if (inherits(facets, "character")) {
-        if (grepl("[[{]", facets)) {
-            # If it looks like JSON, try to convert to an R structure
-            facets <- jsonlite::fromJSON(facets,
-                                         simplifyVector = FALSE,
-                                         simplifyDataFrame = TRUE,
-                                         simplifyMatrix = FALSE)
-        }
-    }
+  params <- list(...)
+  # Facet queries should not return results
+  params$limit <- 0
+  params$env <- env
+  params <- modifyList(params, list(facets = facets))
 
-    params <- list(...)
-    # Facet queries should not return results
-    params$limit <- 0
-    params$env <- env
-    params <- modifyList(params, list(facets=facets))
-
-    response <- do.call(GlobalSearch.request, params)
-    return(response$facets)
+  response <- do.call(GlobalSearch.request, params)
+  return(response$facets)
 }
 
 
@@ -113,12 +116,12 @@ GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 GlobalSearch.subjects <- function(env = get_connection(), ...) {
   params <- list(...)
-  params$limit = 0
-  params$include_subjects = TRUE
+  params$limit <- 0
+  params$include_subjects <- TRUE
   params$env <- env
 
   response <- do.call(GlobalSearch.request, params)
@@ -141,11 +144,11 @@ GlobalSearch.subjects <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 GlobalSearch.subjects_count <- function(env = get_connection(), ...) {
   params <- list(...)
-  params$limit = 0
+  params$limit <- 0
   params$env <- env
 
   response <- do.call(GlobalSearch.request, params)
@@ -198,48 +201,53 @@ GlobalSearch.subjects_count <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
-GlobalSearch.request <- function(query=NULL, filters, entities, env = get_connection(), ...) {
-  body = list(...)
+GlobalSearch.request <- function(query = NULL, filters, entities, env = get_connection(), ...) {
+  body <- list(...)
 
   # Advanced search query
-  body = modifyList(body, list(query=query))
+  body <- modifyList(body, list(query = query))
 
   # Filters can be passed as a JSON string
   if (!missing(filters) && !is.null(filters) && length(filters) > 0) {
     if (inherits(filters, "character")) {
       # Convert JSON string to an R structure
       filters <- jsonlite::fromJSON(filters,
-                                    simplifyVector = FALSE,
-                                    simplifyDataFrame = TRUE,
-                                    simplifyMatrix = FALSE)
+        simplifyVector = FALSE,
+        simplifyDataFrame = TRUE,
+        simplifyMatrix = FALSE
+      )
     }
     # Add filters to request body
-    body = modifyList(body, list(filters=filters))
+    body <- modifyList(body, list(filters = filters))
   }
 
   # Entities can be passed as a JSON string
-  if (!missing(entities) && !is.null(entities) && length(entities) > 0){
+  if (!missing(entities) && !is.null(entities) && length(entities) > 0) {
     if (inherits(entities, "character")) {
       # Convert JSON string to an R structure
       entities <- jsonlite::fromJSON(entities,
-                                    simplifyVector = FALSE,
-                                    simplifyDataFrame = TRUE,
-                                    simplifyMatrix = FALSE)
+        simplifyVector = FALSE,
+        simplifyDataFrame = TRUE,
+        simplifyMatrix = FALSE
+      )
     }
     # Add entities to request body
-    body = modifyList(body, list(entities=entities))
+    body <- modifyList(body, list(entities = entities))
   }
 
 
-  tryCatch({
-    res <- .request('POST', path="v2/search", body=body, env=env)
-    res <- formatEDPQueryResponse(res)
+  tryCatch(
+    {
+      res <- .request("POST", path = "v2/search", body = body, env = env)
+      res <- formatEDPQueryResponse(res)
 
-    return(res)
-  }, error = function(e) {
-    cat(sprintf("Query failed: %s\n", e$message))
-  })
+      return(res)
+    },
+    error = function(e) {
+      cat(sprintf("Query failed: %s\n", e$message))
+    }
+  )
 }
 # nocov end

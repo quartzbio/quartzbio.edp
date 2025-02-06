@@ -19,12 +19,14 @@ Object.upload_file(
 
 \item{vault_path}{The remote path in the vault}
 
-\item{filename}{(optional) The filename for the uploaded file in the vault (default: the basename of the local_path)}
+\item{filename}{(optional) The filename for the uploaded file in the vault
+(default: the basename of the local_path)}
 
 \item{env}{(optional) Custom client environment.}
 }
 \description{
-Upload a local file to a vault on QuartzBio EDP. The vault path provided is the parent directory for uploaded file.
+Upload a local file to a vault on QuartzBio EDP.
+The vault path provided is the parent directory for uploaded file.
 }
 \examples{
 \dontrun{
@@ -35,4 +37,4 @@ Object.upload_file("my_file.json.gz", vault$id, "/parent/directory/")
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

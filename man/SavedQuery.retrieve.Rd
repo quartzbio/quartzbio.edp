@@ -16,11 +16,11 @@ Retrieves a specific saved query on QuartzBio EDP by ID.
 }
 \examples{
 \dontrun{
-SavedQuery.retrieve(<ID>)
+SavedQuery.retrieve(12345)
 }
 
 }
 \references{
 \url{https://docs.solvebio.com/}
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

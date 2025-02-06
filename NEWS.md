@@ -1,3 +1,15 @@
+# version 0.99.1.9000
+
+**Improvements**
+
+* add GitHub workflows to run R CMD check. ([EDPDEV-2381](https://precisionformedicine.atlassian.net/browse/EDPDEV-2381))
+
+**Bug Fixes**
+
+* Fixed the shiny wrapper to connect to EDP with the new connection system. Removed `createEnv` to use `connect()` in the shiny wrapper to use the new credential system. [EDPDEV-2141](https://precisionformedicine.atlassian.net/browse/EDPDEV-2141)
+* Fixed `Dataset_import()` to limit the number of records that can be imported to 5000 at a time. [EDPDEV-1862](https://precisionformedicine.atlassian.net/browse/EDPDEV-1862)
+* Fixed the error occurring when querying dataset containing list fields. Made changes to `format_df_like_model` to assign the object class correctly for list field values in dataset. [EDPDEV-911](https://precisionformedicine.atlassian.net/browse/EDPDEV-911)
+
 # version 0.99
 
 * beta version of the former solvebio R package.Refactoring ot the former solvebio R package.

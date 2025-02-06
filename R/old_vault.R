@@ -13,10 +13,10 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.all <- function(..., env = get_connection()) {
-    .request("GET", "v2/vaults", query=list(...), env=env)
+  .request("GET", "v2/vaults", query = list(...), env = env)
 }
 
 
@@ -34,15 +34,15 @@ Vault.all <- function(..., env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A vault ID is required.")
-    }
+  if (missing(id)) {
+    stop("A vault ID is required.")
+  }
 
-    path <- paste("v2/vaults", paste(id), sep="/")
-    .request("GET", path=path, env=env)
+  path <- paste("v2/vaults", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -62,15 +62,15 @@ Vault.retrieve <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A vault ID is required.")
-    }
+  if (missing(id)) {
+    stop("A vault ID is required.")
+  }
 
-    path <- paste("v2/vaults", paste(id), sep="/")
-    .request("DELETE", path=path, env=env)
+  path <- paste("v2/vaults", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -82,28 +82,28 @@ Vault.delete <- function(id, env = get_connection()) {
 #' @param ... (optional) Additional vault attributes.
 #'
 #' @examples \dontrun{
-#' Vault.create(name="my-domain:MyVault")
+#' Vault.create(name = "my-domain:MyVault")
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.create <- function(name, env = get_connection(), ...) {
-    # TODO
-    if (missing(name)) {
-        stop("A name is required.")
-    }
+  # TODO
+  if (missing(name)) {
+    stop("A name is required.")
+  }
 
-    params = list(
-                  name=name,
-                  ...
-                  )
+  params <- list(
+    name = name,
+    ...
+  )
 
-    vault <- .request("POST", path="v2/vaults", query=NULL, body=params, env=env)
+  vault <- .request("POST", path = "v2/vaults", query = NULL, body = params, env = env)
 
-    return(vault)
+  return(vault)
 }
 
 
@@ -117,25 +117,25 @@ Vault.create <- function(name, env = get_connection(), ...) {
 #'
 #' @examples \dontrun{
 #' Vault.update(
-#'              id="1234",
-#'              name="New Vault Name",
-#'             )
+#'   id = "1234",
+#'   name = "New Vault Name",
+#' )
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.update <- function(id, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("A vault ID is required.")
-    }
+  if (missing(id)) {
+    stop("A vault ID is required.")
+  }
 
-    params = list(...)
+  params <- list(...)
 
-    path <- paste("v2/vaults", paste(id), sep="/")
-    .request('PATCH', path=path, query=NULL, body=params, env=env)
+  path <- paste("v2/vaults", paste(id), sep = "/")
+  .request("PATCH", path = path, query = NULL, body = params, env = env)
 }
 
 
@@ -159,34 +159,34 @@ Vault.update <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
-Vault.get_by_full_path <- function(full_path, verbose=TRUE, env = get_connection()) {
-    if (missing(full_path)) {
-        stop("A vault full path is required.")
+Vault.get_by_full_path <- function(full_path, verbose = TRUE, env = get_connection()) {
+  if (missing(full_path)) {
+    stop("A vault full path is required.")
+  }
+
+  params <- list(
+    full_path = full_path
+  )
+  response <- .request("GET", path = "v2/vaults", query = params, env = env)
+
+  if (response$total == 1) {
+    # Found exactly 1 vault
+    return(response$data[1, ])
+  }
+
+  if (verbose) {
+    if (response$total == 0) {
+      cat(sprintf("Warning: Could not find vault with full path: %s\n", full_path))
     }
 
-    params = list(
-                  full_path=full_path
-                  )
-    response = .request("GET", path="v2/vaults", query=params, env=env)
-
-    if (response$total == 1) {
-        # Found exactly 1 vault
-        return(response$data[1, ])
+    if (response$total > 1) {
+      cat(sprintf("Error: Multiple vaults found with full path: %s\n", full_path))
     }
+  }
 
-    if (verbose) {
-        if (response$total == 0) {
-            cat(sprintf("Warning: Could not find vault with full path: %s\n", full_path))
-        }
-
-        if (response$total > 1) {
-            cat(sprintf("Error: Multiple vaults found with full path: %s\n", full_path))
-        }
-    }
-
-    return(NULL)
+  return(NULL)
 }
 
 
@@ -205,22 +205,22 @@ Vault.get_by_full_path <- function(full_path, verbose=TRUE, env = get_connection
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
-    vault = Vault.get_by_full_path(full_path, verbose=FALSE, env=env)
-    if (!is.null(vault)) {
-        # Return if exists
-        return(vault)
-    }
-
-    # Remove any object path and trailing colon if it exists
-    full_path <- sub(":?/.*", "", full_path)
-    split_path = strsplit(full_path, ":")[[1]]
-    name = split_path[length(split_path)]
-    vault = Vault.create(name=name, env=env, ...)
-
+  vault <- Vault.get_by_full_path(full_path, verbose = FALSE, env = env)
+  if (!is.null(vault)) {
+    # Return if exists
     return(vault)
+  }
+
+  # Remove any object path and trailing colon if it exists
+  full_path <- sub(":?/.*", "", full_path)
+  split_path <- strsplit(full_path, ":")[[1]]
+  name <- split_path[length(split_path)]
+  vault <- Vault.create(name = name, env = env, ...)
+
+  return(vault)
 }
 
 
@@ -237,18 +237,18 @@ Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), 
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.get_personal_vault <- function(env = get_connection()) {
-    user = User.retrieve(env=env)
-    params = list(
-                  name=paste("user", user$id, sep="-"),
-                  vault_type="user"
-                  )
+  user <- User.retrieve(env = env)
+  params <- list(
+    name = paste("user", user$id, sep = "-"),
+    vault_type = "user"
+  )
 
-    response = .request("GET", path="v2/vaults", query=params, env=env)
+  response <- .request("GET", path = "v2/vaults", query = params, env = env)
 
-    return(response$data[1, ])
+  return(response$data[1, ])
 }
 
 
@@ -261,18 +261,18 @@ Vault.get_personal_vault <- function(env = get_connection()) {
 #' @param ... (optional) Additional query parameters (e.g. limit, offset).
 #'
 #' @examples \dontrun{
-#' vault = Vault.get_personal_vault()
+#' vault <- Vault.get_personal_vault()
 #' Vault.files(vault$id)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.files <- function(id, env = get_connection(), ...) {
-    objects = .object_list_helper(id, object_type="file", env=env, ...)
-    return(objects)
+  objects <- .object_list_helper(id, object_type = "file", env = env, ...)
+  return(objects)
 }
 
 
@@ -285,18 +285,18 @@ Vault.files <- function(id, env = get_connection(), ...) {
 #' @param ... (optional) Additional query parameters (e.g. limit, offset).
 #'
 #' @examples \dontrun{
-#' vault = Vault.get_personal_vault()
+#' vault <- Vault.get_personal_vault()
 #' Vault.folders(vault$id)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.folders <- function(id, env = get_connection(), ...) {
-    objects = .object_list_helper(id, object_type="folder", env=env, ...)
-    return(objects)
+  objects <- .object_list_helper(id, object_type = "folder", env = env, ...)
+  return(objects)
 }
 
 
@@ -309,18 +309,18 @@ Vault.folders <- function(id, env = get_connection(), ...) {
 #' @param ... (optional) Additional query parameters (e.g. limit, offset).
 #'
 #' @examples \dontrun{
-#' vault = Vault.get_personal_vault()
+#' vault <- Vault.get_personal_vault()
 #' Vault.datasets(vault$id)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.datasets <- function(id, env = get_connection(), ...) {
-    objects = .object_list_helper(id, object_type="dataset", env=env, ...)
-    return(objects)
+  objects <- .object_list_helper(id, object_type = "dataset", env = env, ...)
+  return(objects)
 }
 
 
@@ -333,18 +333,18 @@ Vault.datasets <- function(id, env = get_connection(), ...) {
 #' @param ... (optional) Additional query parameters (e.g. limit, offset).
 #'
 #' @examples \dontrun{
-#' vault = Vault.get_personal_vault()
+#' vault <- Vault.get_personal_vault()
 #' Vault.objects(vault$id)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.objects <- function(id, env = get_connection(), ...) {
-    objects = .object_list_helper(id, env=env, ...)
-    return(objects)
+  objects <- .object_list_helper(id, env = env, ...)
+  return(objects)
 }
 
 
@@ -358,18 +358,18 @@ Vault.objects <- function(id, env = get_connection(), ...) {
 #' @param ... (optional) Additional query parameters (e.g. limit, offset).
 #'
 #' @examples \dontrun{
-#' vault = Vault.get_personal_vault()
-#' Vault.search('test')
+#' vault <- Vault.get_personal_vault()
+#' Vault.search("test")
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.search <- function(id, query, env = get_connection(), ...) {
-    objects = .object_list_helper(id, query=query, env=env, ...)
-    return(objects)
+  objects <- .object_list_helper(id, query = query, env = env, ...)
+  return(objects)
 }
 
 
@@ -384,45 +384,45 @@ Vault.search <- function(id, query, env = get_connection(), ...) {
 #' @param ... (optional) Additional dataset creation parameters.
 #'
 #' @examples \dontrun{
-#' vault = Vault.get_personal_vault()
-#' Vault.create_dataset(vault$id, path="/", name="My Dataset")
+#' vault <- Vault.get_personal_vault()
+#' Vault.create_dataset(vault$id, path = "/", name = "My Dataset")
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 Vault.create_dataset <- function(id, path, name, env = get_connection(), ...) {
-    if (missing(id)) {
-        stop("A vault ID is required.")
-    }
-    if (missing(name)) {
-        stop("A dataset name is required.")
-    }
+  if (missing(id)) {
+    stop("A vault ID is required.")
+  }
+  if (missing(name)) {
+    stop("A dataset name is required.")
+  }
 
-    vault = Vault.retrieve(id, env=env)
+  vault <- Vault.retrieve(id, env = env)
 
-    if (missing(path) || path == "/" || is.null(path)) {
-        vault_parent_object_id = NULL
-    }
-    else {
-        user = User.retrieve(env=env)
-        account_domain = user$account$domain
-        full_path = paste(account_domain, vault$name, path, sep=":")
-        # Find the parent object (folder) at the provided path
-        parent_object = Object.get_by_full_path(full_path, env=env)
-        vault_parent_object_id = parent_object$id
-    }
+  if (missing(path) || path == "/" || is.null(path)) {
+    vault_parent_object_id <- NULL
+  } else {
+    user <- User.retrieve(env = env)
+    account_domain <- user$account$domain
+    full_path <- paste(account_domain, vault$name, path, sep = ":")
+    # Find the parent object (folder) at the provided path
+    parent_object <- Object.get_by_full_path(full_path, env = env)
+    vault_parent_object_id <- parent_object$id
+  }
 
-    dataset = Dataset.create(
-                   vault_id=vault$id,
-                   vault_parent_object_id=vault_parent_object_id,
-                   name=name,
-                   env=env,
-                   ...)
+  dataset <- Dataset.create(
+    vault_id = vault$id,
+    vault_parent_object_id = vault_parent_object_id,
+    name = name,
+    env = env,
+    ...
+  )
 
-    return(dataset)
+  return(dataset)
 }
 
 
@@ -437,91 +437,90 @@ Vault.create_dataset <- function(id, path, name, env = get_connection(), ...) {
 #' @param ... (optional) Additional folder creation parameters.
 #'
 #' @examples \dontrun{
-#' vault = Vault.get_personal_vault()
+#' vault <- Vault.get_personal_vault()
 #' Vault.create_folder(vault$id, "/My Folder")
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
-Vault.create_folder <- function(id, path, recursive=FALSE, env = get_connection(), ...) {
-    if (missing(id) || is.null(id)) {
-        stop("A vault ID is required.")
+Vault.create_folder <- function(id, path, recursive = FALSE, env = get_connection(), ...) {
+  if (missing(id) || is.null(id)) {
+    stop("A vault ID is required.")
+  }
+  if (missing(path) || is.null(path)) {
+    stop("A path is required.")
+  }
+
+  vault <- Vault.retrieve(id, env = env)
+
+  if (substring(path, 1, 1) != "/") {
+    # Add missing / to path
+    path <- paste("/", path, sep = "")
+  }
+
+  parts <- strsplit(path, split = "/", fixed = TRUE)[[1]]
+  # Get the final folder name from the last part of the path
+  folder_name <- parts[[length(parts)]]
+  # Remove the folder name from the path
+  parents <- utils::head(parts, -1)
+
+  if (recursive) {
+    current_dir <- ""
+    parent_object_id <- NULL
+
+    # Check for existing objects, and ensure they are folders.
+    # Create directories as needed
+    for (dir in parents) {
+      if (dir == "") {
+        next
+      }
+
+      current_dir <- paste(current_dir, dir, sep = "/")
+      obj <- Object.get_by_path(path = current_dir, vault_id = vault$id, env = env)
+
+      if (is.null(obj) || (is.data.frame(obj) && nrow(obj) == 0)) {
+        obj <- Object.create(
+          vault_id = vault$id,
+          parent_object_id = parent_object_id,
+          object_type = "folder",
+          filename = dir,
+          env = env
+        )
+      }
+
+      if (obj$object_type != "folder") {
+        stop(sprintf("Invalid path: existing object at '%s' is not a folder\n", current_dir))
+      }
+
+      parent_object_id <- obj$id
     }
-    if (missing(path) || is.null(path)) {
-        stop("A path is required.")
+  } else {
+    # Find the parent object (folder) at the provided path
+    parent_path <- paste(parents, collapse = "/")
+    if (parent_path == "") {
+      parent_object_id <- NULL
+    } else {
+      parent_object <- Object.get_by_path(parent_path, vault_id = vault$id, env = env)
+      if (is.null(parent_object) || parent_object$object_type != "folder") {
+        stop(sprintf("Invalid path: existing object at '%s' is not a folder\n", parent_object))
+      }
+      parent_object_id <- parent_object$id
     }
+  }
 
-    vault = Vault.retrieve(id, env=env)
+  object <- Object.create(
+    vault_id = vault$id,
+    parent_object_id = parent_object_id,
+    object_type = "folder",
+    filename = folder_name,
+    env = env,
+    ...
+  )
 
-    if (substring(path, 1, 1) != '/') {
-        # Add missing / to path
-        path = paste('/', path, sep='')
-    }
-
-    parts <- strsplit(path, split='/', fixed=TRUE)[[1]]
-    # Get the final folder name from the last part of the path
-    folder_name = parts[[length(parts)]]
-    # Remove the folder name from the path
-    parents = utils::head(parts, -1)
-
-    if (recursive) {
-        current_dir = ''
-        parent_object_id = NULL
-
-        # Check for existing objects, and ensure they are folders.
-        # Create directories as needed
-        for (dir in parents) {
-            if (dir == '') {
-                next
-            }
-
-            current_dir = paste(current_dir, dir, sep='/')
-            obj = Object.get_by_path(path=current_dir, vault_id=vault$id, env=env)
-
-            if (is.null(obj) || (is.data.frame(obj) && nrow(obj) == 0)) {
-                obj = Object.create(
-                              vault_id=vault$id,
-                              parent_object_id=parent_object_id,
-                              object_type='folder',
-                              filename=dir,
-                              env=env
-                              )
-            }
-
-            if (obj$object_type != 'folder') {
-                stop(sprintf("Invalid path: existing object at '%s' is not a folder\n", current_dir))
-            }
-
-            parent_object_id = obj$id
-        }
-    }
-    else {
-        # Find the parent object (folder) at the provided path
-        parent_path = paste(parents, collapse="/")
-        if (parent_path == "") {
-            parent_object_id = NULL
-        }
-        else {
-            parent_object = Object.get_by_path(parent_path, vault_id=vault$id, env=env)
-            if (is.null(parent_object) || parent_object$object_type != 'folder') {
-                stop(sprintf("Invalid path: existing object at '%s' is not a folder\n", parent_object))
-            }
-            parent_object_id = parent_object$id
-        }
-    }
-
-    object = Object.create(
-                   vault_id=vault$id,
-                   parent_object_id=parent_object_id,
-                   object_type='folder',
-                   filename=folder_name,
-                   env=env,
-                   ...)
-
-    return(object)
+  return(object)
 }
 
 
@@ -530,8 +529,8 @@ Vault.create_folder <- function(id, path, recursive=FALSE, env = get_connection(
 #
 
 # Retrieves objects within a specific vault.
-.object_list_helper = function(id, env = get_connection(), ...) {
-    objects = Object.all(vault_id=id, env=env, ...)
-    return(objects$data)
+.object_list_helper <- function(id, env = get_connection(), ...) {
+  objects <- Object.all(vault_id = id, env = env, ...)
+  return(objects$data)
 }
 # nocov end

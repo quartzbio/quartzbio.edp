@@ -13,10 +13,10 @@
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetMigration.all <- function(env = get_connection(), ...) {
-    .request('GET', "v2/dataset_migrations", query=list(...), env=env)
+  .request("GET", "v2/dataset_migrations", query = list(...), env = env)
 }
 
 
@@ -28,21 +28,21 @@ DatasetMigration.all <- function(env = get_connection(), ...) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetMigration.retrieve(<ID>)
+#' DatasetMigration.retrieve(12345)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetMigration.retrieve <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset migration ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset migration ID is required.")
+  }
 
-    path <- paste("v2/dataset_migrations", paste(id), sep="/")
-    .request('GET', path=path, env=env)
+  path <- paste("v2/dataset_migrations", paste(id), sep = "/")
+  .request("GET", path = path, env = env)
 }
 
 
@@ -54,21 +54,21 @@ DatasetMigration.retrieve <- function(id, env = get_connection()) {
 #' @param env (optional) Custom client environment.
 #'
 #' @examples \dontrun{
-#' DatasetMigration.delete(<ID>)
+#' DatasetMigration.delete(12345)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
 DatasetMigration.delete <- function(id, env = get_connection()) {
-    if (missing(id)) {
-        stop("A dataset migration ID is required.")
-    }
+  if (missing(id)) {
+    stop("A dataset migration ID is required.")
+  }
 
-    path <- paste("v2/dataset_migrations", paste(id), sep="/")
-    .request('DELETE', path=path, env=env)
+  path <- paste("v2/dataset_migrations", paste(id), sep = "/")
+  .request("DELETE", path = path, env = env)
 }
 
 
@@ -86,43 +86,42 @@ DatasetMigration.delete <- function(id, env = get_connection()) {
 #' @param ... (optional) Additional dataset migration attributes.
 #'
 #' @examples \dontrun{
-#' DatasetMigration.create(dataset_id=<ID>, upload_id=<ID>)
+#' DatasetMigration.create(dataset_id = 12345, upload_id = 12345)
 #' }
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
-#' @concept  solvebio_api
+#' @concept  quartzbio_api
 #' @export
-DatasetMigration.create <- function(
-                                    source_id,
+DatasetMigration.create <- function(source_id,
                                     target_id,
-                                    commit_mode='append',
-                                    source_params=NULL,
-                                    target_fields=NULL,
-                                    include_errors=FALSE,
+                                    commit_mode = "append",
+                                    source_params = NULL,
+                                    target_fields = NULL,
+                                    include_errors = FALSE,
                                     env = get_connection(),
                                     ...) {
-    if (missing(source_id)) {
-        stop("A source dataset ID is required.")
-    }
+  if (missing(source_id)) {
+    stop("A source dataset ID is required.")
+  }
 
-    if (missing(target_id)) {
-        stop("A target dataset ID is required.")
-    }
+  if (missing(target_id)) {
+    stop("A target dataset ID is required.")
+  }
 
-    params = list(
-                  source_id=source_id,
-                  target_id=target_id,
-                  source_params=source_params,
-                  target_fields=target_fields,
-                  commit_mode=commit_mode,
-                  include_errors=include_errors,
-                  ...
-                  )
+  params <- list(
+    source_id = source_id,
+    target_id = target_id,
+    source_params = source_params,
+    target_fields = target_fields,
+    commit_mode = commit_mode,
+    include_errors = include_errors,
+    ...
+  )
 
-    dataset_migration <- .request('POST', path='v2/dataset_migrations', query=NULL, body=params, env=env)
+  dataset_migration <- .request("POST", path = "v2/dataset_migrations", query = NULL, body = params, env = env)
 
-    return(dataset_migration)
+  return(dataset_migration)
 }
 # nocov end
