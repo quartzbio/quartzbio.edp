@@ -1,0 +1,24 @@
+{
+    "took": 1,
+    "results": [
+        {
+            "importance": 1,
+            "gene": "CFTR",
+            "sample_count": 2104
+        },
+        {
+            "importance": 1,
+            "gene": "BRCA2",
+            "sample_count": 1391
+        },
+        {
+            "importance": 5,
+            "gene": "CLIC2",
+            "sample_count": 14
+        }
+    ],
+    "dataset": "2054312777863118640",
+    "offset": null,
+    "dataset_id": "2054312777863118640",
+    "total": 3
+}

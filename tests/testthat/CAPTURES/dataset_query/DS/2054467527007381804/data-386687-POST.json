@@ -1,0 +1,24 @@
+{
+    "took": 0,
+    "cached": true,
+    "results": [
+        {
+            "Petal.Length": 1.5,
+            "Sepal.Length": 5.2,
+            "Petal.Width": 0.2,
+            "Sepal.Width": 3.5,
+            "Species": "setosa"
+        },
+        {
+            "Petal.Length": 3.5,
+            "Sepal.Length": 5.7,
+            "Petal.Width": 1,
+            "Sepal.Width": 2.6,
+            "Species": "versicolor"
+        }
+    ],
+    "dataset": "2054467527007381804",
+    "offset": 2,
+    "dataset_id": "2054467527007381804",
+    "total": 10
+}

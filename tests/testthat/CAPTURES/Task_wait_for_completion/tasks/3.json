@@ -1,0 +1,16 @@
+{
+  "description": "dummy",
+  "id": "3",
+  "parent_id": "2",
+  "status": "running",
+
+  "task_display_name": "Dummy",
+  "task_id": "2",
+  "task_type": "datasets.dummy",
+  
+  "target_object": {  "id": "1978929479725304116", "full_path": "quartzbio:fake:dataset_3"},
+  "user": {
+      "full_name": "Test User"
+  },
+  "updated_at": "2023-02-14T08:29:55.028Z"
+}

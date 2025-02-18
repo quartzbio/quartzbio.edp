@@ -1,0 +1,56 @@
+{
+    "total": 2,
+    "class_name": "list",
+    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks?status=pending%2Cqueued%2Crunning",
+    "data": [
+      {
+        "class_name": "ECSTask",
+        "description": "Validate and prepare records",
+        "id": "1",
+        "parent_id": null,
+        "status": "completed",
+    
+        "task_display_name": "Dataset Import",
+        "task_id": "1",
+        "task_type": "datasets.DatasetImport",
+        "user": {
+            "full_name": "Test User"
+        },
+        "updated_at": "2023-02-14T08:29:41.168Z"
+      },
+      {
+        "class_name": "ECSTask",
+        "description": "Add 3 records",
+        "id": "2",
+        "parent_id": "1",
+        "status": "completed",
+
+        "task_display_name": "Dataset Commit",
+        "task_id": "2",
+        "task_type": "datasets.DatasetCommit",
+        "user": {
+            "full_name": "Test User"
+        },
+        "updated_at": "2023-02-14T08:29:55.028Z"
+      },
+
+      {
+        "class_name": "ECSTask",
+        "description": "dummy",
+        "id": "3",
+        "parent_id": "2",
+
+        "status": "running",
+    
+        "task_display_name": "Dummy",
+        "task_id": "2",
+        "task_type": "datasets.dummy",
+        
+        "user": {
+            "full_name": "Test User"
+        },
+        "updated_at": "2023-02-14T08:29:55.028Z"
+      }
+    
+  ]
+}

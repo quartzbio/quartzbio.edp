@@ -1,0 +1,19 @@
+{
+    "class_name": "User",
+    "date_joined": "2023-01-27T16:17:17.087Z",
+    "email": "Test.User@fakemail.com",
+    "first_name": "Test",
+    "full_name": "Test User",
+    "id": 51,
+    "is_active": true,
+    "is_staff": false,
+    "is_verified": true,
+    "last_name": "Forner",
+    "password_days_remaining": {
+
+    },
+    "role": "member",
+    "title": "",
+    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v1/users/51",
+    "username": "karl.forner.test.admin"
+}

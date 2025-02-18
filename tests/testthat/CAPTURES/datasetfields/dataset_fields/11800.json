@@ -1,0 +1,25 @@
+{
+    "class_name": "DatasetField",
+    "created_at": "2023-04-13T14:42:33.998Z",
+    "depends_on": [
+
+    ],
+    "data_type": "string",
+    "dataset_id": "2021154175053945409",
+    "description": "",
+    "entity_type": "gene",
+    "expression": null,
+    "facets_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_fields/11800/facets",
+    "id": 11800,
+    "is_hidden": false,
+    "is_list": null,
+    "is_read_only": false,
+    "is_valid": true,
+    "name": "name2",
+    "ordering": null,
+    "title": "name2",
+    "updated_at": "2023-04-13T14:42:37.121Z",
+    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_fields/11800",
+    "url_template": null,
+    "vault_id": 1921
+}

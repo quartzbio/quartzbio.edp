@@ -1,0 +1,24 @@
+{
+    "total": 2,
+    "offset": null,
+    "results": [
+        {
+            "Sepal.Length": "4.6",
+            "Sepal.Width": "3.1",
+            "Petal.Length": "1.5",
+            "Petal.Width": "0.2",
+            "Species": "setosa",
+            "row": "4"
+        },
+        {
+            "Sepal.Length": "4.9",
+            "Sepal.Width": "3.1",
+            "Petal.Length": "1.5",
+            "Petal.Width": "0.1",
+            "Species": "setosa",
+            "row": "10"
+        }
+    ],
+    "object_id": 2021152861582597394,
+    "took": 98
+}

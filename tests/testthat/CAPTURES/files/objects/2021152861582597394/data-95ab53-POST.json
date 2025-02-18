@@ -1,0 +1,40 @@
+{
+    "total": null,
+    "offset": 4,
+    "results": [
+        {
+            "Sepal.Length": "5.1",
+            "Sepal.Width": "3.5",
+            "Petal.Length": "1.4",
+            "Petal.Width": "0.2",
+            "Species": "setosa",
+            "row": "1"
+        },
+        {
+            "Sepal.Length": "4.9",
+            "Sepal.Width": "3",
+            "Petal.Length": "1.4",
+            "Petal.Width": "0.2",
+            "Species": "setosa",
+            "row": "2"
+        },
+        {
+            "Sepal.Length": "4.7",
+            "Sepal.Width": "3.2",
+            "Petal.Length": "1.3",
+            "Petal.Width": "0.2",
+            "Species": "setosa",
+            "row": "3"
+        },
+        {
+            "Sepal.Length": "4.6",
+            "Sepal.Width": "3.1",
+            "Petal.Length": "1.5",
+            "Petal.Width": "0.2",
+            "Species": "setosa",
+            "row": "4"
+        }
+    ],
+    "object_id": 2021152861582597394,
+    "took": 106
+}
