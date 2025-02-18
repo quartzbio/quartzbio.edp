@@ -317,7 +317,7 @@ test_that("format_df_like_model works for list values", {
       }
     )
     names(rows) <- col
-    return(rows)
+    rows
   }
 
   # Create a dummy dataframe with numerical list values
@@ -337,7 +337,7 @@ test_that("format_df_like_model works for list values", {
     for (col_name in names(column_rows)) {
       df[[col_name]] <- column_rows[[col_name]]
     }
-    return(df)
+    df
   }
 
   new_df <- .create_df(DATA_TYPES)

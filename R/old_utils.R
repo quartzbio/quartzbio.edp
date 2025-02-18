@@ -64,6 +64,6 @@ formatQueryColumns <- function(id, env, res, use_field_titles) {
     colnames(res)[match(col.name.title.map[, 1], colnames(res))] <- col.name.title.map[, 2][match(col.name.title.map[, 1], colnames(res))]
     colnames(res) <- make.unique(colnames(res), sep = "_")
   }
-  return(res)
+  res
 }
 # nocov end
