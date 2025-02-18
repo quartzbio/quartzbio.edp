@@ -1,0 +1,61 @@
+{
+    "links": {
+        "next": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2021154175053945409/fields?dataset_id=2021154175053945409&limit=2&page=2",
+        "prev": null
+    },
+    "total": 6,
+    "class_name": "list",
+    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2021154175053945409/fields?dataset_id=2021154175053945409&limit=2&page=1",
+    "data": [
+        {
+            "class_name": "DatasetField",
+            "created_at": "2023-04-13T14:42:33.747Z",
+            "depends_on": [
+
+            ],
+            "data_type": "float",
+            "dataset_id": "2021154175053945409",
+            "description": "description",
+            "entity_type": null,
+            "expression": null,
+            "facets_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_fields/11799/facets",
+            "id": 11799,
+            "is_hidden": false,
+            "is_list": null,
+            "is_read_only": false,
+            "is_valid": true,
+            "name": "name",
+            "ordering": 1,
+            "title": "title",
+            "updated_at": "2023-04-13T14:42:36.992Z",
+            "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_fields/11799",
+            "url_template": null,
+            "vault_id": 1921
+        },
+        {
+            "class_name": "DatasetField",
+            "created_at": "2023-04-13T14:42:35.948Z",
+            "depends_on": [
+
+            ],
+            "data_type": "object",
+            "dataset_id": "2021154175053945409",
+            "description": "",
+            "entity_type": null,
+            "expression": null,
+            "facets_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_fields/11803/facets",
+            "id": 11803,
+            "is_hidden": false,
+            "is_list": null,
+            "is_read_only": false,
+            "is_valid": true,
+            "name": "name5",
+            "ordering": 2,
+            "title": "name5",
+            "updated_at": "2023-04-13T14:42:37.088Z",
+            "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_fields/11803",
+            "url_template": null,
+            "vault_id": 1921
+        }
+    ]
+}

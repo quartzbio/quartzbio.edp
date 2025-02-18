@@ -61,7 +61,7 @@ coverage:
   allow_failure: true
   when: on_success
   script:
-    - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE)'
+    - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE, dependencies = TRUE)'
     - Rscript -e 'pak::pkg_install(pkg = c("covr", "DT"), upgrade = TRUE)'
     - Rscript -e 'options(crayon.enabled=FALSE); covr::gitlab(quiet = FALSE)' # crayon is disabled as it causes issues with coverage reading
     - Rscript -e 'covr::to_cobertura(covr::package_coverage(), "coverage.xml")'

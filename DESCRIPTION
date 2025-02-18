@@ -29,6 +29,7 @@ Imports:
     tools,
     utils
 Suggests:
+    httptest,
     RcppSimdJson,
     shiny,
     shinyjs,

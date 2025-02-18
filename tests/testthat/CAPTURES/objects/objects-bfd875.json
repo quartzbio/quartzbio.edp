@@ -1,0 +1,12 @@
+{
+    "links": {
+        "next": null,
+        "prev": null
+    },
+    "total": 0,
+    "class_name": "list",
+    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/objects?full_path=vsim-dev%3Aquartzbio.edp.test.objects%3A%2Fdir1&object_type=file",
+    "data": [
+
+    ]
+}

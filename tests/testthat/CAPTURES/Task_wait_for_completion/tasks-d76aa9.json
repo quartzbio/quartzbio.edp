@@ -1,0 +1,25 @@
+{
+    "total": 2,
+    "class_name": "list",
+    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/tasks?parent_task_id=1&status=pending%2Cqueued%2Crunning",
+    "data": [
+      {
+        "class_name": "ECSTask",
+        "description": "Add 3 records",
+        "id": "2",
+        "parent_id": "1",
+        "status": "completed",
+        "target_object": {
+          "id": "1978929479725304116",
+          "full_path": "quartzbio:fake:dataset_2"
+        },
+        "task_display_name": "Dataset Commit",
+        "task_id": "2",
+        "task_type": "datasets.DatasetCommit",
+        "user": {
+            "full_name": "Test User"
+        },
+        "updated_at": "2023-02-14T08:29:55.028Z"
+      }
+  ]
+}

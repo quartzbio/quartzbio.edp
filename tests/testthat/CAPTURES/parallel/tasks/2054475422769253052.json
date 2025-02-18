@@ -1,0 +1,190 @@
+{
+    "available_actions": [
+        "rollback"
+    ],
+    "schedule_info": null,
+    "class_name": "ECSTask",
+    "created_at": "2023-05-29T14:05:55.547Z",
+    "description": "Add 150 records",
+    "id": "2054475422769253052",
+    "parent_id": "2054475406487366535",
+    "priority": 30,
+    "require_idle_source": false,
+    "require_idle_target": false,
+    "source_object": null,
+    "source_vault": null,
+    "status": "completed",
+    "target_object": {
+        "id": "2054475399019949541",
+        "vault_id": 2455,
+        "dataset_id": "2054475399019949541",
+        "dataset_full_name": "2054475399019949541",
+        "dataset_documents_count": 150,
+        "documents_count": 150,
+        "dataset_description": "iris.ds",
+        "full_path": "vsim-dev:quartzbio.edp.test.parallel:/A/b/iris.ds",
+        "parent_object_id": "2054475397183957638",
+        "object_type": "dataset",
+        "path": "/A/b/iris.ds",
+        "filename": "iris.ds",
+        "is_deleted": false,
+        "created_at": "2023-05-29T14:05:52.709Z",
+        "updated_at": "2023-05-29T14:06:09.407Z",
+        "last_accessed": "2023-05-29T14:05:52.709Z",
+        "last_modified": "2023-05-29T14:06:09.644Z",
+        "url": null,
+        "vault_name": "quartzbio.edp.test.parallel"
+    },
+    "target_vault": {
+        "id": 2455,
+        "name": "quartzbio.edp.test.parallel",
+        "provider": "SolveBio",
+        "vault_type": "general",
+        "full_path": "vsim-dev:quartzbio.edp.test.parallel",
+        "is_deleted": false,
+        "is_public": false,
+        "created_at": "2023-05-29T14:05:51.504Z",
+        "updated_at": "2023-05-29T14:05:51.536Z",
+        "permissions": {
+            "read": true,
+            "write": true,
+            "admin": true
+        },
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2455"
+    },
+    "task_display_name": "Dataset Commit",
+    "task_id": "2054475418825505488",
+    "task_type": "datasets.DatasetCommit",
+    "updated_at": "2023-05-29T14:06:09.676Z",
+    "user": {
+        "class_name": "User",
+        "email": "Test.User@fakemail.com",
+        "first_name": "Test",
+        "full_name": "Test User",
+        "id": 51,
+        "is_active": true,
+        "is_staff": false,
+        "role": "member",
+        "title": ""
+    },
+    "task_object": {
+        "description": null,
+        "metadata": {
+
+        },
+        "status": "completed",
+        "tags": [
+
+        ],
+        "title": "Records Import",
+        "class_name": "DatasetCommit",
+        "created_at": "2023-05-29T14:05:55.072Z",
+        "dataset": {
+            "availability": "available",
+            "beacon_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/beacon",
+            "capacity": "small",
+            "changelog_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/changelog",
+            "class_name": "Dataset",
+            "commits_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/commits",
+            "created_at": "2023-05-29T14:05:52.698Z",
+            "data_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/data",
+            "description": "iris.ds",
+            "documents_count": 150,
+            "entity_types": [
+
+            ],
+            "exports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/exports",
+            "fields_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/fields",
+            "full_path": "vsim-dev:quartzbio.edp.test.parallel:/A/b/iris.ds",
+            "health": "green",
+            "id": "2054475399019949541",
+            "imports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/imports",
+            "metadata": {
+
+            },
+            "replicas": 0,
+            "status": "open",
+            "storage_class": "Temporary",
+            "tags": [
+
+            ],
+            "template_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/template",
+            "updated_at": "2023-05-29T14:06:09.407Z",
+            "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541",
+            "vault_id": 2455,
+            "vault_name": "quartzbio.edp.test.parallel",
+            "vault_object_filename": "iris.ds",
+            "vault_object_id": "2054475399019949541",
+            "vault_object_path": "/A/b/iris.ds"
+        },
+        "error_message": null,
+        "fields": [
+            {
+                "name": "Petal.Length",
+                "is_new": false
+            },
+            {
+                "name": "Petal.Width",
+                "is_new": false
+            },
+            {
+                "name": "Sepal.Length",
+                "is_new": false
+            },
+            {
+                "name": "Sepal.Width",
+                "is_new": false
+            },
+            {
+                "name": "Species",
+                "is_new": false
+            }
+        ],
+        "genome_build": null,
+        "id": "2054475418825505488",
+        "md5": "daf2cc87c24cba283558a738db60cd6d",
+        "mode": "append",
+        "parent_commit_id": null,
+        "parent_commit_job_id": null,
+        "parent_job_id": "2054475406269167969",
+        "parent_job_model": "datasets.DatasetImport",
+        "records_modified": 150,
+        "records_total": 150,
+        "rollback_commit_id": null,
+        "rollback_commit_job_id": null,
+        "size": 1038,
+        "task_id": "2054475422769253052",
+        "timestamps": [
+            [
+                "new",
+                "queued",
+                "2023-05-29T14:05:55.527609Z"
+            ],
+            [
+                "queued",
+                "running",
+                "2023-05-29T14:05:55.606127Z"
+            ],
+            [
+                "running",
+                "completed",
+                "2023-05-29T14:06:09.656558Z"
+            ]
+        ],
+        "updated_at": "2023-05-29T14:06:09.663Z",
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_commits/2054475418825505488",
+        "user": {
+            "class_name": "User",
+            "email": "Test.User@fakemail.com",
+            "first_name": "Test",
+            "full_name": "Test User",
+            "id": 51,
+            "is_active": true,
+            "is_staff": false,
+            "role": "member",
+            "title": ""
+        },
+        "vault_id": 2455
+    },
+    "cron_schedule": null
+}

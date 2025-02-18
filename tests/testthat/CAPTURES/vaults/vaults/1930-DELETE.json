@@ -1,0 +1,49 @@
+{
+    "account_domain": "vsim-dev",
+    "account_id": 3,
+    "class_name": "Vault",
+    "created_at": "2023-04-13T15:49:42.530Z",
+    "default_storage_class": "Temporary",
+    "description": null,
+    "full_path": "vsim-dev:qb.edp.A",
+    "has_children": false,
+    "has_folder_children": false,
+    "id": 1930,
+    "is_deleted": true,
+    "is_public": false,
+    "last_synced": null,
+    "metadata": {
+
+    },
+    "name": "qb.edp.A",
+    "permissions": {
+        "read": false,
+        "write": false,
+        "admin": false
+    },
+    "provider": "SolveBio",
+    "require_unique_paths": true,
+    "tags": [
+        "A",
+        "TEMP",
+        "QBTEST"
+    ],
+    "updated_at": "2023-04-13T15:49:44.721Z",
+    "url": "/v2/vaults/1930",
+    "user": {
+        "class_name": "User",
+        "email": "Test.User@fakemail.com",
+        "first_name": "Test",
+        "full_name": "Test User",
+        "id": 51,
+        "is_active": true,
+        "is_staff": false,
+        "role": "member",
+        "title": ""
+    },
+    "user_id": 51,
+    "vault_properties": [
+
+    ],
+    "vault_type": "general"
+}

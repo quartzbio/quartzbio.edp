@@ -9,4 +9,5 @@
 library(testthat)
 library(quartzbio.edp)
 
+library(httptest)
 test_check("quartzbio.edp")

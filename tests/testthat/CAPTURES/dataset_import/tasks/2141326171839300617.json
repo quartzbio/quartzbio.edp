@@ -1,0 +1,218 @@
+{
+    "available_actions": [
+        "rollback"
+    ],
+    "schedule_info": null,
+    "class_name": "ECSTask",
+    "created_at": "2023-09-26T10:02:51.641Z",
+    "description": "Add 32 records",
+    "id": "2141326171839300617",
+    "parent_id": "2141326157609181229",
+    "priority": 30,
+    "require_idle_source": false,
+    "require_idle_target": false,
+    "source_object": null,
+    "source_vault": null,
+    "status": "completed",
+    "target_object": {
+        "id": "2141325875891641616",
+        "vault_id": 3314,
+        "dataset_id": "2141325875891641616",
+        "dataset_full_name": "2141325875891641616",
+        "dataset_documents_count": 32,
+        "documents_count": 32,
+        "dataset_description": "mtcars.ds",
+        "full_path": "vsim-dev:quartzbio.edp.test.dataset_import:/mtcars.ds",
+        "parent_object_id": null,
+        "object_type": "dataset",
+        "path": "/mtcars.ds",
+        "filename": "mtcars.ds",
+        "is_deleted": false,
+        "created_at": "2023-09-26T10:02:16.356Z",
+        "updated_at": "2023-09-26T10:03:05.459Z",
+        "last_accessed": "2023-09-26T10:02:16.356Z",
+        "last_modified": "2023-09-26T10:03:05.549Z",
+        "url": null,
+        "vault_name": "quartzbio.edp.test.dataset_import"
+    },
+    "target_vault": {
+        "id": 3314,
+        "name": "quartzbio.edp.test.dataset_import",
+        "provider": "SolveBio",
+        "vault_type": "general",
+        "full_path": "vsim-dev:quartzbio.edp.test.dataset_import",
+        "is_deleted": false,
+        "is_public": false,
+        "created_at": "2023-09-26T10:00:35.514Z",
+        "updated_at": "2023-09-26T10:00:35.533Z",
+        "permissions": {
+            "read": true,
+            "write": true,
+            "admin": true
+        },
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/3314"
+    },
+    "task_display_name": "Dataset Commit",
+    "task_id": "2141326169382852160",
+    "task_type": "datasets.DatasetCommit",
+    "updated_at": "2023-09-26T10:03:05.585Z",
+    "user": {
+        "class_name": "User",
+        "email": "Test.User@fakemail.com",
+        "first_name": "Marc",
+        "full_name": "Marc Lamarine",
+        "id": 71,
+        "is_active": true,
+        "is_staff": false,
+        "role": "member",
+        "title": ""
+    },
+    "task_object": {
+        "description": null,
+        "metadata": {
+
+        },
+        "status": "completed",
+        "tags": [
+
+        ],
+        "title": "Records Import",
+        "class_name": "DatasetCommit",
+        "created_at": "2023-09-26T10:02:51.342Z",
+        "dataset": {
+            "availability": "available",
+            "beacon_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616/beacon",
+            "capacity": "small",
+            "changelog_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616/changelog",
+            "class_name": "Dataset",
+            "commits_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616/commits",
+            "created_at": "2023-09-26T10:02:16.353Z",
+            "data_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616/data",
+            "description": "mtcars.ds",
+            "documents_count": 32,
+            "entity_types": [
+
+            ],
+            "exports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616/exports",
+            "fields_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616/fields",
+            "full_path": "vsim-dev:quartzbio.edp.test.dataset_import:/mtcars.ds",
+            "health": "green",
+            "id": "2141325875891641616",
+            "imports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616/imports",
+            "metadata": {
+
+            },
+            "replicas": 0,
+            "status": "open",
+            "storage_class": "Temporary",
+            "tags": [
+
+            ],
+            "template_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616/template",
+            "updated_at": "2023-09-26T10:03:05.459Z",
+            "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141325875891641616",
+            "vault_id": 3314,
+            "vault_name": "quartzbio.edp.test.dataset_import",
+            "vault_object_filename": "mtcars.ds",
+            "vault_object_id": "2141325875891641616",
+            "vault_object_path": "/mtcars.ds"
+        },
+        "error_message": null,
+        "fields": [
+            {
+                "name": "am",
+                "is_new": false
+            },
+            {
+                "name": "car",
+                "is_new": false
+            },
+            {
+                "name": "carb",
+                "is_new": false
+            },
+            {
+                "name": "cyl",
+                "is_new": false
+            },
+            {
+                "name": "disp",
+                "is_new": false
+            },
+            {
+                "name": "drat",
+                "is_new": false
+            },
+            {
+                "name": "gear",
+                "is_new": false
+            },
+            {
+                "name": "hp",
+                "is_new": false
+            },
+            {
+                "name": "mpg",
+                "is_new": false
+            },
+            {
+                "name": "qsec",
+                "is_new": false
+            },
+            {
+                "name": "vs",
+                "is_new": false
+            },
+            {
+                "name": "wt",
+                "is_new": false
+            }
+        ],
+        "genome_build": null,
+        "id": "2141326169382852160",
+        "md5": "1fbf8cabff78b738ad567ef1dcf33f76",
+        "mode": "append",
+        "parent_commit_id": null,
+        "parent_commit_job_id": null,
+        "parent_job_id": "2141326157406823991",
+        "parent_job_model": "datasets.DatasetImport",
+        "records_modified": 32,
+        "records_total": 32,
+        "rollback_commit_id": null,
+        "rollback_commit_job_id": null,
+        "size": 1048,
+        "task_id": "2141326171839300617",
+        "timestamps": [
+            [
+                "new",
+                "queued",
+                "2023-09-26T10:02:51.611779Z"
+            ],
+            [
+                "queued",
+                "running",
+                "2023-09-26T10:02:51.697981Z"
+            ],
+            [
+                "running",
+                "completed",
+                "2023-09-26T10:03:05.560635Z"
+            ]
+        ],
+        "updated_at": "2023-09-26T10:03:05.569Z",
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_commits/2141326169382852160",
+        "user": {
+            "class_name": "User",
+            "email": "Test.User@fakemail.com",
+            "first_name": "Marc",
+            "full_name": "Marc Lamarine",
+            "id": 71,
+            "is_active": true,
+            "is_staff": false,
+            "role": "member",
+            "title": ""
+        },
+        "vault_id": 3314
+    },
+    "cron_schedule": null
+}

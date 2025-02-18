@@ -1,0 +1,238 @@
+{
+    "available_actions": [
+        "cancel"
+    ],
+    "schedule_info": null,
+    "class_name": "ECSTask",
+    "created_at": "2023-09-26T10:06:23.138Z",
+    "description": "Validate and transform uploaded file",
+    "id": "2141327946002308558",
+    "parent_id": null,
+    "priority": 10,
+    "require_idle_source": false,
+    "require_idle_target": false,
+    "source_object": {
+        "id": "2141327932658290318",
+        "vault_id": 3316,
+        "dataset_id": null,
+        "dataset_full_name": null,
+        "dataset_documents_count": null,
+        "documents_count": 3,
+        "dataset_description": null,
+        "full_path": "vsim-dev:quartzbio.edp.test.ds_import_ff:/a/b/c/mtcars.csv",
+        "parent_object_id": "2141327931196310262",
+        "object_type": "file",
+        "path": "/a/b/c/mtcars.csv",
+        "filename": "mtcars.csv",
+        "is_deleted": false,
+        "created_at": "2023-09-26T10:06:21.542Z",
+        "updated_at": "2023-09-26T10:06:21.593Z",
+        "last_accessed": "2023-09-26T10:06:21.542Z",
+        "last_modified": "2023-09-26T10:06:21.542Z",
+        "url": null,
+        "vault_name": "quartzbio.edp.test.ds_import_ff"
+    },
+    "source_vault": null,
+    "status": "running",
+    "target_object": {
+        "id": "2141327940655504348",
+        "vault_id": 3316,
+        "dataset_id": "2141327940655504348",
+        "dataset_full_name": "2141327940655504348",
+        "dataset_documents_count": 0,
+        "documents_count": 0,
+        "dataset_description": "mtcars.ds",
+        "full_path": "vsim-dev:quartzbio.edp.test.ds_import_ff:/mtcars.ds",
+        "parent_object_id": null,
+        "object_type": "dataset",
+        "path": "/mtcars.ds",
+        "filename": "mtcars.ds",
+        "is_deleted": false,
+        "created_at": "2023-09-26T10:06:22.493Z",
+        "updated_at": "2023-09-26T10:06:26.279Z",
+        "last_accessed": "2023-09-26T10:06:22.493Z",
+        "last_modified": "2023-09-26T10:06:22.493Z",
+        "url": null,
+        "vault_name": "quartzbio.edp.test.ds_import_ff"
+    },
+    "target_vault": {
+        "id": 3316,
+        "name": "quartzbio.edp.test.ds_import_ff",
+        "provider": "SolveBio",
+        "vault_type": "general",
+        "full_path": "vsim-dev:quartzbio.edp.test.ds_import_ff",
+        "is_deleted": false,
+        "is_public": false,
+        "created_at": "2023-09-26T10:06:20.078Z",
+        "updated_at": "2023-09-26T10:06:20.102Z",
+        "permissions": {
+            "read": true,
+            "write": true,
+            "admin": true
+        },
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/3316"
+    },
+    "task_display_name": "Dataset Import",
+    "task_id": "2141327945862245395",
+    "task_type": "datasets.DatasetImport",
+    "updated_at": "2023-09-26T10:07:12.855Z",
+    "user": {
+        "class_name": "User",
+        "email": "Test.User@fakemail.com",
+        "first_name": "Marc",
+        "full_name": "Marc Lamarine",
+        "id": 71,
+        "is_active": true,
+        "is_staff": false,
+        "role": "member",
+        "title": ""
+    },
+    "task_object": {
+        "annotator_params": {
+            "annotator": "simple",
+            "block_size": 10,
+            "chunk_size": 1000,
+            "data": {
+
+            },
+            "debug": false,
+            "include_errors": true,
+            "keep_order": true,
+            "pool_size": 100,
+            "timeout": 900,
+            "pre_annotation_expression": "",
+            "post_annotation_expression": ""
+        },
+        "class_name": "DatasetImport",
+        "commit_mode": "append",
+        "created_at": "2023-09-26T10:06:23.120Z",
+        "dataset": {
+            "availability": "available",
+            "beacon_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348/beacon",
+            "capacity": "small",
+            "changelog_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348/changelog",
+            "class_name": "Dataset",
+            "commits_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348/commits",
+            "created_at": "2023-09-26T10:06:22.489Z",
+            "data_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348/data",
+            "description": "mtcars.ds",
+            "documents_count": 0,
+            "entity_types": [
+
+            ],
+            "exports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348/exports",
+            "fields_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348/fields",
+            "full_path": "vsim-dev:quartzbio.edp.test.ds_import_ff:/mtcars.ds",
+            "health": "green",
+            "id": "2141327940655504348",
+            "imports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348/imports",
+            "metadata": {
+
+            },
+            "replicas": 0,
+            "status": "open",
+            "storage_class": "Temporary",
+            "tags": [
+
+            ],
+            "template_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348/template",
+            "updated_at": "2023-09-26T10:06:26.279Z",
+            "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2141327940655504348",
+            "vault_id": 3316,
+            "vault_name": "quartzbio.edp.test.ds_import_ff",
+            "vault_object_filename": "mtcars.ds",
+            "vault_object_id": "2141327940655504348",
+            "vault_object_path": "/mtcars.ds"
+        },
+        "dataset_commits": [
+
+        ],
+        "description": null,
+        "entity_params": {
+            "disable": null,
+            "entity_types": {
+
+            },
+            "sample_rate": null,
+            "sample_count": null,
+            "apply_detection": null
+        },
+        "error_message": null,
+        "genome_build": null,
+        "id": "2141327945862245395",
+        "manifest": {
+
+        },
+        "metadata": {
+
+        },
+        "logical_object": "2141327932658290318",
+        "reader_params": {
+
+        },
+        "source": "object",
+        "source_object": {
+            "id": "2141327932658290318",
+            "vault_id": 3316,
+            "dataset_id": null,
+            "dataset_full_name": null,
+            "dataset_documents_count": null,
+            "documents_count": 3,
+            "dataset_description": null,
+            "full_path": "vsim-dev:quartzbio.edp.test.ds_import_ff:/a/b/c/mtcars.csv",
+            "parent_object_id": "2141327931196310262",
+            "object_type": "file",
+            "path": "/a/b/c/mtcars.csv",
+            "filename": "mtcars.csv",
+            "is_deleted": false,
+            "created_at": "2023-09-26T10:06:21.542Z",
+            "updated_at": "2023-09-26T10:06:21.593Z",
+            "last_accessed": "2023-09-26T10:06:21.542Z",
+            "last_modified": "2023-09-26T10:06:21.542Z",
+            "url": null,
+            "vault_name": "quartzbio.edp.test.ds_import_ff"
+        },
+        "status": "running",
+        "tags": [
+
+        ],
+        "target_fields": [
+
+        ],
+        "timestamps": [
+            [
+                "new",
+                "queued",
+                "2023-09-26T10:06:23.125785Z"
+            ],
+            [
+                "queued",
+                "running",
+                "2023-09-26T10:07:12.861088Z"
+            ]
+        ],
+        "title": null,
+        "updated_at": "2023-09-26T10:07:12.867Z",
+        "upload": null,
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_imports/2141327945862245395",
+        "user": {
+            "class_name": "User",
+            "email": "Test.User@fakemail.com",
+            "first_name": "Marc",
+            "full_name": "Marc Lamarine",
+            "id": 71,
+            "is_active": true,
+            "is_staff": false,
+            "role": "member",
+            "title": ""
+        },
+        "validation_params": {
+            "disable": null,
+            "raise_on_errors": null,
+            "strict_validation": null,
+            "allow_new_fields": null
+        },
+        "vault_id": 3316
+    },
+    "cron_schedule": null
+}

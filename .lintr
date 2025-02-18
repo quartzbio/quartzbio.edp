@@ -8,3 +8,6 @@ linters: linters_with_defaults(
   object_length_linter = NULL, # to remove some day
   seq_linter = NULL # to remove some day
   )
+exclusions: list(
+  "tests/testthat/CAPTURES"
+  )
