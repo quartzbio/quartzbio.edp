@@ -231,7 +231,7 @@ format_df_like_model <- function(df, model) {
       } else {
         df[[i]] <- lapply(df[[i]], function(x) {
           class(x) <- class(model[[i]])
-          return(x)
+          x
         })
       }
     }

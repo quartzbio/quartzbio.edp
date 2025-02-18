@@ -107,7 +107,7 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
       error = function(e) {
         # Cookie JS is not enabled, disable cookies
         warning("WARNING: This app has not been configured to use cookies for token storage.")
-        return(FALSE)
+        FALSE
       }
     )
 
@@ -266,7 +266,7 @@ protectedServerJS <- function() {
     stop("ShinyJS is required to use quartzbio.edp::protectedServerJS()")
   }
 
-  return('
+  '
     shinyjs.enableCookieAuth = function(params) {
         return true;
     }
@@ -285,6 +285,6 @@ protectedServerJS <- function() {
     shinyjs.rmCookie = function(params) {
         Cookies.remove("sb_auth");
     }
-    ')
+    '
 }
 # nocov end
