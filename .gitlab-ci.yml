@@ -81,7 +81,7 @@ lintr:
     - when: always
   script:
     - Rscript -e 'pak::pkg_install(".", upgrade = TRUE)'
-    - Rscript -e 'pak::pkg_install("lintr", upgrade = TRUE)'
+    - Rscript -e 'pak::pkg_install("lintr", upgrade = TRUE); print(paste("lintr version:", packageVersion("lintr")))'
     - Rscript -e 'Sys.setenv("LINTR_ERROR_ON_LINT" = TRUE); lintr::lint_package()'
 
 build_vignettes:
