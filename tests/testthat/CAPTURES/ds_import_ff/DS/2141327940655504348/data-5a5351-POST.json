@@ -1,0 +1,52 @@
+{
+    "took": 0,
+    "cached": true,
+    "results": [
+        {
+            "disp": 160,
+            "mpg": 21.0,
+            "vs": 0,
+            "gear": 4,
+            "drat": 3.9,
+            "qsec": 16.46,
+            "car": "Mazda RX4",
+            "hp": 110,
+            "am": 1,
+            "wt": 2.62,
+            "carb": 4,
+            "cyl": 6
+        },
+        {
+            "disp": 160,
+            "mpg": 21.0,
+            "vs": 0,
+            "gear": 4,
+            "drat": 3.9,
+            "qsec": 17.02,
+            "car": "Mazda RX4 Wag",
+            "hp": 110,
+            "am": 1,
+            "wt": 2.875,
+            "carb": 4,
+            "cyl": 6
+        },
+        {
+            "disp": 108,
+            "mpg": 22.8,
+            "vs": 1,
+            "gear": 4,
+            "drat": 3.85,
+            "qsec": 18.61,
+            "car": "Datsun 710",
+            "hp": 93,
+            "am": 1,
+            "wt": 2.32,
+            "carb": 1,
+            "cyl": 4
+        }
+    ],
+    "dataset": "2141327940655504348",
+    "offset": null,
+    "dataset_id": "2141327940655504348",
+    "total": 3
+}

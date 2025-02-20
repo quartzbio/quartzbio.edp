@@ -1,0 +1,18 @@
+{
+    "took": 1,
+    "results": [
+        {
+            "arbitrary": "toto",
+            "character": "toto",
+            "numeric": 1,
+            "logical": true,
+            "factor": "level1",
+            "date": "2023-02-13",
+            "integer": 1
+        }
+    ],
+    "dataset": "2054312784203227481",
+    "offset": null,
+    "dataset_id": "2054312784203227481",
+    "total": 1
+}

@@ -1,0 +1,60 @@
+{
+    "account_id": 3,
+    "ancestor_object_ids": [
+        "2054312773621907015",
+        "2054312775707888678"
+    ],
+    "availability": "available",
+    "class_name": "Object",
+    "created_at": "2023-05-29T08:42:46.759Z",
+    "dataset_description": "my_dataset",
+    "dataset_documents_count": 3,
+    "documents_count": 3,
+    "dataset_full_name": "2054312777863118640",
+    "storage_class": "Temporary",
+    "dataset_id": "2054312777863118640",
+    "depth": 2,
+    "description": "my_dataset",
+    "filename": "my_dataset",
+    "full_path": "vsim-dev:quartzbio.edp.test.datasets:/toto/titi/my_dataset",
+    "has_children": false,
+    "has_folder_children": false,
+    "id": "2054312777863118640",
+    "is_deleted": false,
+    "is_transformable": false,
+    "last_accessed": "2023-05-29T08:42:46.758Z",
+    "last_modified": "2023-05-29T08:43:04.437Z",
+    "md5": null,
+    "metadata": {
+
+    },
+    "mimetype": "application/vnd.solvebio.dataset",
+    "num_children": 0,
+    "num_descendants": 0,
+    "object_type": "dataset",
+    "parent_object_id": "2054312775707888678",
+    "path": "/toto/titi/my_dataset",
+    "size": null,
+    "tags": [
+
+    ],
+    "updated_at": "2023-05-29T08:43:04.272Z",
+    "upload_url": null,
+    "url": null,
+    "user": {
+        "class_name": "User",
+        "email": "Test.User@fakemail.com",
+        "first_name": "Test",
+        "full_name": "Test User",
+        "id": 51,
+        "is_active": true,
+        "is_staff": false,
+        "role": "member",
+        "title": ""
+    },
+    "user_id": 51,
+    "vault_id": 2420,
+    "vault_name": "quartzbio.edp.test.datasets",
+    "version_count": 0,
+    "global_beacon": null
+}

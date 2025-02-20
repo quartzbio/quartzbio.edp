@@ -1,0 +1,61 @@
+{
+    "account_id": 3,
+    "ancestor_object_ids": [
+        "2021152855139513617",
+        "2021152856755035611",
+        "2021152858324271213",
+        "2021152859963100214"
+    ],
+    "availability": "available",
+    "class_name": "Object",
+    "created_at": "2023-04-13T14:39:56.695Z",
+    "dataset_description": null,
+    "dataset_documents_count": null,
+    "documents_count": 10,
+    "dataset_full_name": null,
+    "storage_class": null,
+    "dataset_id": null,
+    "depth": 4,
+    "description": null,
+    "filename": "iris.tsv",
+    "full_path": "vsim-dev:quartzbio.edp.test.files:/a/b/c/d/iris.tsv",
+    "has_children": false,
+    "has_folder_children": false,
+    "id": "2021152861582597394",
+    "is_deleted": false,
+    "is_transformable": true,
+    "last_accessed": "2023-04-13T14:40:03.055Z",
+    "last_modified": "2023-04-13T14:39:56.695Z",
+    "md5": "0022c6531ba8783ad394d7e88235e1aa",
+    "metadata": {
+
+    },
+    "mimetype": "text/tab-separated-values",
+    "num_children": 0,
+    "num_descendants": 0,
+    "object_type": "file",
+    "parent_object_id": "2021152859963100214",
+    "path": "/a/b/c/d/iris.tsv",
+    "size": 307,
+    "tags": [
+
+    ],
+    "updated_at": "2023-04-13T14:39:57.530Z",
+    "upload_url": null,
+    "url": null,
+    "user": {
+        "class_name": "User",
+        "email": "Test.User@fakemail.com",
+        "first_name": "Test",
+        "full_name": "Test User",
+        "id": 51,
+        "is_active": true,
+        "is_staff": false,
+        "role": "member",
+        "title": ""
+    },
+    "user_id": 51,
+    "vault_id": 1918,
+    "vault_name": "quartzbio.edp.test.files",
+    "global_beacon": null
+}

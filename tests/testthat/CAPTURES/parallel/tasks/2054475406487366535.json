@@ -1,0 +1,430 @@
+{
+    "available_actions": [
+
+    ],
+    "schedule_info": null,
+    "class_name": "ECSTask",
+    "created_at": "2023-05-29T14:05:53.606Z",
+    "description": "Validate and prepare records",
+    "id": "2054475406487366535",
+    "parent_id": null,
+    "priority": 10,
+    "require_idle_source": false,
+    "require_idle_target": false,
+    "source_object": null,
+    "source_vault": null,
+    "status": "completed",
+    "target_object": {
+        "id": "2054475399019949541",
+        "vault_id": 2455,
+        "dataset_id": "2054475399019949541",
+        "dataset_full_name": "2054475399019949541",
+        "dataset_documents_count": 0,
+        "documents_count": 0,
+        "dataset_description": "iris.ds",
+        "full_path": "vsim-dev:quartzbio.edp.test.parallel:/A/b/iris.ds",
+        "parent_object_id": "2054475397183957638",
+        "object_type": "dataset",
+        "path": "/A/b/iris.ds",
+        "filename": "iris.ds",
+        "is_deleted": false,
+        "created_at": "2023-05-29T14:05:52.709Z",
+        "updated_at": "2023-05-29T14:05:56.189Z",
+        "last_accessed": "2023-05-29T14:05:52.709Z",
+        "last_modified": "2023-05-29T14:05:52.709Z",
+        "url": null,
+        "vault_name": "quartzbio.edp.test.parallel"
+    },
+    "target_vault": {
+        "id": 2455,
+        "name": "quartzbio.edp.test.parallel",
+        "provider": "SolveBio",
+        "vault_type": "general",
+        "full_path": "vsim-dev:quartzbio.edp.test.parallel",
+        "is_deleted": false,
+        "is_public": false,
+        "created_at": "2023-05-29T14:05:51.504Z",
+        "updated_at": "2023-05-29T14:05:51.536Z",
+        "permissions": {
+            "read": true,
+            "write": true,
+            "admin": true
+        },
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/2455"
+    },
+    "task_display_name": "Dataset Import",
+    "task_id": "2054475406269167969",
+    "task_type": "datasets.DatasetImport",
+    "updated_at": "2023-05-29T14:05:55.586Z",
+    "user": {
+        "class_name": "User",
+        "email": "Test.User@fakemail.com",
+        "first_name": "Test",
+        "full_name": "Test User",
+        "id": 51,
+        "is_active": true,
+        "is_staff": false,
+        "role": "member",
+        "title": ""
+    },
+    "task_object": {
+        "annotator_params": {
+            "annotator": "simple",
+            "block_size": 10,
+            "chunk_size": 1000,
+            "data": {
+
+            },
+            "debug": false,
+            "include_errors": true,
+            "keep_order": true,
+            "pool_size": 100,
+            "timeout": 900,
+            "pre_annotation_expression": "",
+            "post_annotation_expression": ""
+        },
+        "class_name": "DatasetImport",
+        "commit_mode": "append",
+        "created_at": "2023-05-29T14:05:53.579Z",
+        "dataset": {
+            "availability": "available",
+            "beacon_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/beacon",
+            "capacity": "small",
+            "changelog_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/changelog",
+            "class_name": "Dataset",
+            "commits_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/commits",
+            "created_at": "2023-05-29T14:05:52.698Z",
+            "data_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/data",
+            "description": "iris.ds",
+            "documents_count": 0,
+            "entity_types": [
+
+            ],
+            "exports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/exports",
+            "fields_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/fields",
+            "full_path": "vsim-dev:quartzbio.edp.test.parallel:/A/b/iris.ds",
+            "health": "green",
+            "id": "2054475399019949541",
+            "imports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/imports",
+            "metadata": {
+
+            },
+            "replicas": 0,
+            "status": "open",
+            "storage_class": "Temporary",
+            "tags": [
+
+            ],
+            "template_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/template",
+            "updated_at": "2023-05-29T14:05:56.189Z",
+            "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541",
+            "vault_id": 2455,
+            "vault_name": "quartzbio.edp.test.parallel",
+            "vault_object_filename": "iris.ds",
+            "vault_object_id": "2054475399019949541",
+            "vault_object_path": "/A/b/iris.ds"
+        },
+        "dataset_commits": [
+            {
+                "description": null,
+                "metadata": {
+
+                },
+                "status": "running",
+                "tags": [
+
+                ],
+                "title": "Records Import",
+                "class_name": "DatasetCommit",
+                "created_at": "2023-05-29T14:05:55.072Z",
+                "dataset": {
+                    "availability": "available",
+                    "beacon_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/beacon",
+                    "capacity": "small",
+                    "changelog_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/changelog",
+                    "class_name": "Dataset",
+                    "commits_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/commits",
+                    "created_at": "2023-05-29T14:05:52.698Z",
+                    "data_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/data",
+                    "description": "iris.ds",
+                    "documents_count": 0,
+                    "entity_types": [
+
+                    ],
+                    "exports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/exports",
+                    "fields_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/fields",
+                    "full_path": "vsim-dev:quartzbio.edp.test.parallel:/A/b/iris.ds",
+                    "health": "green",
+                    "id": "2054475399019949541",
+                    "imports_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/imports",
+                    "metadata": {
+
+                    },
+                    "replicas": 0,
+                    "status": "open",
+                    "storage_class": "Temporary",
+                    "tags": [
+
+                    ],
+                    "template_url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541/template",
+                    "updated_at": "2023-05-29T14:05:56.189Z",
+                    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/datasets/2054475399019949541",
+                    "vault_id": 2455,
+                    "vault_name": "quartzbio.edp.test.parallel",
+                    "vault_object_filename": "iris.ds",
+                    "vault_object_id": "2054475399019949541",
+                    "vault_object_path": "/A/b/iris.ds"
+                },
+                "error_message": null,
+                "fields": [
+                    {
+                        "name": "Petal.Length",
+                        "is_new": false
+                    },
+                    {
+                        "name": "Petal.Width",
+                        "is_new": false
+                    },
+                    {
+                        "name": "Sepal.Length",
+                        "is_new": false
+                    },
+                    {
+                        "name": "Sepal.Width",
+                        "is_new": false
+                    },
+                    {
+                        "name": "Species",
+                        "is_new": false
+                    }
+                ],
+                "genome_build": null,
+                "id": "2054475418825505488",
+                "md5": "daf2cc87c24cba283558a738db60cd6d",
+                "mode": "append",
+                "parent_commit_id": null,
+                "parent_commit_job_id": null,
+                "parent_job_id": "2054475406269167969",
+                "parent_job_model": "datasets.DatasetImport",
+                "records_modified": 150,
+                "records_total": 150,
+                "rollback_commit_id": null,
+                "rollback_commit_job_id": null,
+                "size": 1038,
+                "task_id": "2054475422769253052",
+                "timestamps": [
+                    [
+                        "new",
+                        "queued",
+                        "2023-05-29T14:05:55.527609Z"
+                    ],
+                    [
+                        "queued",
+                        "running",
+                        "2023-05-29T14:05:55.606127Z"
+                    ]
+                ],
+                "updated_at": "2023-05-29T14:05:55.742Z",
+                "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_commits/2054475418825505488",
+                "user": {
+                    "class_name": "User",
+                    "email": "Test.User@fakemail.com",
+                    "first_name": "Test",
+                    "full_name": "Test User",
+                    "id": 51,
+                    "is_active": true,
+                    "is_staff": false,
+                    "role": "member",
+                    "title": ""
+                },
+                "vault_id": 2455
+            }
+        ],
+        "description": null,
+        "entity_params": {
+            "disable": null,
+            "entity_types": {
+
+            },
+            "sample_rate": null,
+            "sample_count": null,
+            "apply_detection": null
+        },
+        "error_message": null,
+        "genome_build": null,
+        "id": "2054475406269167969",
+        "manifest": {
+
+        },
+        "metadata": {
+            "progress": {
+                "processed_records": 150,
+                "errors": {
+                    "records": 0,
+                    "examples": [
+
+                    ],
+                    "fields": 0
+                },
+                "records_per_second": 129.89700899147098
+            },
+            "validation": {
+                "errors": [
+
+                ],
+                "warnings": [
+                    "Column name \"Petal.Length\" uses characters that do not comply with strict column name validation. A valid strict column name is: \"petal.length\". Data Import will continue with column name \"Petal.Length\"",
+                    "Column name \"Sepal.Length\" uses characters that do not comply with strict column name validation. A valid strict column name is: \"sepal.length\". Data Import will continue with column name \"Sepal.Length\"",
+                    "Column name \"Sepal.Width\" uses characters that do not comply with strict column name validation. A valid strict column name is: \"sepal.width\". Data Import will continue with column name \"Sepal.Width\"",
+                    "Column name \"Species\" uses characters that do not comply with strict column name validation. A valid strict column name is: \"species\". Data Import will continue with column name \"Species\"",
+                    "Column name \"Petal.Width\" uses characters that do not comply with strict column name validation. A valid strict column name is: \"petal.width\". Data Import will continue with column name \"Petal.Width\""
+                ],
+                "detections": null,
+                "errors_count": 0,
+                "warnings_count": 5,
+                "error_codes": [
+
+                ],
+                "warning_codes": [
+                    202,
+                    202,
+                    202,
+                    202,
+                    202
+                ]
+            }
+        },
+        "logical_object": null,
+        "reader_params": {
+
+        },
+        "source": "data_records",
+        "source_object": null,
+        "status": "completed",
+        "tags": [
+
+        ],
+        "target_fields": [
+            {
+                "is_transient": false,
+                "description": "",
+                "data_type": "double",
+                "entity_type": null,
+                "ordering": 2,
+                "depends_on": [
+
+                ],
+                "title": "Petal.Length",
+                "is_list": null,
+                "url_template": null,
+                "is_hidden": false,
+                "expression": null,
+                "name": "Petal.Length"
+            },
+            {
+                "is_transient": false,
+                "description": "",
+                "data_type": "double",
+                "entity_type": null,
+                "ordering": 3,
+                "depends_on": [
+
+                ],
+                "title": "Petal.Width",
+                "is_list": null,
+                "url_template": null,
+                "is_hidden": false,
+                "expression": null,
+                "name": "Petal.Width"
+            },
+            {
+                "is_transient": false,
+                "description": "",
+                "data_type": "double",
+                "entity_type": null,
+                "ordering": 0,
+                "depends_on": [
+
+                ],
+                "title": "Sepal.Length",
+                "is_list": null,
+                "url_template": null,
+                "is_hidden": false,
+                "expression": null,
+                "name": "Sepal.Length"
+            },
+            {
+                "is_transient": false,
+                "description": "",
+                "data_type": "double",
+                "entity_type": null,
+                "ordering": 1,
+                "depends_on": [
+
+                ],
+                "title": "Sepal.Width",
+                "is_list": null,
+                "url_template": null,
+                "is_hidden": false,
+                "expression": null,
+                "name": "Sepal.Width"
+            },
+            {
+                "is_transient": false,
+                "description": "",
+                "data_type": "string",
+                "entity_type": null,
+                "ordering": 4,
+                "depends_on": [
+
+                ],
+                "title": "Species",
+                "is_list": null,
+                "url_template": null,
+                "is_hidden": false,
+                "expression": null,
+                "name": "Species"
+            }
+        ],
+        "timestamps": [
+            [
+                "new",
+                "queued",
+                "2023-05-29T14:05:53.594080Z"
+            ],
+            [
+                "queued",
+                "running",
+                "2023-05-29T14:05:53.886779Z"
+            ],
+            [
+                "running",
+                "completed",
+                "2023-05-29T14:05:55.576457Z"
+            ]
+        ],
+        "title": null,
+        "updated_at": "2023-05-29T14:05:55.577Z",
+        "upload": null,
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/dataset_imports/2054475406269167969",
+        "user": {
+            "class_name": "User",
+            "email": "Test.User@fakemail.com",
+            "first_name": "Test",
+            "full_name": "Test User",
+            "id": 51,
+            "is_active": true,
+            "is_staff": false,
+            "role": "member",
+            "title": ""
+        },
+        "validation_params": {
+            "disable": null,
+            "raise_on_errors": null,
+            "strict_validation": null,
+            "allow_new_fields": null
+        },
+        "vault_id": 2455
+    },
+    "cron_schedule": null
+}

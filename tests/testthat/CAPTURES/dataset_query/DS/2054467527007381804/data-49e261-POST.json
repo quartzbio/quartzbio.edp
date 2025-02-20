@@ -1,0 +1,24 @@
+{
+    "took": 0,
+    "cached": true,
+    "results": [
+        {
+            "Petal.Length": 5.9,
+            "Sepal.Length": 6.8,
+            "Petal.Width": 2.3,
+            "Sepal.Width": 3.2,
+            "Species": "virginica"
+        },
+        {
+            "Petal.Length": 6.4,
+            "Sepal.Length": 7.9,
+            "Petal.Width": 2,
+            "Sepal.Width": 3.8,
+            "Species": "virginica"
+        }
+    ],
+    "dataset": "2054467527007381804",
+    "offset": 6,
+    "dataset_id": "2054467527007381804",
+    "total": 7
+}

@@ -1,0 +1,58 @@
+{
+    "links": {
+        "next": "https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults?limit=1&page=2",
+        "prev": null
+    },
+    "total": 7,
+    "class_name": "list",
+    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults?limit=1&page=1",
+    "data": [
+        {
+            "account_domain": "vsim-dev",
+            "account_id": 3,
+            "class_name": "Vault",
+            "created_at": "2022-10-26T19:29:07.902Z",
+            "default_storage_class": null,
+            "description": "",
+            "full_path": "vsim-dev:dandan-test",
+            "has_children": true,
+            "has_folder_children": false,
+            "id": 7,
+            "is_deleted": false,
+            "is_public": false,
+            "last_synced": null,
+            "metadata": {
+
+            },
+            "name": "dandan-test",
+            "permissions": {
+                "read": true,
+                "write": false,
+                "admin": false
+            },
+            "provider": "SolveBio",
+            "require_unique_paths": true,
+            "tags": [
+
+            ],
+            "updated_at": "2023-02-13T19:13:48.825Z",
+            "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/vaults/7",
+            "user": {
+                "class_name": "User",
+                "email": "dandan.xu@fakemail.com",
+                "first_name": "Dandan",
+                "full_name": "Dandan Xu",
+                "id": 3,
+                "is_active": true,
+                "is_staff": false,
+                "role": "primary_owner",
+                "title": ""
+            },
+            "user_id": 3,
+            "vault_properties": [
+
+            ],
+            "vault_type": "general"
+        }
+    ]
+}
