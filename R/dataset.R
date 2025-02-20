@@ -135,7 +135,18 @@ Dataset_import <- function(
 get_url_to_parquet <- function(id, conn = get_connection()) {
   # This is a Demo
   # Using the File download url
-  parquet_url <- File_get_download_url(id)
+  #parquet_url <- File_get_download_url(id)
+  # Export dataset in parquet format
+  export <- DatasetExport.create(
+    id,
+    format = 'parquet',
+    params = NULL,
+    send_email_on_completion = FALSE,
+    follow = TRUE
+  )
+
+  Sys.sleep(2)
+  parquet_url <- DatasetExport.get_download_url(export$id)
   parquet_url
 }
 
