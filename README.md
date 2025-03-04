@@ -1,8 +1,4 @@
- QuartzBio EDP for R [![pipeline status](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/badges/main/pipeline.svg)](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/-/commits/main)
-[![coverage report](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/badges/main/coverage.svg)](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/-/commits/main)
-[![Latest Release](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/-/badges/release.svg)](https://gitlab.tib.aws.precisionformedicine.com/code/edp/quartzbio-edp/-/releases)
-=========================
-
+# QuartzBio EDP for R ![page build status](https://github.com/quartzbio/quartzbio.edp/actions/workflows/pkgdown.yaml/badge.svg) ![pipeline status](https://github.com/quartzbio/quartzbio.edp/actions/workflows/R-CMD-check.yaml/badge.svg)
 This package contains the QuartzBio EDP R language bindings for the EDP (Enterprise Data Platform) API.
 
 Features:
@@ -23,7 +19,6 @@ information about the platform.
   new client.
 * See [ChangeLog](https://quartzbio.github.io/quartzbio.edp/news/index.html) for updates
 
-
 ## Installation
 
 Installing this package requires an installed R environment.
@@ -38,20 +33,17 @@ remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE, ref = "m
 
 **quartzbio.edp** uses the [RcppSimdJson](https://cran.r-project.org/package=RcppSimdJson) R package for speed.
 
-
 But on some older systems, **RcppSimdJson** requires a **CXX17** compatible C++ compiler, even when installed from a pre-compiled binary package..
 
 In this case, you can manually install a **CXX17** compiler. Here are some resources:
 - https://www.geeksforgeeks.org/complete-guide-to-install-c17-in-windows/
 - https://gasparri.org/2020/07/30/installing-c17-and-c20-on-ubuntu-and-amazon-linux/
 
-
 In any case, **RcppSimdJson** is **optional**. If not installed, **quartzbio.edp** will work seamlessly in **degraded mode**.
-
 
 ### complete reproducible installation example using a tidyverse qbrocker image
 
-```
+```{sh}
 # run a shell inside the tidyverse container
 docker run -ti --rm rocker/tidyverse  bash
 
@@ -68,19 +60,18 @@ R
 * Github public [quartzbio.edp](https://github.com/quartzbio/quartzbio.edp) source repository
 * Github quartzbio.edp online package [documentation](https://quartzbio.github.io/quartzbio.edp/)
 
-
 ## Usage
 
 ### connection/authentication
 
 See the [Connection to an EDP host vignette](https://quartzbio.github.io/quartzbio.edp/articles/connection.html) for more details.
 
-- Get an Authentication Token. They can be obtained from [Personal Access Tokens](https://docs.solvebio.com/#authentication)
-
-
+* Get an Authentication Token. They can be obtained from [Personal Access Tokens](https://docs.solvebio.com/#authentication)
 * Save it into the `~/.qb/edp.json` file as the **default** EDP configuration profile.
+
 Your `~/.qb/edp.json` may look like:
-```
+
+```{json}
 {
   "default": {
     "secret": "PUT_HERE_TOUR_AUTHENTICATION_TOKEN",
@@ -92,13 +83,12 @@ Your `~/.qb/edp.json` may look like:
 The package functions will use this default profile by default if you do not use an explicit configuration.
 For example:
 
-```R
+```{r}
 library(quartzbio.edp)
 User()
 Vaults()
 Folders()
 ```
-
 
 ## Articles
 
