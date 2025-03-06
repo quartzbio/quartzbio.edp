@@ -9,22 +9,29 @@ navbar:
     - toc
     - reference
     - articles
+    - Authentication
     - tutorials
     - authors
     - news
     right:
     - search
     - github
+
+  components:
+    Authentication:
+      text: Autentication
+      href: articles/r_authentication.html
+
 reference:
 - title: EDP connections
   desc: |
-    Set, get manage connections to EDP using profiles or environments variables  [Connection to EDP hosts](../../docs/articles/)
+    Set, get manage connections to EDP using profiles or environments variables
   contents:
   - matches('connect')
   - params
 - title: Vaults, Files, Folders
   desc: |
-    Vaults, Files, Folders management [Vaults and Objects](../../docs/articles/vaults_and_objects.html)
+    Vaults, Files, Folders management [Vaults and Objects](../../docs/articles/vaults_n_objects.html)
   contents:
   - matches('^Vault?_')
   - matches('^Folder?_')
