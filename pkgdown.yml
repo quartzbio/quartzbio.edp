@@ -2,9 +2,11 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  first: first.html
-  second: second.html
-last_built: 2025-03-05T14:26Z
+  exporting_data: exporting_data.html
+  import_data: import_data.html
+  r_authentication: r_authentication.html
+  vaults_n_objects: vaults_n_objects.html
+last_built: 2025-03-06T08:39Z
 urls:
   reference: https://quartzbio.github.io/quartzbio.edp/reference
   article: https://quartzbio.github.io/quartzbio.edp/articles
