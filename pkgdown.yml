@@ -2,11 +2,17 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
+  aggregating_datasets: aggregating_datasets.html
+  creating_and_migrating_datasets: creating_and_migrating_datasets.html
+  dataset_templates: dataset_templates.html
+  dataset_versioning: dataset_versioning.html
   exporting_data: exporting_data.html
+  expression_functions: expression_functions.html
   import_data: import_data.html
   r_authentication: r_authentication.html
+  transforming_datasets: transforming_datasets.html
   vaults_n_objects: vaults_n_objects.html
-last_built: 2025-03-06T08:39Z
+last_built: 2025-03-11T13:08Z
 urls:
   reference: https://quartzbio.github.io/quartzbio.edp/reference
   article: https://quartzbio.github.io/quartzbio.edp/articles
