@@ -16,11 +16,34 @@ navbar:
     right:
     - search
     - github
-
+  Articles:
+    text: "Articles"
+    href: "#"
+    menu:
+      - text: "Vaults and Objects"
+        href: articles/vaults_n_objects.html
+      - text: "Importing Data via API"
+        href: articles/import_data.html
+      - text: "Exporting Data via API"
+        href: articles/exporting_data.html
+      - text: "Creating and migrating datasets"
+        href: articles/creating_and_migrating_datasets.html
+      - text: "Dataset templates"
+        href: articles/dataset_templates.html
+      - text: "Data versioning via API"
+        href: articles/dataset_versioning.html
+      - text: "Aggregate datasets"
+        href: articles/aggregating_datasets.html
+      - text: "Transforming datasets"
+        href: articles/transforming_datasets.html
+      - text: "Expression functions"
+        href: articles/expression_functions.html
   components:
     Authentication:
       text: Autentication
       href: articles/r_authentication.html
+
+
 
 reference:
 - title: EDP connections
@@ -31,7 +54,7 @@ reference:
   - params
 - title: Vaults, Files, Folders
   desc: |
-    Vaults, Files, Folders management [Vaults and Objects](../../docs/articles/vaults_n_objects.html)
+    Vaults, Files, Folders management [Vaults and Objects](articles/vaults_n_objects.html)
   contents:
   - matches('^Vault?_')
   - matches('^Folder?_')
@@ -53,3 +76,39 @@ reference:
     Former solvebio api functions. Compatible with the new connection functions.
   contents: has_concept("solvebio_api")
 
+articles:
+- title: "Vaults and Objects"
+  contents:
+  - "vaults_n_objects"
+- title: "Importing and Exporting Data via API"
+  contents:
+  - "import_data"
+  - "exporting_data"
+- title: "Creating and Migrating Datasets"
+  contents:
+  - "creating_and_migrating_datasets"
+- title: "Dataset templates"
+  contents:
+  - "dataset_templates"
+- title: "Dataset Versioning"
+  contents:
+  - "dataset_versioning"
+- title: "Aggregate Datasets"
+  contents:
+  - "aggregating_datasets"
+- title: "Transform Datasets"
+  contents:
+  - "transforming_datasets"
+- title: "Expression Functions"
+  contents:
+  - "expression_functions"
+- title: internal
+  contents:
+  - "r_authentication"
+
+footer:
+  structure:
+    left: developed_by
+    right: [last updated, built_with]
+  components:
+    last updated: "Last updated: 11th March 2025 "
