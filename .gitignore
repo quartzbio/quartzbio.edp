@@ -15,3 +15,7 @@
 man/.roxygen.md5
 docs/
 coverage.xml
+docs
+inst/doc
+/doc/
+/Meta/

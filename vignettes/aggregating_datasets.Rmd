@@ -1,0 +1,161 @@
+---
+title: "Aggregating Datasets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Aggregating Datasets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+
+## Overview
+
+
+Both the EDP Python and R client libraries enable users to perform aggregations to build complex summaries of data. Aggregation queries can be run on datasets with the help of facets. Facets can be used to generate aggregated summaries of string (and date) fields as well as numeric fields, and they automatically work on top of queries and filters. Facets can also be nested, which provides an incredibly efficient mechanism to summarize binned or rolled-up data (i.e. data summarized by term or by date).
+
+
+## String and Date Aggregations
+
+
+For string fields (i.e. categorical fields) and date fields, users can utilize facets to find the total number of unique values as well as a list of the most common values that occur in the dataset. When used with a filtered dataset, the results will represent the filtered subset of data.
+
+
+The following facet types are supported:
+-   terms (default): Returns a list of the top terms and the number of times they occur (in order of this value). The default number of terms returned at once is 10. Users can set a limit up to 1 million (1,000,000) terms returned.
+-   count: Returns the number of unique values in the field. For very large datasets, this is an approximate number.
+
+
+Facets will not work for text fields that are indexed (and tokenized) for full-text search. Terms facets are also disabled for _id fields.
+
+### Examples in R:
+
+```{r}
+library(quartzbio.edp)
+
+# Load ClinVar
+clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37")
+
+# Find the most common genes in ClinVar
+facets <- Dataset.facets(clinvar$id, list("gene"))
+# Convert the facet results to a matrix
+topGenes <- do.call(rbind, facets$gene)
+
+# Retrieve the number of unique genes in ClinVar
+count <- Dataset.facets(clinvar$id, '{"gene": {"facet_type": "count"}}')
+# Convert the facet result to a number
+count <- as.numeric(count)
+
+# Filter ClinVar for only variants that relate to drug response.
+# Which are the most common genes now?
+filters <- '[["clinical_significance", "Drug response"]]'
+facets <- Dataset.facets(clinvar$id, list("gene"), filters = filters)
+# Convert the facet results to a matrix
+topDrugResponseGenes <- do.call(rbind, facets$gene)
+
+# How many genes are in this filtered query?
+count <- Dataset.facets(clinvar$id, '{"gene": {"facet_type": "count"}}', filters = filters)
+# Convert the facet result to a number
+countDrugResponseGenes <- as.numeric(count)
+
+# Now, get the top 100 most common values
+facets <- Dataset.facets(clinvar$id, list("gene" = list("limit" = 1000)))
+# Convert the facet results to a matrix
+top1000DrugResponseGenes <- do.call(rbind, facets$gene)
+```
+
+
+## Numeric Aggregations
+
+
+There are various aggregation options are available for numerical fields (such as float/double, integer/long, and date). Instead of returning "common terms",  numerical facets can calculate summary statistics, histograms, and percentiles. The following facet types are supported:
+
+-   stats: Default stats return average, count, maximum, minimum, and sum. Extended stats also include standard deviation, standard deviation lower and upper bounds, sum of squares, and variance.
+-   histogram: values are binned according to a provided interval. For numerical fields, the default interval is 100. For dates, the default interval is 'month'. Histogram intervals must be integers, and will therefore not work for fields with values between 0 and 1 (such as allele frequencies).
+-   percentiles: calculates estimated percentiles for a field. By default, returns the following percentiles: 1, 5, 25, 50, 75, 95, 99. Percentiles are approximated and have an 1-5% error for very large datasets.
+
+### Examples in R:
+
+```{r}
+library(quartzbio.edp)
+
+# Get ClinVar dataset
+clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37")
+
+# Get extended statistics for a numerical field.
+stats <- Dataset.facets(
+  clinvar$id,
+  '{"info.ALLELEID": {
+        "facet_type": "stats", "extended": true}}'
+)
+# Get the min and max values
+stats$review_status_star$min
+stats$review_status_star$max
+
+# Calculate a histogram for genomic position in chromosome 12
+facets <- Dataset.facets(
+  clinvar$id,
+  '{"genomic_coordinates.start": {"facet_type": "histogram"}}',
+  filters = '[["genomic_coordinates.chromosome", 12]]'
+)
+# Convert the result to a matrix
+genomicCoordinates <- do.call(rbind, facets$genomic_coordinates.start)
+```
+
+
+## Nested Aggregations
+
+
+Nested aggregations can be used to apply an aggregation query to the result of another aggregation query. For example, given a dataset with patient information, users may want to determine the most common diagnosis age for each cancer type. Users could iterate through each cancer type and run a facets query on the age field, but that would require a large number of expensive API calls. Instead, by using nested aggregations, users can simply construct a facets query within an existing facets query, as in the example below.
+
+
+At this time, users may only nest term and histogram facets under terms facets. Nesting within histogram facets is not currently supported.
+
+
+The following example  yields the top ten genes associated with each disease in the public TCGA somatic mutations dataset:
+
+```{r}
+library(quartzbio.edp)
+
+# Retrieve the TCGA Somatic Mutations dataset
+TCGA <- Dataset.get_by_full_path("quartzbio:Public:/TCGA/2.0.0-2018-mc3-v0.2.8/SomaticMutations-GRCh37")
+
+# Retrieve each disease (terms facets)
+# and the gene for each (nested terms facet)
+facets <- list(
+  "disease" = list(
+    "limit" = 100,
+    "facets" = list(
+      "hugo_symbol" = list("limit" = 10)
+    )
+  )
+)
+
+results <- Dataset.facets(TCGA$id, facets = facets)
+
+# Convert results to data frame
+data_frame <- as.data.frame(do.call(rbind, results))
+
+# View data frame
+data_frame
+
+# Output:
+# The disease is the first value in each row, followed by the total number of records and then each gene and its count
+
+# disease UCEC, 934029, TTN, 2961, MUC16, 863, PTEN, 684, DST, 677, SYNE1, 642, CSMD3, 628, RYR2, 613, NEB, 569, ZFHX4, 551, OBSCN, 549
+
+# disease SKCM, 494062, TTN, 3059, MUC16, 2022, DNAH5, 885, PCLO, 672, LRP1B, 515, ANK3, 494, GPR98, 482, CSMD1, 472, DNAH7, 460, CSMD2, 453
+
+# disease COAD, 240187, TTN, 882, APC, 461, MUC16, 323, SYNE1, 300, TP53, 229, OBSCN, 220, FAT4, 211, RYR2, 186, NEB, 176, KRAS, 171
+
+# disease LUAD, 222076, TTN, 935, MUC16, 562, RYR2, 488, CSMD3, 480, LRP1B, 392, USH2A, 374, ZFHX4, 348, TP53, 304, FLG, 269, XIRP2, 268
+
+# disease STAD, 217398, TTN, 882, MUC16, 343, SYNE1, 227, LRP1B, 218, TP53, 216, FAT4, 201, OBSCN, 200, FLG, 193, CSMD3, 192, PCLO, 169
+```
