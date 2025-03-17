@@ -195,9 +195,7 @@ Dataset_schema <- function(id = NULL, full_path = NULL, parquet_path = NULL) {
 #' @param id (character) The ID of a QuartzBio EDP dataset.
 #' @param full_path (character) a valid dataset full path, including the account, vault and path to EDP Dataset.
 #' @param get_schema (boolean) Retrieves the schema of the Quartzbio EDP dataset loaded. Default value: FALSE
-#' @param col_select (character) A character vector of field names to select in the results.
-#' Tidy specification of fields can also be used. Check [arrow::read_parquet()]
-#' @inheritParams arrow::read_parquet
+#' @inheritDotParams arrow::read_parquet col_select as_data_frame
 #' @concept  quartzbio_api
 #' @return A `tibble` which is the default, or an Arrow Table otherwise. If the `get_schema` parameter is set to `TRUE`,
 #' the function returns a list containing both the `tibble` and its schema.

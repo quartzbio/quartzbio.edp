@@ -13,10 +13,16 @@ Dataset_load(id = NULL, full_path = NULL, get_schema = FALSE, ...)
 
 \item{get_schema}{(boolean) Retrieves the schema of the Quartzbio EDP dataset loaded. Default value: FALSE}
 
-\item{...}{Additional arguments passed to \code{ParquetFileReader$create()}}
-
-\item{col_select}{(character) A character vector of field names to select in the results.
-Tidy specification of fields can also be used. Check \code{\link[arrow:read_parquet]{arrow::read_parquet()}}}
+\item{...}{
+  Arguments passed on to \code{\link[arrow:read_parquet]{arrow::read_parquet}}
+  \describe{
+    \item{\code{col_select}}{A character vector of column names to keep, as in the
+"select" argument to \code{data.table::fread()}, or a
+\link[tidyselect:eval_select]{tidy selection specification}
+of columns, as used in \code{dplyr::select()}.}
+    \item{\code{as_data_frame}}{Should the function return a \code{tibble} (default) or
+an Arrow \link[arrow]{Table}?}
+  }}
 }
 \value{
 A \code{tibble} which is the default, or an Arrow Table otherwise. If the \code{get_schema} parameter is set to \code{TRUE},
@@ -25,4 +31,4 @@ the function returns a list containing both the \code{tibble} and its schema.
 \description{
 Loads large Quartzbio EDP dataset and returns an R data frame containing all records.
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}

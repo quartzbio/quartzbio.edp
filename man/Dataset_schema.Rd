@@ -19,4 +19,4 @@ A Schema object containing Fields, which maps to the data types.
 \description{
 Retrieves the schema of the Quartzbio EDP dataset.
 }
-\concept{solvebio_api}
+\concept{quartzbio_api}
