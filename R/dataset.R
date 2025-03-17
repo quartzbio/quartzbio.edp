@@ -123,16 +123,24 @@ Dataset_import <- function(
   res
 }
 
-#' Get URL to parquet dataset
+#' Initiate a Dataset export to parquet
 #'
-#' Get the associated URL to a parquet file for a given Quartzbio EDP dataset ID.
+#' Create a dataset export to parquet file and return the URL to export file
 #'
 #' @param id (character) The ID of a QuartzBio EDP dataset, or a Dataset object.
+#' @param full_path (character) a valid dataset full path, including the account, vault and path to EDP Dataset.
 #' @param conn (optional) Custom client environment.
 #' @return URL to the parquet file for the given EDP dataset. If there is an
 #' failure, an error will be raised.
 #' @concept  solvebio_api
-get_url_to_parquet <- function(id, conn = get_connection()) {
+dataset_export_to_parquet <- function(id = NULL, full_path = NULL, conn = get_connection()) {
+  # Retrieve the dataset ID
+  if (is.null(id) && !is.null(full_path)) {
+    # Retrieving dataset ID by full path
+    dt <- Dataset.get_by_full_path(full_path = full_path)
+    id <- dt$id
+  }
+
   # Export dataset in parquet format
   export <- DatasetExport.create(
     id,
@@ -142,7 +150,8 @@ get_url_to_parquet <- function(id, conn = get_connection()) {
     follow = TRUE
   )
 
-  Sys.sleep(2)
+  # Wait for the download URL to be generated once task completes
+  Sys.sleep(1)
   parquet_url <- DatasetExport.get_download_url(export$id)
   parquet_url
 }
@@ -151,74 +160,71 @@ get_url_to_parquet <- function(id, conn = get_connection()) {
 #'
 #' Retrieves the schema of the Quartzbio EDP dataset.
 #'
-#' @param id The ID of a QuartzBio EDP dataset.
-#' @param full_path a valid dataset full path, including the account, vault and path to EDP Dataset.
+#' @param id (character) The ID of a QuartzBio EDP dataset.
+#' @param full_path (character) a valid dataset full path, including the account, vault and path to EDP Dataset.
+#' @param parquet_path (character) provide a parquet file/ URI connection
 #' @return A Schema object containing Fields, which maps to the data types.
-#' @concept solvebio_api
+#' @concept quartzbio_api
 #' @export
-Dataset_schema <- function(id = NULL, full_path = NULL) {
-  if (!requireNamespace("arrow", quietly = TRUE)) {
-    stop("Packages \"arrow\" must be installed to use this function.")
+Dataset_schema <- function(id = NULL, full_path = NULL, parquet_path = NULL) {
+  # check for arguments
+  all_null <- all(sapply(c(id, full_path, parquet_path), is.null))
+
+  if (all_null) {
+    stop("A dataset ID or full path is required")
   }
 
-  # S3 presigned url for the parquet file of dataset
-  if (is.null(id) && is.null(full_path)) {
-    stop("A dataset ID full path is required")
-  }
-
-  if (!is.null(full_path)) {
-    # Retrieving dataset ID by full path
-    dt <- Dataset.get_by_full_path(full_path = full_path)
-    dataset_id <- dt$id
+  if (!is.null(parquet_path)) {
+    parquet_url <- parquet_path
   } else {
-    dataset_id <- id
+    # initiate a parquet export
+    parquet_url <- dataset_export_to_parquet(id = id, full_path = full_path)
   }
 
-  parquet_url <- get_url_to_parquet(dataset_id)
 
   # Create a Parquet file reader
   pq <- arrow::ParquetFileReader$create(parquet_url)
-  dataset_scehma <- pq$GetSchema()
-  dataset_scehma
+  dataset_schema <- pq$GetSchema()
+  dataset_schema
 }
 
 #' Dataset_load
 #'
 #' Loads large Quartzbio EDP dataset and returns an R data frame containing all records.
 #'
-#' @param id The ID of a QuartzBio EDP dataset.
-#' @param full_path a valid dataset full path, including the account, vault and path to EDP Dataset.
-#' @param select_fields A character vector of field names to select in the results.
+#' @param id (character) The ID of a QuartzBio EDP dataset.
+#' @param full_path (character) a valid dataset full path, including the account, vault and path to EDP Dataset.
+#' @param get_schema (boolean) Retrieves the schema of the Quartzbio EDP dataset loaded. Default value: FALSE
+#' @param col_select (character) A character vector of field names to select in the results.
 #' Tidy specification of fields can also be used. Check [arrow::read_parquet()]
 #' @inheritParams arrow::read_parquet
-#' @concept  solvebio_api
-#' @return A `tibble` which is the default, or an Arrow Table otherwise.
+#' @concept  quartzbio_api
+#' @return A `tibble` which is the default, or an Arrow Table otherwise. If the `get_schema` parameter is set to `TRUE`,
+#' the function returns a list containing both the `tibble` and its schema.
 #' @export
-Dataset_load <- function(id = NULL, full_path = NULL, select_fields = NULL, ...) {
+Dataset_load <- function(id = NULL, full_path = NULL, get_schema = FALSE, ...) {
   if (is.null(id) && is.null(full_path)) {
     stop("A dataset ID or full path is required.")
   }
-  if (!is.null(full_path)) {
-    # Retrieving dataset ID by full path
-    dt <- Dataset.get_by_full_path(full_path = full_path)
-    dataset_id <- dt$id
-  } else {
-    dataset_id <- id
-  }
 
-  parquet_url <- get_url_to_parquet(dataset_id)
+  parquet_url <- dataset_export_to_parquet(id = id, full_path = full_path)
+
   tryCatch(
     {
-      df <- arrow::read_parquet(parquet_url, col_select = select_fields, ...)
+      df <- arrow::read_parquet(parquet_url, ...)
     },
     error = function(e) {
       stop(sprintf("Error in reading dataset: %s\n", e$message))
     }
   )
 
+  if (get_schema) {
+    schema <- Dataset_schema(parquet_path = parquet_url)
+    return(list(df = df, schema = schema))
+  }
+
   df
 }
-# hgvs <- Dataset_load("2401538393287146373")
 
 #' queries data into a dataset.
 #' @inheritParams params

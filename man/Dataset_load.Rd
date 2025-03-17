@@ -4,20 +4,23 @@
 \alias{Dataset_load}
 \title{Dataset_load}
 \usage{
-Dataset_load(id = NULL, full_path = NULL, select_fields = NULL, ...)
+Dataset_load(id = NULL, full_path = NULL, get_schema = FALSE, ...)
 }
 \arguments{
-\item{id}{The ID of a QuartzBio EDP dataset.}
+\item{id}{(character) The ID of a QuartzBio EDP dataset.}
 
-\item{full_path}{a valid dataset full path, including the account, vault and path to EDP Dataset.}
+\item{full_path}{(character) a valid dataset full path, including the account, vault and path to EDP Dataset.}
 
-\item{select_fields}{A character vector of field names to select in the results.
-Tidy specification of fields can also be used. Check \code{\link[arrow:read_parquet]{arrow::read_parquet()}}}
+\item{get_schema}{(boolean) Retrieves the schema of the Quartzbio EDP dataset loaded. Default value: FALSE}
 
 \item{...}{Additional arguments passed to \code{ParquetFileReader$create()}}
+
+\item{col_select}{(character) A character vector of field names to select in the results.
+Tidy specification of fields can also be used. Check \code{\link[arrow:read_parquet]{arrow::read_parquet()}}}
 }
 \value{
-A \code{tibble} which is the default, or an Arrow Table otherwise.
+A \code{tibble} which is the default, or an Arrow Table otherwise. If the \code{get_schema} parameter is set to \code{TRUE},
+the function returns a list containing both the \code{tibble} and its schema.
 }
 \description{
 Loads large Quartzbio EDP dataset and returns an R data frame containing all records.

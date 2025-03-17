@@ -40,7 +40,7 @@ test_that_with_edp_api("dataset_query", {
   set.seed(1234)
   IRIS <- iris[sample(nrow(iris), 10), ]
   IRIS$Species <- as.character(IRIS$Species)
-  ds <- Dataset_create(v, "/A/b/iris.ds")
+  ds <- quartzbio.edp::Dataset_create(v, "/A/b/iris.ds")
 
   Dataset_import(ds, df = IRIS, sync = httptest_is_capture_enabled())
 
