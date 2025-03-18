@@ -4,15 +4,21 @@ pkgdown_sha: ~
 articles:
   aggregating_datasets: aggregating_datasets.html
   creating_and_migrating_datasets: creating_and_migrating_datasets.html
+  data_discovery_via_API: data_discovery_via_API.html
   dataset_templates: dataset_templates.html
   dataset_versioning: dataset_versioning.html
+  edp_r_shiny_applications: edp_r_shiny_applications.html
   exporting_data: exporting_data.html
   expression_functions: expression_functions.html
+  expressions: expressions.html
+  filters: filters.html
   import_data: import_data.html
+  metadata_and_global_beacons: metadata_and_global_beacons.html
+  querying_datasets_and_files: querying_datasets_and_files.html
   r_authentication: r_authentication.html
   transforming_datasets: transforming_datasets.html
   vaults_n_objects: vaults_n_objects.html
-last_built: 2025-03-11T13:08Z
+last_built: 2025-03-18T12:39Z
 urls:
   reference: https://quartzbio.github.io/quartzbio.edp/reference
   article: https://quartzbio.github.io/quartzbio.edp/articles
