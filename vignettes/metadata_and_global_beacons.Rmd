@@ -1,0 +1,128 @@
+---
+title: "Metadata and Global Beacons"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Metadata and Global Beacons}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Overview
+
+
+Users with Write or Admin permissions on vault objects (files, folders, and datasets) have the ability to add tags or metadata to those objects to facilitate data discovery and accessibility. Users with Write or Admin permissions on datasets can also add special labels called entities to fields that contain information such as genes, variants, and samples. To enable users to search for datasets based on the entities they contain, Admins can enable Global Beacons indexing for datasets. For more information about Search tools and data discovery on the EDP, users can refer to the [Data Discovery via API](data_discovery_via_API.html) documentation.
+
+
+## Tags
+
+Tags are case-insensitive lists of strings. Tags can be used to filter and search for objects.
+
+```{r}
+library(quartzbio.edp)
+
+# Upload a file
+vault <- Vault.get_personal_vault()
+object <- Object.upload_file("./analysis.tsv", vault$id, "/")
+
+# Add metadata and tags to the object
+Object.update(object$id, tags = list("tag1", "tag2"))
+```
+
+## Metadata
+
+Metadata is represented by key/value pairs. While nested value pairs are allowed, users are recommended to use a flat metadata structure.
+
+```{r}
+library(quartzbio.edp)
+
+# Upload a file
+vault <- Vault.get_personal_vault()
+object <- Object.upload_file("./analysis.tsv", vault$id, "/")
+
+# Add metadata and tags to the object
+Object.update(object$id, metadata = list(file_type = "CSV", project = "My Project"))
+```
+
+Any metadata values that contain URLs will be converted to links on the EDP web interface.
+
+
+## Entities
+
+Entities are special labels for dataset fields that contain specific content, such as genes, variants, vault objects, samples, and more. Entities allow for cross-dataset data harmonization, easy filtering, Global Beacons, and other entity-specific functions.
+
+Entities can also be added, removed, or switched using the web interface for any dataset to which the user has write access. On the dataset view, any field with an orange label next to the field type is an entity field. Entities can be changed by clicking on the pencil icon via UI.
+
+## Global Beacons
+
+Global Beacons are specialized search endpoints that enable anyone in a user's organization to find datasets based on the entities they contain (i.e. variants, genes). Both the datasets in the public and in the private vaults can be indexed. Depending on the dataset size, indexing time may vary.
+
+Once the dataset has been indexed, users will be able to perform Global Beacon Search and find this dataset.
+
+The EDP Python and R clients provide the functionality to work with Global Beacons. Users with Admin permissions for a dataset can check the status of the Global Beacon on the dataset as well as enable or disable Global Beacons. 
+
+
+When working with Global Beacons via API, the output will display the `status` attribute, which is either `indexing`, `completed`, or `destroying`, as well as the `progress_percent` attribute which describes the percentage of the task completed. While indexing is still in progress, users won't be able to perform Global Beacon Search for that dataset. A dataset is available for Global Beacon Search when the `progress_percent` is 100 and the `status` is completed.
+
+```{r}
+library(quartzbio.edp)
+
+# Turn on Global Beacon on the dataset
+Object.enable_global_beacon(dataset_id)
+
+# Example Output:
+## $id
+## [1] 110
+## $datastore_id
+## [1] 7
+## $dataset_id
+## [1] 1.658667e+18
+## $status
+## [1] "indexing"
+## $progress_percent
+## [1] 0
+## $is_deleted
+## [1] FALSE
+
+# Getting the status of global beacon on the dataset
+Object.get_global_beacon_status(dataset_id)
+
+## $id
+## [1] 110
+## $datastore_id
+## [1] 7
+## $dataset_id
+## [1] 1.658667e+18
+## $status
+## [1] "completed"
+## $progress_percent
+## [1] 100
+## $is_deleted
+## [1] FALSE
+
+# Disabling Global Beacon on dataset
+Object.disable_global_beacon(dataset_id)
+
+# Example Ouput:
+## $id
+## [1] 110
+## $datastore_id
+## [1] 7
+## $dataset_id
+## [1] 1.658667e+18
+## $status
+## [1] "destroying"
+## $progress_percent
+## [1] 0
+## $is_deleted
+## [1] FALSE
+```
+
+Users should note that upsert, overwrite, and delete commits are not yet supported by Global Beacon Search. If an indexed dataset has upsert, overwrite, or delete commits, Global Beacon search results may be inaccurate. To ensure accurate search results, users should copy the dataset (via the UI or [API](creating_and_migrating_datasets.html)) and enable Global Beacons on the new one instead. For more information about commits, users can refer to the [Importing Data](import_data.html) documentation.

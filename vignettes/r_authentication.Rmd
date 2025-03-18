@@ -72,7 +72,7 @@ User.retrieve()$email
 
 ## Connect using QuartzBio EDP configuration profile
 
-Create a EDP configuration profile file `~/.qb/edp.json` as the default EDP configuration profile.Your `~/.qb/edp.json` may look like:
+Create a EDP configuration profile file `~/.qb/edp.json` as the default EDP configuration profile. Create a connection profile using `save_connection_profile` function. This is an example of how your `~/.qb/edp.json` should look like:
 
 ```         
 {

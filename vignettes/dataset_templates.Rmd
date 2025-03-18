@@ -289,7 +289,7 @@ Request Body: In the request body, provide an object with the following properti
 |:----------------:|:----------------:|:-----------------------------------:|
 |       name        | string  |                        A short name for the new template.                         |
 |    description    | string  |                          A description for the template.                          |
-|      fields       | objects | A list of [valid dataset fields.](vignettes/creating_and_migrating_datasets.html) |
+|      fields       | objects | A list of [valid dataset fields.](creating_and_migrating_datasets.html) |
 |      version      | string  |               A string representing a template version (no spaces).               |
 |   template_type   | string  |                 The type of template: dataset, recipe or search.                  |
 |     is_public     | boolean |        True if visible to anyone in a user's organization (default False).        |
