@@ -16,34 +16,10 @@ navbar:
     right:
     - search
     - github
-  Articles:
-    text: "Articles"
-    href: "#"
-    menu:
-      - text: "Vaults and Objects"
-        href: articles/vaults_n_objects.html
-      - text: "Importing Data via API"
-        href: articles/import_data.html
-      - text: "Exporting Data via API"
-        href: articles/exporting_data.html
-      - text: "Creating and migrating datasets"
-        href: articles/creating_and_migrating_datasets.html
-      - text: "Dataset templates"
-        href: articles/dataset_templates.html
-      - text: "Data versioning via API"
-        href: articles/dataset_versioning.html
-      - text: "Aggregate datasets"
-        href: articles/aggregating_datasets.html
-      - text: "Transforming datasets"
-        href: articles/transforming_datasets.html
-      - text: "Expression functions"
-        href: articles/expression_functions.html
   components:
     Authentication:
-      text: Autentication
+      text: Authentication
       href: articles/r_authentication.html
-
-
 
 reference:
 - title: EDP connections
@@ -54,7 +30,7 @@ reference:
   - params
 - title: Vaults, Files, Folders
   desc: |
-    Vaults, Files, Folders management [Vaults and Objects](articles/vaults_n_objects.html)
+    Vaults, Files, Folders management [Vaults and Objects](../articles/vaults_n_objects.html)
   contents:
   - matches('^Vault?_')
   - matches('^Folder?_')
@@ -93,7 +69,7 @@ articles:
 - title: "Dataset Versioning"
   contents:
   - "dataset_versioning"
-- title: "Aggregate Datasets"
+- title: "Dataset Field Aggregation"
   contents:
   - "aggregating_datasets"
 - title: "Transform Datasets"
@@ -102,6 +78,18 @@ articles:
 - title: "Expression Functions"
   contents:
   - "expression_functions"
+  - "expressions"
+- title: "Data Discovery via API"
+  contents:
+  - "data_discovery_via_API"
+  - "metadata_and_global_beacons"
+- title: "Querying and Filtering data in Datasets"
+  contents:
+  - "filters"
+  - "querying_datasets_and_files"
+- title: "Creating and Deploying EDP R/Shiny Applications"
+  contents:
+  - "edp_r_shiny_applications"
 - title: internal
   contents:
   - "r_authentication"
@@ -111,4 +99,5 @@ footer:
     left: developed_by
     right: [last updated, built_with]
   components:
-    last updated: "Last updated: 11th March 2025 "
+    last updated: !expr "paste('Last modified: ', format(Sys.Date(), '%d-%b-%Y'))"
+
