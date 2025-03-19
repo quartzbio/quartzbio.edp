@@ -46,17 +46,17 @@ reference:
   - matches('^filter')
 - title: All Functions
   desc: ~
-  contents: lacks_concepts("solvebio_api")
+  contents: lacks_concepts("quartzbio_api")
 - title: Legacy former solvebio API
   desc: |
     Former solvebio api functions. Compatible with the new connection functions.
-  contents: has_concept("solvebio_api")
+  contents: has_concept("quartzbio_api")
 
 articles:
 - title: "Vaults and Objects"
   contents:
   - "vaults_n_objects"
-- title: "Importing and Exporting Data via API"
+- title: "Importing and Exporting Data"
   contents:
   - "import_data"
   - "exporting_data"
@@ -79,7 +79,7 @@ articles:
   contents:
   - "expression_functions"
   - "expressions"
-- title: "Data Discovery via API"
+- title: "Data Discovery"
   contents:
   - "data_discovery_via_API"
   - "metadata_and_global_beacons"
@@ -90,6 +90,9 @@ articles:
 - title: "Creating and Deploying EDP R/Shiny Applications"
   contents:
   - "edp_r_shiny_applications"
+- title: "EDP Use Cases with R"
+  contents:
+  - "edp_usecases_in_r"
 - title: internal
   contents:
   - "r_authentication"

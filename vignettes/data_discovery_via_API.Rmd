@@ -1,8 +1,8 @@
 ---
-title: "Data Discovery via API"
+title: "Data Discovery"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Data Discovery via API}
+  %\VignetteIndexEntry{Data Discovery}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
