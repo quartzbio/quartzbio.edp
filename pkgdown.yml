@@ -8,6 +8,7 @@ articles:
   dataset_templates: dataset_templates.html
   dataset_versioning: dataset_versioning.html
   edp_r_shiny_applications: edp_r_shiny_applications.html
+  edp_usecases_in_r: edp_usecases_in_r.html
   exporting_data: exporting_data.html
   expression_functions: expression_functions.html
   expressions: expressions.html
@@ -18,7 +19,7 @@ articles:
   r_authentication: r_authentication.html
   transforming_datasets: transforming_datasets.html
   vaults_n_objects: vaults_n_objects.html
-last_built: 2025-03-18T12:39Z
+last_built: 2025-03-19T16:59Z
 urls:
   reference: https://quartzbio.github.io/quartzbio.edp/reference
   article: https://quartzbio.github.io/quartzbio.edp/articles
