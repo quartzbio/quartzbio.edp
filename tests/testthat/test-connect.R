@@ -1,9 +1,3 @@
-###### utils
-..set_env_var <- function(varname, value) {
-  do.call(Sys.setenv, stats::setNames(list(value), varname))
-}
-
-
 ### tests
 test_that_with_edp_api("real_connections", {
   conn <- get_connection(auto = FALSE)
@@ -55,66 +49,64 @@ test_that("test_conn_error", {
 
 test_that("autoconnect", {
   setup_temp_dir()
-  # N.B: mock the home dir
-  home <- Sys.getenv("HOME")
-  ..set_env_var("HOME", getwd())
-  on.exit(..set_env_var("HOME", home), add = TRUE)
 
-  ALL_ENVS <- c(
-    EDP_API_SECRET = "", SOLVEBIO_API_KEY = "", SOLVEBIO_ACCESS_TOKEN = "",
-    EDP_API_HOST = "", SOLVEBIO_API_HOST = "", EDP_PROFILE = "", EDP_CONFIG = ""
-  )
-  we <- function(envs, ...) {
-    missing_envs <- setdiff(names(ALL_ENVS), names(envs))
-    envs <- c(envs, ALL_ENVS[missing_envs])
-    withr::with_envvar(envs, ...)
-  }
+  withr::with_envvar(c(HOME = getwd(), USERPROFILE = getwd()), {
+    ALL_ENVS <- c(
+      EDP_API_SECRET = "", SOLVEBIO_API_KEY = "", SOLVEBIO_ACCESS_TOKEN = "",
+      EDP_API_HOST = "", SOLVEBIO_API_HOST = "", EDP_PROFILE = "", EDP_CONFIG = ""
+    )
+    we <- function(envs, ...) {
+      missing_envs <- setdiff(names(ALL_ENVS), names(envs))
+      envs <- c(envs, ALL_ENVS[missing_envs])
+      withr::with_envvar(envs, ...)
+    }
 
-  ### nothing set --> should fail
-  we(NULL, expect_error(autoconnect(check = FALSE), "autoconnect() failed", fixed = TRUE))
+    ### nothing set --> should fail
+    we(NULL, expect_error(autoconnect(check = FALSE), "autoconnect() failed", fixed = TRUE))
 
-  KEY <- strrep("X", 40)
-  TOKEN <- strrep("Y", 30)
-  ### use new vars
-  we(
-    c(EDP_API_SECRET = KEY, EDP_API_HOST = "host"),
-    expect_identical(autoconnect(check = FALSE), list(secret = KEY, host = "host"))
-  )
-  we(
-    c(EDP_API_SECRET = TOKEN, EDP_API_HOST = "host"),
-    expect_identical(autoconnect(check = FALSE), list(secret = TOKEN, host = "host"))
-  )
+    KEY <- strrep("X", 40)
+    TOKEN <- strrep("Y", 30)
+    ### use new vars
+    we(
+      c(EDP_API_SECRET = KEY, EDP_API_HOST = "host"),
+      expect_identical(autoconnect(check = FALSE), list(secret = KEY, host = "host"))
+    )
+    we(
+      c(EDP_API_SECRET = TOKEN, EDP_API_HOST = "host"),
+      expect_identical(autoconnect(check = FALSE), list(secret = TOKEN, host = "host"))
+    )
 
-  ### use old vars
-  we(
-    c(SOLVEBIO_API_KEY = KEY, SOLVEBIO_API_HOST = "host"),
-    expect_identical(autoconnect(check = FALSE), list(secret = KEY, host = "host"))
-  )
-  we(
-    c(SOLVEBIO_ACCESS_TOKEN = TOKEN, SOLVEBIO_API_HOST = "host"),
-    expect_identical(autoconnect(check = FALSE), list(secret = TOKEN, host = "host"))
-  )
+    ### use old vars
+    we(
+      c(SOLVEBIO_API_KEY = KEY, SOLVEBIO_API_HOST = "host"),
+      expect_identical(autoconnect(check = FALSE), list(secret = KEY, host = "host"))
+    )
+    we(
+      c(SOLVEBIO_ACCESS_TOKEN = TOKEN, SOLVEBIO_API_HOST = "host"),
+      expect_identical(autoconnect(check = FALSE), list(secret = TOKEN, host = "host"))
+    )
 
-  ### use profile
-  conn <- list(secret = TOKEN, host = "host")
+    ### use profile
+    conn <- list(secret = TOKEN, host = "host")
 
-  # default profile
-  we(NULL, {
-    save_connection_profile(conn)
-    expect_identical(autoconnect(check = FALSE), conn)
-  })
+    # default profile
+    we(NULL, {
+      save_connection_profile(conn)
+      expect_identical(autoconnect(check = FALSE), conn)
+    })
 
-  unlink(".qb/edp.json")
-  save_connection_profile(conn, profile = "toto", path = ".qb/edp.json")
+    unlink(".qb/edp.json")
+    save_connection_profile(conn, profile = "toto", path = ".qb/edp.json")
 
-  we(c(EDP_PROFILE = "toto"), {
-    expect_identical(autoconnect(check = FALSE), conn)
-  })
+    we(c(EDP_PROFILE = "toto"), {
+      expect_identical(autoconnect(check = FALSE), conn)
+    })
 
-  # EDP_CONFIG
-  file.rename(".qb/edp.json", "toto.json")
-  we(c(EDP_PROFILE = "toto", EDP_CONFIG = "toto.json"), {
-    expect_identical(autoconnect(check = FALSE), conn)
+    # EDP_CONFIG
+    file.rename(".qb/edp.json", "toto.json")
+    we(c(EDP_PROFILE = "toto", EDP_CONFIG = "toto.json"), {
+      expect_identical(autoconnect(check = FALSE), conn)
+    })
   })
 })
 
@@ -188,43 +180,40 @@ test_that("looks_like_api_key", {
 
 test_that("read_save_connection_from_file", {
   setup_temp_dir()
-  # dir.create('.qb')
 
-  # N.B: mock the home dir
-  home <- Sys.getenv("HOME")
-  ..set_env_var("HOME", getwd())
-  on.exit(..set_env_var("HOME", home), add = TRUE)
+  withr::with_envvar(c(HOME = getwd(), USERPROFILE = getwd()), {
 
-  ### nothing saved yet
-  expect_error(read_connection_profile(), "no such profile")
-  expect_error(read_connection_profile("toto.json"), "no such profile")
-  expect_error(read_connection_profile("toto.json", profile = "titi"), "no such profile")
+    ### nothing saved yet
+    expect_error(read_connection_profile(), "no such profile")
+    expect_error(read_connection_profile("toto.json"), "no such profile")
+    expect_error(read_connection_profile("toto.json", profile = "titi"), "no such profile")
 
-  ### standard
-  conn <- list(secret = strrep("X", 30), host = "host")
+    ### standard
+    conn <- list(secret = strrep("X", 30), host = "host")
+    save_connection_profile(conn)
 
-  save_connection_profile(conn)
-  expect_identical(read_connection_profile(), conn)
+    expect_identical(read_connection_profile(), conn)
 
-  ### add profile
-  conn2 <- list(secret = strrep("Y", 40), host = "host2")
+    ### add profile
+    conn2 <- list(secret = strrep("Y", 40), host = "host2")
 
-  save_connection_profile(conn2, profile = "with_key")
+    save_connection_profile(conn2, profile = "with_key")
 
-  expect_identical(read_connection_profile(), conn)
-  expect_identical(read_connection_profile(profile = "with_key"), conn2)
+    expect_identical(read_connection_profile(), conn)
+    expect_identical(read_connection_profile(profile = "with_key"), conn2)
 
-  ### overwrite
-  conn3 <- list(secret = strrep("Z", 40), host = "host3")
-  expect_error(save_connection_profile(conn3, profile = "with_key"), "overwrite")
+    ### overwrite
+    conn3 <- list(secret = strrep("Z", 40), host = "host3")
+    expect_error(save_connection_profile(conn3, profile = "with_key"), "overwrite")
 
-  save_connection_profile(conn3, profile = "with_key", overwrite = TRUE)
+    save_connection_profile(conn3, profile = "with_key", overwrite = TRUE)
 
-  expect_identical(read_connection_profile(profile = "with_key"), conn3)
+    expect_identical(read_connection_profile(profile = "with_key"), conn3)
 
-  ### custom path
-  save_connection_profile(conn3, path = "custom.creds", profile = "with_token")
-  expect_identical(read_connection_profile(path = "custom.creds", profile = "with_token"), conn3)
+    ### custom path
+    save_connection_profile(conn3, path = "custom.creds", profile = "with_token")
+    expect_identical(read_connection_profile(path = "custom.creds", profile = "with_token"), conn3)
+  })
 })
 
 

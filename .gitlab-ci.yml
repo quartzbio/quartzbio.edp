@@ -27,7 +27,8 @@ cache:
 
 stages:
   - build
-  - test
+  - coverage
+  - tests
   - lintr
   - build_vignettes
   - document_package
@@ -52,7 +53,7 @@ building:
     expire_in: 30 days
 
 coverage:
-  stage: test
+  stage: coverage
   needs: []
   rules:
     - if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS'
@@ -94,6 +95,17 @@ build_vignettes:
   script:
     - Rscript -e 'pak::pkg_install(pkg = "devtools", upgrade = TRUE)'
     - R -q --vanilla -e 'devtools::build_vignettes()'
+
+tests:
+  stage: tests
+  needs: []
+  rules:
+    - if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS'
+      when: never
+    - when: always
+  script:
+    - Rscript -e 'pak::pkg_install(pkg = "devtools", upgrade = TRUE)'
+    - R -q --vanilla -e 'devtools::test()'
 
 document_package:
   stage: document_package
