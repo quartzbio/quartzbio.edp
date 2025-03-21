@@ -4,7 +4,13 @@
 \alias{Dataset_load}
 \title{Dataset_load}
 \usage{
-Dataset_load(id = NULL, full_path = NULL, get_schema = FALSE, ...)
+Dataset_load(
+  id = NULL,
+  full_path = NULL,
+  get_schema = FALSE,
+  filter_expr = NULL,
+  ...
+)
 }
 \arguments{
 \item{id}{(character) The ID of a QuartzBio EDP dataset.}
@@ -12,6 +18,8 @@ Dataset_load(id = NULL, full_path = NULL, get_schema = FALSE, ...)
 \item{full_path}{(character) a valid dataset full path, including the account, vault and path to EDP Dataset.}
 
 \item{get_schema}{(boolean) Retrieves the schema of the Quartzbio EDP dataset loaded. Default value: FALSE}
+
+\item{filter_expr}{(character) A arrow Expression to filter the scanned rows by, or (default) to keep all rows. Check \code{\link[arrow:Scanner]{arrow::Scanner()}}}
 
 \item{...}{
   Arguments passed on to \code{\link[arrow:read_parquet]{arrow::read_parquet}}

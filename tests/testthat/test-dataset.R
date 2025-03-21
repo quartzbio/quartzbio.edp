@@ -174,4 +174,9 @@ test_that("dataset_load", {
 
   expect_equal(names(user_data_result$schema), names(expect_schema))
   expect_equal(user_data_result$schema$types, expect_schema$types)
+
+  # filter data via Arrow expressions
+  user_data_filter <- Dataset_load(id = "1234567", filter_expr = Expression$field_ref("first_name") == "Emily")
+  expect_equal(nrow(user_data_filter), 4)
+  expect_equal(ncol(user_data_filter), 13)
 })

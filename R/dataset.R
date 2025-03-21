@@ -195,17 +195,19 @@ Dataset_schema <- function(id = NULL, full_path = NULL, parquet_path = NULL) {
 #' @param id (character) The ID of a QuartzBio EDP dataset.
 #' @param full_path (character) a valid dataset full path, including the account, vault and path to EDP Dataset.
 #' @param get_schema (boolean) Retrieves the schema of the Quartzbio EDP dataset loaded. Default value: FALSE
+#' @param filter_expr (character) A arrow Expression to filter the scanned rows by, or (default) to keep all rows. Check [arrow::Scanner()]
 #' @inheritDotParams arrow::read_parquet col_select as_data_frame
 #' @concept  quartzbio_api
 #' @return A `tibble` which is the default, or an Arrow Table otherwise. If the `get_schema` parameter is set to `TRUE`,
 #' the function returns a list containing both the `tibble` and its schema.
 #' @export
-Dataset_load <- function(id = NULL, full_path = NULL, get_schema = FALSE, ...) {
+Dataset_load <- function(id = NULL, full_path = NULL, get_schema = FALSE, filter_expr = NULL, ...) {
   if (is.null(id) && is.null(full_path)) {
     stop("A dataset ID or full path is required.")
   }
 
   parquet_url <- dataset_export_to_parquet(id = id, full_path = full_path)
+  #parquet_url <- full_path
 
   tryCatch(
     {
@@ -215,6 +217,12 @@ Dataset_load <- function(id = NULL, full_path = NULL, get_schema = FALSE, ...) {
       stop(sprintf("Error in reading dataset: %s\n", e$message))
     }
   )
+
+  if (!is.null(filter_expr)) {
+    df_scan <- arrow::Scanner$create(df, filter = filter_expr, ...)
+    df <- as.data.frame(df_scan$ToTable())
+
+  }
 
   if (get_schema) {
     schema <- Dataset_schema(parquet_path = parquet_url)
