@@ -1,8 +1,8 @@
 ---
-title: "Exporting Data via API"
+title: "Exporting Data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Exporting Data via API}
+  %\VignetteIndexEntry{Exporting Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
