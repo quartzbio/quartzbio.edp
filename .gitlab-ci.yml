@@ -1,14 +1,16 @@
 default:
   tags: [docker]
-  image: rocker/verse:4.4
+  image: rocker/r-ver:4.4
+
 before_script:
   - echo "options(crayon.enabled=TRUE);" >> .Rprofile
   - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
-  - lsb_release -c
+  - cat /etc/os-release
   - Rscript --vanilla -e "sessionInfo()"
   - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
   - echo "Library path for packages :" $R_LIBS_USER
   - mkdir -p $R_LIBS_USER
+  - apt update; apt install qpdf -y
   - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
   - Rscript -e 'Sys.getenv("R_LIBS")'
   - Rscript -e '.libPaths()'
@@ -21,7 +23,7 @@ variables:
   R_LIBS_USER: ${CI_PROJECT_DIR}/ci/lib
 
 cache:
-  - key: cache-default
+  - key: "cache-${CI_RUNNER_EXECUTABLE_ARCH}-${R_LIBS_USER}-${CI_JOB_IMAGE}"
     paths:
       - ${R_LIBS_USER}
 
@@ -63,7 +65,7 @@ coverage:
   when: on_success
   script:
     - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE, dependencies = TRUE)'
-    - Rscript -e 'pak::pkg_install(pkg = c("covr", "DT"), upgrade = TRUE)'
+    - Rscript -e 'pak::pkg_install(pkg = c("covr", "DT", "xml2"), upgrade = TRUE)'
     - Rscript -e 'options(crayon.enabled=FALSE); covr::gitlab(quiet = FALSE)' # crayon is disabled as it causes issues with coverage reading
     - Rscript -e 'covr::to_cobertura(covr::package_coverage(), "coverage.xml")'
   coverage: '/Coverage: \d+\.\d+/'
@@ -106,7 +108,8 @@ tests:
   script:
     - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE, dependencies = TRUE)'
     - Rscript --vanilla -e 'pak::pkg_install(pkg = "devtools", upgrade = TRUE)'
-    - Rscript --vanilla -e 'devtools::test()'
+    # we should consider changing it to stop_on_warning = TRUE
+    - Rscript --vanilla -e 'devtools::test(stop_on_error = TRUE)'
 
 document_package:
   stage: document_package
