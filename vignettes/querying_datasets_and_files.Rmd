@@ -143,6 +143,45 @@ file_url <- Object.get_download_url(file_id$id)
 df <- read.csv(url(file_url))
 ```
 
+## Load a dataset into Parquet File
+
+Datasets can also be exported into a parquet file and then can be read/queried. The Dataset results are returned as a R dataframe or as a [arrow](https://arrow.apache.org/docs/r/reference/read_parquet.html) table. User can export the dataset into parquet file and build queries using [Arrow expressions](https://arrow.apache.org/docs/r/reference/Expression.html). Export Dataset into parquet and read the records using `Dataset_load` function.
+
+```{r}
+# Export the whole dataset into parquet and read into a dataframe.
+# Datset ID or dataset full path can be provided
+
+results <- Dataset_load(id = "<DATASET_ID>")
+
+results <- Dataset_load(full_path = "<DATASET_FULL_PATH>")
+
+# To export selected fields
+
+results <- Dataset_load(full_path = "quartzbio:Public:/ClinVar/5.3.0-20231007/hgvs4variation",
+                       col_select = c('Symbol', 'GeneID', 'Type', 'NucleotideExpression', 'Assembly'))
+
+# Fields can be selected/excluded based on tidyverse expressions
+
+results <- Dataset_load(id = "<DATASET_ID>", col_select = ends_with("e"))
+
+
+# The Dataset can also be queried by creating arrow filter expressions
+# Filter based on Assembly == 'GRCH37' and VariantionID < 9000
+
+results <- Dataset_load(id = "<DATASET ID>",
+                       filter_expr = Expression$create("and", args = list(
+                         Expression$field_ref("Assembly") == "\"GRCh37\"",
+                         Expression$field_ref("VariationID") < 9000)))
+
+# Dataset schema can also be reterived along with the dataset results
+# get_schema can be set to true to return the schema as well along with the fitered dataset results
+
+results <- Dataset_load(full_path = "<DATASET_FULL_PATH>",
+                       col_select = c('Symbol', 'GeneID', 'Type', 'NucleotideExpression', 'Assembly'),
+                       get_schema = TRUE, filter_expr = Expression$field_ref("Assembly") == "\"GRCh37\"")
+
+```
+
 ## Supported File Extensions and Compressions
 
 File querying is only supported for the following file extensions and compressions:
@@ -161,7 +200,7 @@ The only supported encoding is UTF-8.
 The output format of the query can be provided by using the output_format parameter which can be one of the following:
 
 | Output Format  | Description                                                              |
-|----------------------|--------------------------------------------------|
+|-----------------------|-------------------------------------------------|
 | json (default) | applicable to all file extensions                                        |
 | csv            | applicable only to **csv**, **txt**, **tsv**, or **bed** file extensions |
 | tsv            | applicable only to **csv**, **txt**, **tsv**, or **bed** file extensions |
@@ -186,7 +225,7 @@ Methods do not accept URL parameters or request bodies unless specified. Please 
 Request Body: The request body should contain valid query parameters:
 
 |    Property    |  Value  |                    Description                     |
-|:---------------:|:---------------:|:-------------------------------------:|
+|:----------------:|:----------------:|:-----------------------------------:|
 |    filters     | objects |               A valid filter object.               |
 |     facets     | objects | A valid [facets](aggregating_datasets.html) object |
 |     fields     | string  |    A list of fields to include in the results.     |
