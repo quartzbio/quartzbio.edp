@@ -157,8 +157,10 @@ results <- Dataset_load(full_path = "<DATASET_FULL_PATH>")
 
 # To export selected fields
 
-results <- Dataset_load(full_path = "quartzbio:Public:/ClinVar/5.3.0-20231007/hgvs4variation",
-                       col_select = c('Symbol', 'GeneID', 'Type', 'NucleotideExpression', 'Assembly'))
+results <- Dataset_load(
+  full_path = "quartzbio:Public:/ClinVar/5.3.0-20231007/hgvs4variation",
+  col_select = c("Symbol", "GeneID", "Type", "NucleotideExpression", "Assembly")
+)
 
 # Fields can be selected/excluded based on tidyverse expressions
 
@@ -168,18 +170,22 @@ results <- Dataset_load(id = "<DATASET_ID>", col_select = ends_with("e"))
 # The Dataset can also be queried by creating arrow filter expressions
 # Filter based on Assembly == 'GRCH37' and VariantionID < 9000
 
-results <- Dataset_load(id = "<DATASET ID>",
-                       filter_expr = Expression$create("and", args = list(
-                         Expression$field_ref("Assembly") == "\"GRCh37\"",
-                         Expression$field_ref("VariationID") < 9000)))
+results <- Dataset_load(
+  id = "<DATASET ID>",
+  filter_expr = Expression$create("and", args = list(
+    Expression$field_ref("Assembly") == "\"GRCh37\"",
+    Expression$field_ref("VariationID") < 9000
+  ))
+)
 
 # Dataset schema can also be reterived along with the dataset results
 # get_schema can be set to true to return the schema as well along with the fitered dataset results
 
-results <- Dataset_load(full_path = "<DATASET_FULL_PATH>",
-                       col_select = c('Symbol', 'GeneID', 'Type', 'NucleotideExpression', 'Assembly'),
-                       get_schema = TRUE, filter_expr = Expression$field_ref("Assembly") == "\"GRCh37\"")
-
+results <- Dataset_load(
+  full_path = "<DATASET_FULL_PATH>",
+  col_select = c("Symbol", "GeneID", "Type", "NucleotideExpression", "Assembly"),
+  get_schema = TRUE, filter_expr = Expression$field_ref("Assembly") == "\"GRCh37\""
+)
 ```
 
 ## Supported File Extensions and Compressions
