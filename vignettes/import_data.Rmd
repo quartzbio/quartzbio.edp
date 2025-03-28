@@ -26,7 +26,7 @@ The EDP's import system automates the traditional ETL (Extract, Transform, Load)
 The following file formats and extensions are supported:
 
 | Name                                              | File Extension | Previewable in EDP? | Transformable into a Dataset? |
-|------------------------|----------------|----------------|----------------|
+|---------------------|-----------------|-----------------|-----------------|
 | Comma Separated Values                            | .csv           | Y                   | Y                             |
 | General Feature Format                            | .gff3.gz       | Y                   | Y                             |
 | Gene Transfer Format                              | .gtf           | Y                   | Y                             |
@@ -64,7 +64,7 @@ EDP supports GZip compression for all file types. Gzipped files must have the .g
 The first step to getting data onto EDP is by uploading files into a vault. Users can refer to the Vaults documentation for more information.
 
 ```{r}
-ibrary(quartzbio.edp)
+library(quartzbio.edp)
 vault <- Vault.get_personal_vault()
 uploaded_file <- File_upload(vault$id, "local/path/file.vcf.gz", "/")
 
@@ -81,17 +81,18 @@ vault <- Vault.get_personal_vault()
 dataset_full_path <- paste(vault$full_path, "/r_examples/test_dataset", sep = ":")
 dataset <- Dataset.get_or_create_by_full_path(dataset_full_path)
 
+
+
 # Launch the import
 imp <- DatasetImport.create(
   dataset_id = dataset$id,
-  object_id = object$id,
+  object_id = uploaded_file$id,
   commit_mode = "append"
 )
 
 # Wait for the import to complete
 Dataset.activity(dataset$id)
 ```
-
 
 ## Importing from URLs
 
@@ -129,7 +130,6 @@ Dataset.activity(dataset$id)
 
 The EDP can also pull data from DNAnexus, SevenBridges, and many other pipelines. Users can contact QuartzBio Support for more information.
 
-
 ## Importing from Records
 
 The EDP can also import data as a list of records, i.e. a list of Python dictionaries or R data. Users should note that the EDP supports only importing up to 5000 records at a time through this method. Importing from records is most optimal for importing small datasets and making edits to datasets. For larger imports and transforms, users are recommended to import from compressed JSONL files.
@@ -151,7 +151,6 @@ imp <- DatasetImport.create(
   data_records = records
 )
 ```
-
 
 ## Transforming Imported Data
 
@@ -215,7 +214,6 @@ Dataset_query(dataset$id, exclude_fields = c("_id", "_commit"))
 
 Existing imported data can also be modified by using migrations. This allows a user to add a column, modify data within a column, or remove a column.
 
-
 ## Validating Imported Data
 
 When importing data, every record is validated to ensure it can be committed into a Dataset. Validation compares the schema of existing Dataset fields with the values of incoming data and issues validation errors if the Dataset field schema does not match the incoming value. Validation can also issue warnings.
@@ -234,7 +232,7 @@ The following example fails an import as soon as invalid data is detected:
 ```{r}
 imp <- DatasetImport.create(
   dataset_id = dataset$id,
-  object_id = object$id,
+  object_id = uploaded_file$id,
   validation_params = list(
     raise_on_errors = TRUE
   )
@@ -246,13 +244,12 @@ The following example disables validation from running, which can improve import
 ```{r}
 imp <- DatasetImport.create(
   dataset_id = dataset$id,
-  object_id = object$id,
+  object_id = uploaded_file$id,
   validation_params = list(
     disable = TRUE
   )
 )
 ```
-
 
 ## Committing Imported Data
 
@@ -292,13 +289,11 @@ Indexing operations and query operations are also faster for larger-capacity dat
 
 Some dataset field expressions are more expensive than others. Dataset query expressions can be sped up by applying exact filters, using fields to only pull back the fields that are needed, or using dataset_count() if the length is what is needed.
 
-
 ## API Endpoints
 
 Methods do not accept URL parameters or request bodies unless specified. Please note that if your EDP endpoint is sponsor.edp.aws.quartz.bio, you would use sponsor.api.edp.aws.quartz.bio.
 
 #### Dataset Imports
-
 
 | Method | HTTP Request                                     | Description                            | Authorization                                                                  | Response                                                                                        |
 |---------------|---------------|---------------|---------------|---------------|
@@ -308,9 +303,8 @@ Request Body:
 
 In the request body, provide an object with the following properties:
 
-
 |     Property      |  Value  |                                                      Description                                                      |
-|:----------------:|:----------------:|:----------------------------------:|
+|:-----------------:|:-----------------:|:---------------------------------:|
 |    commit_mode    | string  |                                                 A valid commit mode.                                                  |
 |    dataset_id     | integer |                                    (Optional) The ID of an existing object on EDP.                                    |
 |     object_id     | integer |                                        (Optional) A file manifest (see below).                                        |
@@ -324,7 +318,6 @@ In the request body, provide an object with the following properties:
 |  include_errors   | boolean | If True, a new field (\_errors) will be added to each record containing expression evaluation errors (default: True). |
 |   target_fields   | objects |                          A list of valid dataset fields to create or override in the import.                          |
 |     priority      | integer |                                           A priority to assign to this task                                           |
-
 
 When creating a new import, either manifest, object_id or data_records must be provided. Using a manifest allows you to import a remote file accessible by HTTP(S), for example:
 
@@ -344,9 +337,8 @@ When creating a new import, either manifest, object_id or data_records must be p
 
 Manifests can include the following parameters:
 
-
 |     Property      | Value  |                                                          Description                                                          |
-|:----------------:|:----------------:|:----------------------------------:|
+|:-----------------:|:-----------------:|:---------------------------------:|
 |        url        | string |             A publicly accessible URL pointing to a file to import into EDP. You must pass a URL or an object_id.             |
 |     object_id     |  long  |                           The ID of an existing object on EDP. You must pass an object_id or a URL.                           |
 |       name        | string |                   (Optional) The name of the file. If not passed, EDP will take it from the URL or object.                    |
@@ -356,23 +348,19 @@ Manifests can include the following parameters:
 |   reader_params   | object |                                       (Optional) Configuration parameters for readers.                                        |
 | validation_params | object |                                      (Optional) Configuration parameters for validation.                                      |
 
-
 | Method | HTTP Request                                            | Description              | Authorization                                                                  | Response                                            |
 |---------------|---------------|---------------|---------------|---------------|
 | delete | DELETE <https://><EDP_API_HOST>/v2/dataset_imports/{ID} | Delete a dataset import. | This request requires an authorized user with write permission on the dataset. | The response returns "HTTP 200 OK" when successful. |
 
 Deleting dataset imports is not recommended as data provenance will be lost.
 
-
 | Method | HTTP Request                                         | Description                        | Authorization                                                                 | Response                                        |
 |---------------|---------------|---------------|---------------|---------------|
 | get    | GET <https://><EDP_API_HOST>/v2/dataset_imports/{ID} | Retrieve metadata about an import. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetImport resource. |
 
-
 | Method | HTTP Request                                                  | Description                                 | Authorization                                                                 | Response                                                 |
 |---------------|---------------|---------------|---------------|---------------|
 | list   | GET <https://><EDP_API_HOST>/v2/datasets/{DATASET_ID}/imports | List the imports associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetImport resources. |
-
 
 | Method | HTTP Request                                                | Description              | Authorization                                                                  | Response                                                                    |
 |---------------|---------------|---------------|---------------|---------------|

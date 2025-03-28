@@ -158,6 +158,9 @@ migration <- DatasetMigration.create(
     )
   )
 )
+
+# Wait for the migration to complete
+Dataset.activity(target_dataset$id)
 ```
 
 ## Modifying Fields

@@ -83,7 +83,7 @@ Dataset.activity(dataset$id)
 
 # Download
 url <- DatasetExport.get_download_url(export$id)
-download.file(url, "data.csv.gz")
+download.file(url, "data.csv")
 
 # An exports can also be saved to a path in a vault
 export <- DatasetExport.create(
@@ -121,7 +121,7 @@ export <- DatasetExport.create(
 
 # Download to your home directory
 url <- DatasetExport.get_download_url(export$id)
-download.file(url, "my_variants.json.gz")
+download.file(url, "my_variants.json")
 ```
 
 ## API Endpoints

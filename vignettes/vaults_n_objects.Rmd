@@ -120,10 +120,13 @@ url <- File_get_download_url(csv_file$id)
 Users can also download more than one file in the same folder:
 
 ```{r}
-files <- Vault.search(vault$id, "xyz", object_type = "file")
+#Search for a particular object in the vault using the query argument.
+#Query can include the exact file name or Unix style wildcards are supported too
 
-for (file in files) {
-  File_download(file$id, file$name)
+files <- Vault.search(vault$id, query = "xyz", object_type = "file")
+
+for (i in 1:nrow(files)) {
+  File_download(files$id[i], files$filename[i])
 }
 ```
 
@@ -167,8 +170,6 @@ library(quartzbio.edp)
 public <- Vault.get_by_full_path("quartzbio:public")
 all_clinvar_datasets <- Vault.datasets(public$id, regex = "/ClinVar/.*")
 
-# List all datasets within a specific folder using regex
-all_clinvar_datasets <- Vault.datasets(public$id, regex = "/ClinVar/.*")
 ```
 
 
@@ -188,8 +189,8 @@ new_folder <- Vault.create_folder(vault_x$id, "/new-folder")
 files <- Vault.search(vault_x$id, "xyz", object_type = "file")
 
 # Update parent_object_id in order to move the file to the new folder
-for (file in files) {
-  Object.update(file$id, parent_object_id = new_folder$id)
+for (i in 1:nrow(files)) {
+  Object.update(files$id[i], parent_object_id = new_folder$id)
 }
 ```
 
