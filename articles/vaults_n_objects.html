@@ -180,10 +180,13 @@ access to the vault:</p>
 <span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/File_get_download_url.html">File_get_download_url</a></span><span class="op">(</span><span class="va">csv_file</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 <p>Users can also download more than one file in the same folder:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.search.html">Vault.search</a></span><span class="op">(</span><span class="va">vault</span><span class="op">$</span><span class="va">id</span>, <span class="st">"xyz"</span>, object_type <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co">#Search for a particular object in the vault using the query argument.</span></span>
+<span><span class="co">#Query can include the exact file name or Unix style wildcards are supported too</span></span>
 <span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">file</span> <span class="kw">in</span> <span class="va">files</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="../reference/File_download.html">File_download</a></span><span class="op">(</span><span class="va">file</span><span class="op">$</span><span class="va">id</span>, <span class="va">file</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span>
+<span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.search.html">Vault.search</a></span><span class="op">(</span><span class="va">vault</span><span class="op">$</span><span class="va">id</span>, query <span class="op">=</span> <span class="st">"xyz"</span>, object_type <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/File_download.html">File_download</a></span><span class="op">(</span><span class="va">files</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">files</span><span class="op">$</span><span class="va">filename</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -226,9 +229,6 @@ expression, unless it is absolutely necessary.</p>
 <span><span class="co"># Retrieve the EDP public vault</span></span>
 <span><span class="co"># List all datasets within a specific folder using regex</span></span>
 <span><span class="va">public</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.get_by_full_path.html">Vault.get_by_full_path</a></span><span class="op">(</span><span class="st">"quartzbio:public"</span><span class="op">)</span></span>
-<span><span class="va">all_clinvar_datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.datasets.html">Vault.datasets</a></span><span class="op">(</span><span class="va">public</span><span class="op">$</span><span class="va">id</span>, regex <span class="op">=</span> <span class="st">"/ClinVar/.*"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># List all datasets within a specific folder using regex</span></span>
 <span><span class="va">all_clinvar_datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.datasets.html">Vault.datasets</a></span><span class="op">(</span><span class="va">public</span><span class="op">$</span><span class="va">id</span>, regex <span class="op">=</span> <span class="st">"/ClinVar/.*"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -248,8 +248,8 @@ querying and move them to another folder.</p>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.search.html">Vault.search</a></span><span class="op">(</span><span class="va">vault_x</span><span class="op">$</span><span class="va">id</span>, <span class="st">"xyz"</span>, object_type <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Update parent_object_id in order to move the file to the new folder</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">file</span> <span class="kw">in</span> <span class="va">files</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="../reference/Object.update.html">Object.update</a></span><span class="op">(</span><span class="va">file</span><span class="op">$</span><span class="va">id</span>, parent_object_id <span class="op">=</span> <span class="va">new_folder</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/Object.update.html">Object.update</a></span><span class="op">(</span><span class="va">files</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, parent_object_id <span class="op">=</span> <span class="va">new_folder</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -467,7 +467,7 @@ higher on the vault.</td>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 26-Mar-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Last modified: 28-Mar-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
