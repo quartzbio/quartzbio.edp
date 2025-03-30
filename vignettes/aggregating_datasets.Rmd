@@ -96,8 +96,8 @@ stats <- Dataset.facets(
         "facet_type": "stats", "extended": true}}'
 )
 # Get the min and max values
-stats$review_status_star$min
-stats$review_status_star$max
+stats$info.ALLELEID$min
+stats$info.ALLELEID$max
 
 # Calculate a histogram for genomic position in chromosome 12
 facets <- Dataset.facets(
