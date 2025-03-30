@@ -161,16 +161,16 @@ get_api_response_error_message <- function(res, default_message = "") {
 detect_ids <- function(x) {
   # look for ids
   is_id <- grepl("_id$", names(x)) & lengths(x) > 0
-  lst <- x[is_id]
 
   # extract the part before _id (e.g. dataset_id --> dataset)
-  class_names <- sub("_.+$", "", names(lst))
+  class_names <- sub("_.+$", "", names(is_id[is_id]))
   # capitalize, e.g. dataset --> Dataset
   class_names <- capitalize(class_names)
   # suffix with Id
   class_names <- paste0(class_names, "Id")
 
-  current_classes <- lapply(lst, class)
+  current_classes <- lapply(names(is_id[is_id]), function(name) class(x[[name]]))
+
   for (i in seq_along(current_classes)) {
     current_classes[[i]] <- c(class_names[i], current_classes[[i]])
   }

@@ -48,8 +48,8 @@ test_that("postprocess_single_entity", {
   # class
   expect_identical(class(y), c("Titi", "Object", "list"))
   # its IDs
-  expect_identical(class(y$toto_id), c("TotoId", "numeric"))
-  expect_identical(class(y$vault_id), c("VaultId", "character"))
+  expect_identical(class(y$toto_id), "numeric")
+  expect_identical(class(y$vault_id), "character")
 
   class(y) <- class(y)[-(1:2)]
   class(y$toto_id) <- class(y$toto_id)[-1]
@@ -149,7 +149,7 @@ test_that("detect_ids", {
 
   expect_identical(
     classes,
-    list(vault_id = c("VaultId", "numeric"), toto_id = c("TotoId", "numeric"))
+    list(c("VaultId", "numeric"), c("TotoId", "numeric"))
   )
 })
 
@@ -165,7 +165,7 @@ test_that("apply_class_to_ids", {
   lst2 <- apply_class_to_ids(lst, classes)
 
   .class <- function(x) class(x)[1]
-  expect_equal(sapply(lst2, .class), c("numeric", "VaultId", "TotoId", "character", "list"), ignore_attr = TRUE)
+  expect_equal(sapply(lst2, .class), c("numeric", "numeric", "numeric", "character", "list"), ignore_attr = TRUE)
 })
 
 

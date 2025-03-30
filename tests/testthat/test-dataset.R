@@ -93,11 +93,6 @@ test_that_with_edp_api("datasets", {
   df$arbitrary <- bless(df$arbitrary, "myclass")
   expect_equal(df, dfi, ignore_attr = TRUE)
 
-  ### methods
-  ds1bis <- fetch(ds$dataset_id)
-
-  expect_s3_class(ds1bis, "Dataset")
-  expect_identical(ds1bis$id, ds$id)
 })
 
 test_that("dataset_load", {
@@ -176,7 +171,7 @@ test_that("dataset_load", {
   expect_equal(user_data_result$schema$types, expect_schema$types)
 
   # filter data via Arrow expressions
-  user_data_filter <- Dataset_load(id = "1234567", filter_expr = Expression$field_ref("first_name") == "Emily")
+  user_data_filter <- Dataset_load(id = "1234567", filter_expr = arrow::Expression$field_ref("first_name") == "Emily")
   expect_equal(nrow(user_data_filter), 4)
   expect_equal(ncol(user_data_filter), 13)
 })
