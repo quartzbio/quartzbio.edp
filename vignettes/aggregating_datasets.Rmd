@@ -15,25 +15,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 ## Overview
-
 
 Both the EDP Python and R client libraries enable users to perform aggregations to build complex summaries of data. Aggregation queries can be run on datasets with the help of facets. Facets can be used to generate aggregated summaries of string (and date) fields as well as numeric fields, and they automatically work on top of queries and filters. Facets can also be nested, which provides an incredibly efficient mechanism to summarize binned or rolled-up data (i.e. data summarized by term or by date).
 
-
 ## String and Date Aggregations
-
 
 For string fields (i.e. categorical fields) and date fields, users can utilize facets to find the total number of unique values as well as a list of the most common values that occur in the dataset. When used with a filtered dataset, the results will represent the filtered subset of data.
 
-
 The following facet types are supported:
+
 -   terms (default): Returns a list of the top terms and the number of times they occur (in order of this value). The default number of terms returned at once is 10. Users can set a limit up to 1 million (1,000,000) terms returned.
+
 -   count: Returns the number of unique values in the field. For very large datasets, this is an approximate number.
 
-
-Facets will not work for text fields that are indexed (and tokenized) for full-text search. Terms facets are also disabled for _id fields.
+Facets will not work for text fields that are indexed (and tokenized) for full-text search. Terms facets are also disabled for \_id fields.
 
 ### Examples in R:
 
@@ -71,11 +67,9 @@ facets <- Dataset.facets(clinvar$id, list("gene" = list("limit" = 1000)))
 top1000DrugResponseGenes <- do.call(rbind, facets$gene)
 ```
 
-
 ## Numeric Aggregations
 
-
-There are various aggregation options are available for numerical fields (such as float/double, integer/long, and date). Instead of returning "common terms",  numerical facets can calculate summary statistics, histograms, and percentiles. The following facet types are supported:
+There are various aggregation options are available for numerical fields (such as float/double, integer/long, and date). Instead of returning "common terms", numerical facets can calculate summary statistics, histograms, and percentiles. The following facet types are supported:
 
 -   stats: Default stats return average, count, maximum, minimum, and sum. Extended stats also include standard deviation, standard deviation lower and upper bounds, sum of squares, and variance.
 -   histogram: values are binned according to a provided interval. For numerical fields, the default interval is 100. For dates, the default interval is 'month'. Histogram intervals must be integers, and will therefore not work for fields with values between 0 and 1 (such as allele frequencies).
@@ -109,17 +103,13 @@ facets <- Dataset.facets(
 genomicCoordinates <- do.call(rbind, facets$genomic_coordinates.start)
 ```
 
-
 ## Nested Aggregations
-
 
 Nested aggregations can be used to apply an aggregation query to the result of another aggregation query. For example, given a dataset with patient information, users may want to determine the most common diagnosis age for each cancer type. Users could iterate through each cancer type and run a facets query on the age field, but that would require a large number of expensive API calls. Instead, by using nested aggregations, users can simply construct a facets query within an existing facets query, as in the example below.
 
-
 At this time, users may only nest term and histogram facets under terms facets. Nesting within histogram facets is not currently supported.
 
-
-The following example  yields the top ten genes associated with each disease in the public TCGA somatic mutations dataset:
+The following example yields the top ten genes associated with each disease in the public TCGA somatic mutations dataset:
 
 ```{r}
 library(quartzbio.edp)

@@ -26,7 +26,7 @@ Dataset query results are returned in pages, similar to a search engine. To narr
 A basic query returns a page of results from the specified public dataset. Users can set the paginate parameter to True to retrieve all records or use the limit parameter to specify how many records to retrieve. Users should note that in the R client, the limit parameter allows users to retrieve a maximum of 10,000 records in a single request. Additionally, the query function accepts the following parameters:
 
 |   Parameter    |  Value  |                                                                                                                                  Description                                                                                                                                  |
-|:----------------:|:----------------:|:----------------------------------:|
+|:-----------------:|:-----------------:|:----------------------------------:|
 |    filters     | objects |                                                                                                                            A valid filter object.                                                                                                                             |
 |     facets     | objects |                                                                                                                             A valid facets object                                                                                                                             |
 |     fields     | string  |                                                                                                                  A list of fields to include in the results.                                                                                                                  |
@@ -42,14 +42,18 @@ A basic query returns a page of results from the specified public dataset. Users
 ```{r}
 # Users can set how many records they want to retrieve with the "limit" parameter
 clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37")
+
 # View the first 10,000 records
 records <- Dataset_query(clinvar$id, limit = 10000)
 
 # View the next 10,000 records
-records_offset <- Dataset_query(dataset_id = clinvar$id, limit = 10000, offset = 10000)
+next_records <- fetch_next(records)
 
-# To get all results in a single data frame, can use R functions such as rbind:
-all_records <- rbind(records, records_offset)
+# To get all results in a single data frame, users can use R functions fetch_all:
+df_all <- fetch_all(records)
+
+# Users can also fetch all records by
+records <- Dataset_query(clinvar$id, all = TRUE)
 
 # Users can order query results using the ordering argument
 
@@ -143,6 +147,7 @@ file_url <- Object.get_download_url(file_id$id)
 df <- read.csv(url(file_url))
 ```
 
+
 ## Supported File Extensions and Compressions
 
 File querying is only supported for the following file extensions and compressions:
@@ -161,7 +166,7 @@ The only supported encoding is UTF-8.
 The output format of the query can be provided by using the output_format parameter which can be one of the following:
 
 | Output Format  | Description                                                              |
-|----------------------|--------------------------------------------------|
+|-----------------------|------------------------------------------------|
 | json (default) | applicable to all file extensions                                        |
 | csv            | applicable only to **csv**, **txt**, **tsv**, or **bed** file extensions |
 | tsv            | applicable only to **csv**, **txt**, **tsv**, or **bed** file extensions |
@@ -186,7 +191,7 @@ Methods do not accept URL parameters or request bodies unless specified. Please 
 Request Body: The request body should contain valid query parameters:
 
 |    Property    |  Value  |                    Description                     |
-|:---------------:|:---------------:|:-------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 |    filters     | objects |               A valid filter object.               |
 |     facets     | objects | A valid [facets](aggregating_datasets.html) object |
 |     fields     | string  |    A list of fields to include in the results.     |
@@ -223,7 +228,7 @@ The dataset query response has the following structure:
 Request Body:
 
 |  Property   |  Value  |                                                                Description                                                                 |
-|:----------------:|:----------------:|:----------------------------------:|
+|:-----------------:|:-----------------:|:----------------------------------:|
 |    name     | string  |                                                     A short name for the Saved Query.                                                      |
 | description | string  |                                                     A description for the Saved Query.                                                     |
 |   dataset   | string  | The ID or full_path of a dataset to validate this query parameters against. This is needed on initial creation to ensure valid parameters. |

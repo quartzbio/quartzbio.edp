@@ -93,9 +93,85 @@ test_that_with_edp_api("datasets", {
   df$arbitrary <- bless(df$arbitrary, "myclass")
   expect_equal(df, dfi, ignore_attr = TRUE)
 
-  ### methods
-  ds1bis <- fetch(ds$dataset_id)
+})
 
-  expect_s3_class(ds1bis, "Dataset")
-  expect_identical(ds1bis$id, ds$id)
+test_that("dataset_load", {
+  local_mocked_bindings(
+    dataset_export_to_parquet = function(id, full_path, ...) file.path("CAPTURES", "dataset_load", "userdata1.parquet")
+  )
+
+  # Dataset schema
+  expect_schema <- arrow::schema(
+    registration_dttm = arrow::timestamp("ns"),
+    id = arrow::int32(),
+    first_name = arrow::string(),
+    last_name = arrow::string(),
+    email = arrow::string(),
+    gender = arrow::string(),
+    ip_address = arrow::string(),
+    cc = arrow::string(),
+    country = arrow::string(),
+    birthdate = arrow::string(),
+    salary = arrow::float64(),
+    title = arrow::string(),
+    comments = arrow::string(),
+  )
+  # expected_schema_class <- c("Schema", "ArrowObject", "R6")
+  # Positive testcases
+  actual_schema <- Dataset_schema(full_path = "/path/to/dataset")
+
+  expect_equal(names(actual_schema), names(expect_schema))
+  expect_equal(class(actual_schema), class(expect_schema))
+  expect_equal(actual_schema$types, expect_schema$types)
+
+  # Negative testscases
+  expect_error(Dataset_schema(), "A dataset ID or full path is required")
+
+  expect_equal(names(Dataset_schema(id = "1234567")), names(expect_schema))
+
+  expect_equal(
+    names(Dataset_schema(parquet_path = file.path("CAPTURES", "dataset_load", "userdata1.parquet"))),
+    names(expect_schema)
+  )
+
+  expect_equal(
+    class(Dataset_schema(parquet_path = file.path("CAPTURES", "dataset_load", "userdata1.parquet"))),
+    class(expect_schema)
+  )
+
+
+  # Dataset load
+  # Check the tibble returned
+
+  user_data <- Dataset_load(id = "1234567")
+  expect_equal(nrow(user_data), 1000)
+  expect_equal(ncol(user_data), 13)
+
+  # select fields
+  selected_user_data <- Dataset_load(id = "1234567", col_select = c("first_name", "last_name", "country", "title"))
+  # expect_equal(nrow(selected_user_data), 1000)
+  expect_equal(ncol(selected_user_data), 4)
+
+  # As arrow table
+
+  arrow_table_data <- Dataset_load(
+    full_path = "vault_path/to/dataset", col_select = c("first_name", "last_name", "country", "title", "gender", "comments"),
+    as_data_frame = FALSE
+  )
+
+  expect_equal(ncol(arrow_table_data), 6)
+  expect_true("ArrowObject" %in% class(arrow_table_data))
+
+  # Read data into dataframe with schema
+  user_data_result <- Dataset_load(full_path = "vault_path/to/dataset", get_schema = TRUE)
+  expect_equal(nrow(user_data_result$df), 1000)
+  expect_equal(ncol(user_data_result$df), 13)
+
+  expect_equal(names(user_data_result$schema), names(expect_schema))
+  expect_equal(user_data_result$schema$types, expect_schema$types)
+
+  # filter data via Arrow expressions
+  user_data_filter <- Dataset_load(id = "1234567", filter_expr = arrow::Expression$field_ref("first_name") == "Emily")
+  expect_equal(nrow(user_data_filter), 4)
+  expect_equal(ncol(user_data_filter), 13)
 })

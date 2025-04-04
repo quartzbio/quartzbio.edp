@@ -123,6 +123,115 @@ Dataset_import <- function(
   res
 }
 
+#' Initiate a Dataset export to parquet
+#'
+#' Create a dataset export to parquet file and return the URL to export file
+#'
+#' @param id (character) The ID of a QuartzBio EDP dataset, or a Dataset object.
+#' @param full_path (character) a valid dataset full path, including the account, vault and path to EDP Dataset.
+#' @param conn (optional) Custom client environment.
+#' @return URL to the parquet file for the given EDP dataset. If there is an
+#' failure, an error will be raised.
+#' @concept  solvebio_api
+dataset_export_to_parquet <- function(id = NULL, full_path = NULL, conn = get_connection()) {
+  # Retrieve the dataset ID
+  if (is.null(id) && !is.null(full_path)) {
+    # Retrieving dataset ID by full path
+    dt <- Dataset.get_by_full_path(full_path = full_path)
+    id <- dt$id
+  }
+
+  # Export dataset in parquet format
+  export <- DatasetExport.create(
+    id,
+    format = "parquet",
+    params = NULL,
+    send_email_on_completion = FALSE,
+    follow = TRUE
+  )
+
+  # Wait for the download URL to be generated once task completes
+  Sys.sleep(1)
+  parquet_url <- DatasetExport.get_download_url(export$id)
+  parquet_url
+}
+
+#' Get dataset schema
+#'
+#' Retrieves the schema of the Quartzbio EDP dataset.
+#'
+#' @param id (character) The ID of a QuartzBio EDP dataset.
+#' @param full_path (character) a valid dataset full path, including the account, vault and path to EDP Dataset.
+#' @param parquet_path (character) provide a parquet file/ URI connection
+#' @return A Schema object containing Fields, which maps to the data types.
+#' @concept quartzbio_api
+#' @export
+Dataset_schema <- function(id = NULL, full_path = NULL, parquet_path = NULL) {
+  # check for arguments
+  all_null <- all(sapply(c(id, full_path, parquet_path), is.null))
+
+  if (all_null) {
+    stop("A dataset ID or full path is required")
+  }
+
+  if (!is.null(parquet_path)) {
+    parquet_url <- parquet_path
+  } else {
+    # initiate a parquet export
+    parquet_url <- dataset_export_to_parquet(id = id, full_path = full_path)
+  }
+
+
+  # Create a Parquet file reader
+  pq <- arrow::ParquetFileReader$create(parquet_url)
+  dataset_schema <- pq$GetSchema()
+  dataset_schema
+}
+
+#' Dataset_load
+#'
+#' Loads large Quartzbio EDP dataset and returns an R data frame containing all records.
+#'
+#' @param id (character) The ID of a QuartzBio EDP dataset.
+#' @param full_path (character) a valid dataset full path, including the account, vault and path to EDP Dataset.
+#' @param get_schema (boolean) Retrieves the schema of the Quartzbio EDP dataset loaded. Default value: FALSE
+#' @param filter_expr (character) A arrow Expression to filter the scanned rows by, or (default) to keep all rows. Check [arrow::Scanner()]
+#' @inheritDotParams arrow::read_parquet col_select as_data_frame
+#' @concept  quartzbio_api
+#' @return A `tibble` which is the default, or an Arrow Table otherwise. If the `get_schema` parameter is set to `TRUE`,
+#' the function returns a list containing both the `tibble` and its schema.
+#' @export
+Dataset_load <- function(id = NULL, full_path = NULL, get_schema = FALSE, filter_expr = NULL, ...) {
+  if (is.null(id) && is.null(full_path)) {
+    stop("A dataset ID or full path is required.")
+  }
+
+  parquet_url <- dataset_export_to_parquet(id = id, full_path = full_path)
+  #parquet_url <- full_path
+
+  tryCatch(
+    {
+      df <- arrow::read_parquet(parquet_url, ...)
+    },
+    error = function(e) {
+      stop(sprintf("Error in reading dataset: %s\n", e$message))
+    }
+  )
+
+  if (!is.null(filter_expr)) {
+    df_scan <- arrow::Scanner$create(df, filter = filter_expr, ...)
+    df <- as.data.frame(df_scan$ToTable())
+
+  }
+
+  if (get_schema) {
+    schema <- Dataset_schema(parquet_path = parquet_url)
+    return(list(df = df, schema = schema))
+  }
+
+  df
+}
+
 #' queries data into a dataset.
 #' @inheritParams params
 #' @param meta    whether to retrieve fields meta data information to properly format, reorder
