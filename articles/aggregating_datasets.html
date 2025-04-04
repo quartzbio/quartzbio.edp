@@ -81,12 +81,15 @@ can utilize facets to find the total number of unique values as well as
 a list of the most common values that occur in the dataset. When used
 with a filtered dataset, the results will represent the filtered subset
 of data.</p>
-<p>The following facet types are supported: - terms (default): Returns a
-list of the top terms and the number of times they occur (in order of
-this value). The default number of terms returned at once is 10. Users
-can set a limit up to 1 million (1,000,000) terms returned. - count:
-Returns the number of unique values in the field. For very large
-datasets, this is an approximate number.</p>
+<p>The following facet types are supported:</p>
+<ul>
+<li><p>terms (default): Returns a list of the top terms and the number
+of times they occur (in order of this value). The default number of
+terms returned at once is 10. Users can set a limit up to 1 million
+(1,000,000) terms returned.</p></li>
+<li><p>count: Returns the number of unique values in the field. For very
+large datasets, this is an approximate number.</p></li>
+</ul>
 <p>Facets will not work for text fields that are indexed (and tokenized)
 for full-text search. Terms facets are also disabled for _id fields.</p>
 <div class="section level3">
@@ -242,7 +245,7 @@ disease in the public TCGA somatic mutations dataset:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 28-Mar-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Last modified: 04-Apr-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

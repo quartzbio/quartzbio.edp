@@ -73,6 +73,7 @@ analysis.</p>
 <li>CSV: Comma Separated Value format (flattened, gzipped).</li>
 <li>TSV: Tab Separated Value format (flattened, gzipped).</li>
 <li>Excel (XLSX): Microsoft Excel format (flattened).</li>
+<li>Parquet: column-oriented data file format.</li>
 </ul>
 <p>Exporting data can take anywhere from a few seconds to tens of
 minutes, depending on the number of records and selected format. Exports
@@ -199,6 +200,56 @@ a dataset:</p>
 <span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/DatasetExport.get_download_url.html">DatasetExport.get_download_url</a></span><span class="op">(</span><span class="va">export</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="va">url</span>, <span class="st">"my_variants.json"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="export-and-load-a-dataset-from-parquet-file">Export and Load a dataset from Parquet File<a class="anchor" aria-label="anchor" href="#export-and-load-a-dataset-from-parquet-file"></a>
+</h3>
+<p>Datasets can also be exported into a parquet file and then can be
+read/queried. The Dataset results are returned as a R dataframe or as a
+<a href="https://arrow.apache.org/docs/r/reference/read_parquet.html" class="external-link">arrow</a>
+table. User can export the dataset into parquet file format (.parquet)
+and build queries using <a href="https://arrow.apache.org/docs/r/reference/Expression.html" class="external-link">Arrow
+expressions</a>. Export Dataset into parquet and read the records using
+<code>Dataset_load</code> function.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Export the whole dataset into parquet and read into a dataframe.</span></span>
+<span><span class="co"># Datset ID or dataset full path can be provided</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_load.html">Dataset_load</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"&lt;DATASET_ID&gt;"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_load.html">Dataset_load</a></span><span class="op">(</span>full_path <span class="op">=</span> <span class="st">"&lt;DATASET_FULL_PATH&gt;"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># To export selected fields</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_load.html">Dataset_load</a></span><span class="op">(</span></span>
+<span>  full_path <span class="op">=</span> <span class="st">"quartzbio:Public:/ClinVar/5.3.0-20231007/hgvs4variation"</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Symbol"</span>, <span class="st">"GeneID"</span>, <span class="st">"Type"</span>, <span class="st">"NucleotideExpression"</span>, <span class="st">"Assembly"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Fields can be selected/excluded based on tidyverse expressions</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_load.html">Dataset_load</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"&lt;DATASET_ID&gt;"</span>, col_select <span class="op">=</span> <span class="fu">ends_with</span><span class="op">(</span><span class="st">"e"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># The Dataset can also be queried by creating arrow filter expressions</span></span>
+<span><span class="co"># Filter based on Assembly == 'GRCH37' and VariantionID &lt; 9000</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_load.html">Dataset_load</a></span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="st">"&lt;DATASET ID&gt;"</span>,</span>
+<span>  filter_expr <span class="op">=</span> <span class="va">Expression</span><span class="op">$</span><span class="fu">create</span><span class="op">(</span><span class="st">"and"</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="va">Expression</span><span class="op">$</span><span class="fu">field_ref</span><span class="op">(</span><span class="st">"Assembly"</span><span class="op">)</span> <span class="op">==</span> <span class="st">"\"GRCh37\""</span>,</span>
+<span>    <span class="va">Expression</span><span class="op">$</span><span class="fu">field_ref</span><span class="op">(</span><span class="st">"VariationID"</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">9000</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Dataset schema can also be reterived along with the dataset results</span></span>
+<span><span class="co"># get_schema can be set to true to return the schema as well along with the fitered dataset results</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_load.html">Dataset_load</a></span><span class="op">(</span></span>
+<span>  full_path <span class="op">=</span> <span class="st">"&lt;DATASET_FULL_PATH&gt;"</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Symbol"</span>, <span class="st">"GeneID"</span>, <span class="st">"Type"</span>, <span class="st">"NucleotideExpression"</span>, <span class="st">"Assembly"</span><span class="op">)</span>,</span>
+<span>  get_schema <span class="op">=</span> <span class="cn">TRUE</span>, filter_expr <span class="op">=</span> <span class="va">Expression</span><span class="op">$</span><span class="fu">field_ref</span><span class="op">(</span><span class="st">"Assembly"</span><span class="op">)</span> <span class="op">==</span> <span class="st">"\"GRCh37\""</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="api-endpoints">API Endpoints<a class="anchor" aria-label="anchor" href="#api-endpoints"></a>
@@ -241,9 +292,9 @@ resource.</td>
 properties:</p>
 <table class="table">
 <colgroup>
-<col width="23%">
-<col width="23%">
-<col width="52%">
+<col width="24%">
+<col width="24%">
+<col width="50%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">Property</th>
@@ -288,9 +339,9 @@ output (must be an EDP full path).</td>
 <p>The following export formats (format property) are available:</p>
 <table class="table">
 <colgroup>
-<col width="23%">
-<col width="23%">
-<col width="52%">
+<col width="24%">
+<col width="24%">
+<col width="50%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">Format</th>
@@ -334,9 +385,9 @@ natively support list within columns.</p>
 exports:</p>
 <table class="table">
 <colgroup>
-<col width="19%">
-<col width="19%">
-<col width="61%">
+<col width="21%">
+<col width="21%">
+<col width="56%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">Property</th>
@@ -428,9 +479,9 @@ mode is disabled, the response contains a URL to the file.</td>
 <p>This request accepts the following parameter:</p>
 <table class="table">
 <colgroup>
-<col width="22%">
-<col width="22%">
-<col width="54%">
+<col width="23%">
+<col width="23%">
+<col width="52%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">Property</th>
@@ -536,7 +587,7 @@ with the status canceled.</td>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 28-Mar-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Last modified: 04-Apr-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

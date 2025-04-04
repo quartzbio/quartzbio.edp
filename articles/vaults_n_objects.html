@@ -106,7 +106,7 @@ multiple vaults matching a given advanced search query
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://quartzbio.github.io/quartzbio.edp/">quartzbio.edp</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Retrieve your personal vault</span></span>
-<span><span class="va">my_vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.get_personal_vault.html">Vault.get_personal_vault</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">my_vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.html">Vault</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Your personal vault also has the shortcut `~`</span></span>
 <span><span class="va">my_vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.get_by_full_path.html">Vault.get_by_full_path</a></span><span class="op">(</span><span class="st">"~"</span><span class="op">)</span></span>
@@ -135,10 +135,10 @@ incrementing number to the name (i.e. folder, folder-1, folder-2,
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://quartzbio.github.io/quartzbio.edp/">quartzbio.edp</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># First, retrieve the vault</span></span>
-<span><span class="va">vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.get_personal_vault.html">Vault.get_personal_vault</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.html">Vault</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create the folder at the root of the vault</span></span>
-<span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.create_folder.html">Vault.create_folder</a></span><span class="op">(</span><span class="va">vault</span><span class="op">$</span><span class="va">id</span>, <span class="st">"/new-folder"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Object_create.html">Object_create</a></span><span class="op">(</span><span class="va">vault</span><span class="op">$</span><span class="va">id</span>, <span class="st">"new-folder"</span>, object_type <span class="op">=</span> <span class="st">"folder"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="uploading-files">Uploading Files<a class="anchor" aria-label="anchor" href="#uploading-files"></a>
@@ -153,7 +153,7 @@ files before uploading if they are large.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://quartzbio.github.io/quartzbio.edp/">quartzbio.edp</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># First retrieve the vault</span></span>
-<span><span class="va">vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.get_personal_vault.html">Vault.get_personal_vault</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.html">Vault</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Upload your file into the root of the vault File_upload</span></span>
 <span><span class="co"># Object.upload_file('local/path/data.csv', vault$id, '/')</span></span>
@@ -180,8 +180,8 @@ access to the vault:</p>
 <span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/File_get_download_url.html">File_get_download_url</a></span><span class="op">(</span><span class="va">csv_file</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 <p>Users can also download more than one file in the same folder:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Search for a particular object in the vault using the query argument.</span></span>
-<span><span class="co">#Query can include the exact file name or Unix style wildcards are supported too</span></span>
+<code class="sourceCode R"><span><span class="co"># Search for a particular object in the vault using the query argument.</span></span>
+<span><span class="co"># Query can include the exact file name or Unix style wildcards are supported too</span></span>
 <span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.search.html">Vault.search</a></span><span class="op">(</span><span class="va">vault</span><span class="op">$</span><span class="va">id</span>, query <span class="op">=</span> <span class="st">"xyz"</span>, object_type <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span></span>
 <span></span>
@@ -198,7 +198,7 @@ name or other attributes.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://quartzbio.github.io/quartzbio.edp/">quartzbio.edp</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Retrieve a vault</span></span>
-<span><span class="va">vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.get_personal_vault.html">Vault.get_personal_vault</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.html">Vault</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Search across files, folders, and datasets in the vault</span></span>
 <span><span class="va">objects</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.search.html">Vault.search</a></span><span class="op">(</span><span class="va">vault</span><span class="op">$</span><span class="va">id</span>, query <span class="op">=</span> <span class="st">"xyz"</span><span class="op">)</span></span>
@@ -262,7 +262,7 @@ automatically delete all its contents.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://quartzbio.github.io/quartzbio.edp/">quartzbio.edp</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create an empty folder in your personal vault</span></span>
-<span><span class="va">vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.get_personal_vault.html">Vault.get_personal_vault</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">vault</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.html">Vault</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Vault.create_folder.html">Vault.create_folder</a></span><span class="op">(</span><span class="va">vault</span><span class="op">$</span><span class="va">id</span>, <span class="st">"/test-delete-folder"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create the folder at the root of the vault</span></span>
@@ -467,7 +467,7 @@ higher on the vault.</td>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 28-Mar-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Last modified: 04-Apr-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

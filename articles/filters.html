@@ -68,7 +68,13 @@
 and files through the R client library, which also enable the
 application of complex filters on dataset and file fields. Users can
 also utilize Bash to query and filter datasets.</p>
-<p>Users can filter on any field in a dataset or file:</p>
+<p>Users can filter on any field in a dataset or file. Filters can be
+applied using 3 syntaxes:</p>
+<ul>
+<li>Math syntax</li>
+<li>API JSON syntax</li>
+<li>API syntax in R data structure</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Filter ClinVar dataset to pathogenic variants</span></span>
 <span></span>
@@ -79,7 +85,20 @@ also utilize Bash to query and filter datasets.</p>
 <span><span class="co"># Filter ClinVar file to pathogenic variants</span></span>
 <span></span>
 <span><span class="va">clinvar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Object.get_by_full_path.html">Object.get_by_full_path</a></span><span class="op">(</span><span class="st">"quartzbio:Public:/ClinVar/5.2.0-20210110/ClinVar-5-2-0-20210110-Variants-GRCH37-1425664822266145048-20221110194518.json.gz"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/Object.query.html">Object.query</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["clinical_significance", "pathogenic"]]'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/Object.query.html">Object.query</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["clinical_significance", "pathogenic"]]'</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># There are 3 basic syntaxes that can be used</span></span>
+<span></span>
+<span><span class="co">### generally, 3 ways</span></span>
+<span><span class="co"># math syntax</span></span>
+<span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'clinical_significance = "pathogenic"'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># API JSON syntax</span></span>
+<span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["clinical_significance", "pathogenic"]]'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># API syntax in R data structure</span></span>
+<span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span><span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"clinical_significance"</span>, <span class="st">"pathogenic"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Filters can be modified using “filter actions”, which let users
 adjust the condition of a filter. To specify a filter action, users can
 append it to the field name when building a filter:</p>
@@ -87,8 +106,8 @@ append it to the field name when building a filter:</p>
 #For example, date__gte for filtering by dates greater or equal to the input</code></pre>
 <table class="table">
 <colgroup>
-<col width="26%">
-<col width="73%">
+<col width="29%">
+<col width="70%">
 </colgroup>
 <thead><tr class="header">
 <th align="center"><strong>Action</strong></th>
@@ -163,7 +182,8 @@ Users can also match against multiple strings at once (a boolean or)
 using the “in” filter. By default, filters on string fields use the
 “equals” match.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Query Dataset</span></span>
+<code class="sourceCode R"><span><span class="co"># Filtering dataset using JSON syntax</span></span>
+<span><span class="co"># Query Dataset</span></span>
 <span><span class="va">clinvar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.get_by_full_path.html">Dataset.get_by_full_path</a></span><span class="op">(</span><span class="st">"quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Equals match</span></span>
@@ -176,7 +196,32 @@ using the “in” filter. By default, filters on string fields use the
 <span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["gene__regexp", "BRCA[12]"]]'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Prefix match</span></span>
-<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["gene__prefix", "BRCA"]]'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["gene__prefix", "BRCA"]]'</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Filtering dataset using Math syntax</span></span>
+<span><span class="co"># Equals match</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'(gene = "BRCA1")'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Equals match (in list)</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'gene IN ("BRCA1", "BRCA2")'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Regular expression match</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'gene regexp "BRCA[12]"'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Filtering dataset using R data structure</span></span>
+<span><span class="co"># Equals match</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="st">"BRCA1"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Equals match (in list)</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gene__in"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BRCA1"</span>, <span class="st">"BRCA2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Regular expression match</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gene__regexp"</span>, <span class="st">"BRCA[12]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Prefix match</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gene__prefix"</span>, <span class="st">"BRCA"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="text-filters">Text Filters<a class="anchor" aria-label="anchor" href="#text-filters"></a>
@@ -188,7 +233,15 @@ relevance.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Contains match for text fields</span></span>
 <span><span class="va">MedLine</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.get_by_full_path.html">Dataset.get_by_full_path</a></span><span class="op">(</span><span class="st">"quartzbio:Public:/MEDLINE/2.3.4-2018/MEDLINE-sample"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">MedLine</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["abstract__contains", "diabetes"]]'</span><span class="op">)</span></span></code></pre></div>
+<span></span>
+<span><span class="co"># JSON Syntax</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">MedLine</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["abstract__contains", "Immunological"]]'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Math Syntax</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">MedLine</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'(abstract CONTAINS "Immunological")'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># R data structure syntax</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">MedLine</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"abstract__contains"</span>, <span class="st">"Immunological"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="numeric-date-filters">Numeric &amp; Date Filters<a class="anchor" aria-label="anchor" href="#numeric-date-filters"></a>
@@ -200,7 +253,14 @@ in a list (in), half-open range match (range), and standard operators
 <code class="sourceCode R"><span><span class="co"># Equals match</span></span>
 <span><span class="va">clinvar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.get_by_full_path.html">Dataset.get_by_full_path</a></span><span class="op">(</span><span class="st">"quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37'"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># JSON syntaz</span></span>
 <span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["info.ORIGIN", 4]]'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Math syntax</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">"(info.ORIGIN = 4)"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># R data structure syntax</span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"info.ORIGIN"</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Equals match (in list)</span></span>
 <span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[["info.ORIGIN__in", [1, 2, 3]]]'</span><span class="op">)</span></span>
@@ -232,19 +292,27 @@ only compatible with datasets.</p>
 <p>The examples below show how to filter a dataset on one or two fields.
 In many cases, users will probably need to combine many filters into a
 single query.</p>
-<p>When manually writing queries in JSON, users can combine and nest
-filters using boolean operators (‘and’, ‘or’, ‘not’).</p>
+<p>When manually writing queries, users can combine and nest filters
+using boolean operators (‘and’, ‘or’, ‘not’).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clinvar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.get_by_full_path.html">Dataset.get_by_full_path</a></span><span class="op">(</span><span class="st">"quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Combining filters with boolean operaters with different syntaxes</span></span>
 <span></span>
 <span><span class="co"># AND</span></span>
 <span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[{"and": [["gene", "BRCA1"], ["clinical_significance", "pathogenic"]]}]'</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'(gene = "BRCA1") AND (clinical_significance = "Pathogenic")'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># OR</span></span>
 <span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[{"or": [["gene", "BRCA1"], ["gene_symbol", "BRCA2"]]}]'</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'(gene = "BRCA1") OR (gene_symbol = "BRCA2")'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># NOT</span></span>
-<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[{"not": [["gene", "BRCA1"], ["gene_symbol", "BRCA2"]]}]'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="st">'[{"not": [["gene", "BRCA1"], ["gene_symbol", "BRCA2"]]}]'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/Dataset_query.html">Dataset_query</a></span><span class="op">(</span>dataset_id <span class="op">=</span> <span class="va">clinvar</span><span class="op">$</span><span class="va">id</span>, filters <span class="op">=</span> <span class="fu"><a href="../reference/filters.html">filters</a></span><span class="op">(</span><span class="st">'NOT ((gene = "BRCA1") OR (gene = "BRCA2"))'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="query-strings">Query Strings<a class="anchor" aria-label="anchor" href="#query-strings"></a>
@@ -335,8 +403,8 @@ should be written as <code>\(1\+1\)\=2</code>.</p>
 <div class="section level2">
 <h2 id="advanced-filters">Advanced Filters<a class="anchor" aria-label="anchor" href="#advanced-filters"></a>
 </h2>
-<p>Users can also compose filters in JSON and apply these filters via R,
-Python, or the EDP UI:</p>
+<p>Users can also compose filters and apply these filters via R, Python,
+or the EDP UI:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Contains match for text fields</span></span>
 <span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Dataset.get_by_full_path.html">Dataset.get_by_full_path</a></span><span class="op">(</span><span class="st">"quartzbio:Public:/MEDLINE/2.3.4-2018/MEDLINE-sample"</span><span class="op">)</span></span>
@@ -380,8 +448,8 @@ fields automatically use the “contains” filter action instead.</p>
 <p>String and text actions include:</p>
 <table class="table">
 <colgroup>
-<col width="27%">
-<col width="72%">
+<col width="30%">
+<col width="69%">
 </colgroup>
 <thead><tr class="header">
 <th align="center"><strong>Action</strong></th>
@@ -417,8 +485,8 @@ The action is only compatible with datasets)</td>
 <p>Numeric and date field actions include:</p>
 <table class="table">
 <colgroup>
-<col width="27%">
-<col width="72%">
+<col width="30%">
+<col width="69%">
 </colgroup>
 <thead><tr class="header">
 <th align="center"><strong>Action</strong></th>
@@ -466,7 +534,7 @@ value.</td>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 28-Mar-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Last modified: 04-Apr-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

@@ -91,7 +91,9 @@
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/DatasetTemplate.update.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Dataset_create.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Dataset_import.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Dataset_load.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Dataset_query.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Dataset_schema.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Datasets.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Expression.evaluate.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/File.html</loc></url>
@@ -165,6 +167,7 @@
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/connect.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/connect_with_profile.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/create_model_df_from_fields.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/dataset_export_to_parquet.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/fetch_all.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/fetch_next.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/fetch_prev.html</loc></url>
