@@ -45,7 +45,7 @@ Users can retrieve any shared vault by name or the full path (e.g. domain:name).
 library(quartzbio.edp)
 
 # Retrieve your personal vault
-my_vault <- Vault.get_personal_vault()
+my_vault <- Vault()
 
 # Your personal vault also has the shortcut `~`
 my_vault <- Vault.get_by_full_path("~")
@@ -72,10 +72,10 @@ Folders can only be created within a vault for which the user has write-level pe
 library(quartzbio.edp)
 
 # First, retrieve the vault
-vault <- Vault.get_personal_vault()
+vault <- Vault()
 
 # Create the folder at the root of the vault
-folder <- Vault.create_folder(vault$id, "/new-folder")
+folder <- Object_create(vault$id, "new-folder", object_type = "folder")
 ```
 
 
@@ -89,7 +89,7 @@ The max upload size is 5 GB. Users are recommended to gzip their files before up
 library(quartzbio.edp)
 
 # First retrieve the vault
-vault <- Vault.get_personal_vault()
+vault <- Vault()
 
 # Upload your file into the root of the vault File_upload
 # Object.upload_file('local/path/data.csv', vault$id, '/')
@@ -120,8 +120,8 @@ url <- File_get_download_url(csv_file$id)
 Users can also download more than one file in the same folder:
 
 ```{r}
-#Search for a particular object in the vault using the query argument.
-#Query can include the exact file name or Unix style wildcards are supported too
+# Search for a particular object in the vault using the query argument.
+# Query can include the exact file name or Unix style wildcards are supported too
 
 files <- Vault.search(vault$id, query = "xyz", object_type = "file")
 
@@ -139,7 +139,7 @@ Users can search for files, folders, and datasets within any vault by name or ot
 library(quartzbio.edp)
 
 # Retrieve a vault
-vault <- Vault.get_personal_vault()
+vault <- Vault()
 
 # Search across files, folders, and datasets in the vault
 objects <- Vault.search(vault$id, query = "xyz")
@@ -169,7 +169,6 @@ library(quartzbio.edp)
 # List all datasets within a specific folder using regex
 public <- Vault.get_by_full_path("quartzbio:public")
 all_clinvar_datasets <- Vault.datasets(public$id, regex = "/ClinVar/.*")
-
 ```
 
 
@@ -203,7 +202,7 @@ Users can delete any vault or object (file, folder, or dataset) that they have a
 library(quartzbio.edp)
 
 # Create an empty folder in your personal vault
-vault <- Vault.get_personal_vault()
+vault <- Vault()
 folder <- Vault.create_folder(vault$id, "/test-delete-folder")
 
 # Create the folder at the root of the vault
