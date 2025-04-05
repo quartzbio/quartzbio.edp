@@ -2,7 +2,9 @@
 
 **New Features**
 
--   Retrieve datasets efficiently by leveraging the new parquet download function ([EDPDEV-1962](https://precisionformedicine.atlassian.net/browse/EDPDEV-1962))
+-   Dataset Export to parquet file format. Export the EDP Datasets into parquet file and load the data into R dataframe using `Dataset_load()` function. This function leverages `arrow::read_parquet` function.
+
+-   Refactored login flow for EDP Shiny application to support component based authorization using the `quartzbio_shiny_auth` function.
 
 **Improvements**
 
