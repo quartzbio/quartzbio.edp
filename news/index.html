@@ -37,7 +37,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="version-100">version 1.0.0<a class="anchor" aria-label="anchor" href="#version-100"></a></h2>
 <p><strong>New Features</strong></p>
-<ul><li>Retrieve datasets efficiently by leveraging the new parquet download function (<a href="https://precisionformedicine.atlassian.net/browse/EDPDEV-1962" class="external-link">EDPDEV-1962</a>)</li>
+<ul><li><p>Dataset Export to parquet file format. Export the EDP Datasets into parquet file and load the data into R dataframe using <code><a href="../reference/Dataset_load.html">Dataset_load()</a></code> function. This function leverages <code><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html" class="external-link">arrow::read_parquet</a></code> function.</p></li>
+<li><p>Refactored login flow for EDP Shiny application to support component based authorization using the <code>quartzbio_shiny_auth</code> function.</p></li>
 </ul><p><strong>Improvements</strong></p>
 <ul><li>add GitHub workflows to run R CMD check. (<a href="https://precisionformedicine.atlassian.net/browse/EDPDEV-2381" class="external-link">EDPDEV-2381</a>)</li>
 </ul><p><strong>Bug Fixes</strong></p>
@@ -110,7 +111,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 04-Apr-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Last modified: 05-Apr-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
