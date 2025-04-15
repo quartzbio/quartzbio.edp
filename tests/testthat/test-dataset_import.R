@@ -45,8 +45,6 @@ test_that_with_edp_api("dataset_import", {
     res <- Dataset_import(ds, df = MTCARS, sync = TRUE, retries = 0),
     "timeout"
   )
-  # useful for test coverage on tasks code
-  Task_wait_for_completion(res$task_id)
 
   ### check the result
   df <- Dataset_query(ds)
