@@ -111,6 +111,8 @@ Dataset_import <- function(
   rm(file_id)
 
   params <- preprocess_api_params(exclude = c("conn", "sync"))
+  params <- c(params, list(...))
+
   res <- request_edp_api("POST", "v2/dataset_imports", conn = conn, params = params)
 
   if (sync) {
