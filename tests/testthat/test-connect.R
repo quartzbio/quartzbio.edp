@@ -95,8 +95,7 @@ test_that("autoconnect", {
       expect_identical(autoconnect(check = FALSE), conn)
     })
 
-    unlink(".qb/edp.json")
-    save_connection_profile(conn, profile = "toto", path = ".qb/edp.json")
+    save_connection_profile(conn, profile = "toto")
 
     we(c(EDP_PROFILE = "toto"), {
       expect_identical(autoconnect(check = FALSE), conn)
