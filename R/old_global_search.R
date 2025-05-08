@@ -122,6 +122,7 @@ GlobalSearch.subjects <- function(env = get_connection(), ...) {
   params <- list(...)
   params$limit <- 0
   params$include_subjects <- TRUE
+  params$include_all_subjects <- TRUE
   params$env <- env
 
   response <- do.call(GlobalSearch.request, params)
