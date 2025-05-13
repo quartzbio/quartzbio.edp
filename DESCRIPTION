@@ -33,6 +33,8 @@ Imports:
 Suggests:
     httptest,
     knitr,
+    logger,
+    mockery,
     RcppSimdJson,
     rmarkdown,
     shiny,
