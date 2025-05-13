@@ -44,7 +44,14 @@ updated session with EDP connection to be used in shiny app</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">quartzbio_shiny_auth</span><span class="op">(</span><span class="va">input</span>, <span class="va">session</span>, <span class="va">client_id</span>, client_secret <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">base_url</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">quartzbio_shiny_auth</span><span class="op">(</span></span>
+<span>  <span class="va">input</span>,</span>
+<span>  <span class="va">session</span>,</span>
+<span>  <span class="va">client_id</span>,</span>
+<span>  client_secret <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">base_url</span>,</span>
+<span>  create_logfile <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -70,6 +77,10 @@ updated session with EDP connection to be used in shiny app</p>
 <dt id="arg-base-url">base_url<a class="anchor" aria-label="anchor" href="#arg-base-url"></a></dt>
 <dd><p>BASE URL</p></dd>
 
+
+<dt id="arg-create-logfile">create_logfile<a class="anchor" aria-label="anchor" href="#arg-create-logfile"></a></dt>
+<dd><p>(logical) Create a file to log records. Default is set to FALSE. Log file name will be generated automatically.</p></dd>
+
 </dl></div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -81,7 +92,7 @@ updated session with EDP connection to be used in shiny app</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 08-May-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Last modified: 13-May-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer></div>
