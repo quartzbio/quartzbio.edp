@@ -102,7 +102,7 @@ test_that("autoconnect", {
     })
 
     # EDP_CONFIG
-    file.rename(".qb/edp.json", "toto.json")
+    file.rename(file.path(getwd(), ".qb/edp.json"), "toto.json")
     we(c(EDP_PROFILE = "toto", EDP_CONFIG = "toto.json"), {
       expect_identical(autoconnect(check = FALSE), conn)
     })
