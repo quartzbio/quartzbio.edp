@@ -23,4 +23,3 @@ log_message("FATAL", "this is a fatal message")
 log_message("DEBUG", "this is a debug")
 }
 }
-\concept{quartzbio_api}
