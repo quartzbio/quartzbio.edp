@@ -5,7 +5,6 @@
 #' @param log_level Set log level. Default is set to INFO. Available levels: FATAL, ERROR, WARN, INFO, DEBUG
 #' @return The log file, if logging file is configured successfully,
 #' `"console"` if logging defaults to console or `NULL` if logging is disabled (due to invalid path or missing logger package).
-#' @concept quartzbio_api
 #' @export
 configure_logger <- function(log_file, log_level = "INFO") {
   if (!requireNamespace("logger", quietly = TRUE)) {
@@ -31,7 +30,6 @@ configure_logger <- function(log_file, log_level = "INFO") {
 #' Add log messages with the given log level
 #' @param level log level Available levels: FATAL, ERROR, WARN, INFO, DEBUG
 #' @param content message to be logged
-#' @concept quartzbio_api
 #' @examples
 #' \dontrun{
 #' log_message("INFO", "This is a info message")
@@ -69,4 +67,38 @@ log_message <- function(level, content) {
       message("INFO: ", content)
     }
   }
+}
+
+
+#' edp_health_check
+#'
+#' Provides quick health check to test your EDP connection and retrieves user details and vaults
+#' @param get_vault_list Get the vault list created by the user
+#' @export
+edp_health_check <- function(get_vault_list = FALSE) {
+
+  if (!requireNamespace("cli", quietly = TRUE)) {
+    stop("The 'cli' package is required for this function, but not installed.")
+  }
+
+  # Check if the access token is valid and check Connection
+
+  cli::cli_h2("EDP Connection Check")
+  conn <- autoconnect(check = TRUE)
+
+  cli::cli_text("EDP Connection established successfully")
+
+  # Get user details
+
+  cli::cli_h2("EDP User")
+  current_user <- User(conn)
+  cli::cli_text("EDP user {current_user$full_name} {current_user$username}. Role: {current_user$role}")
+
+  # Fetch user's vaults
+
+  if (get_vault_list) {
+    cli::cli_h2("Fetching Vault List")
+    fetch_vaults.User(current_user, conn)
+  }
+
 }

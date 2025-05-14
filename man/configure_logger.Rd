@@ -12,10 +12,9 @@ configure_logger(log_file, log_level = "INFO")
 \item{log_level}{Set log level. Default is set to INFO. Available levels: FATAL, ERROR, WARN, INFO, DEBUG}
 }
 \value{
-The log file with set log level threshold id logging file is configured successfully.
-\code{"console"} if logging defaults to console or \code{NULL}if logging is disabled. (due to invalid path or missing logger package)
+The log file, if logging file is configured successfully,
+\code{"console"} if logging defaults to console or \code{NULL} if logging is disabled (due to invalid path or missing logger package).
 }
 \description{
 Setup the  log record appender function for the file provided
 }
-\concept{quartzbio_api}

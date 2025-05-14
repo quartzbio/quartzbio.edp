@@ -41,3 +41,17 @@ test_that("log message without logger", {
   expect_message(log_message("DEBUG", "This is a debug message"), "DEBUG: This is a debug message")
   expect_warning(log_message("WARN", "This is a warning"), "WARNING: This is a warning")
 })
+
+test_that("edp_health_check", {
+  envs <- c(EDP_API_SECRET = strrep("X", 30), EDP_API_HOST = "host")
+  # withr::with_envvar(envs, ))
+  withr::with_envvar(envs, {
+    expect_error(edp_health_check(), regexp = "autoconnect\\(\\) failed")
+  })
+
+  # invalid secret
+  envs_2 <- c(EDP_API_SECRET = strrep("X", 31), EDP_API_HOST = "host")
+  withr::with_envvar(envs_2, {
+    expect_error(edp_health_check(), regexp = "autoconnect\\(\\) failed")
+  })
+})
