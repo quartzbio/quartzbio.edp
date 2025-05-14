@@ -16,10 +16,10 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
     tryCatch(
       {
         user <- User.retrieve(env = auth_env)
-        add_log("INFO", paste("Connected to Quartzbio EDP with user", user$full_name))
+        log_message("INFO", paste("Connected to Quartzbio EDP with user", user$full_name))
       },
       error = function(e) {
-        add_log("ERROR", paste("Connection to Quartzbio EDP Failed:", e$message))
+        log_message("ERROR", paste("Connection to Quartzbio EDP Failed:", e$message))
       }
     )
   }
@@ -96,13 +96,13 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
           shinyjs::js$enableCookieAuth()
           TRUE
         } else {
-          add_log("WARN", "This app requires shinyjs to use cookies for token storage.")
+          log_message("WARN", "This app requires shinyjs to use cookies for token storage.")
           FALSE
         }
       },
       error = function(e) {
         # Cookie JS is not enabled, disable cookies
-        add_log("WARN", "This app has not been configured to use cookies for token storage.")
+        log_message("WARN", "This app has not been configured to use cookies for token storage.")
         FALSE
       }
     )
@@ -124,7 +124,7 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
         redirect_uri = redirect_uri,
         code = parsed_params$code
       )
-      add_log("INFO", "Proceeding to reterieve QuartzBio EDP OAuth2 token")
+      log_message("INFO", "Proceeding to reterieve QuartzBio EDP OAuth2 token")
 
       oauth_data <- tryCatch(
         {
@@ -137,7 +137,7 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
           )
         },
         error = function(e) {
-          add_log("ERROR", sprintf("ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n", e))
+          log_message("ERROR", sprintf("ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n", e))
         }
       )
 
@@ -182,7 +182,7 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
           rawToChar(openssl::aes_cbc_decrypt(raw, key = aes_key))
         }
       } else {
-        add_log("WARN", "QuartzBio EDP OAuth2 tokens will not be encrypted in cookies. Set client_secret to encrypt tokens.")
+        log_message("WARN", "QuartzBio EDP OAuth2 tokens will not be encrypted in cookies. Set client_secret to encrypt tokens.")
       }
 
       shiny::observe({
@@ -216,7 +216,7 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
       })
     } else {
       # warning("WARNING: QuartzBio EDP cookie-based token storage is disabled.")
-      add_log("INFO", "QuartzBio EDP cookie-based token storage is disabled.")
+      log_message("INFO", "QuartzBio EDP cookie-based token storage is disabled.")
     }
 
     shiny::observeEvent(session$clientData$url_search,
@@ -227,7 +227,7 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
         # This can be used for local development or automated tests to bypass
         # the login modal.
         if (.config$token != "") {
-          add_log("WARN", "Found credentials in global environment, will not show login modal.")
+          log_message("WARN", "Found credentials in global environment, will not show login modal.")
           .initializeSession(session,
             token = .config$token,
             token_type = .config$token_type
