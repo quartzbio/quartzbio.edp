@@ -84,7 +84,7 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
         .get_error_msg(res)
       ))
 
-      msg("got error using dplyr::bind_rows() to aggregate the paginated results, retrying with rbind.data.frame()...")
+      msg("trying with rbind.data.frame() to aggregate the paginated results, got error using dplyr::bind_rows()...")
       tt <- system.time(res <- do.call(rbind.data.frame, lst), FALSE)
     }
     verbose && msg("took %s to bind the data frames", tt[3])
