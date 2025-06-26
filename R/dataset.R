@@ -287,7 +287,7 @@ Dataset_query <- function(
       },
       gcFirst = FALSE
     )
-    msg("took %s to process the meta data.", tt[3])
+    msg("took %s to process the meta data successfully.", tt[3])
   }
 
   df
