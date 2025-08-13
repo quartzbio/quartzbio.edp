@@ -2,7 +2,6 @@
 
 #' New function for EDP auth of shiny app. Returns the
 #' updated session with EDP connection to be used in shiny app
-#' @concept quartzbio_api
 #' @param input input
 #' @param session session
 #' @param client_id client_id

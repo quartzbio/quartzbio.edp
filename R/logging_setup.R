@@ -76,7 +76,6 @@ log_message <- function(level, content) {
 #' @param get_vault_list Get the vault list created by the user
 #' @export
 edp_health_check <- function(get_vault_list = FALSE) {
-
   if (!requireNamespace("cli", quietly = TRUE)) {
     stop("The 'cli' package is required for this function, but not installed.")
   }
@@ -100,5 +99,4 @@ edp_health_check <- function(get_vault_list = FALSE) {
     cli::cli_h2("Fetching Vault List")
     fetch_vaults.User(current_user, conn)
   }
-
 }

@@ -1,4 +1,3 @@
-
 # Sys.getenv does not return unser if the variable is set but empty
 get_env <- function(name, unset = "") {
   vx <- Sys.getenv(name)

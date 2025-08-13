@@ -23,6 +23,7 @@ Imports:
     future.apply,
     httr,
     jsonlite,
+    lifecycle,
     methods,
     mime,
     openssl,

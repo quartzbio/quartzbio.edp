@@ -32,9 +32,11 @@ Dataset.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Dataset.retrieve <- function(id, env = get_connection()) {
+  deprecate_soft("1.0.0", "Dataset.retrieve()", "Dataset()", details = "Dataset() fetches a dataset using either id or the full path")
   if (missing(id)) {
     stop("A dataset ID is required.")
   }
@@ -169,9 +171,11 @@ Dataset.data <- function(id, filters, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Dataset.query <- function(id, paginate = FALSE, use_field_titles = TRUE, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Dataset.query()", "Dataset_query()")
   params <- list(...)
   params$id <- id
   params$env <- env
@@ -221,9 +225,11 @@ Dataset.query <- function(id, paginate = FALSE, use_field_titles = TRUE, env = g
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Dataset.fields <- function(id, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Dataset.fields()", "DatasetFields()")
   if (inherits(id, "numeric")) {
     warning("Please use string IDs instead of numeric IDs.")
   }
@@ -335,9 +341,11 @@ Dataset.count <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Dataset.create()", "Dataset_create()")
   if (missing(vault_id)) {
     stop("A vault ID is required.")
   }
@@ -408,9 +416,11 @@ Dataset.update <- function(id, env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
+  deprecate_soft("1.0.0", "Dataset.get_by_full_path()", "Dataset()", details = "Dataset() fetches a dataset using either id or the full path")
   object <- Object.get_by_full_path(full_path, env = env)
 
   dataset <- do.call(Dataset.retrieve, list(id = object$dataset_id, env = env))
