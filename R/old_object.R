@@ -24,9 +24,11 @@ Object.all <- function(env = get_connection(), ...) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Object.retrieve <- function(id, env = get_connection()) {
+  deprecate_soft("1.0.0", "Object.retrieve()", "Object()", details = "To fetch a file or folder using id or full path use File() or Folder() respectively")
   if (missing(id)) {
     stop("A object ID is required.")
   }
@@ -85,9 +87,11 @@ Object.delete <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Object.create <- function(vault_id, parent_object_id, object_type, filename, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Object.create()", "Object_create()", details = "To create a file for folder in Quartzbio EDP use File_create() and Folder_create() respectively")
   if (missing(vault_id)) {
     stop("A vault ID is required.")
   }
@@ -133,9 +137,11 @@ Object.create <- function(vault_id, parent_object_id, object_type, filename, env
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Object.update <- function(id, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Object.update()", "Object_update()")
   if (missing(id)) {
     stop("An object ID is required.")
   }
@@ -161,10 +167,11 @@ Object.update <- function(id, env = get_connection(), ...) {
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
-#'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Object.get_by_full_path()", "Object()")
   params <- list(
     full_path = full_path,
     ...
@@ -263,9 +270,11 @@ Object.get_download_url <- function(id, env = get_connection()) {
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Object.upload_file <- function(local_path, vault_id, vault_path, filename, env = get_connection()) {
+  deprecate_soft("1.0.0", "Object.upload_file()", "File_upload()")
   if (missing(local_path) || !file.exists(local_path)) {
     stop("A valid path to a local file is required.")
   }
@@ -351,9 +360,11 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename, env = get_connection()) {
+  deprecate_soft("1.0.0", "Object.get_or_upload_file()", "File_upload()", details = "To fetch a file use by id or fullpath use File()")
   if (missing(local_path) || !file.exists(local_path)) {
     stop("A valid path to a local file is required.")
   }
@@ -456,9 +467,11 @@ Object.data <- function(id, filters, col.names = NULL, env = get_connection(), .
 #' @references
 #' \url{https://docs.solvebio.com/}
 #'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Object.query <- function(id, paginate = FALSE, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Object.query()", "File_query()")
   params <- list(...)
   params$id <- id
   params$env <- env

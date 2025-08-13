@@ -12,10 +12,11 @@
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
-#'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Vault.all <- function(..., env = get_connection()) {
+  deprecate_soft("1.0.0", "Vault.all()", "Vaults()")
   .request("GET", "v2/vaults", query = list(...), env = env)
 }
 
@@ -80,7 +81,7 @@ Vault.delete <- function(id, env = get_connection()) {
 #' @param name The unique name of the vault.
 #' @param env (optional) Custom client environment.
 #' @param ... (optional) Additional vault attributes.
-#'
+#' @importFrom lifecycle deprecate_soft
 #' @examples \dontrun{
 #' Vault.create(name = "my-domain:MyVault")
 #' }
@@ -91,6 +92,7 @@ Vault.delete <- function(id, env = get_connection()) {
 #' @concept  quartzbio_api
 #' @export
 Vault.create <- function(name, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Vault.create()", "Vault_create()")
   # TODO
   if (missing(name)) {
     stop("A name is required.")
@@ -124,10 +126,11 @@ Vault.create <- function(name, env = get_connection(), ...) {
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
-#'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Vault.update <- function(id, env = get_connection(), ...) {
+  deprecate_soft("1.0.0", "Vault.update()", "Vault_update()")
   if (missing(id)) {
     stop("A vault ID is required.")
   }
@@ -158,10 +161,11 @@ Vault.update <- function(id, env = get_connection(), ...) {
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
-#'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 Vault.get_by_full_path <- function(full_path, verbose = TRUE, env = get_connection()) {
+  deprecate_soft("1.0.0", "Vault.get_by_full_path()", "Vault()")
   if (missing(full_path)) {
     stop("A vault full path is required.")
   }

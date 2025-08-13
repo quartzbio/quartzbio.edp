@@ -24,13 +24,14 @@
 #'
 #' @references
 #' \url{https://docs.solvebio.com/}
-#'
+#' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
 login <- function(
     api_key = Sys.getenv("SOLVEBIO_API_KEY"),
     api_token = Sys.getenv("SOLVEBIO_ACCESS_TOKEN"),
     api_host = Sys.getenv("SOLVEBIO_API_HOST")) {
+  deprecate_soft("1.0.0", "login()", "connect()")
   secret <- api_token
   if (!.is_nz_string(secret)) {
     secret <- api_key

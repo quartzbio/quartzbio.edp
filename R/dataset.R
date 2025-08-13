@@ -209,7 +209,7 @@ Dataset_load <- function(id = NULL, full_path = NULL, get_schema = FALSE, filter
   }
 
   parquet_url <- dataset_export_to_parquet(id = id, full_path = full_path)
-  #parquet_url <- full_path
+  # parquet_url <- full_path
 
   tryCatch(
     {
@@ -223,7 +223,6 @@ Dataset_load <- function(id = NULL, full_path = NULL, get_schema = FALSE, filter
   if (!is.null(filter_expr)) {
     df_scan <- arrow::Scanner$create(df, filter = filter_expr, ...)
     df <- as.data.frame(df_scan$ToTable())
-
   }
 
   if (get_schema) {
