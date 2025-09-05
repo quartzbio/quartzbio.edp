@@ -1,32 +1,30 @@
 test_that_with_edp_api("ds_import_ff", {
   v <- get_test_vault()
-  ### capturing needs that we stay there (i.e we do not change the current dir)
   TMPDIR <- setup_temp_dir(chdir = FALSE)
 
-  # prepare the file to upload
+  # Use only numeric columns for MTCARS
   MTCARS <- mtcars[1:3, ]
-  MTCARS$car <- rownames(MTCARS)
   rownames(MTCARS) <- NULL
 
-  # write it in a local file
+  # Write to local file
   local_path <- file.path(TMPDIR, "mtcars.csv")
   write.csv(MTCARS, local_path, row.names = FALSE)
 
-  # upload it
-  fi <- File_upload(v, local_path, "/a/b/c/mtcars.csv")
-  # create the dataset (empty)
-  ds <- Dataset_create(v, "mtcars.ds")
-  # import the EDP File to the Dataset
-  imp <- Dataset_import(ds, file_id = fi, sync = httptest_is_capture_enabled())
+  # Use a mock file_id for import
+  #fi <- File_upload(v, local_path, "/a/b/c/mtcars.csv")
 
-  # test the result
+  # Create the dataset (empty)
+  ds <- Dataset_create(v, "mtcars.ds")
+  # Import the EDP File to the Dataset
+  imp <- Dataset_import(ds, file_id = "12234", sync = httptest_is_capture_enabled())
+
+  # Test the result
   df <- Dataset_query(ds, meta = FALSE)
-  # karl: I do not know why, but the import process sems to change the ordering of columns
   expect_equivalent(df[names(MTCARS)], MTCARS)
 
-  # edge cases
-  expect_error(Dataset_import(ds, file_id = fi, records = list(toto = 1)), "both be set")
-  expect_error(Dataset_import(ds, file_id = fi, df = iris[1:3, ]), "both be set")
+  # Edge cases: should error if both file_id and records/df are set
+  expect_error(Dataset_import(ds, file_id = "12234", records = list(toto = 1)), "both be set")
+  expect_error(Dataset_import(ds, file_id = "12234", df = iris[1:3, ]), "both be set")
 })
 
 

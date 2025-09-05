@@ -31,4 +31,3 @@ quartzbio_shiny_auth(
 New function for EDP auth of shiny app. Returns the
 updated session with EDP connection to be used in shiny app
 }
-\concept{quartzbio_api}

@@ -2,7 +2,11 @@
 % Please edit documentation in R/file.R
 \name{File_upload}
 \alias{File_upload}
-\title{uploads a file}
+\title{uploads a file
+Upload a file to a QuartzBio vault.
+Automatically uses multipart upload for files larger than the multipart_threshold.
+multipart_threshold (int): File size threshold for multipart upload (default: 64MB)
+multipart_chunksize (int): Size of each upload part (default: 64MB)}
 \usage{
 File_upload(
   vault_id,
@@ -25,4 +29,8 @@ File_upload(
 }
 \description{
 uploads a file
+Upload a file to a QuartzBio vault.
+Automatically uses multipart upload for files larger than the multipart_threshold.
+multipart_threshold (int): File size threshold for multipart upload (default: 64MB)
+multipart_chunksize (int): Size of each upload part (default: 64MB)
 }
