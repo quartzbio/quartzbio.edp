@@ -21,9 +21,6 @@ Object.all <- function(env = get_connection(), ...) {
 #' Object.retrieve("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -48,9 +45,6 @@ Object.retrieve <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' Object.delete("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -83,9 +77,6 @@ Object.delete <- function(id, env = get_connection()) {
 #'   filename = "My Folder"
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
@@ -134,9 +125,6 @@ Object.create <- function(vault_id, parent_object_id, object_type, filename, env
 #' )
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -165,8 +153,6 @@ Object.update <- function(id, env = get_connection(), ...) {
 #' Object.get_by_full_path("solvebio:public:/ClinVar")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -201,9 +187,6 @@ Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
 #' Object.get_by_path("/ClinVar")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Object.get_by_path <- function(path, env = get_connection(), ...) {
@@ -234,9 +217,6 @@ Object.get_by_path <- function(path, env = get_connection(), ...) {
 #' Object.get_download_url("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Object.get_download_url <- function(id, env = get_connection()) {
@@ -266,9 +246,6 @@ Object.get_download_url <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' Object.upload_file("my_file.json.gz", vault$id, "/parent/directory/")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
@@ -357,9 +334,6 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
 #' Object.get_or_upload_file("my_file.json.gz", vault$id, "/parent/directory/")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -403,9 +377,6 @@ Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename
 #' @examples \dontrun{
 #' Object.data("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -464,9 +435,6 @@ Object.data <- function(id, filters, col.names = NULL, env = get_connection(), .
 #' Object.query("12345678790", paginate = TRUE)
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -517,9 +485,6 @@ Object.query <- function(id, paginate = FALSE, env = get_connection(), ...) {
 #' Object.fields("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Object.fields <- function(id, env = get_connection(), ...) {
@@ -552,9 +517,6 @@ Object.fields <- function(id, env = get_connection(), ...) {
 #' Object.get_global_beacon_status("1234567890")
 #' Object.get_global_beacon_status("1234567890", raise_on_disabled = TRUE)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -594,9 +556,6 @@ Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env =
 #' Object.enable_global_beacon("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Object.enable_global_beacon <- function(id, env = get_connection()) {
@@ -619,9 +578,6 @@ Object.enable_global_beacon <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' Object.disable_global_beacon("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

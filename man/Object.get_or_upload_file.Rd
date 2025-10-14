@@ -35,7 +35,4 @@ Object.get_or_upload_file("my_file.json.gz", vault$id, "/parent/directory/")
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

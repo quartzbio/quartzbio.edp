@@ -69,7 +69,6 @@ File_upload <- function(
       err <- get_api_response_error_message(res)
       if (is.null(err) || length(err) == 0) err <- "Error in parsing error message"
       .die("uploading file content failed with code %s: %s", res$status, err)
-
     }
   }
 

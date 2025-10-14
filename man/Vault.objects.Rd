@@ -23,7 +23,4 @@ Vault.objects(vault$id)
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

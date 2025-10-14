@@ -22,9 +22,6 @@
 #' GlobalSearch.search(query = "fuji")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 GlobalSearch.search <- function(paginate = FALSE, env = get_connection(), ...) {
@@ -71,9 +68,6 @@ GlobalSearch.search <- function(paginate = FALSE, env = get_connection(), ...) {
 #' GlobalSearch.facets(facets = "study")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
@@ -113,9 +107,6 @@ GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
 #' GlobalSearch.subjects(entities = '[["gene","BRCA2"]]')
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 GlobalSearch.subjects <- function(env = get_connection(), ...) {
@@ -141,9 +132,6 @@ GlobalSearch.subjects <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' GlobalSearch.subjects_count(entities = '[["gene","BRCA2"]]')
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -198,9 +186,6 @@ GlobalSearch.subjects_count <- function(env = get_connection(), ...) {
 #'              }]'
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

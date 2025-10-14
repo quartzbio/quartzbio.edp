@@ -9,7 +9,9 @@ Object.all(env = get_connection(), ...)
 \arguments{
 \item{env}{Custom client environment.}
 
-\item{...}{Additional query parameters, passed to .request().}
+\item{...}{Additional query parameters, passed to .request().
+
+\url{https://docs.solvebio.com/}}
 }
 \description{
 Retrieves the metadata about all objects on EDP accessible to the current user.

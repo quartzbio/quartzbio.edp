@@ -10,9 +10,6 @@
 #' DatasetExport.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 DatasetExport.all <- function(env = get_connection(), ...) {
@@ -29,9 +26,6 @@ DatasetExport.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' DatasetExport.retrieve(12345)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -55,9 +49,6 @@ DatasetExport.retrieve <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' DatasetExport.delete(12345)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -89,9 +80,6 @@ DatasetExport.delete <- function(id, env = get_connection()) {
 #'   params = list(fields = c("field_1"), limit = 100)
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -132,9 +120,6 @@ DatasetExport.create <- function(dataset_id,
 #' @examples \dontrun{
 #' DatasetExport.get_download_url("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

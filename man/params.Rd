@@ -159,11 +159,10 @@ in the dataset table.}
 
 \item{workers}{in parallel mode, the number of concurrent requests to make}
 
-\item{...}{Additional query parameters, passed to .request().}
+\item{...}{Additional query parameters, passed to .request().
+
+\url{https://docs.solvebio.com/}}
 }
 \description{
 shared roxygen params
-}
-\references{
-\url{https://docs.solvebio.com/}
 }

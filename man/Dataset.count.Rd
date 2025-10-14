@@ -24,7 +24,4 @@ Dataset.count(dataset, filters = '[["gene_symbol", "BRCA2"]]')
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

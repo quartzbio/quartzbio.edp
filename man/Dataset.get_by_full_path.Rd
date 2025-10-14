@@ -20,7 +20,4 @@ Dataset.get_by_full_path("solvebio:public:/ClinVar/3.7.4-2017-01-30/Variants-GRC
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

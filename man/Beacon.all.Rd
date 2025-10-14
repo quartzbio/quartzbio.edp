@@ -20,7 +20,4 @@ Beacon.all()
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

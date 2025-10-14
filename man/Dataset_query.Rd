@@ -53,7 +53,9 @@ and rename the data frame}
 
 \item{conn}{a EDP connection object (as a named list or environment)}
 
-\item{...}{Additional query parameters, passed to .request().}
+\item{...}{Additional query parameters, passed to .request().
+
+\url{https://docs.solvebio.com/}}
 }
 \description{
 queries data into a dataset.

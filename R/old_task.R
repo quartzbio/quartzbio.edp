@@ -10,9 +10,6 @@
 #' Task.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Task.all <- function(env = get_connection(), ...) {
@@ -29,9 +26,6 @@ Task.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' Task.retrieve("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
@@ -60,8 +54,8 @@ Task.retrieve <- function(id, env = get_connection()) {
 #' }
 #' @return the task object
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
+#'
+#'
 #'
 #' @concept  quartzbio_api
 #' @export

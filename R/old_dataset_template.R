@@ -10,9 +10,6 @@
 #' DatasetTemplate.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 DatasetTemplate.all <- function(env = get_connection(), ...) {
@@ -30,9 +27,6 @@ DatasetTemplate.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' DatasetTemplate.retrieve(12345)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -57,9 +51,6 @@ DatasetTemplate.retrieve <- function(id, env = get_connection()) {
 #' DatasetTemplate.delete(12345)
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 DatasetTemplate.delete <- function(id, env = get_connection()) {
@@ -82,9 +73,6 @@ DatasetTemplate.delete <- function(id, env = get_connection()) {
 #' DatasetTemplate.create(name = "My Dataset Template")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 DatasetTemplate.create <- function(env = get_connection(), ...) {
@@ -106,9 +94,6 @@ DatasetTemplate.create <- function(env = get_connection(), ...) {
 #'   name = "New Template Name",
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

@@ -24,7 +24,4 @@ Dataset.facets("1234567890", list("clinical_significance", "gene_symbol"))
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

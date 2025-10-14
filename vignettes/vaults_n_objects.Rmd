@@ -83,7 +83,7 @@ folder <- Object_create(vault$id, "new-folder", object_type = "folder")
 
 Users can upload files to any vault to which they have write-level access. File names are case-insensitive. Uploading a file with a duplicate name (or the same name as a folder) will cause the new file's name to be auto-incremented (i.e. file, file-1, file-2, ...).
 
-The max upload size is 5 GB. Users are recommended to gzip their files before uploading if they are large.
+The maximum file upload size is 100 GB. Users are recommended to gzip their files before uploading if they are large.
 
 ```{r}
 library(quartzbio.edp)

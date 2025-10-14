@@ -20,7 +20,4 @@ BeaconSet.delete("1234")
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

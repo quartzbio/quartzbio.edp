@@ -22,7 +22,4 @@ Object.get_by_full_path("solvebio:public:/ClinVar")
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

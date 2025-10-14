@@ -35,6 +35,3 @@ Dataset_create(
 \description{
 creates a new Dataset.
 }
-\references{
-\url{https://docs.solvebio.com/}
-}

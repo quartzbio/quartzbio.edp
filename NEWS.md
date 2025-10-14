@@ -2,6 +2,8 @@
 
 **New Features**
 
+-   Multipart upload functionality. The maximum file upload size has been increased to 100 GB. `File_upload` automatically uses multipart upload for files with size larger than the multipart_threshold.
+
 -   To improve developer experience in shiny applications users can add verbose logs in log file by leveraging `logger` package. Users can create log file and set the log-level using `configure_logger` and add logs using `log_message` functions.
 
 -   EDP Health Check. Perform a quick check to test your EDP credentials, connection, user details and vaults using `edp_health_check` function.

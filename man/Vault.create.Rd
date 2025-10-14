@@ -22,7 +22,4 @@ Vault.create(name = "my-domain:MyVault")
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

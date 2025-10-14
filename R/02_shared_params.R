@@ -96,7 +96,7 @@
 #' @param workers                   in parallel mode, the number of concurrent requests to make
 #' @param ...                       Additional query parameters, passed to .request().
 #'
-#' @references \url{https://docs.solvebio.com/}
+#' \url{https://docs.solvebio.com/}
 #'
 #' @name params
 NULL
@@ -116,7 +116,7 @@ NULL
 #' @param records                   The data to annotate as a data frame.
 #' @param ...                       Additional query parameters, passed to .request().
 #'
-#' @references \url{https://docs.solvebio.com/}
+#' \url{https://docs.solvebio.com/}
 #'
 #' @name old_params
 NULL

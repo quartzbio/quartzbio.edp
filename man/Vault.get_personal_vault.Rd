@@ -18,7 +18,4 @@ Vault.get_personal_vault()
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}
