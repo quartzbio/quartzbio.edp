@@ -62,8 +62,16 @@
     
     
 <p>EDP supports programmatic access via R. To get started, users will
-need to authenticate their session using a <a href="https://docs.solvebio.com/#authentication" class="external-link">Personal Access
-Token</a>.</p>
+need to authenticate their session using a Personal Access Token.</p>
+<div class="section level3">
+<h3 id="personal-access-tokens">Personal Access Tokens<a class="anchor" aria-label="anchor" href="#personal-access-tokens"></a>
+</h3>
+<p>Clients can authenticate with Personal Access Tokens. Create a new
+Personal Access Token by clicking “Generate New Token” on the Personal
+Access Tokens page (<a href="https://DOMAIN.edp.aws.quartz.bio/settings/tokens" class="external-link uri">https://DOMAIN.edp.aws.quartz.bio/settings/tokens</a>).
+Without valid credentials, API endpoints may return
+<code>403 Forbidden</code>, or <code>401 Not Authorized</code>.</p>
+</div>
 <div class="section level2">
 <h2 id="pre-requisites">Pre-Requisites<a class="anchor" aria-label="anchor" href="#pre-requisites"></a>
 </h2>
@@ -155,6 +163,21 @@ do not use an explicit configuration. For example:</p>
 <span><span class="fu"><a href="../reference/Vaults.html">Vaults</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/Folders.html">Folders</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="edp-health-check">EDP Health Check<a class="anchor" aria-label="anchor" href="#edp-health-check"></a>
+</h2>
+<p>To perform a quick check to test your credentials and EDP connection
+use <code>edp_health_check</code> function. This provides a situation
+report which checks if their token and domain are valid and EDP
+connection is established successfully. It provides the user details if
+the EDP connection is successful.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/edp_health_check.html">edp_health_check</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The health check function can retrieve the list of vaults created by
+the user by setting <code>get_vault_list</code> parameter to TRUE</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/edp_health_check.html">edp_health_check</a></span><span class="op">(</span>get_vault_list <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
@@ -166,7 +189,7 @@ do not use an explicit configuration. For example:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 05-Sep-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Last modified: 14-Oct-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
