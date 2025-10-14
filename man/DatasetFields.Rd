@@ -26,14 +26,13 @@ See also \code{limit}.}
 
 \item{conn}{a EDP connection object (as a named list or environment)}
 
-\item{...}{Additional query parameters, passed to .request().}
+\item{...}{Additional query parameters, passed to .request().
+
+\url{https://docs.solvebio.com/}}
 }
 \value{
 a DatasetFieldList object
 }
 \description{
 fetches the fields of a dataset.
-}
-\references{
-\url{https://docs.solvebio.com/}
 }

@@ -20,7 +20,4 @@ DatasetCommit.retrieve(12345)
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

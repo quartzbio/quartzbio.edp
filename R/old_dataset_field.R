@@ -10,9 +10,6 @@
 #' DatasetField.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 DatasetField.all <- function(env = get_connection(), ...) {
@@ -30,9 +27,6 @@ DatasetField.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' DatasetField.retrieve(691)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
@@ -59,9 +53,6 @@ DatasetField.retrieve <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' DatasetField.facets(691)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -91,9 +82,6 @@ DatasetField.facets <- function(id, env = get_connection(), ...) {
 #' @examples \dontrun{
 #' DatasetField.create(dataset_id = 12345, name = "my_field", title = "My Field", data_type = "string")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
@@ -134,9 +122,6 @@ DatasetField.create <- function(dataset_id, name, data_type = "auto", env = get_
 #'   title = "New Field Title"
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api

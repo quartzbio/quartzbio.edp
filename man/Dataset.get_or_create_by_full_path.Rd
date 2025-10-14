@@ -22,7 +22,4 @@ Dataset.get_or_create_by_full_path("MyVault:/folder/sub-folder/dataset")
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

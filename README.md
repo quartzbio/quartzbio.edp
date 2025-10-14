@@ -10,8 +10,6 @@ Features:
 * S3 methods
 * Portability between most platforms: Linux, Windows, OS X.
 
-Please see the legacy SolveBio [documentation](https://docs.solvebio.com) for more
-information about the platform.
 
 ## Beta Release
 
@@ -57,7 +55,7 @@ R
 >remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE)
 ```
 
-## documentation
+## Documentation
 
 * Github public [quartzbio.edp](https://github.com/quartzbio/quartzbio.edp) source repository
 * Github quartzbio.edp online package [documentation](https://quartzbio.github.io/quartzbio.edp/)
@@ -66,9 +64,9 @@ R
 
 ### connection/authentication
 
-See the [Connection to an EDP host vignette](https://quartzbio.github.io/quartzbio.edp/articles/connection.html) for more details.
+See the [Connection to an EDP host vignette](https://quartzbio.github.io/quartzbio.edp/articles/r_authentication.html#r-authentication) for more details.
 
-* Get an Authentication Token. They can be obtained from [Personal Access Tokens](https://docs.solvebio.com/#authentication)
+* Get an Authentication Token. They can be obtained from [Personal Access Tokens](https://quartzbio.github.io/quartzbio.edp/articles/r_authentication.html#personal-access-tokens)
 * Save it into the `~/.qb/edp.json` file as the **default** EDP configuration profile.
 
 Your `~/.qb/edp.json` may look like:

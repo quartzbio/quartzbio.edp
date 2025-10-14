@@ -10,9 +10,6 @@
 #' DatasetCommit.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 DatasetCommit.all <- function(env = get_connection(), ...) {
@@ -30,9 +27,6 @@ DatasetCommit.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' DatasetCommit.retrieve(12345)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -56,9 +50,6 @@ DatasetCommit.retrieve <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' DatasetCommit.delete(12345)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

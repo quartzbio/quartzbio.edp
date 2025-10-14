@@ -10,9 +10,6 @@
 #' SavedQuery.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 SavedQuery.all <- function(env = get_connection(), ...) {
@@ -30,9 +27,6 @@ SavedQuery.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' SavedQuery.retrieve(12345)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -57,9 +51,6 @@ SavedQuery.retrieve <- function(id, env = get_connection()) {
 #' SavedQuery.delete(12345)
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 SavedQuery.delete <- function(id, env = get_connection()) {
@@ -82,9 +73,6 @@ SavedQuery.delete <- function(id, env = get_connection()) {
 #' SavedQuery.create(name = "My Dataset Template")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 SavedQuery.create <- function(env = get_connection(), ...) {
@@ -106,9 +94,6 @@ SavedQuery.create <- function(env = get_connection(), ...) {
 #'   name = "New query Name",
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

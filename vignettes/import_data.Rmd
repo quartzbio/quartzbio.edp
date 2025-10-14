@@ -44,6 +44,9 @@ The following file formats and extensions are supported:
 
 EDP automatically detects the file format based on the extension, except for the Nirvana JSON file, and parses the file using a specialized "reader". It is possible to manually specify a reader and modify reader parameters using the reader_params attribute of the DatasetImport resource.
 
+The Nirvana JSON format has to meet the official [Illumina's Nirvana JSON layout](https://illumina.github.io/NirvanaDocumentation/file-formats/nirvana-json-file-format/#json-layout) in order to be parsed properly.
+
+
 | Reader  | Reader name | Extension        |
 |---------|-------------|------------------|
 | VCF     | vcf         | .vcf             |

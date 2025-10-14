@@ -41,9 +41,6 @@ Application.retrieve <- function(client_id, env = get_connection()) {
 #' )
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Application.update <- function(client_id, env = get_connection(), ...) {
@@ -68,9 +65,6 @@ Application.update <- function(client_id, env = get_connection(), ...) {
 #' @examples \dontrun{
 #' Application.delete("abcd1234")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -99,9 +93,6 @@ Application.delete <- function(client_id, env = get_connection()) {
 #'   redirect_uris = "http://localhost:3838/"
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

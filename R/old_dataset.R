@@ -8,9 +8,6 @@
 #' Dataset.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Dataset.all <- function(env = get_connection(), ...) {
@@ -28,9 +25,6 @@ Dataset.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' Dataset.retrieve("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
@@ -57,9 +51,6 @@ Dataset.retrieve <- function(id, env = get_connection()) {
 #' Dataset.delete("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Dataset.delete <- function(id, env = get_connection()) {
@@ -82,9 +73,6 @@ Dataset.delete <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' Dataset.template("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -109,9 +97,6 @@ Dataset.template <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' Dataset.data("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -168,9 +153,6 @@ Dataset.data <- function(id, filters, env = get_connection(), ...) {
 #' Dataset.query("12345678790", paginate = TRUE)
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -222,9 +204,6 @@ Dataset.query <- function(id, paginate = FALSE, use_field_titles = TRUE, env = g
 #' Dataset.fields("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -259,9 +238,6 @@ Dataset.fields <- function(id, env = get_connection(), ...) {
 #' @examples \dontrun{
 #' Dataset.facets("1234567890", list("clinical_significance", "gene_symbol"))
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -307,9 +283,6 @@ Dataset.facets <- function(id, facets, env = get_connection(), ...) {
 #' Dataset.count(dataset, filters = '[["gene_symbol", "BRCA2"]]')
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Dataset.count <- function(id, env = get_connection(), ...) {
@@ -337,9 +310,6 @@ Dataset.count <- function(id, env = get_connection(), ...) {
 #' @examples \dontrun{
 #' Dataset.create(vault_id = vault$id, vault_parent_object_id = NULL, name = "My Dataset")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
@@ -385,9 +355,6 @@ Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_con
 #' )
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Dataset.update <- function(id, env = get_connection(), ...) {
@@ -413,9 +380,6 @@ Dataset.update <- function(id, env = get_connection(), ...) {
 #' Dataset.get_by_full_path("solvebio:public:/ClinVar/3.7.4-2017-01-30/Variants-GRCh37")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -439,9 +403,6 @@ Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
 #' @examples \dontrun{
 #' Dataset.get_or_create_by_full_path("MyVault:/folder/sub-folder/dataset")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -521,9 +482,6 @@ Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection()
 #' Dataset.activity("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Dataset.activity <- function(id, follow = TRUE, env = get_connection()) {
@@ -559,9 +517,6 @@ Dataset.activity <- function(id, follow = TRUE, env = get_connection()) {
 #' Dataset.get_global_beacon_status("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = get_connection()) {
@@ -584,9 +539,6 @@ Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env 
 #' Dataset.enable_global_beacon("1234567890")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Dataset.enable_global_beacon <- function(id, env = get_connection()) {
@@ -608,9 +560,6 @@ Dataset.enable_global_beacon <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' Dataset.disable_global_beacon("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

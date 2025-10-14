@@ -17,9 +17,9 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-The EDP makes it easy to transform data using its dynamic, Python-based expression language. Users can employ expressions to transform data when importing files when copying data between (or within) datasets (using "migrations"), or even when querying datasets. In all scenarios, expressions can be provided through the target_fields parameter. Users can refer to the Expressions documentation to learn more about using expressions.
+The EDP makes it easy to transform data using its dynamic, Python-based expression language. Users can employ expressions to transform data when importing files when copying data between (or within) datasets (using "migrations"), or even when querying datasets. In all scenarios, expressions can be provided through the target_fields parameter. Users can refer to the [Expressions](expressions.html) documentation to learn more about using expressions.
 
-This article describes how to transform data using dataset migrations, but users can use the same techniques with dataset imports. With dataset migrations, users can copy data between datasets as well as modify datasets in-place. This makes it possible to add, edit, and remove fields as well as records. All dataset migrations have a source dataset and a target dataset (which can be the same when editing a single dataset). Users are recommended to review the Creating and Migrating Datasets documentation before this article.
+This article describes how to transform data using dataset migrations, but users can use the same techniques with dataset imports. With dataset migrations, users can copy data between datasets as well as modify datasets in-place. This makes it possible to add, edit, and remove fields as well as records. All dataset migrations have a source dataset and a target dataset (which can be the same when editing a single dataset). Users are recommended to review the [Creating and Migrating Datasets](creating_and_migrating_datasets.html) documentation before this article.
 
 ## Modifying Fields
 
@@ -77,7 +77,7 @@ DatasetMigration.create(
 
 In the following example, an existing field in the dataset from the previous example (clinsig_clone) is modified (converted to uppercase). Similar to the example above, a commit mode of overwrite or upsert is required to avoid duplicating records.
 
-This example uses an expression that references a pre-existing field in the dataset; users can learn more about expression context by reviewing the Expressions documentation.
+This example uses an expression that references a pre-existing field in the dataset; users can learn more about expression context by reviewing the [Expressions](expressions.html) documentation.
 
 ```{r}
 library(quartzbio.edp)

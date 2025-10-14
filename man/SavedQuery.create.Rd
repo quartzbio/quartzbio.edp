@@ -20,7 +20,4 @@ SavedQuery.create(name = "My Dataset Template")
 }
 
 }
-\references{
-\url{https://docs.solvebio.com/}
-}
 \concept{quartzbio_api}

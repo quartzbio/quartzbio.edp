@@ -22,8 +22,6 @@
 #' login()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export

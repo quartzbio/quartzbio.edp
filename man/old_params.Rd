@@ -26,11 +26,10 @@
 
 \item{records}{The data to annotate as a data frame.}
 
-\item{...}{Additional query parameters, passed to .request().}
+\item{...}{Additional query parameters, passed to .request().
+
+\url{https://docs.solvebio.com/}}
 }
 \description{
 shared old roxygen params
-}
-\references{
-\url{https://docs.solvebio.com/}
 }

@@ -10,8 +10,6 @@
 #' Vault.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -31,9 +29,6 @@ Vault.all <- function(..., env = get_connection()) {
 #' @examples \dontrun{
 #' Vault.retrieve("1234567890")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -60,9 +55,6 @@ Vault.retrieve <- function(id, env = get_connection()) {
 #' Vault.delete("1")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Vault.delete <- function(id, env = get_connection()) {
@@ -85,9 +77,6 @@ Vault.delete <- function(id, env = get_connection()) {
 #' @examples \dontrun{
 #' Vault.create(name = "my-domain:MyVault")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -124,8 +113,6 @@ Vault.create <- function(name, env = get_connection(), ...) {
 #' )
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -159,8 +146,6 @@ Vault.update <- function(id, env = get_connection(), ...) {
 #' Vault.get_by_full_path("QuartzBio EDP:Public")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
@@ -206,9 +191,6 @@ Vault.get_by_full_path <- function(full_path, verbose = TRUE, env = get_connecti
 #' Vault.get_or_create_by_full_path("My New Vault")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
@@ -238,9 +220,6 @@ Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), 
 #' Vault.get_personal_vault()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Vault.get_personal_vault <- function(env = get_connection()) {
@@ -269,9 +248,6 @@ Vault.get_personal_vault <- function(env = get_connection()) {
 #' Vault.files(vault$id)
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Vault.files <- function(id, env = get_connection(), ...) {
@@ -292,9 +268,6 @@ Vault.files <- function(id, env = get_connection(), ...) {
 #' vault <- Vault.get_personal_vault()
 #' Vault.folders(vault$id)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -317,9 +290,6 @@ Vault.folders <- function(id, env = get_connection(), ...) {
 #' Vault.datasets(vault$id)
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Vault.datasets <- function(id, env = get_connection(), ...) {
@@ -340,9 +310,6 @@ Vault.datasets <- function(id, env = get_connection(), ...) {
 #' vault <- Vault.get_personal_vault()
 #' Vault.objects(vault$id)
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -366,9 +333,6 @@ Vault.objects <- function(id, env = get_connection(), ...) {
 #' Vault.search("test")
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 Vault.search <- function(id, query, env = get_connection(), ...) {
@@ -391,9 +355,6 @@ Vault.search <- function(id, query, env = get_connection(), ...) {
 #' vault <- Vault.get_personal_vault()
 #' Vault.create_dataset(vault$id, path = "/", name = "My Dataset")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -444,9 +405,6 @@ Vault.create_dataset <- function(id, path, name, env = get_connection(), ...) {
 #' vault <- Vault.get_personal_vault()
 #' Vault.create_folder(vault$id, "/My Folder")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export

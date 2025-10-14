@@ -10,9 +10,6 @@
 #' BeaconSet.all()
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 BeaconSet.all <- function(env = get_connection(), ...) {
@@ -29,9 +26,6 @@ BeaconSet.all <- function(env = get_connection(), ...) {
 #' @examples \dontrun{
 #' BeaconSet.retrieve("1234")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -60,9 +54,6 @@ BeaconSet.retrieve <- function(id, env = get_connection()) {
 #' )
 #' }
 #'
-#' @references
-#' \url{https://docs.solvebio.com/}
-#'
 #' @concept  quartzbio_api
 #' @export
 BeaconSet.update <- function(id, env = get_connection(), ...) {
@@ -87,9 +78,6 @@ BeaconSet.update <- function(id, env = get_connection(), ...) {
 #' @examples \dontrun{
 #' BeaconSet.delete("1234")
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -118,9 +106,6 @@ BeaconSet.delete <- function(id, env = get_connection()) {
 #'   title = "My new beacon set",
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
@@ -160,9 +145,6 @@ BeaconSet.create <- function(title, description, is_shared = FALSE, env = get_co
 #'   entity_type = "gene"
 #' )
 #' }
-#'
-#' @references
-#' \url{https://docs.solvebio.com/}
 #'
 #' @concept  quartzbio_api
 #' @export
