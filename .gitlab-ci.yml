@@ -2,25 +2,11 @@ default:
   tags: [docker]
   image: rocker/r-ver:4.4
 
-before_script:
-  - echo "options(crayon.enabled=TRUE);" >> .Rprofile
-  - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
-  - cat /etc/os-release
-  - Rscript --vanilla -e "sessionInfo()"
-  - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
-  - echo "Library path for packages :" $R_LIBS_USER
-  - mkdir -p $R_LIBS_USER
-  - apt update; apt install qpdf -y
-  - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
-  - Rscript -e 'Sys.getenv("R_LIBS")'
-  - Rscript -e '.libPaths()'
-  - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
-
-
 variables:
   GIT_DEPTH: 10
   R_LIBS: ${CI_PROJECT_DIR}/ci/lib:${R_LIBS}
   R_LIBS_USER: ${CI_PROJECT_DIR}/ci/lib
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
 
 cache:
   - key: "cache-${CI_RUNNER_EXECUTABLE_ARCH}-${R_LIBS_USER}-${CI_JOB_IMAGE}"
@@ -28,12 +14,18 @@ cache:
       - ${R_LIBS_USER}
 
 stages:
+  - build-sonar
+  - sonarqube-vulnerability-report
   - build
   - coverage
   - tests
   - lintr
   - build_vignettes
   - document_package
+
+# some commands are duplicated but:
+# 1. Cannot be added only in the first job because each job can run in a different runner
+# 2. Cannot be added in before_script because some jobs run on other type of runners and can fail (sonarQube)
 
 building:
   stage: build
@@ -45,6 +37,18 @@ building:
       when: never
     - when: always
   script:
+    - echo "options(crayon.enabled=TRUE);" >> .Rprofile
+    - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
+    - cat /etc/os-release
+    - Rscript --vanilla -e "sessionInfo()"
+    - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
+    - echo "Library path for packages :" $R_LIBS_USER
+    - mkdir -p $R_LIBS_USER
+    - apt update; apt install qpdf -y
+    - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
+    - Rscript -e 'Sys.getenv("R_LIBS")'
+    - Rscript -e '.libPaths()'
+    - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
     - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE, dependencies = TRUE)'
     - Rscript -e 'pak::pkg_install(pkg = "rcmdcheck", upgrade = TRUE)'
 # tests will be executed in the next stage
@@ -64,6 +68,18 @@ coverage:
   allow_failure: true
   when: on_success
   script:
+    - echo "options(crayon.enabled=TRUE);" >> .Rprofile
+    - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
+    - cat /etc/os-release
+    - Rscript --vanilla -e "sessionInfo()"
+    - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
+    - echo "Library path for packages :" $R_LIBS_USER
+    - mkdir -p $R_LIBS_USER
+    - apt update; apt install qpdf -y
+    - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
+    - Rscript -e 'Sys.getenv("R_LIBS")'
+    - Rscript -e '.libPaths()'
+    - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
     - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE, dependencies = TRUE)'
     - Rscript -e 'pak::pkg_install(pkg = c("covr", "DT", "xml2"), upgrade = TRUE)'
     - Rscript -e 'options(crayon.enabled=FALSE); covr::gitlab(quiet = FALSE)' # crayon is disabled as it causes issues with coverage reading
@@ -83,6 +99,18 @@ lintr:
       when: never
     - when: always
   script:
+    - echo "options(crayon.enabled=TRUE);" >> .Rprofile
+    - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
+    - cat /etc/os-release
+    - Rscript --vanilla -e "sessionInfo()"
+    - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
+    - echo "Library path for packages :" $R_LIBS_USER
+    - mkdir -p $R_LIBS_USER
+    - apt update; apt install qpdf -y
+    - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
+    - Rscript -e 'Sys.getenv("R_LIBS")'
+    - Rscript -e '.libPaths()'
+    - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
     - Rscript -e 'pak::pkg_install(".", upgrade = TRUE)'
     - Rscript -e 'pak::pkg_install("lintr", upgrade = TRUE); print(paste("lintr version:", packageVersion("lintr")))'
     - Rscript -e 'Sys.setenv("LINTR_ERROR_ON_LINT" = TRUE); lintr::lint_package()'
@@ -95,6 +123,18 @@ build_vignettes:
       when: never
     - when: always
   script:
+    - echo "options(crayon.enabled=TRUE);" >> .Rprofile
+    - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
+    - cat /etc/os-release
+    - Rscript --vanilla -e "sessionInfo()"
+    - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
+    - echo "Library path for packages :" $R_LIBS_USER
+    - mkdir -p $R_LIBS_USER
+    - apt update; apt install qpdf -y
+    - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
+    - Rscript -e 'Sys.getenv("R_LIBS")'
+    - Rscript -e '.libPaths()'
+    - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
     - Rscript -e 'pak::pkg_install(pkg = "devtools", upgrade = TRUE)'
     - Rscript --vanilla -e 'devtools::build_vignettes()'
 
@@ -106,6 +146,18 @@ tests:
       when: never
     - when: always
   script:
+    - echo "options(crayon.enabled=TRUE);" >> .Rprofile
+    - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
+    - cat /etc/os-release
+    - Rscript --vanilla -e "sessionInfo()"
+    - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
+    - echo "Library path for packages :" $R_LIBS_USER
+    - mkdir -p $R_LIBS_USER
+    - apt update; apt install qpdf -y
+    - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
+    - Rscript -e 'Sys.getenv("R_LIBS")'
+    - Rscript -e '.libPaths()'
+    - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
     - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE, dependencies = TRUE)'
     - Rscript --vanilla -e 'pak::pkg_install(pkg = "devtools", upgrade = TRUE)'
     # we should consider changing it to stop_on_warning = TRUE
@@ -119,6 +171,54 @@ document_package:
       when: never
     - when: always
   script:
+    - echo "options(crayon.enabled=TRUE);" >> .Rprofile
+    - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
+    - cat /etc/os-release
+    - Rscript --vanilla -e "sessionInfo()"
+    - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
+    - echo "Library path for packages :" $R_LIBS_USER
+    - mkdir -p $R_LIBS_USER
+    - apt update; apt install qpdf -y
+    - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
+    - Rscript -e 'Sys.getenv("R_LIBS")'
+    - Rscript -e '.libPaths()'
+    - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
     - Rscript -e 'pak::local_install_deps(root = ".")'
     - Rscript -e 'pak::pkg_install(pkg = "roxygen2", upgrade = TRUE)'
     - R -q --vanilla -e 'roxygen2::roxygenize()'
+
+build-sonar:
+  tags: [shell_with_docker]
+  stage: build-sonar
+  cache:
+    policy: pull-push
+    key: "sonar-cache-$CI_COMMIT_REF_SLUG"
+    paths:
+      - "${SONAR_USER_HOME}/cache"
+      - sonar-scanner/
+  script:
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.3.0.5189-linux-x64.zip -O sonar-scanner.zip
+    - unzip -o -d sonar-scanner sonar-scanner.zip
+    - ./sonar-scanner/sonar-scanner-7.3.0.5189-linux-x64/bin/sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}"
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'master'
+    - if: $CI_COMMIT_BRANCH == 'main'
+    - if: $CI_COMMIT_BRANCH == 'develop'
+
+sonarqube-vulnerability-report:
+  tags: [shell_with_docker]
+  stage: sonarqube-vulnerability-report
+  script:
+    - 'curl -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/gitlab_sast_export?projectKey=pipelines_us_projects_data_syncer_154d103d-d199-40f2-8838-637bae5b21fb&branch=${CI_COMMIT_BRANCH}&pullRequest=${CI_MERGE_REQUEST_IID}" -o gl-sast-sonar-report.json'
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'master'
+    - if: $CI_COMMIT_BRANCH == 'main'
+    - if: $CI_COMMIT_BRANCH == 'develop'
+  artifacts:
+    expire_in: 1 day
+    reports:
+      sast: gl-sast-sonar-report.json
