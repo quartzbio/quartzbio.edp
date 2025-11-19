@@ -74,8 +74,8 @@ Your `~/.qb/edp.json` may look like:
 ```json
 {
   "default": {
-    "secret": "PUT_HERE_TOUR_AUTHENTICATION_TOKEN",
-    "host": "https://api.solvebio.com"
+    "secret": "PUT_HERE_YOUR_AUTHENTICATION_TOKEN",
+    "host": "<QUARTZBIO API HOST>"
   }
 }
 ```
