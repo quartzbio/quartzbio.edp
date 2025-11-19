@@ -1,0 +1,353 @@
+# Dataset Templates
+
+## Overview
+
+Dataset templates describe how data should be transformed. A template is
+a collection of fields (columns) that describe the desired format of
+some input data. Templates are used to import files, export, query or
+migrate data. They allow for field normalization and transformation, and
+also for the addition of fields and annotations. In this article, users
+will learn how to view, create, update and apply templates for
+transforming datasets.
+
+## Retrieving Templates
+
+To list all templates:
+
+``` r
+all_templates <- DatasetTemplate.all(template_type = "dataset")
+```
+
+It will return all available dataset templates with their names,
+template id, organization, account id and status.
+
+To retrieve a template by known ID:
+
+``` r
+template <- DatasetTemplate.retrieve(id = "template_id")
+```
+
+## Template Fields
+
+The list of fields is the most important part of a template. Each field
+describes a DatasetField, an object that defines properties of the field
+such as name, title, and data type as key-value pairs. Fields are
+written as lists in R.
+
+Example:
+
+``` r
+fields <- list(
+  list(
+    name = "reason",
+    title = "Reason",
+    description = "The reasons for the significance value",
+    data_type = "string",
+    depends_on = list("reason_list"),
+    expression = "', '.join(record.reason_list) if record.reason_list else None",
+    ordering = 1,
+  ),
+  list(...)
+)
+```
+
+## Template Permissions
+
+By default, all newly created templates are accessible by everyone at
+the user’s organization.
+
+If users want the template to be shown in the UI (in the modal used for
+transforming files), then they can add the import tag to the template.
+
+``` r
+DatasetTemplate.update("id of your template", tags = list("import"))
+```
+
+If users would like to make the template private (accessible only to
+your user), then they can set the account_id parameter to None.
+
+``` r
+DatasetTemplate.update("id of your template", account = NULL)
+```
+
+If users would like to make the template accessible to all users on EDP
+(including those outside of your organization) then they can set the
+is_public parameter to True. As always, users should not share anything
+sensitive outside of their organization.
+
+``` r
+DatasetTemplate.update("id of your template", is_public = TRUE)
+```
+
+## Create a Template
+
+To create a template, users should prepare the list of DatasetFields
+with information about data types, expressions, entities, etc.
+
+Example of list of fields:
+
+``` r
+fields <- list(
+  list(
+    name = "sample",
+    depends_on = list("subject"),
+    entity_type = "sample",
+    description = "Sample ID from SUBJECT",
+    data_type = "string",
+    ordering = 1,
+    expression = "record.subject"
+  ),
+  list(
+    name = "study",
+    title = "STUDY",
+    description = "Study Code",
+    ordering = 2,
+    expression = "None if value == 'UNASSIGNED' else value",
+    data_type = "string"
+  ),
+  list(
+    data_type = "string",
+    depends_on = list("hgvs_c"),
+    description = "EDP variant entity, computed from the short variant CDS change",
+    expression = "entity_ids('variant', record.hgvs_c) if record.hgvs_c else None",
+    is_transient = TRUE,
+    name = "variant_cdna_grch38"
+  )
+)
+```
+
+The following attributes should be added: - name - the name of the
+field - data_type - the data type of the field - entity_type – the
+entity type (only necessary for entity querying)
+
+The following attributes are optional, but responsible for much of the
+data transformation:
+
+- expression - The expression that will be evaluated to populate this
+  field’s value. Put “value” to use the current value. Users can refer
+  to the Expressions documentation for more information. In order to use
+  data from another field (for comparison, splits, etc), users should
+  make sure that they also add it to the list of fields, which will
+  allow them to retrieve it using expression context variables:
+  record.name_of_field. Users should also add the field in the
+  depends_on parameter.
+
+- depends_on - This is a list of fields that the expression depends on.
+  Users can add any field names here. This will ensure that those fields
+  expressions are evaluated before its dependents. The template creation
+  will fail if there is a circular dependency.
+
+- is_transient - A transient field is a field that is not indexed into
+  the dataset, but calculated only while the template annotation is
+  running. This is useful for temporary fields/variables for complex
+  templates (default is False)
+
+The following attributes are optional, and informational only, but
+encouraged:
+
+- title - The field’s display name, shown in the UI and in CSV/Excel
+  exports.
+- description - Describes the contents of the field, shown in the UI.
+- ordering - The order in which this column appears when retrieving data
+  from the dataset. Order is 0-based. Default is 0
+- is_hidden - Set to True if the field should be excluded by default
+  from the UI.
+
+After the list of the fields is prepared, other information about a
+template can be added:
+
+``` r
+template <- list(
+  name = "My Variant Template",
+  version = "1.2.0",
+  description = "Import a special CSV file. Genome is assumed to be GRCh38, also has variant entity for GRCh37.", template_type = "dataset",
+  is_public = FALSE,
+  entity_params = list("disable" = TRUE),
+  fields = fields
+)
+```
+
+The template_type should be set to “dataset”.
+
+``` r
+my_template <- DatasetTemplate.create(
+  name = "My Variant Template",
+  version = "1.2.0",
+  description = "Import a special CSV file. Genome is assumed to be GRCh38, also has variant entity for GRCh37.", template_type = "dataset",
+  is_public = FALSE,
+  fields = fields
+)
+```
+
+Printing the template object will show the template’s ID and contents.
+
+## Create a Dataset with a Template
+
+Users can create a dataset and set the structure with a template.
+
+After that, users can create the template:
+
+``` r
+template <- DatasetTemplate.retrieve("id of your template")
+# Specify where you want to create your new dataset
+vault <- Vault.get_personal_vault()
+dataset_full_path <- paste(vault$full_path, "my_fields_dataset", sep = "/")
+
+# Dataset will now have the non-transient fields from the template
+# with desired titles/descriptions and expressions, but no records
+dataset <- Dataset.get_or_create_by_full_path(dataset_full_path, fields = template$fields)
+```
+
+Users can also create and a dataset and add the fields during file
+import:
+
+``` r
+template <- DatasetTemplate.retrieve("id of your template")
+
+# Specify where you want to create your new dataset
+vault <- Vault.get_personal_vault()
+dataset_full_path <- paste(vault$full_path, "my_fields_dataset", sep = "/")
+dataset <- Dataset.get_or_create_by_full_path(dataset_full_path, fields = template$fields)
+file_object <- Object.retrieve("id of file uploaded to EDP")
+DatasetImport.create(
+  dataset_id = dataset$id,
+  object_id = file_object$id,
+  target_fields = template$fields,
+  commit_mode = "append"
+)
+
+# Wait for import to finish
+Dataset.activity(dataset$id, follow = TRUE)
+```
+
+## Update a Template:
+
+Template attributes such as the list of fields can be edited. For
+example, new fields can be added to an existing template. In this
+example, a new field called “phase_numeric” is added to the template to
+transform roman numerals to numbers in the phase field of the dataset.
+
+``` r
+library(quartzbio.edp)
+
+library(jsonlite)
+# List all templates
+all_templates <- DatasetTemplate.all(template_type = "dataset", tags = "import")
+
+# Print ID & name of each
+data.frame(all_templates$data$id, all_templates$data$name)
+
+# Retrieve a template by ID
+template <- DatasetTemplate.retrieve("template_id")
+
+
+# Write to a JSON file for editing
+
+fields_json <- toJSON(template$fields, pretty = TRUE)
+writeLines(fields_json, "template.json")
+
+# Edit the template.json file as needed
+# Add a field to file:
+# {
+#  "title": "phase_numeric",
+#  "name": "phase_numeric",
+#  "data_type": "string",
+#  "depends_on": ["phase"],
+#  "expression": "record.phase.replace('III', '3').replace('II', '2').replace('I', '1')"
+# }
+# Read the updated JSON file and convert it to a list
+updated_fields <- fromJSON(readLines("template.json"))
+
+# Test the template by applying it to a few records
+
+dataset <- Dataset.get_by_full_path("vault:/my/dataset/")
+records <- Dataset.query(dataset$id, limit = 10)
+
+df <- Annotator.annotate(records, updated_fields)
+head(df)
+
+# Save the template to the API
+template <- DatasetTemplate.update(template$id, fields = updated_fields)
+
+# Apply it to the existing dataset
+DatasetMigration.create(
+  source_id = dataset$id,
+  target_id = dataset$id,
+  target_fields = template$fields,
+  commit_mode = "upsert",
+  source_params = list(filters = list())
+)
+
+# Follow the task, wait for it to complete
+Dataset.activity(dataset$id, follow = TRUE)
+```
+
+## Building and Testing Templates with the Annotator
+
+When creating new templates it it is useful to use the annotator to test
+and validate the fields and their expressions. The below snippet will
+use the annotator to process records in real time with the template
+fields.
+
+``` r
+require(quartzbio.edp)
+
+# Get records from dataset
+dataset <- Dataset.get_or_create_by_full_path(dataset_full_path)
+records <- dataset.query()
+
+# Load files from a template
+template <- DatasetTemplate.retrieve(template_id)
+fields <- template$fieldsAnnotator.annotate(records = records, fields = fields)
+```
+
+## API Endpoints
+
+Methods do not accept URL parameters or request bodies unless specified.
+Please note that if your EDP endpoint is sponsor.edp.aws.quartz.bio, you
+would use sponsor.api.edp.aws.quartz.bio.
+
+### Dataset Templates
+
+| Method |             HTTP Request             |        Description         |                             Authorization                              |                        Response                         |
+|:------:|:------------------------------------:|:--------------------------:|:----------------------------------------------------------------------:|:-------------------------------------------------------:|
+| create | POST <https://>/v2/dataset_templates | Create a dataset template. | This request requires an authorized user with appropriate permissions. | The response contains the new DatasetTemplate resource. |
+
+Request Body: In the request body, provide an object with the following
+properties:
+
+|     Property      |  Value  |                                                       Description                                                        |
+|:-----------------:|:-------:|:------------------------------------------------------------------------------------------------------------------------:|
+|       name        | string  |                                            A short name for the new template.                                            |
+|    description    | string  |                                             A description for the template.                                              |
+|      fields       | objects | A list of [valid dataset fields.](https://quartzbio.github.io/quartzbio.edp/articles/creating_and_migrating_datasets.md) |
+|      version      | string  |                                  A string representing a template version (no spaces).                                   |
+|   template_type   | string  |                                     The type of template: dataset, recipe or search.                                     |
+|     is_public     | boolean |                           True if visible to anyone in a user’s organization (default False).                            |
+| annotator_params  | object  |                                  (optional) Configuration parameters for the Annotator.                                  |
+|   entity_params   | object  |                                (optional) Configuration parameters for entity detection.                                 |
+|   reader_params   | object  |                                     (optional) Configuration parameters for readers.                                     |
+| validation_params | object  |                                   (optional) Configuration parameters for validation.                                    |
+
+| Method |                HTTP Request                 |        Description         |                                  Authorization                                   |                      Response                       |
+|:------:|:-------------------------------------------:|:--------------------------:|:--------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| delete | DELETE <https://>/v2/dataset_templates/{ID} | Delete a dataset template. | This request requires an authorized user with write permissions on the resource. | The response returns “HTTP 200 OK” when successful. |
+
+|  Method  |                   HTTP Request                   |                     Description                     |                       Authorization                       |                                      Response                                      |
+|:--------:|:------------------------------------------------:|:---------------------------------------------------:|:---------------------------------------------------------:|:----------------------------------------------------------------------------------:|
+| generate | GET <https://>/v2/datasets/{DATASET_ID}/template | Create a dataset template from an existing dataset. | This request requires an authorized user with permission. | The response contains an unsaved DatasetTemplate object for the specified dataset. |
+
+| Method |               HTTP Request               |         Description          |                       Authorization                       |                     Response                      |
+|:------:|:----------------------------------------:|:----------------------------:|:---------------------------------------------------------:|:-------------------------------------------------:|
+|  get   | GET <https://>/v2/dataset_templates/{ID} | Retrieve a dataset template. | This request requires an authorized user with permission. | The response contains a DatasetTemplate resource. |
+
+| Method |            HTTP Request             |                   Description                   |                         Authorization                          |                                 Response                                  |
+|:------:|:-----------------------------------:|:-----------------------------------------------:|:--------------------------------------------------------------:|:-------------------------------------------------------------------------:|
+|  list  | GET <https://>/v2/dataset_templates | Retrieve a list of available dataset templates. | This request requires an authorized user with read permission. | The response contains a list of resources visible to the requesting user. |
+
+Parameters This request accepts the following parameters:
+
+| Property |  Value  |                   Description                    |
+|:--------:|:-------:|:------------------------------------------------:|
+|  limit   | integer |    The number of objects to return per page.     |
+|  offset  | integer | The offset within the list of available objects. |

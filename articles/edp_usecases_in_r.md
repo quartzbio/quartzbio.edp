@@ -1,0 +1,220 @@
+# EDP Use Cases with R
+
+In this article, you can find examples of using EDP with the R client.
+
+## Global Beacons
+
+Global Beacon lets anyone in your organization find datasets based on
+the entities it contains (i.e. variants, genets, targets). Only datasets
+that have entities can be indexed.
+
+For more information about Global Beacons, please review the Global
+Beacons Overview article.
+
+``` r
+library("quartzbio.edp")
+connect(secret = "TOKEN")
+```
+
+First, let’s start with enabling Global Beacon on the dataset:
+
+``` r
+# Dataset ID
+dataset_id <- "1658666726768179211"
+
+
+# Turn on Global Beacon on the selected dataset
+Object.enable_global_beacon(dataset_id)
+```
+
+Let’s check now the status of Global Beacon indexing for the datasets:
+
+``` r
+# Waiting a minute until indexing is complete
+Sys.sleep(60)
+
+# Getting the status of global beacon on the dataset
+Object.get_global_beacon_status(dataset_id)
+```
+
+As we can see from the response, the indexing is complete. It means that
+now we can perform a search on dataset entities.
+
+Similarly to enabling Global Beacon for the datasets, you may also
+disable it using the disable_global_beacon function:
+
+``` r
+Object.disable_global_beacon("1676139881237207342")
+```
+
+## Global Search
+
+Global Search allows you to search for vaults, files, folders, and
+datasets by name, tags, user, date, and other metadata which can be
+customized.
+
+For more information about Global Search, please review the Global
+Search Overview article.
+
+Similarly to Global Search on the web application, the search
+functionality is available through the EDP R client as well.
+
+### Global Search functions
+
+GlobalSearch module provides three functions and all of them use the
+same set of parameters (filters, entities, query, limit, offset, etc):
+
+**1. GlobalSearch.search**
+
+Performs a global search based on provided filters, entities, and
+queries (advanced query) and returns an R data frame containing results
+from API response. For a full list of results set paginate attribute to
+TRUE:
+
+``` r
+GlobalSearch.search(filters = '[{"and":[["type__in",["dataset"]]]}]')
+GlobalSearch.search(query = "fuji")
+GlobalSearch.search(query = "fuji", paginate = TRUE)
+```
+
+**2. GlobalSearch.subjects**
+
+Similar to the search function, the subjects function returns the
+results in the form of an R data frame. The returned data frame contains
+subjects:
+
+``` r
+GlobalSearch.subjects(entities = '[["gene","BRCA2"]]')
+```
+
+**3. GlobalSearch.request**
+
+Performs low-level global search based on the provided filters, similar
+to what you would do from a web application. In the response there will
+be the following attributes:
+
+- results - list of vault objects (datasets, files, folders, and
+  vaults). Those are the same - - objects from the “Results” tab on the
+  GlobalSearch page on Mesh.
+- total - number of objects in the search results
+- vaults - list of vaults
+- subjects - list of subjects
+- subjects_count - number of subjects in the subjects list
+- took - the amount of time it took to perform a search
+- offset - offset for pagination, offset from the first result you want
+  to fetch
+
+You may call the request function by providing some of the following
+arguments: filters, entities, query (advanced search query), limit, and
+offset:
+
+``` r
+GlobalSearch.request(query = "fuji", limit = 200)
+GlobalSearch.request(entities = '[["gene","BRCA2"]]')
+GlobalSearch.request(entities = '[["gene","BRCA2"]]', filters = '[{"and":[{"and":[["created_at__range",["2021-11-28","2021-12-28"]]]},["type__in",["dataset"]]]}]')
+```
+
+**Recommended functions to use:**
+
+- GlobalSearch.search - for getting the search results.
+- GlobalSearch.subjects - for getting the subjects.
+
+### Search Examples
+
+1.  Global Beacon Search
+
+As we previously indexed the dataset, we should be able to perform an
+entity search and see that dataset in the results.
+
+``` r
+results <- GlobalSearch.search(entities = '[["gene","BRCA2"]]')
+results
+```
+
+Each result object has the following attributes:
+
+``` r
+names(results)
+```
+
+2.  Applying filters for Global Search
+
+Search only for vaults:
+
+``` r
+response <- GlobalSearch.search(filters = '[{"and":[["type__in",["vault"]]]}]')
+response
+```
+
+Search based on the date created:
+
+``` r
+response <- GlobalSearch.search(filters = '[{"and":[{"and":[["created_at__range",["2021-11-21","2021-12-28"]]]}]}]')
+response
+```
+
+3.  Advanced search query
+
+The search function has embedded pagination in itself, so by setting
+that attribute to true, it will fetch all results (warning: that
+operation may be costly and time-consuming).
+
+By performing an advanced search using query argument, only 100 objects
+are returned and you may see the reason for that in the following output
+message:
+
+``` r
+# Advanced search
+response <- GlobalSearch.search(query = "fuji")
+
+# Number of objects in the response
+dim(response)
+```
+
+We can perform a request function call to get the full API response and
+see how many results we have in total:
+
+``` r
+response <- GlobalSearch.request(query = "fuji")
+response$total
+```
+
+There are 1407 objects in total but we have only 100 of them returned as
+default. In order to get all the results you may use parameter paginate
+= TRUE (please note that retrieving all objects may take a while):
+
+``` r
+results <- GlobalSearch.search(query = "fuji", paginate = TRUE)
+print(dim(results))
+```
+
+Alternatively, instead of using paginate parameter, you may use the
+limit parameter instead. Here we’re setting a limit to 500 objects:
+
+``` r
+results <- GlobalSearch.search(query = "fuji", limit = 500)
+print(dim(results))
+```
+
+4.  Getting the Global Search subjects
+
+Similar to the search function to get the result objects in the previous
+sections, we can use the subjects function to get a data frame
+containing only subjects:
+
+``` r
+GlobalSearch.subjects(entities = '[["gene","BRCA2"]]')
+```
+
+### Annotate with Dataset Queries
+
+EDP makes it possible to annotate a field with data from any other
+dataset. Users can run any dataset query in an expression and use it to
+annotate a field.
+
+In this example, we have a list of variants in the EDP variant ID
+format. We will annotate them with information about dataset presence
+(where has this variant been seen?), clinical significance, population
+allele frequencies, and prevalence in cancer types. Users can easily add
+their own annotation datasets by importing them into EDP and querying
+them in an expression.

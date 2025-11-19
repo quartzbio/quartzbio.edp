@@ -43,14 +43,11 @@
 <li><p>Dataset Export to parquet file format. Export the EDP Datasets into parquet file and load the data into R dataframe using <code><a href="../reference/Dataset_load.html">Dataset_load()</a></code> function. This function leverages <code><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html" class="external-link">arrow::read_parquet</a></code> function.</p></li>
 <li><p>Refactored login flow for EDP Shiny application to support component based authorization using the <code>quartzbio_shiny_auth</code> function.</p></li>
 </ul><p><strong>Improvements</strong></p>
-<ul><li>add GitHub workflows to run R CMD check. (<a href="https://precisionformedicine.atlassian.net/browse/EDPDEV-2381" class="external-link">EDPDEV-2381</a>)</li>
+<ul><li>add GitHub workflows to run R CMD check.</li>
 </ul><p><strong>Bug Fixes</strong></p>
-<ul><li>Fixed the shiny wrapper to connect to EDP with the new connection system. Removed <code>createEnv</code> to use <code><a href="../reference/connect.html">connect()</a></code> in the shiny wrapper to use the new credential system. <a href="https://precisionformedicine.atlassian.net/browse/EDPDEV-2141" class="external-link">EDPDEV-2141</a>
-</li>
-<li>Fixed <code><a href="../reference/Dataset_import.html">Dataset_import()</a></code> to limit the number of records that can be imported to 5000 at a time. <a href="https://precisionformedicine.atlassian.net/browse/EDPDEV-1862" class="external-link">EDPDEV-1862</a>
-</li>
-<li>Fixed the error occurring when querying dataset containing list fields. Made changes to <code>format_df_like_model</code> to assign the object class correctly for list field values in dataset. <a href="https://precisionformedicine.atlassian.net/browse/EDPDEV-911" class="external-link">EDPDEV-911</a>
-</li>
+<ul><li><p>Fixed the shiny wrapper to connect to EDP with the new connection system. Removed <code>createEnv</code> to use <code><a href="../reference/connect.html">connect()</a></code> in the shiny wrapper to use the new credential system.</p></li>
+<li><p>Fixed <code><a href="../reference/Dataset_import.html">Dataset_import()</a></code> to limit the number of records that can be imported to 5000 at a time.</p></li>
+<li><p>Fixed the error occurring when querying dataset containing list fields. Made changes to <code>format_df_like_model</code> to assign the object class correctly for list field values in dataset.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99" id="version-099">version 0.99<a class="anchor" aria-label="anchor" href="#version-099"></a></h2>
@@ -114,7 +111,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 27-Oct-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Last modified: 19-Nov-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

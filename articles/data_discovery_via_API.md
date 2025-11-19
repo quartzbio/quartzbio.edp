@@ -1,0 +1,88 @@
+# Data Discovery
+
+Global Search allows users to search for vaults, files, folders, and
+datasets by name, tags, user, date, and other metadata that can be
+customized. Similarly to Global Search on the web application, the
+search functionality is available through EDP Python and R clients as
+well.
+
+## Global Search Basics
+
+The EDP Global Search performs a search based on the provided set of
+parameters (filters, entities, query, limit, ordering, etc.):
+
+- query: Advanced search query string
+- filters: Filters to apply
+- entities: List of entity tuples to filter on (entity type, entity)
+- limit: Maximum number of query results to return
+
+``` r
+library("quartzbio.edp")
+
+# By default it limits the number of objects in search result to 100
+results <- GlobalSearch.search()
+
+# To return all objects set parameter paginate to TRUE
+results <- GlobalSearch.search(paginate = TRUE)
+```
+
+Users may use the limit parameter to limit the number of returned
+objects:
+
+    # No filters applied with limit parameter
+    results <- GlobalSearch.search(limit = 200)
+
+## Applying filters for Global Search
+
+Similar to the web application, users can apply filters with R client:
+
+``` r
+library("quartzbio.edp")
+
+# Searching only for vaults
+response <- GlobalSearch.search(filters = '[{"and":[["type__in",["vault"]]]}]')
+
+# Searching based on date created
+response <- GlobalSearch.search(filters = '[{"and":[{"and":[["created_at__range",["2023-01-01","2023-12-31"]]]}]}]')
+```
+
+## Advanced Search Query
+
+Users can write their own queries the using R client by providing query
+parameters:
+
+``` r
+library("quartzbio.edp")
+
+# Advanced search (using keyword argument)
+results <- GlobalSearch.search(query = "TCGA", paginate = TRUE)
+
+# Advanced search (using positional argument)
+results <- GlobalSearch.search("test")
+```
+
+## Global Beacon Search
+
+Global Beacon Search can be performed as well with both Python and R
+clients by using the entities parameter. Please note that Global Beacon
+Search works only on datasets enabled by Global Beacons. To search for
+subjects or samples, users should also set the vault_scope parameter to
+“any”.
+
+``` r
+# Entity search example
+GlobalSearch.search(entities = '[["gene","BRCA2"]]')
+
+# Entity search example
+GlobalSearch.search(entities = '[["variant", "GRCH38-7-140753336-140753336-T"]]')
+
+# Sample entity search example
+GlobalSearch.search(entities = '[["sample","A00001"]]', vault_scope = "any")
+```
+
+## Retrieving Subjects with Global Search
+
+``` r
+# Getting the subjects
+GlobalSearch.subjects(entities = '[["gene","BRCA2"]]')
+```
