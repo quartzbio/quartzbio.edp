@@ -1,7 +1,8 @@
-# Function to support multi-part upload for files larger than multipart_threshold.
+# Function to support multi-part upload for files larger than multipart_threshold. Enhanced multipart upload with parallel parts and presigned URL refresh
 
 Function to support multi-part upload for files larger than
-multipart_threshold.
+multipart_threshold. Enhanced multipart upload with parallel parts and
+presigned URL refresh
 
 ## Usage
 
@@ -10,6 +11,8 @@ Multi_part_file_upload(
   obj,
   local_path,
   local_md5,
+  num_processes,
+  max_retries,
   conn = get_connection(),
   ...
 )
@@ -28,6 +31,14 @@ Multi_part_file_upload(
 - local_md5:
 
   md5sum checksum of file
+
+- num_processes:
+
+  Number of parallel workers for multipart upload (default: 1)
+
+- max_retries:
+
+  Maximum retries per part for multipart upload (default: 3)
 
 - conn:
 

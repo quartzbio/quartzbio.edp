@@ -131,7 +131,8 @@ Objects](https://quartzbio.github.io/quartzbio.edp/articles/vaults_n_objects.md)
   : fetches a list of folders.
 - [`Multi_part_file_upload()`](https://quartzbio.github.io/quartzbio.edp/reference/Multi_part_file_upload.md)
   : Function to support multi-part upload for files larger than
-  multipart_threshold.
+  multipart_threshold. Enhanced multipart upload with parallel parts and
+  presigned URL refresh
 - [`Object()`](https://quartzbio.github.io/quartzbio.edp/reference/Object.md)
   : fetches an object.
 - [`Object_create()`](https://quartzbio.github.io/quartzbio.edp/reference/Object_create.md)
@@ -198,12 +199,23 @@ Objects](https://quartzbio.github.io/quartzbio.edp/articles/vaults_n_objects.md)
   with EDP connection to be used in shiny app
 - [`read_connection_profile()`](https://quartzbio.github.io/quartzbio.edp/reference/read_connection_profile.md)
   : read a connection profile
+- [`refresh_presigned_urls()`](https://quartzbio.github.io/quartzbio.edp/reference/refresh_presigned_urls.md)
+  : Refresh presigned URLs for multipart upload
 - [`save_connection_profile()`](https://quartzbio.github.io/quartzbio.edp/reference/save_connection_profile.md)
   : save a connection profile
 - [`set_connection()`](https://quartzbio.github.io/quartzbio.edp/reference/set_connection.md)
   : set the default connection
 - [`test_connection()`](https://quartzbio.github.io/quartzbio.edp/reference/test_connection.md)
   : test a connection
+- [`upload_parts_parallel()`](https://quartzbio.github.io/quartzbio.edp/reference/upload_parts_parallel.md)
+  : Function to upload parts in parallel
+- [`upload_parts_sequential()`](https://quartzbio.github.io/quartzbio.edp/reference/upload_parts_sequential.md)
+  : Upload parts sequentially with retry logic for failed parts
+- [`upload_parts_with_multisession()`](https://quartzbio.github.io/quartzbio.edp/reference/upload_parts_with_multisession.md)
+  : Function to upload parts in parallel using future multisession
+- [`upload_single_part()`](https://quartzbio.github.io/quartzbio.edp/reference/upload_single_part.md)
+  : Function to Upload a single part with retry logic and presigned URL
+  refresh
 
 ## Legacy former solvebio API
 

@@ -58,6 +58,8 @@ multipart_chunksize (int): Size of each upload part (default: 64MB)</p>
 <span>  <span class="va">local_path</span>,</span>
 <span>  <span class="va">vault_path</span>,</span>
 <span>  mimetype <span class="op">=</span> <span class="fu">mime</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mime/man/guess_type.html" class="external-link">guess_type</a></span><span class="op">(</span><span class="va">local_path</span><span class="op">)</span>,</span>
+<span>  max_retries <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  num_processes <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  conn <span class="op">=</span> <span class="fu"><a href="get_connection.html">get_connection</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -82,6 +84,14 @@ multipart_chunksize (int): Size of each upload part (default: 64MB)</p>
 <dd><p>the MIME type of the Object.</p></dd>
 
 
+<dt id="arg-max-retries">max_retries<a class="anchor" aria-label="anchor" href="#arg-max-retries"></a></dt>
+<dd><p>Maximum retries per part for multipart upload (default: 3)</p></dd>
+
+
+<dt id="arg-num-processes">num_processes<a class="anchor" aria-label="anchor" href="#arg-num-processes"></a></dt>
+<dd><p>Number of parallel workers for multipart upload (default: 1)</p></dd>
+
+
 <dt id="arg-conn">conn<a class="anchor" aria-label="anchor" href="#arg-conn"></a></dt>
 <dd><p>a EDP connection object (as a named list or environment)</p></dd>
 
@@ -96,7 +106,7 @@ multipart_chunksize (int): Size of each upload part (default: 64MB)</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 19-Nov-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Last modified: 01-Dec-2025 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

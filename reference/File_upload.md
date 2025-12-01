@@ -14,6 +14,8 @@ File_upload(
   local_path,
   vault_path,
   mimetype = mime::guess_type(local_path),
+  max_retries = 3,
+  num_processes = 1,
   conn = get_connection()
 )
 ```
@@ -35,6 +37,14 @@ File_upload(
 - mimetype:
 
   the MIME type of the Object.
+
+- max_retries:
+
+  Maximum retries per part for multipart upload (default: 3)
+
+- num_processes:
+
+  Number of parallel workers for multipart upload (default: 1)
 
 - conn:
 

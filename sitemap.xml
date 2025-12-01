@@ -187,8 +187,13 @@
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/protectedServerJS.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/quartzbio_shiny_auth.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/read_connection_profile.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/refresh_presigned_urls.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/save_connection_profile.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/set_connection.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/test_connection.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/upload_parts_parallel.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/upload_parts_sequential.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/upload_parts_with_multisession.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/upload_single_part.html</loc></url>
 </urlset>
 
