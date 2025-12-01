@@ -13,6 +13,8 @@ File_upload(
   local_path,
   vault_path,
   mimetype = mime::guess_type(local_path),
+  max_retries = 3,
+  num_processes = 1,
   conn = get_connection()
 )
 }
@@ -24,6 +26,10 @@ File_upload(
 \item{vault_path}{a Vault path, as a string (e.g. "/d1/d2/foo.csv")}
 
 \item{mimetype}{the MIME type of the Object.}
+
+\item{max_retries}{Maximum retries per part for multipart upload (default: 3)}
+
+\item{num_processes}{Number of parallel workers for multipart upload (default: 1)}
 
 \item{conn}{a EDP connection object (as a named list or environment)}
 }
