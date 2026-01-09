@@ -52,7 +52,7 @@ GlobalSearch.search <- function(paginate = FALSE, env = get_connection(), ...) {
     ))
   }
 
-  return(df)
+  df
 }
 
 
@@ -93,7 +93,7 @@ GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
   params <- modifyList(params, list(facets = facets))
 
   response <- do.call(GlobalSearch.request, params)
-  return(response$facets)
+  response$facets
 }
 
 
@@ -119,7 +119,7 @@ GlobalSearch.subjects <- function(env = get_connection(), ...) {
   response <- do.call(GlobalSearch.request, params)
   df <- response$subjects
 
-  return(df)
+  df
 }
 
 
@@ -143,7 +143,7 @@ GlobalSearch.subjects_count <- function(env = get_connection(), ...) {
   response <- do.call(GlobalSearch.request, params)
   df <- response$subjects_count
 
-  return(df)
+  df
 }
 
 

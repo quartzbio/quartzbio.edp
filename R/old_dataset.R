@@ -188,7 +188,7 @@ Dataset.query <- function(id, paginate = FALSE, use_field_titles = TRUE, env = g
 
   df <- formatQueryColumns(id, env, df, use_field_titles)
 
-  return(df)
+  df
 }
 
 
@@ -266,7 +266,7 @@ Dataset.facets <- function(id, facets, env = get_connection(), ...) {
 
   response <- do.call(Dataset.data, params)
 
-  return(response$facets)
+  response$facets
 }
 
 
@@ -294,7 +294,7 @@ Dataset.count <- function(id, env = get_connection(), ...) {
 
   response <- do.call(Dataset.data, params)
 
-  return(response$total)
+  response$total
 }
 
 
@@ -336,7 +336,7 @@ Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_con
 
   dataset <- .request("POST", path = "v2/datasets", query = NULL, body = params, env = env)
 
-  return(dataset)
+  dataset
 }
 
 
@@ -388,7 +388,7 @@ Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
   object <- Object.get_by_full_path(full_path, env = env)
 
   dataset <- do.call(Dataset.retrieve, list(id = object$dataset_id, env = env))
-  return(dataset)
+  dataset
 }
 
 
@@ -466,7 +466,7 @@ Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection()
     ...
   )
 
-  return(dataset)
+  dataset
 }
 
 
@@ -524,7 +524,7 @@ Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env 
     stop("A dataset ID is required.")
   }
 
-  return(Object.get_global_beacon_status(id, raise_on_disabled = raise_on_disabled, env = env))
+  Object.get_global_beacon_status(id, raise_on_disabled = raise_on_disabled, env = env)
 }
 
 
@@ -546,7 +546,7 @@ Dataset.enable_global_beacon <- function(id, env = get_connection()) {
     stop("A dataset ID is required.")
   }
 
-  return(Object.enable_global_beacon(id, env = env))
+  Object.enable_global_beacon(id, env = env)
 }
 
 
@@ -568,7 +568,7 @@ Dataset.disable_global_beacon <- function(id, env = get_connection()) {
     stop("A dataset ID is required.")
   }
 
-  return(Object.disable_global_beacon(id, env = env))
+  Object.disable_global_beacon(id, env = env)
 }
 
 

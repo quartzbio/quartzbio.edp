@@ -94,7 +94,7 @@ Vault.create <- function(name, env = get_connection(), ...) {
 
   vault <- .request("POST", path = "v2/vaults", query = NULL, body = params, env = env)
 
-  return(vault)
+  vault
 }
 
 
@@ -175,7 +175,7 @@ Vault.get_by_full_path <- function(full_path, verbose = TRUE, env = get_connecti
     }
   }
 
-  return(NULL)
+  NULL
 }
 
 
@@ -206,7 +206,7 @@ Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), 
   name <- split_path[length(split_path)]
   vault <- Vault.create(name = name, env = env, ...)
 
-  return(vault)
+  vault
 }
 
 
@@ -231,7 +231,7 @@ Vault.get_personal_vault <- function(env = get_connection()) {
 
   response <- .request("GET", path = "v2/vaults", query = params, env = env)
 
-  return(response$data[1, ])
+  response$data[1, ]
 }
 
 
@@ -252,7 +252,7 @@ Vault.get_personal_vault <- function(env = get_connection()) {
 #' @export
 Vault.files <- function(id, env = get_connection(), ...) {
   objects <- .object_list_helper(id, object_type = "file", env = env, ...)
-  return(objects)
+  objects
 }
 
 
@@ -273,7 +273,7 @@ Vault.files <- function(id, env = get_connection(), ...) {
 #' @export
 Vault.folders <- function(id, env = get_connection(), ...) {
   objects <- .object_list_helper(id, object_type = "folder", env = env, ...)
-  return(objects)
+  objects
 }
 
 
@@ -294,7 +294,7 @@ Vault.folders <- function(id, env = get_connection(), ...) {
 #' @export
 Vault.datasets <- function(id, env = get_connection(), ...) {
   objects <- .object_list_helper(id, object_type = "dataset", env = env, ...)
-  return(objects)
+  objects
 }
 
 
@@ -315,7 +315,7 @@ Vault.datasets <- function(id, env = get_connection(), ...) {
 #' @export
 Vault.objects <- function(id, env = get_connection(), ...) {
   objects <- .object_list_helper(id, env = env, ...)
-  return(objects)
+  objects
 }
 
 
@@ -337,7 +337,7 @@ Vault.objects <- function(id, env = get_connection(), ...) {
 #' @export
 Vault.search <- function(id, query, env = get_connection(), ...) {
   objects <- .object_list_helper(id, query = query, env = env, ...)
-  return(objects)
+  objects
 }
 
 
@@ -387,7 +387,7 @@ Vault.create_dataset <- function(id, path, name, env = get_connection(), ...) {
     ...
   )
 
-  return(dataset)
+  dataset
 }
 
 
@@ -482,7 +482,7 @@ Vault.create_folder <- function(id, path, recursive = FALSE, env = get_connectio
     ...
   )
 
-  return(object)
+  object
 }
 
 
@@ -493,6 +493,6 @@ Vault.create_folder <- function(id, path, recursive = FALSE, env = get_connectio
 # Retrieves objects within a specific vault.
 .object_list_helper <- function(id, env = get_connection(), ...) {
   objects <- Object.all(vault_id = id, env = env, ...)
-  return(objects$data)
+  objects$data
 }
 # nocov end

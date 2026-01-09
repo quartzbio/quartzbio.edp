@@ -106,7 +106,7 @@ DatasetExport.create <- function(dataset_id,
     Task.follow(dataset_export$task_id)
   }
 
-  return(dataset_export)
+  dataset_export
 }
 
 
@@ -131,6 +131,6 @@ DatasetExport.get_download_url <- function(id, env = get_connection()) {
   path <- paste("v2/dataset_exports", paste(id), "download", sep = "/")
   response <- .request("GET", path = path, query = list(redirect = ""), env = env)
 
-  return(response$url)
+  response$url
 }
 # nocov end

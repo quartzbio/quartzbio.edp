@@ -9,17 +9,17 @@
 configure_logger <- function(log_file, log_level = "INFO") {
   if (!requireNamespace("logger", quietly = TRUE)) {
     warning("The 'logger' package is not installed. Logging will be disabled.")
-    return(invisible(NULL))
+    invisible(NULL)
   } else {
     logger::log_threshold(log_level)
 
     if (!is.null(log_file) && length(log_file) == 1 && is.character(log_file)) {
       logger::log_appender(logger::appender_file(log_file)) # Write log in file
-      return(invisible(log_file))
+      invisible(log_file)
     } else {
       warning("Invalid file path for log file. Defaulting to console logging")
       logger::log_appender(logger::appender_console)
-      return(invisible("console"))
+      invisible("console")
     }
   }
 }

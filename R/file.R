@@ -400,10 +400,10 @@ upload_parts_with_multisession <- function(
 
   # Filter out failed uploads
   #failed_parts <- Filter(is.null, results)
-  return(list(
+  list(
     failed_parts = Filter(is.null, results),
     updated_parts = parts
-  ))
+  )
 }
 
 #' Function to upload parts in parallel
@@ -466,7 +466,7 @@ upload_parts_parallel <- function(
 
   # Return successfully uploaded parts
   #return(Filter(Negate(is.null), parts))
-  return(parts)
+  parts
 }
 
 #' Upload parts sequentially with retry logic for failed parts
@@ -535,7 +535,7 @@ upload_parts_sequential <- function(
     }
   }
 
-  return(Filter(Negate(is.null), parts))
+  Filter(Negate(is.null), parts)
 }
 
 #' Function to support multi-part upload for files larger than multipart_threshold.
