@@ -110,6 +110,6 @@ DatasetMigration.create <- function(source_id,
 
   dataset_migration <- .request("POST", path = "v2/dataset_migrations", query = NULL, body = params, env = env)
 
-  return(dataset_migration)
+  dataset_migration
 }
 # nocov end

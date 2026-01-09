@@ -66,6 +66,6 @@ Task.follow <- function(id, env = get_connection(), interval = 2) {
     cat(paste("Task", id, "status:", imp$status, "\n", sep = " "))
     Sys.sleep(interval)
   }
-  return(imp)
+  imp
 }
 # nocov end

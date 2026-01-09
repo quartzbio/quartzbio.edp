@@ -96,6 +96,6 @@ DatasetImport.create <- function(dataset_id,
 
   dataset_import <- .request("POST", path = "v2/dataset_imports", query = NULL, body = params, env = env)
 
-  return(dataset_import)
+  dataset_import
 }
 # nocov end

@@ -104,7 +104,7 @@ DatasetField.create <- function(dataset_id, name, data_type = "auto", env = get_
 
   dataset_field <- .request("POST", path = "v2/dataset_fields", query = NULL, body = params, env = env)
 
-  return(dataset_field)
+  dataset_field
 }
 
 

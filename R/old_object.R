@@ -106,7 +106,7 @@ Object.create <- function(vault_id, parent_object_id, object_type, filename, env
 
   object <- .request("POST", path = "v2/objects", query = NULL, body = params, env = env)
 
-  return(object)
+  object
 }
 
 
@@ -171,7 +171,7 @@ Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
     cat(sprintf("Warning: Multiple object found with full path: %s\n", full_path))
   }
 
-  return(response$data)
+  response$data
 }
 
 
@@ -202,7 +202,7 @@ Object.get_by_path <- function(path, env = get_connection(), ...) {
     return(response$data[1, ])
   }
 
-  return(NULL)
+  NULL
 }
 
 
@@ -227,7 +227,7 @@ Object.get_download_url <- function(id, env = get_connection()) {
   path <- paste("v2/objects", paste(id), "download", sep = "/")
   response <- .request("GET", path = path, query = list(redirect = NULL), env = env)
 
-  return(response$download_url)
+  response$download_url
 }
 
 
@@ -313,7 +313,7 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
     stop(sprintf("Error: Failed to upload file"))
   }
 
-  return(obj)
+  obj
 }
 
 
@@ -361,7 +361,7 @@ Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename
     object <- Object.upload_file(local_path, vault_id, vault_path, filename, env = env)
   }
 
-  return(object)
+  object
 }
 
 
@@ -469,7 +469,7 @@ Object.query <- function(id, paginate = FALSE, env = get_connection(), ...) {
     ))
   }
 
-  return(df)
+  df
 }
 
 
@@ -541,7 +541,7 @@ Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env =
     }
   )
 
-  return(response)
+  response
 }
 
 

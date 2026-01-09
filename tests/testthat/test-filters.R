@@ -189,7 +189,7 @@ test_that("code_to_list", {
       f(z)
     }
     y <- "litteral"
-    return(3L + 1)
+    3L + 1
   }
   code <- body(f)
   lst <- code_to_list(code)
@@ -197,7 +197,7 @@ test_that("code_to_list", {
   tokens <- as.character(unlist(lst))
   expected <- c(
     "`:`", "`{`", "`+`", "`<-`", "`for`", "`while`", "1", "3",
-    "f", "g", "i", "litteral", "return", "x", "y", "z"
+    "f", "g", "i", "litteral", "x", "y", "z"
   )
 
   expect_identical(sort(unique(tokens)), sort(expected))

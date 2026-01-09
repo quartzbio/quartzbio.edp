@@ -3,7 +3,7 @@ formatEDPResponse <- function(res, raw = FALSE) {
   url <- res$url
   body <- httr::content(res, as = "text", encoding = "UTF-8")
   if (raw) {
-    return(body)
+    body
   } else {
     # Only simplify uniform JSON dictionary responses
     # as data frames. These responses include
@@ -15,7 +15,7 @@ formatEDPResponse <- function(res, raw = FALSE) {
       simplifyMatrix = FALSE
     )
     res$"_url" <- url
-    return(res)
+    res
   }
 }
 
@@ -31,7 +31,7 @@ formatEDPQueryResponse <- function(res, raw = FALSE, col.names = NULL) {
       res$results <- as.data.frame(res$results)
     }
   }
-  return(res)
+  res
 }
 
 formatQueryColumns <- function(id, env, res, use_field_titles) {
