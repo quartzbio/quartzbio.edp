@@ -110,3 +110,11 @@ Folders()
 ## Articles
 
 - [Vignettes](https://quartzbio.github.io/quartzbio.edp/articles/)
+
+## Credits
+
+### Core Authors:
+
+- David Caplan
+- Karl Forner
+- Marc Lamarine
