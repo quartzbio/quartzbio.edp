@@ -18,6 +18,7 @@ Object_create(
   mimetype = NULL,
   size = NULL,
   md5 = NULL,
+  target = NULL,
   conn = get_connection()
 )
 ```
@@ -34,7 +35,8 @@ Object_create(
 
 - object_type:
 
-  the type of an object, one of "file", "folder", or "dataset".
+  the type of an object, one of "file", "folder", "dataset" or
+  "shortcut".
 
 - parent_object_id:
 
@@ -73,6 +75,23 @@ Object_create(
 - md5:
 
   a MD5 fingerprint, as a string.
+
+- target:
+
+  named list. Only relevant when `object_type` is `shortcut`. Must
+  contain `object_type`. When `object_type` is `url` then the second
+  field must be `url`. For other `object_type`s `id` should be provided.
+  Shortcuts can be created to:
+
+  - vaults (object_type='vault')
+
+  - files (object_type='file')
+
+  - datasets (object_type='dataset')
+
+  - folders (object_type='folder')
+
+  - URLs (object_type='url')
 
 - conn:
 

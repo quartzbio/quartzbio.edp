@@ -42,6 +42,7 @@
 <li><p>EDP Health Check. Perform a quick check to test your EDP credentials, connection, user details and vaults using <code>edp_health_check</code> function.</p></li>
 <li><p>Dataset Export to parquet file format. Export the EDP Datasets into parquet file and load the data into R dataframe using <code><a href="../reference/Dataset_load.html">Dataset_load()</a></code> function. This function leverages <code><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html" class="external-link">arrow::read_parquet</a></code> function.</p></li>
 <li><p>Refactored login flow for EDP Shiny application to support component based authorization using the <code>quartzbio_shiny_auth</code> function.</p></li>
+<li><p>Add support for EDP Shortcut objects. Adds new functions: <code>Shortcuts</code>, <code>Shortcut</code>, <code>Shortcut_create</code>, <code>is_shortcut</code> and <code>Shortcut_get_target</code>.</p></li>
 </ul><p><strong>Improvements</strong></p>
 <ul><li>add GitHub workflows to run R CMD check.</li>
 </ul><p><strong>Bug Fixes</strong></p>

@@ -30,7 +30,8 @@ Object_update(
 
 - object_type:
 
-  the type of an object, one of "file", "folder", or "dataset".
+  the type of an object, one of "file", "folder", "dataset" or
+  "shortcut".
 
 - parent_object_id:
 

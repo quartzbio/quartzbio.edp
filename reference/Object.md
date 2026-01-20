@@ -27,7 +27,9 @@ Object(
 
 - path:
 
-  the path of an object, with the folders (e.g. "/d1/d2/foo.csv").
+  the path of an object, starting from the vault's root directory. The
+  path must include all intermediate folders and end with the object’s
+  name (e.g. "/d1/d2/foo.csv" or "/d1/d2/").
 
 - vault_id:
 
@@ -35,7 +37,8 @@ Object(
 
 - object_type:
 
-  the type of an object, one of "file", "folder", or "dataset".
+  the type of an object, one of "file", "folder", "dataset" or
+  "shortcut".
 
 - conn:
 

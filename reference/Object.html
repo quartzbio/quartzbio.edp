@@ -64,7 +64,9 @@
 
 
 <dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
-<dd><p>the path of an object, with the folders (e.g. "/d1/d2/foo.csv").</p></dd>
+<dd><p>the path of an object, starting from the vault's
+root directory. The path must include all intermediate folders and end with the object’s name
+(e.g. "/d1/d2/foo.csv" or "/d1/d2/").</p></dd>
 
 
 <dt id="arg-vault-id">vault_id<a class="anchor" aria-label="anchor" href="#arg-vault-id"></a></dt>
@@ -72,7 +74,7 @@
 
 
 <dt id="arg-object-type">object_type<a class="anchor" aria-label="anchor" href="#arg-object-type"></a></dt>
-<dd><p>the type of an object, one of  "file", "folder", or "dataset".</p></dd>
+<dd><p>the type of an object, one of  "file", "folder", "dataset" or "shortcut".</p></dd>
 
 
 <dt id="arg-conn">conn<a class="anchor" aria-label="anchor" href="#arg-conn"></a></dt>

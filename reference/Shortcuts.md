@@ -1,48 +1,14 @@
-# Function to support multi-part upload for files larger than multipart_threshold. Enhanced multipart upload with parallel parts and presigned URL refresh
+# fetches a list of shortcuts.
 
-Function to support multi-part upload for files larger than
-multipart_threshold. Enhanced multipart upload with parallel parts and
-presigned URL refresh
+fetches a list of shortcuts.
 
 ## Usage
 
 ``` r
-Multi_part_file_upload(
-  obj,
-  local_path,
-  local_md5,
-  num_processes,
-  max_retries,
-  conn = get_connection(),
-  ...
-)
+Shortcuts(...)
 ```
 
 ## Arguments
-
-- obj:
-
-  Object created
-
-- local_path:
-
-  Path of file in local
-
-- local_md5:
-
-  md5sum checksum of file
-
-- num_processes:
-
-  Number of parallel workers for multipart upload (default: 1)
-
-- max_retries:
-
-  Maximum retries per part for multipart upload (default: 3)
-
-- conn:
-
-  Valid EDP connection
 
 - ...:
 
@@ -52,6 +18,10 @@ Multi_part_file_upload(
   `ancestor_id`
 
   :   an object ID of an ancestor, for filtering.
+
+  `conn`
+
+  :   a EDP connection object (as a named list or environment)
 
   `depth`
 
@@ -121,3 +91,7 @@ Multi_part_file_upload(
   `vault_full_path`
 
   :   a Vault full path, as a string (e.g. "quartzbio:Public")
+
+## Value
+
+the shortcuts as an ObjectList

@@ -1,28 +1,18 @@
-# fetches a file by id, full_path or (vault_id, path)
+# fetches a shortcut by id or (vault_id, path)
 
-fetches a file by id, full_path or (vault_id, path)
+fetches a shortcut by id or (vault_id, path)
 
 ## Usage
 
 ``` r
-File(
-  id = NULL,
-  full_path = NULL,
-  path = NULL,
-  vault_id = NULL,
-  conn = get_connection()
-)
+Shortcut(id = NULL, path = NULL, vault_id = NULL, conn = get_connection())
 ```
 
 ## Arguments
 
 - id:
 
-  a File ID
-
-- full_path:
-
-  an Object full path, including the account, vault and path.
+  the shortcut ID.
 
 - path:
 
@@ -37,7 +27,3 @@ File(
 - conn:
 
   a EDP connection object (as a named list or environment)
-
-## Value
-
-the file info as an Object

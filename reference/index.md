@@ -141,6 +141,14 @@ Objects](https://quartzbio.github.io/quartzbio.edp/articles/vaults_n_objects.md)
   : updates an Object.
 - [`Objects()`](https://quartzbio.github.io/quartzbio.edp/reference/Objects.md)
   : fetches a list of objects (files, folders, datasets)
+- [`Shortcut()`](https://quartzbio.github.io/quartzbio.edp/reference/Shortcut.md)
+  : fetches a shortcut by id or (vault_id, path)
+- [`Shortcut_create()`](https://quartzbio.github.io/quartzbio.edp/reference/Shortcut_create.md)
+  : creates a shortcut.
+- [`Shortcut_get_target()`](https://quartzbio.github.io/quartzbio.edp/reference/Shortcut_get_target.md)
+  : Get Shortcut target
+- [`Shortcuts()`](https://quartzbio.github.io/quartzbio.edp/reference/Shortcuts.md)
+  : fetches a list of shortcuts.
 - [`Task()`](https://quartzbio.github.io/quartzbio.edp/reference/Task.md)
   : fetches a task.
 - [`Task_wait_for_completion()`](https://quartzbio.github.io/quartzbio.edp/reference/Task_wait_for_completion.md)
@@ -188,6 +196,8 @@ Objects](https://quartzbio.github.io/quartzbio.edp/articles/vaults_n_objects.md)
   : deletes an object from EDP
 - [`get_connection()`](https://quartzbio.github.io/quartzbio.edp/reference/get_connection.md)
   : get the default connection if any
+- [`is_shortcut()`](https://quartzbio.github.io/quartzbio.edp/reference/is_shortcut.md)
+  : Is an object a shortcut
 - [`log_message()`](https://quartzbio.github.io/quartzbio.edp/reference/log_message.md)
   : Record a log message with the given log level
 - [`old_params`](https://quartzbio.github.io/quartzbio.edp/reference/old_params.md)

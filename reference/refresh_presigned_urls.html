@@ -98,14 +98,16 @@ See also <code>page</code>.</p></dd>
 objects at a minimum distance from the ancestor.</p></dd>
 
     <dt><code>object_type</code></dt>
-<dd><p>the type of an object, one of  "file", "folder", or "dataset".</p></dd>
+<dd><p>the type of an object, one of  "file", "folder", "dataset" or "shortcut".</p></dd>
 
     <dt><code>page</code></dt>
 <dd><p>The number of the page to fetch, as an integer. starts from 1.
 See also <code>limit</code>.</p></dd>
 
     <dt><code>path</code></dt>
-<dd><p>the path of an object, with the folders (e.g. "/d1/d2/foo.csv").</p></dd>
+<dd><p>the path of an object, starting from the vault's
+root directory. The path must include all intermediate folders and end with the object’s name
+(e.g. "/d1/d2/foo.csv" or "/d1/d2/").</p></dd>
 
     <dt><code>query</code></dt>
 <dd><p>a string that matches any objects whose path contains that string.</p></dd>

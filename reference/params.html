@@ -204,7 +204,7 @@ objects at a minimum distance from the ancestor.</p></dd>
 
 
 <dt id="arg-object-type">object_type<a class="anchor" aria-label="anchor" href="#arg-object-type"></a></dt>
-<dd><p>the type of an object, one of  "file", "folder", or "dataset".</p></dd>
+<dd><p>the type of an object, one of  "file", "folder", "dataset" or "shortcut".</p></dd>
 
 
 <dt id="arg-ordering">ordering<a class="anchor" aria-label="anchor" href="#arg-ordering"></a></dt>
@@ -221,7 +221,9 @@ See also <code>limit</code>.</p></dd>
 
 
 <dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
-<dd><p>the path of an object, with the folders (e.g. "/d1/d2/foo.csv").</p></dd>
+<dd><p>the path of an object, starting from the vault's
+root directory. The path must include all intermediate folders and end with the object’s name
+(e.g. "/d1/d2/foo.csv" or "/d1/d2/").</p></dd>
 
 
 <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
@@ -277,6 +279,18 @@ sub tasks to finish before returning.</p></dd>
 <dt id="arg-target-fields">target_fields<a class="anchor" aria-label="anchor" href="#arg-target-fields"></a></dt>
 <dd><p>A list of valid dataset fields to create or override in the import,
 as a character vector.</p></dd>
+
+
+<dt id="arg-target">target<a class="anchor" aria-label="anchor" href="#arg-target"></a></dt>
+<dd><p>named list. Only relevant when <code>object_type</code> is <code>shortcut</code>.
+Must contain <code>object_type</code>. When <code>object_type</code> is <code>url</code> then the second field
+must be <code>url</code>. For other <code>object_type</code>s <code>id</code> should be provided.
+Shortcuts can be created to:</p><ul><li><p>vaults (object_type='vault')</p></li>
+<li><p>files (object_type='file')</p></li>
+<li><p>datasets (object_type='dataset')</p></li>
+<li><p>folders (object_type='folder')</p></li>
+<li><p>URLs (object_type='url')</p></li>
+</ul></dd>
 
 
 <dt id="arg-task-id">task_id<a class="anchor" aria-label="anchor" href="#arg-task-id"></a></dt>

@@ -137,6 +137,10 @@
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/SavedQuery.delete.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/SavedQuery.retrieve.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/SavedQuery.update.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Shortcut.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Shortcut_create.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Shortcut_get_target.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Shortcuts.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Task.all.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Task.follow.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/Task.html</loc></url>
@@ -179,6 +183,7 @@
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/generics.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/get_connection.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/index.html</loc></url>
+<url><loc>https://quartzbio.github.io/quartzbio.edp/reference/is_shortcut.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/log_message.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/login.html</loc></url>
 <url><loc>https://quartzbio.github.io/quartzbio.edp/reference/old_params.html</loc></url>

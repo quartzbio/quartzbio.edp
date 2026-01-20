@@ -26,6 +26,10 @@
 - Refactored login flow for EDP Shiny application to support component
   based authorization using the `quartzbio_shiny_auth` function.
 
+- Add support for EDP Shortcut objects. Adds new functions: `Shortcuts`,
+  `Shortcut`, `Shortcut_create`, `is_shortcut` and
+  `Shortcut_get_target`.
+
 **Improvements**
 
 - add GitHub workflows to run R CMD check.
