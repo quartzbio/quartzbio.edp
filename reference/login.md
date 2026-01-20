@@ -6,17 +6,12 @@ Store and verify your QuartzBio EDP credentials.
 
 ``` r
 login(
-  api_key = Sys.getenv("SOLVEBIO_API_KEY"),
-  api_token = Sys.getenv("SOLVEBIO_ACCESS_TOKEN"),
-  api_host = Sys.getenv("SOLVEBIO_API_HOST")
+  api_token = Sys.getenv("QUARTZBIO_ACCESS_TOKEN"),
+  api_host = Sys.getenv("QUARTZBIO_API_HOST")
 )
 ```
 
 ## Arguments
-
-- api_key:
-
-  Your QuartzBio EDP API key
 
 - api_token:
 
