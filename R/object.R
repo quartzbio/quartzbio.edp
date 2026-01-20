@@ -72,6 +72,7 @@ Object_create <- function(
     mimetype = NULL,
     size = NULL,
     md5 = NULL,
+    target = NULL,
     conn = get_connection()) {
   params <- preprocess_api_params()
   request_edp_api("POST", "v2/objects", conn = conn, params = params)

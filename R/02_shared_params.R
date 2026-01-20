@@ -57,12 +57,14 @@
 #' @param mimetype                  the MIME type of the Object.
 #' @param min_distance              used in conjuction with the ancestor_id filter to only include
 #'                                   objects at a minimum distance from the ancestor.
-#' @param object_type               the type of an object, one of  "file", "folder", or "dataset".
+#' @param object_type               the type of an object, one of  "file", "folder", "dataset" or "shortcut".
 #' @param ordering                  A list of fields to order/sort the results with, as a character vector.
 #' @param offset                    the file offset (starts from 0).
 #' @param page                      The number of the page to fetch, as an integer. starts from 1.
 #'                                  See also `limit`.
-#' @param path                      the path of an object, with the folders (e.g. "/d1/d2/foo.csv").
+#' @param path                      the path of an object, starting from the vault's
+#'                                  root directory. The path must include all intermediate folders and end with the object’s name
+#'                                  (e.g. "/d1/d2/foo.csv" or "/d1/d2/").
 #' @param parallel                  whether to parallelize the API calls.
 #' @param parent_object_id          the ID of the parent of the Object.
 #' @param query                     a string that matches any objects whose path contains that string.
@@ -83,6 +85,16 @@
 #' @param tags                      a list of tags as a character vector.
 #' @param target_fields             A list of valid dataset fields to create or override in the import,
 #'                                  as a character vector.
+#' @param target                    named list. Only relevant when `object_type` is `shortcut`.
+#'                                  Must contain `object_type`. When `object_type` is `url` then the second field
+#'                                  must be `url`. For other `object_type`s `id` should be provided.
+#'                                  Shortcuts can be created to: \itemize{
+#'                                  \item vaults (object_type='vault')
+#'                                  \item files (object_type='file')
+#'                                  \item datasets (object_type='dataset')
+#'                                  \item folders (object_type='folder')
+#'                                  \item URLs (object_type='url')
+#'                                  }
 #' @param task_id                   an (ECS) Task ID as a string.
 #' @param url_template              A URL template with one or more "value" sections that will be
 #'                                  interpolated with the field value and displayed as a link

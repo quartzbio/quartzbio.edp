@@ -1,0 +1,16 @@
+{
+    "class_name": "list",
+    "total": 0,
+    "data": [
+
+    ],
+    "url": "https://vsim-dev.api.edp.aws.quartz.bio/v2/objects?object_type=folder&path=%2Ftest&vault_id=3182",
+    "links": {
+        "prev": {
+
+        },
+        "next": {
+
+        }
+    }
+}
