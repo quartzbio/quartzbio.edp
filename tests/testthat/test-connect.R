@@ -52,7 +52,7 @@ test_that("autoconnect", {
 
   withr::with_envvar(c(HOME = getwd(), USERPROFILE = getwd()), {
     ALL_ENVS <- c(
-      EDP_API_SECRET = "", SOLVEBIO_API_KEY = "", SOLVEBIO_ACCESS_TOKEN = "",
+      EDP_API_SECRET = "", SOLVEBIO_ACCESS_TOKEN = "",
       EDP_API_HOST = "", SOLVEBIO_API_HOST = "", EDP_PROFILE = "", EDP_CONFIG = ""
     )
     we <- function(envs, ...) {
@@ -64,23 +64,14 @@ test_that("autoconnect", {
     ### nothing set --> should fail
     we(NULL, expect_error(autoconnect(check = FALSE), "autoconnect() failed", fixed = TRUE))
 
-    KEY <- strrep("X", 40)
     TOKEN <- strrep("Y", 30)
     ### use new vars
-    we(
-      c(EDP_API_SECRET = KEY, EDP_API_HOST = "host"),
-      expect_identical(autoconnect(check = FALSE), list(secret = KEY, host = "host"))
-    )
     we(
       c(EDP_API_SECRET = TOKEN, EDP_API_HOST = "host"),
       expect_identical(autoconnect(check = FALSE), list(secret = TOKEN, host = "host"))
     )
 
     ### use old vars
-    we(
-      c(SOLVEBIO_API_KEY = KEY, SOLVEBIO_API_HOST = "host"),
-      expect_identical(autoconnect(check = FALSE), list(secret = KEY, host = "host"))
-    )
     we(
       c(SOLVEBIO_ACCESS_TOKEN = TOKEN, SOLVEBIO_API_HOST = "host"),
       expect_identical(autoconnect(check = FALSE), list(secret = TOKEN, host = "host"))
@@ -133,10 +124,8 @@ test_that("check_connection", {
   check_connection <- quartzbio.edp:::check_connection
 
   ### positives
-  expect_error(check_connection(list(secret = strrep("X", 40), host = "host")), NA)
   expect_error(check_connection(list(secret = strrep("X", 30), host = "host")), NA)
   # also works with an environment
-  expect_error(check_connection(as.environment(list(secret = strrep("X", 40), host = "host"))), NA)
   expect_error(check_connection(as.environment(list(secret = strrep("X", 30), host = "host"))), NA)
 
   ### negatives
@@ -161,20 +150,6 @@ test_that("looks_like_api_token", {
   expect_true(looks_like_api_token(strrep(" ", 30)))
 })
 
-
-
-test_that("looks_like_api_key", {
-  looks_like_api_key <- quartzbio.edp:::looks_like_api_key
-
-  expect_false(looks_like_api_key(""))
-  expect_false(looks_like_api_key(NULL))
-  expect_false(looks_like_api_key(NA))
-  expect_false(looks_like_api_key(1))
-  expect_false(looks_like_api_key(strrep("X", 30)))
-
-  expect_true(looks_like_api_key(strrep("X", 40)))
-  expect_true(looks_like_api_key(strrep(" ", 40)))
-})
 
 
 test_that("read_save_connection_from_file", {
@@ -222,11 +197,12 @@ test_that("connect", {
   key <- strrep("X", 40)
   token <- strrep("Y", 30)
 
-  expect_identical(connect(key, "host", check = FALSE), list(secret = key, host = "host"))
+  expect_identical(connect(token, "host", check = FALSE), list(secret = token, host = "host"))
+  expect_error(connect(key, "host", check = FALSE))
 
   ### test env vars: KEY
   ALL_ENVS <- c(
-    EDP_API_SECRET = "", SOLVEBIO_API_KEY = "", SOLVEBIO_ACCESS_TOKEN = "",
+    EDP_API_SECRET = "", SOLVEBIO_ACCESS_TOKEN = "",
     EDP_API_HOST = "", SOLVEBIO_API_HOST = ""
   )
   we <- function(envs, ...) {
@@ -236,8 +212,8 @@ test_that("connect", {
   }
 
   # new EDP env vars
-  we(c(EDP_API_SECRET = key, EDP_API_HOST = "h"), {
-    expect_identical(connect(check = FALSE), list(secret = key, host = "h"))
+  we(c(EDP_API_SECRET = token, EDP_API_HOST = "h"), {
+    expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
   })
 
   # backwards compatibility:
@@ -248,16 +224,12 @@ test_that("connect", {
     expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
   })
 
-  we(c(SOLVEBIO_API_KEY = key, SOLVEBIO_API_HOST = "h"), {
-    expect_identical(connect(check = FALSE), list(secret = key, host = "h"))
-  })
-
   # precedence of new envs
   we(c(
-    SOLVEBIO_API_KEY = "k2", EDP_API_SECRET = key,
+    SOLVEBIO_API_KEY = "k2", EDP_API_SECRET = token,
     SOLVEBIO_API_HOST = "h2", EDP_API_HOST = "h"
   ), {
-    expect_identical(connect(check = FALSE), list(secret = key, host = "h"))
+    expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
   })
 
   # explicit params (token) supersedes api_key via default
@@ -272,9 +244,9 @@ test_that("connect", {
 
   # precedence of new envs
   we(c(
-    SOLVEBIO_ACCESS_TOKEN = "t2", EDP_API_SECRET = key,
+    SOLVEBIO_ACCESS_TOKEN = "t2", EDP_API_SECRET = token,
     SOLVEBIO_API_HOST = "h2", EDP_API_HOST = "h"
   ), {
-    expect_identical(connect(check = FALSE), list(secret = key, host = "h"))
+    expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
   })
 })
