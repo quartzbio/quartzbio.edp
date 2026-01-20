@@ -47,9 +47,9 @@ reference:
 - title: All Functions
   desc: ~
   contents: lacks_concepts("quartzbio_api")
-- title: Legacy former solvebio API
+- title: API functions supported from former Solvebio package
   desc: |
-    Former solvebio api functions. Compatible with the new connection functions.
+    Functions present in former SolveBio package are available in the new QuartzBio package.
   contents: has_concept("quartzbio_api")
 
 articles:
@@ -99,8 +99,9 @@ articles:
 
 footer:
   structure:
-    left: developed_by
+    left: copyright
     right: [last updated, built_with]
   components:
     last updated: !expr "paste('Last modified: ', format(Sys.Date(), '%d-%b-%Y'))"
+    copyright: !expr "paste('©', format(Sys.Date(), '%Y'), 'QuartzBio')"
 
