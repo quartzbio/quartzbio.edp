@@ -33,9 +33,11 @@ Objects(
 
 \item{filename}{an Object filename, without the parent folder (e.g. "foo.csv")}
 
-\item{path}{the path of an object, with the folders (e.g. "/d1/d2/foo.csv").}
+\item{path}{the path of an object, starting from the vault's
+root directory. The path must include all intermediate folders and end with the object’s name
+(e.g. "/d1/d2/foo.csv" or "/d1/d2/").}
 
-\item{object_type}{the type of an object, one of  "file", "folder", or "dataset".}
+\item{object_type}{the type of an object, one of  "file", "folder", "dataset" or "shortcut".}
 
 \item{depth}{the depth of the object in the Vault as an integer (0 means root)}
 

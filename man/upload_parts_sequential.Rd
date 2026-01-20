@@ -33,10 +33,12 @@ objects for matching paths (case-insensitive).}
 See also \code{page}.}
     \item{\code{min_distance}}{used in conjuction with the ancestor_id filter to only include
 objects at a minimum distance from the ancestor.}
-    \item{\code{object_type}}{the type of an object, one of  "file", "folder", or "dataset".}
+    \item{\code{object_type}}{the type of an object, one of  "file", "folder", "dataset" or "shortcut".}
     \item{\code{page}}{The number of the page to fetch, as an integer. starts from 1.
 See also \code{limit}.}
-    \item{\code{path}}{the path of an object, with the folders (e.g. "/d1/d2/foo.csv").}
+    \item{\code{path}}{the path of an object, starting from the vault's
+root directory. The path must include all intermediate folders and end with the object’s name
+(e.g. "/d1/d2/foo.csv" or "/d1/d2/").}
     \item{\code{query}}{a string that matches any objects whose path contains that string.}
     \item{\code{regex}}{A regular expression, as a string, to filter the results with.}
     \item{\code{storage_class}}{The Storage class of the vault \verb{('Standard', 'Standard-IA', 'Essential', 'Temporary', 'Performance', 'Archive')} as a string.}

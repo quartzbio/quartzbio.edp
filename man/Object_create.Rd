@@ -17,6 +17,7 @@ Object_create(
   mimetype = NULL,
   size = NULL,
   md5 = NULL,
+  target = NULL,
   conn = get_connection()
 )
 }
@@ -25,7 +26,7 @@ Object_create(
 
 \item{filename}{an Object filename, without the parent folder (e.g. "foo.csv")}
 
-\item{object_type}{the type of an object, one of  "file", "folder", or "dataset".}
+\item{object_type}{the type of an object, one of  "file", "folder", "dataset" or "shortcut".}
 
 \item{parent_object_id}{the ID of the parent of the Object.}
 
@@ -44,6 +45,17 @@ Object_create(
 \item{size}{The size of the object.}
 
 \item{md5}{a MD5 fingerprint, as a string.}
+
+\item{target}{named list. Only relevant when \code{object_type} is \code{shortcut}.
+Must contain \code{object_type}. When \code{object_type} is \code{url} then the second field
+must be \code{url}. For other \code{object_type}s \code{id} should be provided.
+Shortcuts can be created to: \itemize{
+\item vaults (object_type='vault')
+\item files (object_type='file')
+\item datasets (object_type='dataset')
+\item folders (object_type='folder')
+\item URLs (object_type='url')
+}}
 
 \item{conn}{a EDP connection object (as a named list or environment)}
 }

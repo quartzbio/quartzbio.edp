@@ -21,7 +21,7 @@ Object_update(
 
 \item{filename}{an Object filename, without the parent folder (e.g. "foo.csv")}
 
-\item{object_type}{the type of an object, one of  "file", "folder", or "dataset".}
+\item{object_type}{the type of an object, one of  "file", "folder", "dataset" or "shortcut".}
 
 \item{parent_object_id}{the ID of the parent of the Object.}
 

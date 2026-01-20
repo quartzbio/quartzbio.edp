@@ -1,0 +1,112 @@
+{
+    "account_id": 33,
+    "ancestor_object_ids": [
+
+    ],
+    "availability": {
+
+    },
+    "class_name": "Object",
+    "created_at": "2026-01-19T10:54:24.657363Z",
+    "dataset_description": {
+
+    },
+    "dataset_documents_count": {
+
+    },
+    "documents_count": {
+
+    },
+    "dataset_full_name": {
+
+    },
+    "storage_class": {
+
+    },
+    "dataset_id": {
+
+    },
+    "depth": 0,
+    "description": "",
+    "filename": "test",
+    "full_path": "vsim-test-dev:quartzbio.edp.test.Shortcut:/test",
+    "has_children": false,
+    "has_folder_children": false,
+    "id": "2754512386592252649",
+    "is_deleted": false,
+    "is_transformable": false,
+    "last_accessed": "2026-01-19T10:54:24.657306Z",
+    "last_modified": "2026-01-19T10:54:24.657306Z",
+    "md5": {
+
+    },
+    "metadata": {
+
+    },
+    "mimetype": "application/vnd.solvebio.shortcut",
+    "num_children": 0,
+    "num_descendants": 0,
+    "object_type": "shortcut",
+    "parent_object_id": {
+
+    },
+    "path": "/test",
+    "size": {
+
+    },
+    "tags": [
+
+    ],
+    "updated_at": "2026-01-19T10:54:24.700905Z",
+    "upload_url": {
+
+    },
+    "url": {
+
+    },
+    "user": {
+        "class_name": "User",
+        "date_joined": "2023-01-27T16:17:17.087Z",
+        "email": "Test.User@fakemail.com",
+        "first_name": "Test",
+        "full_name": "Test User",
+        "id": 51,
+        "is_active": true,
+        "is_staff": false,
+        "is_verified": true,
+        "last_name": "User",
+        "password_days_remaining": {
+
+        },
+        "role": "member",
+        "title": "",
+        "url": "https://vsim-dev.api.edp.aws.quartz.bio/v1/users/51",
+        "username": "mock_user"
+    },
+    "user_id": 243,
+    "vault_id": 3181,
+    "vault_name": "quartzbio.edp.test.Shortcut",
+    "version_count": 1,
+    "global_beacon": {
+
+    },
+    "target": {
+        "id": {
+
+        },
+        "object_type": "url",
+        "url": "url"
+    },
+    "updated_by": {
+    },
+    "inherited_metadata": {
+
+    },
+    "upload_id": {
+
+    },
+    "upload_key": {
+
+    },
+    "is_multipart": false
+}

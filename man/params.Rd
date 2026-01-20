@@ -99,7 +99,7 @@ See also \code{page}.}
 \item{min_distance}{used in conjuction with the ancestor_id filter to only include
 objects at a minimum distance from the ancestor.}
 
-\item{object_type}{the type of an object, one of  "file", "folder", or "dataset".}
+\item{object_type}{the type of an object, one of  "file", "folder", "dataset" or "shortcut".}
 
 \item{ordering}{A list of fields to order/sort the results with, as a character vector.}
 
@@ -108,7 +108,9 @@ objects at a minimum distance from the ancestor.}
 \item{page}{The number of the page to fetch, as an integer. starts from 1.
 See also \code{limit}.}
 
-\item{path}{the path of an object, with the folders (e.g. "/d1/d2/foo.csv").}
+\item{path}{the path of an object, starting from the vault's
+root directory. The path must include all intermediate folders and end with the object’s name
+(e.g. "/d1/d2/foo.csv" or "/d1/d2/").}
 
 \item{parallel}{whether to parallelize the API calls.}
 
@@ -138,6 +140,17 @@ sub tasks to finish before returning.}
 
 \item{target_fields}{A list of valid dataset fields to create or override in the import,
 as a character vector.}
+
+\item{target}{named list. Only relevant when \code{object_type} is \code{shortcut}.
+Must contain \code{object_type}. When \code{object_type} is \code{url} then the second field
+must be \code{url}. For other \code{object_type}s \code{id} should be provided.
+Shortcuts can be created to: \itemize{
+\item vaults (object_type='vault')
+\item files (object_type='file')
+\item datasets (object_type='dataset')
+\item folders (object_type='folder')
+\item URLs (object_type='url')
+}}
 
 \item{task_id}{an (ECS) Task ID as a string.}
 
