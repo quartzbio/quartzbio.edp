@@ -4,10 +4,6 @@ get_env <- function(name, unset = "") {
   if (.is_nz_string(vx)) vx else unset
 }
 
-looks_like_api_key <- function(x) {
-  .is_nz_string(x) && nchar(x) == 40
-}
-
 looks_like_api_token <- function(x) {
   .is_nz_string(x) && nchar(x) == 30
 }
@@ -29,8 +25,8 @@ check_connection <- function(conn) {
 
 
   .die_unless(
-    looks_like_api_key(secret) || looks_like_api_token(secret),
-    "connection secret does not look like an API key nor token"
+    looks_like_api_token(secret),
+    "connection secret does not look like an API token"
   )
 }
 
@@ -54,7 +50,7 @@ test_connection <- function(conn) {
 
   .die_unless(inherits(res, "User"), "could not retrieve user profile.")
 
-  type <- if (looks_like_api_key(conn$secret)) "Key" else "Token"
+  type <- "Token"
   msg <- sprintf('Connected to %s with user "%s" using an API %s', conn$host, res$full_name, type)
   message(msg)
 
@@ -95,10 +91,9 @@ get_connection <- function(auto = TRUE) {
 #'
 #' @param secret      a QuartzBio EDP **API key**  or **token** as a string.
 #'                    Defaults to the `EDP_API_SECRET` environment variable if set,
-#'                    otherwise to the `QUARTZBIO_ACCESS_TOKEN` var, then to `QUARTZBIO_API_KEY`, then to
-#'                    legacy `SOLVEBIO_ACCESS_TOKEN` var, then to
-#'                    to the `SOLVEBIO_API_KEY` var.
-
+#'                    otherwise to the `QUARTZBIO_ACCESS_TOKEN` var, then to
+#'                    legacy `SOLVEBIO_ACCESS_TOKEN` var.
+#'
 #' @param host        the QuartzBio EDP **API host** as a string.
 #'                    Defaults to the `EDP_API_HOST` environment variable if set, otherwise to the
 #'                    `QUARTZBIO_API_HOST` var, then to the legacy `SOLVEBIO_API_HOST` var.
@@ -106,8 +101,6 @@ get_connection <- function(auto = TRUE) {
 #' @return a connection object
 #'
 #' @examples \dontrun{
-#' #  using API key
-#' conn <- connect("MYKEY")
 #' # using env vars
 #' conn <- connect()
 #' # using token and explicit host
@@ -121,11 +114,7 @@ connect <- function(
       get_env(
         "QUARTZBIO_ACCESS_TOKEN",
         get_env(
-          "QUARTZBIO_API_KEY",
-          get_env(
-            "SOLVEBIO_ACCESS_TOKEN",
-            get_env("SOLVEBIO_API_KEY")
-          )
+          "SOLVEBIO_ACCESS_TOKEN"
         )
       )
     ),

@@ -1,7 +1,7 @@
 JSON <- "application/json"
 
 format_auth_header <- function(secret) {
-  token_type <- if (looks_like_api_key(secret)) "Token" else "Bearer"
+  token_type <- if (looks_like_api_token(secret)) "Bearer" else "Token"
   c(Authorization = paste(token_type, secret, sep = " "))
 }
 
