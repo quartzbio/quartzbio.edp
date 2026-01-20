@@ -338,10 +338,10 @@ Objects](https://quartzbio.github.io/quartzbio.edp/articles/vaults_n_objects.md)
   : Function to Upload a single part with retry logic and presigned URL
   refresh
 
-## Legacy former solvebio API
+## API functions supported from former Solvebio package
 
-Former solvebio api functions. Compatible with the new connection
-functions.
+Functions present in former SolveBio package are available in the new
+QuartzBio package.
 
 - [`Annotator.annotate()`](https://quartzbio.github.io/quartzbio.edp/reference/Annotator.annotate.md)
   : Annotate a data table/frame with additional fields.
