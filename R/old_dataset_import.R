@@ -79,10 +79,12 @@ DatasetImport.delete <- function(id, env = get_connection()) {
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
-DatasetImport.create <- function(dataset_id,
-                                 commit_mode = "append",
-                                 env = get_connection(),
-                                 ...) {
+DatasetImport.create <- function(
+  dataset_id,
+  commit_mode = "append",
+  env = get_connection(),
+  ...
+) {
   deprecate_soft("1.0.0", "DatasetImport.create()", "Dataset_import()")
   if (missing(dataset_id)) {
     stop("A dataset ID is required.")
@@ -94,7 +96,13 @@ DatasetImport.create <- function(dataset_id,
     ...
   )
 
-  dataset_import <- .request("POST", path = "v2/dataset_imports", query = NULL, body = params, env = env)
+  dataset_import <- .request(
+    "POST",
+    path = "v2/dataset_imports",
+    query = NULL,
+    body = params,
+    env = env
+  )
 
   dataset_import
 }

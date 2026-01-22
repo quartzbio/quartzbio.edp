@@ -76,7 +76,13 @@ DatasetTemplate.delete <- function(id, env = get_connection()) {
 #' @concept  quartzbio_api
 #' @export
 DatasetTemplate.create <- function(env = get_connection(), ...) {
-  .request("POST", path = "v2/dataset_templates", query = NULL, body = list(...), env = env)
+  .request(
+    "POST",
+    path = "v2/dataset_templates",
+    query = NULL,
+    body = list(...),
+    env = env
+  )
 }
 
 

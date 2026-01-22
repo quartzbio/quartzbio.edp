@@ -7,18 +7,19 @@
 #'                      Order is 0-based. Default is 0.
 #' @export
 DatasetField_create <- function(
-    dataset_id,
-    data_type,
-    name,
-    title = NULL,
-    description = NULL,
-    ordering = NULL,
-    entity_type = NULL,
-    expression = NULL,
-    is_hidden = NULL,
-    is_list = NULL,
-    url_template = NULL,
-    conn = get_connection()) {
+  dataset_id,
+  data_type,
+  name,
+  title = NULL,
+  description = NULL,
+  ordering = NULL,
+  entity_type = NULL,
+  expression = NULL,
+  is_hidden = NULL,
+  is_list = NULL,
+  url_template = NULL,
+  conn = get_connection()
+) {
   dataset_id <- id(dataset_id)
   params <- preprocess_api_params()
   request_edp_api("POST", "v2/dataset_fields", conn = conn, params = params)
@@ -31,42 +32,62 @@ DatasetField_create <- function(
 #' @return a DatasetField object
 #' @export
 DatasetField_update <- function(
-    field_id,
-    data_type = NULL,
-    title = NULL,
-    description = NULL,
-    ordering = NULL,
-    entity_type = NULL,
-    expression = NULL,
-    is_hidden = NULL,
-    is_list = NULL,
-    url_template = NULL,
-    conn = get_connection()) {
+  field_id,
+  data_type = NULL,
+  title = NULL,
+  description = NULL,
+  ordering = NULL,
+  entity_type = NULL,
+  expression = NULL,
+  is_hidden = NULL,
+  is_list = NULL,
+  url_template = NULL,
+  conn = get_connection()
+) {
   params <- preprocess_api_params(exclude = c("conn", "field"))
   field_id <- id(field_id)
 
-  request_edp_api("PATCH", file.path("v2/dataset_fields", field_id), conn = conn, params = params)
+  request_edp_api(
+    "PATCH",
+    file.path("v2/dataset_fields", field_id),
+    conn = conn,
+    params = params
+  )
 }
 
 #' fetches the fields of a dataset.
 #' @inherit params
 #' @return a DatasetFieldList object
 #' @export
-DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, conn = get_connection(), ...) {
+DatasetFields <- function(
+  dataset_id,
+  limit = NULL,
+  page = NULL,
+  all = FALSE,
+  conn = get_connection(),
+  ...
+) {
   dataset_id <- id(dataset_id)
   params <- preprocess_api_params()
   all <- params$all
   params$all <- NULL
 
-  lst <- request_edp_api("GET", file.path("v2/datasets", dataset_id, "fields"),
+  lst <- request_edp_api(
+    "GET",
+    file.path("v2/datasets", dataset_id, "fields"),
     params = params,
-    conn = conn, limit = limit, page = page, ...
+    conn = conn,
+    limit = limit,
+    page = page,
+    ...
   )
   if (!length(lst)) {
     return(NULL)
   }
 
-  if (all) lst <- fetch_all(lst)
+  if (all) {
+    lst <- fetch_all(lst)
+  }
 
   names(lst) <- elts(lst, "name")
 
@@ -78,7 +99,12 @@ DatasetFields <- function(dataset_id, limit = NULL, page = NULL, all = FALSE, co
 #' @inheritParams params
 #' @return a DatasetField object
 #' @export
-DatasetField <- function(field_id = NULL, dataset_id = NULL, name = NULL, conn = get_connection()) {
+DatasetField <- function(
+  field_id = NULL,
+  dataset_id = NULL,
+  name = NULL,
+  conn = get_connection()
+) {
   id <- id(field_id)
   if (!length(id)) {
     dataset_id <- id(dataset_id)
@@ -92,7 +118,11 @@ DatasetField <- function(field_id = NULL, dataset_id = NULL, name = NULL, conn =
     return(field)
   }
 
-  field <- request_edp_api("GET", file.path("v2/dataset_fields", id), conn = conn) %IF_EMPTY_THEN%
+  field <- request_edp_api(
+    "GET",
+    file.path("v2/dataset_fields", id),
+    conn = conn
+  ) %IF_EMPTY_THEN%
     .die('field id "%s" not found', id)
 
   field
@@ -136,9 +166,11 @@ R_TO_DATA_TYPES <- list(
 #' @return A model empty R dataframe
 
 create_model_df_from_fields <- function(
-    cols, fields,
-    titles = TRUE,
-    ordering = TRUE) {
+  cols,
+  fields,
+  titles = TRUE,
+  ordering = TRUE
+) {
   if (.empty(cols)) {
     return(NULL)
   }
@@ -147,7 +179,13 @@ create_model_df_from_fields <- function(
   # the fields may not cover all columns, e.g. the _id, _commit ones
   # we create default dummy fields for those to simplify the processing
   .field <- function(name) {
-    list(name = name, title = name, description = "", data_type = "string", ordering = NULL)
+    list(
+      name = name,
+      title = name,
+      description = "",
+      data_type = "string",
+      ordering = NULL
+    )
   }
 
   field_names <- .elts(fields, "name")
@@ -167,7 +205,11 @@ create_model_df_from_fields <- function(
     missings <- lengths(orderings) == 0
 
     if (any(missings)) {
-      maxo <- if (all(missings)) 0 else max(unlist(orderings, recursive = FALSE), na.rm = TRUE) + 1
+      maxo <- if (all(missings)) {
+        0
+      } else {
+        max(unlist(orderings, recursive = FALSE), na.rm = TRUE) + 1
+      }
       missing_orderings <- seq.int(maxo, length.out = sum(missings))
       orderings[missings] <- missing_orderings
     }
@@ -263,11 +305,13 @@ format_df_like_model <- function(df, model) {
 # - set the column names to the titles
 # - store the names, titles and descriptions as attributes
 format_df_with_fields <- function(
-    df, fields,
-    titles = TRUE,
-    types = TRUE,
-    ordering = TRUE,
-    attributes = TRUE) {
+  df,
+  fields,
+  titles = TRUE,
+  types = TRUE,
+  ordering = TRUE,
+  attributes = TRUE
+) {
   if (ncol(df) == 0) {
     return(df)
   }
@@ -288,7 +332,9 @@ infer_fields_from_df <- function(df) {
     colname <- df_names[i]
     type <- class(df[[i]])[1]
     data_type <- R_TO_DATA_TYPES[[type]]
-    if (!.is_nz_string(data_type)) data_type <- "auto"
+    if (!.is_nz_string(data_type)) {
+      data_type <- "auto"
+    }
 
     list(
       name = colname,
@@ -319,7 +365,15 @@ as.data.frame.DatasetField <- function(x, ...) {
 print.DatasetField <- function(x, ...) {
   df <- as.data.frame(x)
 
-  cols <- c("id", "name", "title", "description", "ordering", "is_hidden", "entity_type")
+  cols <- c(
+    "id",
+    "name",
+    "title",
+    "description",
+    "ordering",
+    "is_hidden",
+    "entity_type"
+  )
   cols <- intersect(cols, names(df))
   df <- df[cols]
 
@@ -331,7 +385,16 @@ print.DatasetFieldList <- function(x, ...) {
   cat("EDP List of", length(x), "DatasetFields\n")
 
   df <- as.data.frame(x)
-  cols <- c("id", "name", "title", "description", "data_type", "ordering", "is_hidden", "entity_type")
+  cols <- c(
+    "id",
+    "name",
+    "title",
+    "description",
+    "data_type",
+    "ordering",
+    "is_hidden",
+    "entity_type"
+  )
   cols <- intersect(cols, names(df))
   df <- df[cols]
 

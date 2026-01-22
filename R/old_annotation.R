@@ -4,14 +4,26 @@
 #' @inheritParams old_params
 #' @concept quartzbio_api
 #' @export
-Annotator.annotate <- function(records, fields, include_errors = FALSE, raw = FALSE,
-                               env = get_connection()) {
+Annotator.annotate <- function(
+  records,
+  fields,
+  include_errors = FALSE,
+  raw = FALSE,
+  env = get_connection()
+) {
   params <- list(
     records = records,
     fields = fields,
     include_errors = include_errors
   )
-  .request("POST", path = "v1/annotate", query = NULL, body = params, env = env, raw = raw)
+  .request(
+    "POST",
+    path = "v1/annotate",
+    query = NULL,
+    body = params,
+    env = env,
+    raw = raw
+  )
 }
 
 
@@ -23,8 +35,14 @@ Annotator.annotate <- function(records, fields, include_errors = FALSE, raw = FA
 #' }
 #' @concept quartzbio_api
 #' @export
-Expression.evaluate <- function(expression, data_type = "string", is_list = FALSE,
-                                data = NULL, raw = FALSE, env = get_connection()) {
+Expression.evaluate <- function(
+  expression,
+  data_type = "string",
+  is_list = FALSE,
+  data = NULL,
+  raw = FALSE,
+  env = get_connection()
+) {
   params <- list(
     expression = expression,
     data_type = data_type,
@@ -32,6 +50,13 @@ Expression.evaluate <- function(expression, data_type = "string", is_list = FALS
     data = data
   )
 
-  .request("POST", path = "v1/evaluate", query = NULL, body = params, env = env, raw = raw)
+  .request(
+    "POST",
+    path = "v1/evaluate",
+    query = NULL,
+    body = params,
+    env = env,
+    raw = raw
+  )
 }
 # nocov end

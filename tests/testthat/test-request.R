@@ -2,20 +2,26 @@
 test_that("send_request", {
   send_request <- quartzbio.edp:::send_request
 
-  res <- build_httr_response("dummy", code = 429L, headers = list(
-    `content-type` = "application/json",
-    `retry-after` = 0.2
-  ))
+  res <- build_httr_response(
+    "dummy",
+    code = 429L,
+    headers = list(
+      `content-type` = "application/json",
+      `retry-after` = 0.2
+    )
+  )
 
   ### 429
-  expect_error(send_request("GET", fake_response = res), "retries are exhausted")
+  expect_error(
+    send_request("GET", fake_response = res),
+    "retries are exhausted"
+  )
 
   ### normal
   res$status_code <- 200
   res2 <- send_request("GET", fake_response = res)
   expect_identical(res2, res)
 })
-
 
 
 test_that("process_by_params", {
@@ -40,7 +46,10 @@ test_that("process_by_params", {
 
   ### unique = FALSE
   expect_error(process(.by(), unique = FALSE), "at least one")
-  expect_identical(process(.by(id = 0, name = "toto"), unique = FALSE), list(id = 0, name = "toto"))
+  expect_identical(
+    process(.by(id = 0, name = "toto"), unique = FALSE),
+    list(id = 0, name = "toto")
+  )
 
   ### unique = FALSE, empty = TRUE
   expect_identical(process(.by(), empty = TRUE), list())
@@ -55,9 +64,11 @@ test_that("process_by_params", {
   expect_identical(process(.by(a = 1, b = 2)), list(a = 1, b = 2))
 
   expect_error(process(.by(id = 0, a = 1, b = 2)), "exactly one")
-  expect_identical(process(.by(id = 0, a = 1, b = 2), unique = FALSE), list(id = 0, a = 1, b = 2))
+  expect_identical(
+    process(.by(id = 0, a = 1, b = 2), unique = FALSE),
+    list(id = 0, a = 1, b = 2)
+  )
   expect_identical(process(.by(), empty = TRUE), list())
-
 
   ### 2 sublists
   .by <- function(id = NULL, a = NULL, b = NULL) {
@@ -78,7 +89,8 @@ test_that("process_by_params", {
 })
 
 
-test_that_with_edp_api("request_edp_api_429",
+test_that_with_edp_api(
+  "request_edp_api_429",
   {
     request_edp_api <- quartzbio.edp:::request_edp_api
     expect_error(Vaults(), "retries are exhausted")
@@ -95,7 +107,9 @@ test_that_with_edp_api("request_edp_api", {
   res <- request_edp_api("GET", "v1/user", conn = conn)
 
   expect_true(is.list(res))
-  expect_true(all(c("class_name", "full_name", "id", "username") %in% names(res)))
+  expect_true(all(
+    c("class_name", "full_name", "id", "username") %in% names(res)
+  ))
   expect_identical(class(res), c("User", "list"))
 
   # raw = TRUE
@@ -150,15 +164,19 @@ test_that_with_edp_api("request_edp_api", {
 })
 
 
-
-
 test_that("format_auth_header", {
   format_auth_header <- quartzbio.edp:::format_auth_header
   # key
   secret <- strrep("X", 40)
-  expect_identical(format_auth_header(secret), c(Authorization = paste("Token", secret)))
+  expect_identical(
+    format_auth_header(secret),
+    c(Authorization = paste("Token", secret))
+  )
 
   # TOKEN
   secret <- strrep("X", 30)
-  expect_identical(format_auth_header(secret), c(Authorization = paste("Bearer", secret)))
+  expect_identical(
+    format_auth_header(secret),
+    c(Authorization = paste("Bearer", secret))
+  )
 })

@@ -1,7 +1,9 @@
 test_that_with_edp_api("user", {
   res <- User()
 
-  expect_true(all(c("class_name", "full_name", "id", "username") %in% names(res)))
+  expect_true(all(
+    c("class_name", "full_name", "id", "username") %in% names(res)
+  ))
   expect_true(nzchar(res$full_name))
   expect_identical(class(res), c("User", "list"))
 

@@ -41,7 +41,10 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
       # # the problem is that in dev it is not installed so we have to load it
       # # from source using qbdev
       REQUIRE <- require
-      stopifnot(REQUIRE("qbdev"), "the qbdev R package was not found in future_lapply()")
+      stopifnot(
+        REQUIRE("qbdev"),
+        "the qbdev R package was not found in future_lapply()"
+      )
       cat("loading quartzbio.edp...\n")
       load_pkg <- utils::getFromNamespace("load_pkg", "qbdev")
       load_pkg("quartzbio.edp")
@@ -59,9 +62,13 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
 
   # if in dev internal mode, qbdev must be loaded by future_lapply()
   future_packages <- NULL
-  if (isNamespaceLoaded("qbdev")) future_packages <- "qbdev"
+  if (isNamespaceLoaded("qbdev")) {
+    future_packages <- "qbdev"
+  }
 
-  lst <- future.apply::future_lapply(pages, fun,
+  lst <- future.apply::future_lapply(
+    pages,
+    fun,
     future.seed = NULL,
     future.packages = future_packages,
     future.globals = globals,
@@ -75,7 +82,10 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
   res <- NULL
   if (is.data.frame(lst[[1]])) {
     # implement fastest method with fallback in case of error
-    tt <- system.time(res <- try(as.data.frame(dplyr::bind_rows(lst)), TRUE), gcFirst = FALSE)
+    tt <- system.time(
+      res <- try(as.data.frame(dplyr::bind_rows(lst)), TRUE),
+      gcFirst = FALSE
+    )
     if (.is_error(res)) {
       # errors may happen for example if the JSON data type vary across pages
       # cf https://precisionformedicine.atlassian.net/browse/SBP-536
@@ -84,7 +94,9 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
         .get_error_msg(res)
       ))
 
-      msg("trying with rbind.data.frame() to aggregate the paginated results, got error using dplyr::bind_rows()...")
+      msg(
+        "trying with rbind.data.frame() to aggregate the paginated results, got error using dplyr::bind_rows()..."
+      )
       tt <- system.time(res <- do.call(rbind.data.frame, lst), FALSE)
     }
     verbose && msg("took %s to bind the data frames", tt[3])
@@ -95,7 +107,10 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
   }
 
   # remove obsolete attributes
-  attr(res, "pagination") <- attr(res, "offset") <- attr(res, "page") <- attr(res, "took") <- NULL
+  attr(res, "pagination") <- attr(res, "offset") <- attr(res, "page") <- attr(
+    res,
+    "took"
+  ) <- NULL
 
   res
 }
@@ -105,7 +120,8 @@ fetch_page <- function(x, delta) {
 
   page_index <- pagination$page_index
   index <- page_index$index + delta
-  if (index < 1 || index > page_index$nb) { # out of range
+  if (index < 1 || index > page_index$nb) {
+    # out of range
     return(NULL)
   }
 

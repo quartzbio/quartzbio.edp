@@ -25,8 +25,9 @@
 #' @concept  quartzbio_api
 #' @export
 login <- function(
-    api_token = Sys.getenv("QUARTZBIO_ACCESS_TOKEN"),
-    api_host = Sys.getenv("QUARTZBIO_API_HOST")) {
+  api_token = Sys.getenv("QUARTZBIO_ACCESS_TOKEN"),
+  api_host = Sys.getenv("QUARTZBIO_API_HOST")
+) {
   deprecate_soft("1.0.0", "login()", "connect()")
   secret <- api_token
 
@@ -34,17 +35,17 @@ login <- function(
 }
 
 
-
-
-
-
 # Private API request method.
 .request <- function(
-    method, path, query, body,
-    env = get_connection(),
-    content_type = "application/json",
-    raw = TRUE,
-    ...) {
+  method,
+  path,
+  query,
+  body,
+  env = get_connection(),
+  content_type = "application/json",
+  raw = TRUE,
+  ...
+) {
   # check connection, and initialize it if needed
   check_connection(env)
 
@@ -86,7 +87,8 @@ login <- function(
     query <- NULL
   }
 
-  switch(method,
+  switch(
+    method,
     GET = {
       res <- httr::GET(
         uri,
@@ -143,10 +145,12 @@ login <- function(
     }
   )
 
-
   if (res$status < 200 | res$status >= 400) {
     if (res$status == 429) {
-      stop(sprintf("API error: Too many requests, please retry in %i seconds\n", res$header$"retry-after"))
+      stop(sprintf(
+        "API error: Too many requests, please retry in %i seconds\n",
+        res$header$"retry-after"
+      ))
     }
     if (res$status == 400) {
       tryCatch(
@@ -165,7 +169,11 @@ login <- function(
       )
     }
     if (res$status == 401) {
-      stop(sprintf("Unauthorized: %s (error %s)\n", httr::content(res, as = "parsed")$detail, res$status))
+      stop(sprintf(
+        "Unauthorized: %s (error %s)\n",
+        httr::content(res, as = "parsed")$detail,
+        res$status
+      ))
     }
 
     content <- httr::content(res, as = "text", encoding = "UTF-8")
@@ -183,7 +191,9 @@ login <- function(
     res <- structure(res, class = res$class_name)
   }
 
-  if (!raw) res <- res$results
+  if (!raw) {
+    res <- res$results
+  }
 
   res
 }

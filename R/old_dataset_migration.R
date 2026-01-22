@@ -82,14 +82,16 @@ DatasetMigration.delete <- function(id, env = get_connection()) {
 #'
 #' @concept  quartzbio_api
 #' @export
-DatasetMigration.create <- function(source_id,
-                                    target_id,
-                                    commit_mode = "append",
-                                    source_params = NULL,
-                                    target_fields = NULL,
-                                    include_errors = FALSE,
-                                    env = get_connection(),
-                                    ...) {
+DatasetMigration.create <- function(
+  source_id,
+  target_id,
+  commit_mode = "append",
+  source_params = NULL,
+  target_fields = NULL,
+  include_errors = FALSE,
+  env = get_connection(),
+  ...
+) {
   if (missing(source_id)) {
     stop("A source dataset ID is required.")
   }
@@ -108,7 +110,13 @@ DatasetMigration.create <- function(source_id,
     ...
   )
 
-  dataset_migration <- .request("POST", path = "v2/dataset_migrations", query = NULL, body = params, env = env)
+  dataset_migration <- .request(
+    "POST",
+    path = "v2/dataset_migrations",
+    query = NULL,
+    body = params,
+    env = env
+  )
 
   dataset_migration
 }

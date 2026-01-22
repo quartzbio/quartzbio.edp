@@ -2,7 +2,12 @@
 test_that_with_edp_api("delete.object", {
   v <- get_test_vault()
   o1 <- Object_create(v$id, "dir1", object_type = "folder")
-  o2 <- Object_create(v, "toto.txt", object_type = "file", parent_object_id = o1$id)
+  o2 <- Object_create(
+    v,
+    "toto.txt",
+    object_type = "file",
+    parent_object_id = o1$id
+  )
 
   ####### delete ######
   # delete.Object
@@ -34,7 +39,12 @@ test_that_with_edp_api("objects", {
   expect_null(o1$upload_url)
 
   # create a subfolder
-  o2 <- Object_create(v, "dir2", object_type = "folder", parent_object_id = o1$id)
+  o2 <- Object_create(
+    v,
+    "dir2",
+    object_type = "folder",
+    parent_object_id = o1$id
+  )
 
   expect_s3_class(o2, "Folder")
   expect_identical(o2$path, "/dir1/dir2")
@@ -42,7 +52,12 @@ test_that_with_edp_api("objects", {
   expect_identical(unclass(o2$parent_object_id), o1$id)
 
   # create a file
-  o3 <- Object_create(v, "toto.txt", object_type = "file", parent_object_id = o2$id)
+  o3 <- Object_create(
+    v,
+    "toto.txt",
+    object_type = "file",
+    parent_object_id = o2$id
+  )
 
   expect_s3_class(o3, "File")
   expect_s3_class(o3, "Object")
@@ -53,8 +68,11 @@ test_that_with_edp_api("objects", {
   expect_true(nzchar(o3$upload_url))
 
   # create a Dataset
-  o4 <- Object_create(v, "data.csv",
-    object_type = "dataset", parent_object_id = o1$id,
+  o4 <- Object_create(
+    v,
+    "data.csv",
+    object_type = "dataset",
+    parent_object_id = o1$id,
     tags = c("quartzbio.edp.objects.hopefully.this.is.unique", "misc")
   )
 
@@ -73,7 +91,6 @@ test_that_with_edp_api("objects", {
   conn <- get_connection()
   o <- Object(o1, conn = conn)
   expect_identical(o$id, o1$id)
-
 
   ### Object()
   # by id
@@ -112,7 +129,10 @@ test_that_with_edp_api("objects", {
   expect_equal(o, o1bis)
 
   # no object_type matching
-  expect_error(Object(full_path = o1$full_path, object_type = "file"), "entity not found")
+  expect_error(
+    Object(full_path = o1$full_path, object_type = "file"),
+    "entity not found"
+  )
 
   ### Object_update()
   expect_length(o2$tags, 0)

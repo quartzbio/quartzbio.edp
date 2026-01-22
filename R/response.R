@@ -14,11 +14,13 @@ check_httr_response <- function(res) {
   if (status == 204 || status == 301 || status == 302) {
     return(res)
   }
-  if (status == 404) { # Not found
+  if (status == 404) {
+    # Not found
     return(NULL)
   }
 
-  if (status >= 200 && status < 400) { # no error
+  if (status >= 200 && status < 400) {
+    # no error
     # check content-type
     content_type <- res$headers$`Content-Type`
     if (!.is_nz_string(content_type) || content_type != JSON) {
@@ -32,7 +34,9 @@ check_httr_response <- function(res) {
 
   .die_if(
     status == 401,
-    "Unauthorized: %s (error %s)", get_api_response_error_message(res), status
+    "Unauthorized: %s (error %s)",
+    get_api_response_error_message(res),
+    status
   )
 
   .die_if(status == 400, "API error: %s", get_api_response_error_message(res))
@@ -53,7 +57,6 @@ postprocess_df <- function(res, key, conn) {
 
   attr(df, "connection") <- as.environment(conn)
 
-
   df
 }
 
@@ -64,7 +67,9 @@ postprocess_df <- function(res, key, conn) {
 postprocess_response <- function(res, is_df, conn, call = NULL) {
   # dispatch
   class_name <- res$class_name
-  if (!.is_nz_string(class_name)) class_name <- ""
+  if (!.is_nz_string(class_name)) {
+    class_name <- ""
+  }
 
   if (!"total" %in% names(res) && class_name != "list") {
     # consider it is a single entity
@@ -86,7 +91,6 @@ postprocess_response <- function(res, is_df, conn, call = NULL) {
 
   x
 }
-
 
 
 # process a response that contains only a single entity: classify it, and classify its ids
@@ -169,7 +173,9 @@ detect_ids <- function(x) {
   # suffix with Id
   class_names <- paste0(class_names, "Id")
 
-  current_classes <- lapply(names(is_id[is_id]), function(name) class(x[[name]]))
+  current_classes <- lapply(names(is_id[is_id]), function(name) {
+    class(x[[name]])
+  })
 
   for (i in seq_along(current_classes)) {
     current_classes[[i]] <- c(class_names[i], current_classes[[i]])

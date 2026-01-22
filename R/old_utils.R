@@ -9,7 +9,8 @@ formatEDPResponse <- function(res, raw = FALSE) {
     # as data frames. These responses include
     # resource GET requests (list and detail)
     # as well as dataset queries.
-    res <- jsonlite::fromJSON(body,
+    res <- jsonlite::fromJSON(
+      body,
       simplifyVector = FALSE,
       simplifyDataFrame = TRUE,
       simplifyMatrix = FALSE
@@ -54,14 +55,19 @@ formatQueryColumns <- function(id, env, res, use_field_titles) {
     )
   }
   # Remove all names and titles that are not in the results query
-  col.name.title.map <- col.name.title.map[col.name.title.map$names %in% colnames(res), ]
+  col.name.title.map <- col.name.title.map[
+    col.name.title.map$names %in% colnames(res),
+  ]
 
   # Order columns in the dataframe based on list of dataset fields
   res <- res[col.name.title.map$names]
 
   if (use_field_titles) {
     # Change column names to titles based on the col.name.title.map dataframe
-    colnames(res)[match(col.name.title.map[, 1], colnames(res))] <- col.name.title.map[, 2][match(col.name.title.map[, 1], colnames(res))]
+    colnames(res)[match(
+      col.name.title.map[, 1],
+      colnames(res)
+    )] <- col.name.title.map[, 2][match(col.name.title.map[, 1], colnames(res))]
     colnames(res) <- make.unique(colnames(res), sep = "_")
   }
   res

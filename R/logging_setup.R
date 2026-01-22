@@ -91,7 +91,9 @@ edp_health_check <- function(get_vault_list = FALSE) {
 
   cli::cli_h2("EDP User")
   current_user <- User(conn)
-  cli::cli_text("EDP user {current_user$full_name} {current_user$username}. Role: {current_user$role}")
+  cli::cli_text(
+    "EDP user {current_user$full_name} {current_user$username}. Role: {current_user$role}"
+  )
 
   # Fetch user's vaults
 

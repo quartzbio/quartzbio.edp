@@ -12,10 +12,16 @@ Shortcuts <- function(...) {
 #' @inheritParams params
 #' @export
 Shortcut <- function(
-    id = NULL, path = NULL, vault_id = NULL,
-    conn = get_connection()) {
+  id = NULL,
+  path = NULL,
+  vault_id = NULL,
+  conn = get_connection()
+) {
   Object(
-    object_type = "shortcut", id = id, path = path, vault_id = vault_id,
+    object_type = "shortcut",
+    id = id,
+    path = path,
+    vault_id = vault_id,
     conn = conn
   )
 }
@@ -34,16 +40,21 @@ Shortcut <- function(
 #' @return the shortcut as an Object
 #' @export
 Shortcut_create <- function(
-    vault_id,
-    vault_path,
-    target,
-    tags = list(),
-    conn = get_connection()) {
+  vault_id,
+  vault_path,
+  target,
+  tags = list(),
+  conn = get_connection()
+) {
   vault_id <- id(vault_id)
 
   allow_target_names <- c("object_type", "id", "url")
   valid_target <- all(names(target) %in% allow_target_names) &&
-    ifelse(target[["object_type"]] == "url", utils::hasName(target, "url"), utils::hasName(target, "id"))
+    ifelse(
+      target[["object_type"]] == "url",
+      utils::hasName(target, "url"),
+      utils::hasName(target, "id")
+    )
 
   .die_unless(valid_target, "Invalid target configuration")
 
@@ -73,7 +84,7 @@ Shortcut_create <- function(
 #' @returns Bool
 #' @export
 #'
-is_shortcut  <- function(obj) {
+is_shortcut <- function(obj) {
   utils::hasName(obj, "object_type") &&
     obj[["object_type"]] == "shortcut"
 }

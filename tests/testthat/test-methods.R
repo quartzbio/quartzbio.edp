@@ -17,7 +17,6 @@ test_that("print.edplist", {
 })
 
 
-
 test_that("method_defaults", {
   expect_error(delete(1), "Not yet implemented")
   expect_error(fetch(1), "Not yet implemented")

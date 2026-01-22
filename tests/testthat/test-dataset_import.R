@@ -16,17 +16,26 @@ test_that_with_edp_api("ds_import_ff", {
   # Create the dataset (empty)
   ds <- Dataset_create(v, "mtcars.ds")
   # Import the EDP File to the Dataset
-  imp <- Dataset_import(ds, file_id = "12234", sync = httptest_is_capture_enabled())
+  imp <- Dataset_import(
+    ds,
+    file_id = "12234",
+    sync = httptest_is_capture_enabled()
+  )
 
   # Test the result
   df <- Dataset_query(ds, meta = FALSE)
   expect_equivalent(df[names(MTCARS)], MTCARS)
 
   # Edge cases: should error if both file_id and records/df are set
-  expect_error(Dataset_import(ds, file_id = "12234", records = list(toto = 1)), "both be set")
-  expect_error(Dataset_import(ds, file_id = "12234", df = iris[1:3, ]), "both be set")
+  expect_error(
+    Dataset_import(ds, file_id = "12234", records = list(toto = 1)),
+    "both be set"
+  )
+  expect_error(
+    Dataset_import(ds, file_id = "12234", df = iris[1:3, ]),
+    "both be set"
+  )
 })
-
 
 
 # .dataset_import <- function()

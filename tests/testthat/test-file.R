@@ -24,7 +24,10 @@ test_that_with_edp_api("file_download", {
 
   ### File_read
   writeLines("coucou", local_path)
-  expect_identical(File_read(fi, local_path = local_path, overwrite = TRUE), "coucou")
+  expect_identical(
+    File_read(fi, local_path = local_path, overwrite = TRUE),
+    "coucou"
+  )
 
   ###
   # because of the faked httr download, the file is not created
@@ -49,18 +52,30 @@ test_that_with_edp_api("File_upload works with mock API", {
   vault_id <- v
 
   # Run File_upload (should use mock API responses)
-  mockery::stub(File_upload, "request_edp_api", list(upload_url = "https://mock-upload-url"))
+  mockery::stub(
+    File_upload,
+    "request_edp_api",
+    list(upload_url = "https://mock-upload-url")
+  )
 
-  mockery::stub(File_upload, "httr::PUT", list(
-    status_code = function(x) 200
-  ))
+  mockery::stub(
+    File_upload,
+    "httr::PUT",
+    list(
+      status_code = function(x) 200
+    )
+  )
 
-  mockery::stub(File_upload, "File_create", list(
-    id = "mock-object-id",
-    path = "/mock/path/mtcars.csv",
-    is_multipart = FALSE,
-    upload_url = "https://mock-url/upload"
-  ))
+  mockery::stub(
+    File_upload,
+    "File_create",
+    list(
+      id = "mock-object-id",
+      path = "/mock/path/mtcars.csv",
+      is_multipart = FALSE,
+      upload_url = "https://mock-url/upload"
+    )
+  )
   obj <- File_upload(vault_id, local_path, vault_path)
 
   # Check that the returned object is a list and has expected fields
@@ -69,8 +84,6 @@ test_that_with_edp_api("File_upload works with mock API", {
   expect_equal(obj$path, vault_path)
   expect_equal(obj$id, "mock-object-id")
 })
-
-
 
 
 test_that_with_edp_api("Multi_part_file_upload works with mock API", {
@@ -90,8 +103,20 @@ test_that_with_edp_api("Multi_part_file_upload works with mock API", {
   obj <- list(
     is_multipart = TRUE,
     presigned_urls = list(
-      list(part_number = 1, start_byte = 0, end_byte = 32 * 1024 * 1024 - 1, size = 32 * 1024 * 1024, upload_url = "https://mock-url/part1"),
-      list(part_number = 2, start_byte = 32 * 1024 * 1024, end_byte = 65 * 1024 * 1024 - 1, size = 33 * 1024 * 1024, upload_url = "https://mock-url/part2")
+      list(
+        part_number = 1,
+        start_byte = 0,
+        end_byte = 32 * 1024 * 1024 - 1,
+        size = 32 * 1024 * 1024,
+        upload_url = "https://mock-url/part1"
+      ),
+      list(
+        part_number = 2,
+        start_byte = 32 * 1024 * 1024,
+        end_byte = 65 * 1024 * 1024 - 1,
+        size = 33 * 1024 * 1024,
+        upload_url = "https://mock-url/part2"
+      )
     ),
     upload_id = "mock-upload-id",
     upload_key = "mock-upload-key",
@@ -99,13 +124,21 @@ test_that_with_edp_api("Multi_part_file_upload works with mock API", {
     path = vault_path
   )
 
-  mockery::stub(Multi_part_file_upload, "httr::PUT", list(
-    status_code = function(x) 200,
-    headers = function(x) list(etag = "\"mock-etag\"")
-  ))
+  mockery::stub(
+    Multi_part_file_upload,
+    "httr::PUT",
+    list(
+      status_code = function(x) 200,
+      headers = function(x) list(etag = "\"mock-etag\"")
+    )
+  )
 
   # Mock request_edp_api to return a successful completion message
-  mockery::stub(Multi_part_file_upload, "request_edp_api", list(message = "Multipart upload complete"))
+  mockery::stub(
+    Multi_part_file_upload,
+    "request_edp_api",
+    list(message = "Multipart upload complete")
+  )
 
   # Run Multi_part_file_upload (should use mock API responses)
   result <- Multi_part_file_upload(

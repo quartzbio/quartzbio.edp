@@ -12,10 +12,18 @@ Folders <- function(...) {
 #' @inheritParams params
 #' @export
 Folder <- function(
-    id = NULL, full_path = NULL, path = NULL, vault_id = NULL,
-    conn = get_connection()) {
+  id = NULL,
+  full_path = NULL,
+  path = NULL,
+  vault_id = NULL,
+  conn = get_connection()
+) {
   Object(
-    object_type = "folder", id = id, full_path = full_path, path = path, vault_id = vault_id,
+    object_type = "folder",
+    id = id,
+    full_path = full_path,
+    path = path,
+    vault_id = vault_id,
     conn = conn
   )
 }
@@ -29,8 +37,12 @@ Folder <- function(
 #' @return the folder as an Object
 #' @export
 Folder_create <- function(
-    vault_id, path, recursive = TRUE, parent_folder_id = NULL,
-    conn = get_connection()) {
+  vault_id,
+  path,
+  recursive = TRUE,
+  parent_folder_id = NULL,
+  conn = get_connection()
+) {
   vault_id <- id(vault_id)
   parent_folder_id <- id(parent_folder_id)
   path <- path_make_absolute(path)
@@ -40,15 +52,26 @@ Folder_create <- function(
   # do we need a parent ?
   if (!length(parent_folder_id) && parent_path != "/") {
     parent <- Folders(path = parent_path, vault_id = vault_id, conn = conn)[[1]]
-    .die_if(!length(parent) && !recursive, "not allowed to create parent folder (recursive == FALSE)")
+    .die_if(
+      !length(parent) && !recursive,
+      "not allowed to create parent folder (recursive == FALSE)"
+    )
     if (!length(parent)) {
-      parent <- Folder_create(vault_id, parent_path, recursive = recursive, conn = conn)
+      parent <- Folder_create(
+        vault_id,
+        parent_path,
+        recursive = recursive,
+        conn = conn
+      )
     }
     parent_folder_id <- parent$id
   }
   Object_create(
-    vault_id = vault_id, filename = basename(path), object_type = "folder",
-    parent_object_id = parent_folder_id, conn = conn
+    vault_id = vault_id,
+    filename = basename(path),
+    object_type = "folder",
+    parent_object_id = parent_folder_id,
+    conn = conn
   )
 }
 

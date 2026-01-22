@@ -29,7 +29,6 @@ test_that("is_defined_scalar_integer", {
 })
 
 
-
 test_that("IF_EMPTY_THEN", {
   expect_identical(1 %IF_EMPTY_THEN% 2, 1)
   expect_identical(iris %IF_EMPTY_THEN% 2, iris)
@@ -41,7 +40,6 @@ test_that("IF_EMPTY_THEN", {
   expect_identical(character() %IF_EMPTY_THEN% 2, 2)
   expect_identical(c() %IF_EMPTY_THEN% 2, 2)
 })
-
 
 
 test_that("scalarize_list", {
@@ -64,7 +62,6 @@ test_that("scalarize_list", {
 })
 
 
-
 test_that("hex2raw", {
   hex2raw <- quartzbio.edp:::hex2raw
 
@@ -85,7 +82,6 @@ test_that("hex2raw", {
 })
 
 
-
 test_that("path_make_absolute", {
   path_make_absolute <- quartzbio.edp:::path_make_absolute
 
@@ -95,7 +91,6 @@ test_that("path_make_absolute", {
   expect_identical(path_make_absolute("/toto"), "/toto")
   expect_identical(path_make_absolute("A"), "/A")
 })
-
 
 
 test_that("bless", {
@@ -117,7 +112,6 @@ test_that("bless", {
 })
 
 
-
 test_that("capitalize", {
   capitalize <- quartzbio.edp:::capitalize
 
@@ -125,7 +119,6 @@ test_that("capitalize", {
   expect_identical(capitalize("Folder"), "Folder")
   expect_identical(capitalize("a"), "A")
 })
-
 
 
 test_that("convert_edp_list_to_df", {
@@ -182,7 +175,6 @@ test_that("convert_edp_list_to_df", {
 })
 
 
-
 test_that("summary_string", {
   summary_string <- quartzbio.edp:::summary_string
 
@@ -191,10 +183,15 @@ test_that("summary_string", {
   expect_identical(summary_string(list()), "")
 
   # standard
-  expect_identical(summary_string(list(axx = TRUE, byy = FALSE, Cxx = TRUE)), "AbC")
-  expect_identical(summary_string(list(xY = TRUE, axx = 1, byy = FALSE, Cxx = TRUE)), "XabC")
+  expect_identical(
+    summary_string(list(axx = TRUE, byy = FALSE, Cxx = TRUE)),
+    "AbC"
+  )
+  expect_identical(
+    summary_string(list(xY = TRUE, axx = 1, byy = FALSE, Cxx = TRUE)),
+    "XabC"
+  )
 })
-
 
 
 test_that("id", {

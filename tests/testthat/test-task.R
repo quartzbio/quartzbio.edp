@@ -1,4 +1,5 @@
-test_that_with_edp_api("Task_wait_for_completion",
+test_that_with_edp_api(
+  "Task_wait_for_completion",
   {
     v <- get_test_vault()
 
@@ -12,9 +13,12 @@ test_that_with_edp_api("Task_wait_for_completion",
     res <- Dataset_import(ds, records = records)
 
     # timeout
-    expect_false(Task_wait_for_completion(res$task_id, retries = 1, interval = 1))
+    expect_false(Task_wait_for_completion(
+      res$task_id,
+      retries = 1,
+      interval = 1
+    ))
     expect_false(Task_wait_for_completion(2, retries = 1, interval = 1))
-
 
     # print.ECSTaskList()
     tasks <- Tasks(parent_task_id = 1, alive = TRUE)
@@ -29,11 +33,10 @@ test_that_with_edp_api("Task_wait_for_completion",
 )
 
 
-
-
 # if we were to recapture, it is stored in Tasks/tasks-494909.json
 #
-test_that_with_edp_api("Task",
+test_that_with_edp_api(
+  "Task",
   {
     v <- get_test_vault()
     tatype <- "datasets.DatasetCommit"

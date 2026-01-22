@@ -1,23 +1,47 @@
 test_that_with_edp_api("Shortcut_create", {
   v <- get_test_vault()
 
-  sc <- Shortcut_create(v, "test", target = list(object_type = "url", url = "url"))
+  sc <- Shortcut_create(
+    v,
+    "test",
+    target = list(object_type = "url", url = "url")
+  )
   expect_s3_class(sc, c("Object", "Shortcut"))
 })
 
 test_that("Shortcut_create rejects bad target", {
   expect_error(Shortcut_create("id", "path", target = 42))
   expect_error(Shortcut_create("id", "path", target = list()))
-  expect_error(Shortcut_create("id", "path", target = list(object_type = "url", id = "123")))
-  expect_error(Shortcut_create("id", "path", target = list(object_type = "file", url = "123")))
-  expect_error(Shortcut_create("id", "path", target = list(object_type = "file", id = "123", bad_item = "123")))
-  expect_error(Shortcut_create("id", "path", target = list(object_type = "filez", id = "123")))
+  expect_error(Shortcut_create(
+    "id",
+    "path",
+    target = list(object_type = "url", id = "123")
+  ))
+  expect_error(Shortcut_create(
+    "id",
+    "path",
+    target = list(object_type = "file", url = "123")
+  ))
+  expect_error(Shortcut_create(
+    "id",
+    "path",
+    target = list(object_type = "file", id = "123", bad_item = "123")
+  ))
+  expect_error(Shortcut_create(
+    "id",
+    "path",
+    target = list(object_type = "filez", id = "123")
+  ))
 })
 
 test_that_with_edp_api("Shortcut", {
   v <- get_test_vault()
 
-  sc <- Shortcut_create(v, "test", target = list(object_type = "url", url = "url"))
+  sc <- Shortcut_create(
+    v,
+    "test",
+    target = list(object_type = "url", url = "url")
+  )
 
   returned_sc <- Shortcut(sc$id)
   expect_identical(returned_sc$id, sc$id)
@@ -28,8 +52,16 @@ test_that_with_edp_api("Shortcut", {
 test_that_with_edp_api("Shortcuts", {
   v <- get_test_vault()
 
-  sc1 <- Shortcut_create(v, "test", target = list(object_type = "url", url = "url"))
-  sc1 <- Shortcut_create(v, "test/two", target = list(object_type = "url", url = "url"))
+  sc1 <- Shortcut_create(
+    v,
+    "test",
+    target = list(object_type = "url", url = "url")
+  )
+  sc1 <- Shortcut_create(
+    v,
+    "test/two",
+    target = list(object_type = "url", url = "url")
+  )
 
   returned_scs <- Shortcuts(v)
 
@@ -43,7 +75,11 @@ test_that_with_edp_api("Shortcuts", {
 test_that_with_edp_api("is_shortcut_works", {
   v <- get_test_vault()
 
-  sc <- Shortcut_create(v, "test", target = list(object_type = "url", url = "url"))
+  sc <- Shortcut_create(
+    v,
+    "test",
+    target = list(object_type = "url", url = "url")
+  )
   fo <- Folder_create(v, "test_folder")
 
   expect_true(is_shortcut(sc))
@@ -56,8 +92,16 @@ test_that_with_edp_api("Shortcut_get_target", {
   v2 <- Vault(name = .vault_name("vault2"))
 
   fo <- Folder_create(v2, "test_folder")
-  sc_fo <- Shortcut_create(v, "test", target = list(object_type = "folder", id = fo$id))
-  sc_vault <- Shortcut_create(v, "test/vault", target = list(object_type = "vault", id = v2$id))
+  sc_fo <- Shortcut_create(
+    v,
+    "test",
+    target = list(object_type = "folder", id = fo$id)
+  )
+  sc_vault <- Shortcut_create(
+    v,
+    "test/vault",
+    target = list(object_type = "vault", id = v2$id)
+  )
 
   resolved_sc_fo <- Shortcut_get_target(sc_fo)
 

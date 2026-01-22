@@ -1,5 +1,9 @@
 ### test shared function
-dummy_httr_request <- function(status, headers = list(`Content-Type` = "application/json"), content = NULL) {
+dummy_httr_request <- function(
+  status,
+  headers = list(`Content-Type` = "application/json"),
+  content = NULL
+) {
   x <- list(status = status, headers = headers)
   if (length(content)) {
     x <- httr_response_set_json_content_to_list(x, content, auto_unbox = TRUE)
@@ -7,8 +11,6 @@ dummy_httr_request <- function(status, headers = list(`Content-Type` = "applicat
   class(x) <- "response"
   x
 }
-
-
 
 
 test_that("classify_entity", {
@@ -36,11 +38,16 @@ test_that("classify_entity", {
 })
 
 
-
 test_that("postprocess_single_entity", {
   postprocess_single_entity <- quartzbio.edp:::postprocess_single_entity
 
-  x <- list(a = 1, object_type = "titi", class_name = "Object", toto_id = 1, vault_id = "a")
+  x <- list(
+    a = 1,
+    object_type = "titi",
+    class_name = "Object",
+    toto_id = 1,
+    vault_id = "a"
+  )
 
   conn <- list()
   y <- postprocess_single_entity(x, conn)
@@ -78,7 +85,6 @@ test_that("postprocess_single_entity", {
 }
 
 
-
 test_that("process_by_params", {
   process <- quartzbio.edp:::process_by_params
 
@@ -101,7 +107,10 @@ test_that("process_by_params", {
 
   ### unique = FALSE
   expect_error(process(.by(), unique = FALSE), "at least one")
-  expect_identical(process(.by(id = 0, name = "toto"), unique = FALSE), list(id = 0, name = "toto"))
+  expect_identical(
+    process(.by(id = 0, name = "toto"), unique = FALSE),
+    list(id = 0, name = "toto")
+  )
 
   ### unique = FALSE, empty = TRUE
   expect_identical(process(.by(), empty = TRUE), list())
@@ -116,9 +125,11 @@ test_that("process_by_params", {
   expect_identical(process(.by(a = 1, b = 2)), list(a = 1, b = 2))
 
   expect_error(process(.by(id = 0, a = 1, b = 2)), "exactly one")
-  expect_identical(process(.by(id = 0, a = 1, b = 2), unique = FALSE), list(id = 0, a = 1, b = 2))
+  expect_identical(
+    process(.by(id = 0, a = 1, b = 2), unique = FALSE),
+    list(id = 0, a = 1, b = 2)
+  )
   expect_identical(process(.by(), empty = TRUE), list())
-
 
   ### 2 sublists
   .by <- function(id = NULL, a = NULL, b = NULL) {
@@ -139,11 +150,16 @@ test_that("process_by_params", {
 })
 
 
-
 test_that("detect_ids", {
   detect_ids <- quartzbio.edp:::detect_ids
 
-  lst <- list(id = 0, vault_id = 1, toto_id = 2, foo = "a", sublist = list(a_id = 1))
+  lst <- list(
+    id = 0,
+    vault_id = 1,
+    toto_id = 2,
+    foo = "a",
+    sublist = list(a_id = 1)
+  )
 
   classes <- detect_ids(lst)
 
@@ -154,20 +170,28 @@ test_that("detect_ids", {
 })
 
 
-
 test_that("apply_class_to_ids", {
   apply_class_to_ids <- quartzbio.edp:::apply_class_to_ids
   detect_ids <- quartzbio.edp:::detect_ids
 
-  lst <- list(id = 0, vault_id = 1, toto_id = 2, foo = "a", sublist = list(a_id = 1))
+  lst <- list(
+    id = 0,
+    vault_id = 1,
+    toto_id = 2,
+    foo = "a",
+    sublist = list(a_id = 1)
+  )
   classes <- detect_ids(lst)
 
   lst2 <- apply_class_to_ids(lst, classes)
 
   .class <- function(x) class(x)[1]
-  expect_equal(sapply(lst2, .class), c("numeric", "numeric", "numeric", "character", "list"), ignore_attr = TRUE)
+  expect_equal(
+    sapply(lst2, .class),
+    c("numeric", "numeric", "numeric", "character", "list"),
+    ignore_attr = TRUE
+  )
 })
-
 
 
 test_that("check_httr_response", {
@@ -190,34 +214,45 @@ test_that("check_httr_response", {
 
   ### 401: Unauthorized
   # with details
-  expect_error(check(.resp(401, content = list(details = "coucou"))), "Unauthorized: coucou")
+  expect_error(
+    check(.resp(401, content = list(details = "coucou"))),
+    "Unauthorized: coucou"
+  )
 
   # with msg but no details
-  expect_error(check(.resp(401, content = list(x = "guess what"))), "Unauthorized: guess what")
+  expect_error(
+    check(.resp(401, content = list(x = "guess what"))),
+    "Unauthorized: guess what"
+  )
 
   # weird content
   expect_error(check(.resp(401, content = 1)), "Unauthorized: 1")
   expect_error(check(.resp(401)), "Unauthorized:\\s*\\(error 401\\)")
 
   ### other errors
-  expect_error(check(.resp(400, content = list(details = "coucou"))), "API error: coucou")
+  expect_error(
+    check(.resp(400, content = list(details = "coucou"))),
+    "API error: coucou"
+  )
   expect_error(check(.resp(400)), "API error: ")
 
   expect_error(check(.resp(9999)), "Uknown API error 9999")
-  expect_error(check(.resp(9999, content = list(details = "coucou"))), "Uknown API error 9999: coucou")
+  expect_error(
+    check(.resp(9999, content = list(details = "coucou"))),
+    "Uknown API error 9999: coucou"
+  )
 
   ### html content type
   # create a fake httr reponse (cf fake_httr_response
   url <- "https://sandbox.edp.aws.quartz.bio/v1/user"
 
-  res <- dummy_httr_request(200,
+  res <- dummy_httr_request(
+    200,
     headers = list(`Content-Type` = "text/html; charset=utf-8"),
     content = "<html></html>"
   )
   expect_identical(check(res), res)
 })
-
-
 
 
 test_that("get_api_response_error_message", {
@@ -229,10 +264,19 @@ test_that("get_api_response_error_message", {
   expect_identical(get_msg(.resp(200)), "")
 
   ### standard API error message (details)
-  expect_identical(get_msg(.resp(401, content = list(details = "coucou"))), "coucou")
+  expect_identical(
+    get_msg(.resp(401, content = list(details = "coucou"))),
+    "coucou"
+  )
 
-  expect_identical(get_msg(.resp(401, content = list("hello")), "toto"), "hello")
-  expect_identical(get_msg(.resp(401, content = LETTERS[1:5]), "toto"), "A, B, C, D, E")
+  expect_identical(
+    get_msg(.resp(401, content = list("hello")), "toto"),
+    "hello"
+  )
+  expect_identical(
+    get_msg(.resp(401, content = LETTERS[1:5]), "toto"),
+    "A, B, C, D, E"
+  )
   expect_identical(get_msg(.resp(401, content = 1), "toto"), "1")
 
   ### edge cases

@@ -6,16 +6,22 @@
   length(x) == 1 && !is.na(x) && is.character(x) && nzchar(x)
 }
 
-.die_if <- function(cond, ..., .envir = parent.frame()) .die_unless(!cond, ..., .envir = .envir)
+.die_if <- function(cond, ..., .envir = parent.frame()) {
+  .die_unless(!cond, ..., .envir = .envir)
+}
 .die_unless <- function(cond, ..., .envir = parent.frame()) {
   if (!is.logical(cond) || .empty(cond)) {
     stop("Bad logical argument cond: ", cond)
   }
 
   # check that the dots are not forgotten
-  if (missing(...)) stop("missing message")
+  if (missing(...)) {
+    stop("missing message")
+  }
 
-  if (any(!cond)) .die(..., .envir = .envir)
+  if (any(!cond)) {
+    .die(..., .envir = .envir)
+  }
 
   invisible()
 }
@@ -65,7 +71,13 @@
   }
 
   .collapse_args <- function(x) {
-    if (length(x) > 1) paste0(x, collapse = ",") else if (length(x) == 0) "" else x
+    if (length(x) > 1) {
+      paste0(x, collapse = ",")
+    } else if (length(x) == 0) {
+      ""
+    } else {
+      x
+    }
   }
   fixed_dots <- lapply(dots, .collapse_args)
 

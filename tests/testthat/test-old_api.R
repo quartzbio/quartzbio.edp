@@ -1,7 +1,8 @@
 .login <- function(conn) {
   ### test env vars: KEY
   ALL_ENVS <- c(
-    SOLVEBIO_API_KEY = "", SOLVEBIO_API_TOKEN = "",
+    SOLVEBIO_API_KEY = "",
+    SOLVEBIO_API_TOKEN = "",
     SOLVEBIO_API_HOST = ""
   )
   we <- function(envs, ...) {

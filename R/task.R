@@ -7,31 +7,53 @@
 #' @return a list of Tasks as a ECSTaskList object.
 #' @export
 Tasks <- function(
-    target_object_id = NULL,
-    parent_task_id = NULL,
-    task_type = NULL,
-    status = NULL,
-    alive = NULL,
-    limit = NULL, page = NULL,
-    conn = get_connection()) {
+  target_object_id = NULL,
+  parent_task_id = NULL,
+  task_type = NULL,
+  status = NULL,
+  alive = NULL,
+  limit = NULL,
+  page = NULL,
+  conn = get_connection()
+) {
   # currently preprocess_api_params does not support multi-valued params
-  params <- preprocess_api_params(exclude = c(
-    "conn", "limit", "page",
-    "status", "alive"
-  ))
+  params <- preprocess_api_params(
+    exclude = c(
+      "conn",
+      "limit",
+      "page",
+      "status",
+      "alive"
+    )
+  )
 
   if (!.empty(alive)) {
     # can not be used with status
     .die_unless(.empty(status), 'param "alive" can not be used with "status"')
-    .die_unless(is.logical(alive) && !is.na(alive), 'bad param "alive": "%s"', alive)
-    status <- if (alive) TASK_STATUS_ALIVE else setdiff(TASK_STATUS, TASK_STATUS_ALIVE)
+    .die_unless(
+      is.logical(alive) && !is.na(alive),
+      'bad param "alive": "%s"',
+      alive
+    )
+    status <- if (alive) {
+      TASK_STATUS_ALIVE
+    } else {
+      setdiff(TASK_STATUS, TASK_STATUS_ALIVE)
+    }
   }
   if (!.empty(status)) {
     bad <- setdiff(status, TASK_STATUS)
     .die_unless(.empty(bad), 'bad status values: "%s"', bad)
     params$status <- paste0(status, collapse = ",")
   }
-  request_edp_api("GET", "v2/tasks", conn = conn, limit = limit, page = page, params = params)
+  request_edp_api(
+    "GET",
+    "v2/tasks",
+    conn = conn,
+    limit = limit,
+    page = page,
+    params = params
+  )
 }
 
 #' fetches a task.
@@ -61,8 +83,12 @@ Task <- function(task_id, conn = get_connection()) {
 #'  is exceeded (~ timeout).
 #' @export
 Task_wait_for_completion <- function(
-    task_id, interval = 3, retries = 30, recursive = TRUE,
-    conn = get_connection()) {
+  task_id,
+  interval = 3,
+  retries = 30,
+  recursive = TRUE,
+  conn = get_connection()
+) {
   if (retries <= 0) {
     return(FALSE)
   }
@@ -83,7 +109,10 @@ Task_wait_for_completion <- function(
 
     msg <- .safe_sprintf(
       'waiting for task %s ("%s" for "%s"),  %i retries left',
-      task$id, task$task_display_name, task$target_object$full_path, retries
+      task$id,
+      task$task_display_name,
+      task$target_object$full_path,
+      retries
     )
     message(msg)
     task <- .task()
@@ -91,12 +120,22 @@ Task_wait_for_completion <- function(
 
   if (recursive) {
     subtasks <- Tasks(
-      parent_task_id = task_id, target_object_id = task$target_object$id,
-      alive = TRUE, conn = conn
+      parent_task_id = task_id,
+      target_object_id = task$target_object$id,
+      alive = TRUE,
+      conn = conn
     )
 
     for (subtask in subtasks) {
-      if (!Task_wait_for_completion(subtask, interval = interval, retries = retries, recursive = TRUE, conn = conn)) {
+      if (
+        !Task_wait_for_completion(
+          subtask,
+          interval = interval,
+          retries = retries,
+          recursive = TRUE,
+          conn = conn
+        )
+      ) {
         return(FALSE)
       }
     }
@@ -124,7 +163,16 @@ print.ECSTaskList <- function(x, ...) {
   full_paths[lengths(full_paths) == 0] <- NA_character_
   df$target_full_path <- as.character(full_paths)
 
-  cols <- c("id", "target_full_path", "task_display_name", "status", "description", "user", "updated_at", "parent_id")
+  cols <- c(
+    "id",
+    "target_full_path",
+    "task_display_name",
+    "status",
+    "description",
+    "user",
+    "updated_at",
+    "parent_id"
+  )
   cols <- intersect(cols, names(df))
   df <- df[cols]
 

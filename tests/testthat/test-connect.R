@@ -6,7 +6,6 @@ test_that_with_edp_api("real_connections", {
   conn2 <- connect(conn$secret, conn$host)
   expect_identical(conn2, conn)
 
-
   ### get_connection auto
   set_connection(NULL)
   expect_null(get_connection(auto = FALSE))
@@ -17,7 +16,6 @@ test_that_with_edp_api("real_connections", {
   )
   expect_identical(conn3, conn)
 })
-
 
 
 test_that_with_edp_api("test_connection", {
@@ -33,10 +31,8 @@ test_that_with_edp_api("test_connection", {
 })
 
 
-
 test_that("test_conn_error", {
   conn <- EDP_DUMMY_CONN
-
 
   ### with a URL that works but that is not EDP
   expect_warning(
@@ -46,14 +42,17 @@ test_that("test_conn_error", {
 })
 
 
-
 test_that("autoconnect", {
   setup_temp_dir()
 
   withr::with_envvar(c(HOME = getwd(), USERPROFILE = getwd()), {
     ALL_ENVS <- c(
-      EDP_API_SECRET = "", SOLVEBIO_ACCESS_TOKEN = "",
-      EDP_API_HOST = "", SOLVEBIO_API_HOST = "", EDP_PROFILE = "", EDP_CONFIG = ""
+      EDP_API_SECRET = "",
+      SOLVEBIO_ACCESS_TOKEN = "",
+      EDP_API_HOST = "",
+      SOLVEBIO_API_HOST = "",
+      EDP_PROFILE = "",
+      EDP_CONFIG = ""
     )
     we <- function(envs, ...) {
       missing_envs <- setdiff(names(ALL_ENVS), names(envs))
@@ -62,19 +61,32 @@ test_that("autoconnect", {
     }
 
     ### nothing set --> should fail
-    we(NULL, expect_error(autoconnect(check = FALSE), "autoconnect() failed", fixed = TRUE))
+    we(
+      NULL,
+      expect_error(
+        autoconnect(check = FALSE),
+        "autoconnect() failed",
+        fixed = TRUE
+      )
+    )
 
     TOKEN <- strrep("Y", 30)
     ### use new vars
     we(
       c(EDP_API_SECRET = TOKEN, EDP_API_HOST = "host"),
-      expect_identical(autoconnect(check = FALSE), list(secret = TOKEN, host = "host"))
+      expect_identical(
+        autoconnect(check = FALSE),
+        list(secret = TOKEN, host = "host")
+      )
     )
 
     ### use old vars
     we(
       c(SOLVEBIO_ACCESS_TOKEN = TOKEN, SOLVEBIO_API_HOST = "host"),
-      expect_identical(autoconnect(check = FALSE), list(secret = TOKEN, host = "host"))
+      expect_identical(
+        autoconnect(check = FALSE),
+        list(secret = TOKEN, host = "host")
+      )
     )
 
     ### use profile
@@ -101,7 +113,6 @@ test_that("autoconnect", {
 })
 
 
-
 test_that("get_set_connection", {
   old <- get_connection(auto = FALSE)
   on.exit(set_connection(old, check = FALSE), add = TRUE)
@@ -124,12 +135,24 @@ test_that("check_connection", {
   check_connection <- quartzbio.edp:::check_connection
 
   ### positives
-  expect_error(check_connection(list(secret = strrep("X", 30), host = "host")), NA)
+  expect_error(
+    check_connection(list(secret = strrep("X", 30), host = "host")),
+    NA
+  )
   # also works with an environment
-  expect_error(check_connection(as.environment(list(secret = strrep("X", 30), host = "host"))), NA)
+  expect_error(
+    check_connection(as.environment(list(
+      secret = strrep("X", 30),
+      host = "host"
+    ))),
+    NA
+  )
 
   ### negatives
-  expect_error(check_connection(list(secret = strrep("X", 20), host = "host")), "not look like")
+  expect_error(
+    check_connection(list(secret = strrep("X", 20), host = "host")),
+    "not look like"
+  )
   expect_error(check_connection(list(host = "host")), "secret")
   expect_error(check_connection(list(secret = strrep("X", 20))), "host")
   expect_error(check_connection(1), "secret")
@@ -151,16 +174,17 @@ test_that("looks_like_api_token", {
 })
 
 
-
 test_that("read_save_connection_from_file", {
   setup_temp_dir()
 
   withr::with_envvar(c(HOME = getwd(), USERPROFILE = getwd()), {
-
     ### nothing saved yet
     expect_error(read_connection_profile(), "no such profile")
     expect_error(read_connection_profile("toto.json"), "no such profile")
-    expect_error(read_connection_profile("toto.json", profile = "titi"), "no such profile")
+    expect_error(
+      read_connection_profile("toto.json", profile = "titi"),
+      "no such profile"
+    )
 
     ### standard
     conn <- list(secret = strrep("X", 30), host = "host")
@@ -178,18 +202,27 @@ test_that("read_save_connection_from_file", {
 
     ### overwrite
     conn3 <- list(secret = strrep("Z", 40), host = "host3")
-    expect_error(save_connection_profile(conn3, profile = "with_key"), "overwrite")
+    expect_error(
+      save_connection_profile(conn3, profile = "with_key"),
+      "overwrite"
+    )
 
     save_connection_profile(conn3, profile = "with_key", overwrite = TRUE)
 
     expect_identical(read_connection_profile(profile = "with_key"), conn3)
 
     ### custom path
-    save_connection_profile(conn3, path = "custom.creds", profile = "with_token")
-    expect_identical(read_connection_profile(path = "custom.creds", profile = "with_token"), conn3)
+    save_connection_profile(
+      conn3,
+      path = "custom.creds",
+      profile = "with_token"
+    )
+    expect_identical(
+      read_connection_profile(path = "custom.creds", profile = "with_token"),
+      conn3
+    )
   })
 })
-
 
 
 test_that("connect", {
@@ -197,13 +230,18 @@ test_that("connect", {
   key <- strrep("X", 40)
   token <- strrep("Y", 30)
 
-  expect_identical(connect(token, "host", check = FALSE), list(secret = token, host = "host"))
+  expect_identical(
+    connect(token, "host", check = FALSE),
+    list(secret = token, host = "host")
+  )
   expect_error(connect(key, "host", check = FALSE))
 
   ### test env vars: KEY
   ALL_ENVS <- c(
-    EDP_API_SECRET = "", SOLVEBIO_ACCESS_TOKEN = "",
-    EDP_API_HOST = "", SOLVEBIO_API_HOST = ""
+    EDP_API_SECRET = "",
+    SOLVEBIO_ACCESS_TOKEN = "",
+    EDP_API_HOST = "",
+    SOLVEBIO_API_HOST = ""
   )
   we <- function(envs, ...) {
     missing_envs <- setdiff(names(ALL_ENVS), names(envs))
@@ -217,24 +255,42 @@ test_that("connect", {
   })
 
   # backwards compatibility:
-  we(c(SOLVEBIO_API_KEY = key, SOLVEBIO_ACCESS_TOKEN = token, SOLVEBIO_API_HOST = "h"), {
-    expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
-  })
-  we(c(SOLVEBIO_API_KEY = key, EDP_API_SECRET = token, SOLVEBIO_API_HOST = "h"), {
-    expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
-  })
+  we(
+    c(
+      SOLVEBIO_API_KEY = key,
+      SOLVEBIO_ACCESS_TOKEN = token,
+      SOLVEBIO_API_HOST = "h"
+    ),
+    {
+      expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
+    }
+  )
+  we(
+    c(SOLVEBIO_API_KEY = key, EDP_API_SECRET = token, SOLVEBIO_API_HOST = "h"),
+    {
+      expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
+    }
+  )
 
   # precedence of new envs
-  we(c(
-    SOLVEBIO_API_KEY = "k2", EDP_API_SECRET = token,
-    SOLVEBIO_API_HOST = "h2", EDP_API_HOST = "h"
-  ), {
-    expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
-  })
+  we(
+    c(
+      SOLVEBIO_API_KEY = "k2",
+      EDP_API_SECRET = token,
+      SOLVEBIO_API_HOST = "h2",
+      EDP_API_HOST = "h"
+    ),
+    {
+      expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
+    }
+  )
 
   # explicit params (token) supersedes api_key via default
   we(c(EDP_API_SECRET = key, EDP_API_HOST = "h"), {
-    expect_identical(connect(token, check = FALSE), list(secret = token, host = "h"))
+    expect_identical(
+      connect(token, check = FALSE),
+      list(secret = token, host = "h")
+    )
   })
 
   # backwards compatibility:
@@ -243,10 +299,15 @@ test_that("connect", {
   })
 
   # precedence of new envs
-  we(c(
-    SOLVEBIO_ACCESS_TOKEN = "t2", EDP_API_SECRET = token,
-    SOLVEBIO_API_HOST = "h2", EDP_API_HOST = "h"
-  ), {
-    expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
-  })
+  we(
+    c(
+      SOLVEBIO_ACCESS_TOKEN = "t2",
+      EDP_API_SECRET = token,
+      SOLVEBIO_API_HOST = "h2",
+      EDP_API_HOST = "h"
+    ),
+    {
+      expect_identical(connect(check = FALSE), list(secret = token, host = "h"))
+    }
+  )
 })
