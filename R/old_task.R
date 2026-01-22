@@ -61,7 +61,9 @@ Task.retrieve <- function(id, env = get_connection()) {
 #' @export
 Task.follow <- function(id, env = get_connection(), interval = 2) {
   imp <- Task.retrieve(id, env)
-  while (imp$status == "pending" || imp$status == "queued" || imp$status == "running") {
+  while (
+    imp$status == "pending" || imp$status == "queued" || imp$status == "running"
+  ) {
     imp <- Task.retrieve(id, env)
     cat(paste("Task", id, "status:", imp$status, "\n", sep = " "))
     Sys.sleep(interval)

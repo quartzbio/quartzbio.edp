@@ -23,7 +23,6 @@ check_connection <- function(conn) {
   }
   .die_unless(.is_nz_string(secret), 'no "secret" in connection')
 
-
   .die_unless(
     looks_like_api_token(secret),
     "connection secret does not look like an API token"
@@ -51,7 +50,12 @@ test_connection <- function(conn) {
   .die_unless(inherits(res, "User"), "could not retrieve user profile.")
 
   type <- "Token"
-  msg <- sprintf('Connected to %s with user "%s" using an API %s', conn$host, res$full_name, type)
+  msg <- sprintf(
+    'Connected to %s with user "%s" using an API %s',
+    conn$host,
+    res$full_name,
+    type
+  )
   message(msg)
 
   invisible()
@@ -67,7 +71,9 @@ test_connection <- function(conn) {
 #' @inheritParams connect
 #' @export
 set_connection <- function(conn, check = TRUE) {
-  if (check && !is.null(conn)) test_connection(conn)
+  if (check && !is.null(conn)) {
+    test_connection(conn)
+  }
   assign("connection", conn, envir = .DEFAULTS)
 }
 
@@ -109,20 +115,26 @@ get_connection <- function(auto = TRUE) {
 #'
 #' @export
 connect <- function(
-    secret = get_env(
-      "EDP_API_SECRET",
+  secret = get_env(
+    "EDP_API_SECRET",
+    get_env(
+      "QUARTZBIO_ACCESS_TOKEN",
       get_env(
-        "QUARTZBIO_ACCESS_TOKEN",
-        get_env(
-          "SOLVEBIO_ACCESS_TOKEN"
-        )
+        "SOLVEBIO_ACCESS_TOKEN"
       )
-    ),
-    host = get_env("EDP_API_HOST", get_env("QUARTZBIO_API_HOST", get_env("SOLVEBIO_API_HOST"))),
-    check = TRUE) {
+    )
+  ),
+  host = get_env(
+    "EDP_API_HOST",
+    get_env("QUARTZBIO_API_HOST", get_env("SOLVEBIO_API_HOST"))
+  ),
+  check = TRUE
+) {
   conn <- list(secret = secret, host = host)
   check_connection(conn)
-  if (check) test_connection(conn)
+  if (check) {
+    test_connection(conn)
+  }
 
   conn
 }
@@ -176,8 +188,9 @@ read_all_connections_from_file <- function(path) {
 #' @family connection
 #' @export
 read_connection_profile <- function(
-    profile = get_env("EDP_PROFILE", "default"),
-    path = get_env("EDP_CONFIG", "~/.qb/edp.json")) {
+  profile = get_env("EDP_PROFILE", "default"),
+  path = get_env("EDP_CONFIG", "~/.qb/edp.json")
+) {
   profiles <- read_all_connections_from_file(path)
   cfg <- profiles[[profile]]
   .die_if(length(cfg) == 0, 'no such profile "%s" in file "%s"', profile, path)
@@ -195,20 +208,24 @@ read_connection_profile <- function(
 #' @family connection
 #' @export
 save_connection_profile <- function(
-    conn,
-    profile = get_env("EDP_PROFILE", "default"),
-    path = get_env("EDP_CONFIG", "~/.qb/edp.json"),
-    overwrite = FALSE) {
+  conn,
+  profile = get_env("EDP_PROFILE", "default"),
+  path = get_env("EDP_CONFIG", "~/.qb/edp.json"),
+  overwrite = FALSE
+) {
   cfg <- read_all_connections_from_file(path)
   .die_unless(
     length(cfg[[profile]]) == 0 || overwrite,
-    'can not overwrite existing profile "%s"', profile
+    'can not overwrite existing profile "%s"',
+    profile
   )
 
   cfg[[profile]] <- conn
 
   dir <- dirname(path)
-  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+  if (!dir.exists(dir)) {
+    dir.create(dir, recursive = TRUE)
+  }
 
   jsonlite::write_json(cfg, path, auto_unbox = TRUE)
 }

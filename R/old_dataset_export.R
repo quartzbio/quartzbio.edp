@@ -83,12 +83,14 @@ DatasetExport.delete <- function(id, env = get_connection()) {
 #'
 #' @concept  quartzbio_api
 #' @export
-DatasetExport.create <- function(dataset_id,
-                                 format = "json",
-                                 params = list(),
-                                 follow = FALSE,
-                                 env = get_connection(),
-                                 ...) {
+DatasetExport.create <- function(
+  dataset_id,
+  format = "json",
+  params = list(),
+  follow = FALSE,
+  env = get_connection(),
+  ...
+) {
   if (missing(dataset_id)) {
     stop("A dataset ID is required.")
   }
@@ -100,7 +102,13 @@ DatasetExport.create <- function(dataset_id,
     ...
   )
 
-  dataset_export <- .request("POST", path = "v2/dataset_exports", query = NULL, body = params, env = env)
+  dataset_export <- .request(
+    "POST",
+    path = "v2/dataset_exports",
+    query = NULL,
+    body = params,
+    env = env
+  )
 
   if (follow) {
     Task.follow(dataset_export$task_id)
@@ -129,7 +137,12 @@ DatasetExport.get_download_url <- function(id, env = get_connection()) {
   }
 
   path <- paste("v2/dataset_exports", paste(id), "download", sep = "/")
-  response <- .request("GET", path = path, query = list(redirect = ""), env = env)
+  response <- .request(
+    "GET",
+    path = path,
+    query = list(redirect = ""),
+    env = env
+  )
 
   response$url
 }

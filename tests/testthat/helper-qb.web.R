@@ -10,8 +10,10 @@ EDP_DUMMY_CONN <- list(
 
 .test_env_setup <- function(name) {
   v <- Vault_create(
-    name = name, description = "quartzbio.edp R package temp test vault",
-    storage_class = "Temporary", tags = "TESTING"
+    name = name,
+    description = "quartzbio.edp R package temp test vault",
+    storage_class = "Temporary",
+    tags = "TESTING"
   )
 }
 .test_env_teardown <- function(vault) {
@@ -64,11 +66,13 @@ EDP_DUMMY_CONN <- list(
 .vault_name <- function(desc) paste0("quartzbio.edp.test.", desc)
 
 test_that_with_edp_api <- function(
-    desc, expr,
-    verbose = FALSE,
-    connector = .edp_fetch_connection,
-    can_capture = TRUE,
-    capture_dir = file.path("CAPTURES", desc)) {
+  desc,
+  expr,
+  verbose = FALSE,
+  connector = .edp_fetch_connection,
+  can_capture = TRUE,
+  capture_dir = file.path("CAPTURES", desc)
+) {
   capture <- httptest_is_capture_enabled() && can_capture
 
   backup <- start_mock_api(

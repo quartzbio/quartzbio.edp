@@ -57,7 +57,9 @@ DatasetField.retrieve <- function(id, env = get_connection()) {
 #' @concept  quartzbio_api
 #' @export
 DatasetField.facets <- function(id, env = get_connection(), ...) {
-  if (missing(id) | !(class(id) %in% c("DatasetField", "numeric", "character"))) {
+  if (
+    missing(id) | !(class(id) %in% c("DatasetField", "numeric", "character"))
+  ) {
     stop("A dataset field ID is required.")
   }
   if (inherits(id, "DatasetField")) {
@@ -86,7 +88,13 @@ DatasetField.facets <- function(id, env = get_connection(), ...) {
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
-DatasetField.create <- function(dataset_id, name, data_type = "auto", env = get_connection(), ...) {
+DatasetField.create <- function(
+  dataset_id,
+  name,
+  data_type = "auto",
+  env = get_connection(),
+  ...
+) {
   deprecate_soft("1.0.0", "DatasetField.create()", "DatasetField_create()")
   if (missing(dataset_id)) {
     stop("A dataset ID is required.")
@@ -102,7 +110,13 @@ DatasetField.create <- function(dataset_id, name, data_type = "auto", env = get_
     ...
   )
 
-  dataset_field <- .request("POST", path = "v2/dataset_fields", query = NULL, body = params, env = env)
+  dataset_field <- .request(
+    "POST",
+    path = "v2/dataset_fields",
+    query = NULL,
+    body = params,
+    env = env
+  )
 
   dataset_field
 }

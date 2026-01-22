@@ -14,11 +14,19 @@ test_that_with_edp_api("ds_custom_fields", {
   # change the type of the first field
   fields[[1]]$data_type <- "integer"
 
-  Dataset_import(ds, df = IRIS, target_fields = fields, sync = httptest_is_capture_enabled())
+  Dataset_import(
+    ds,
+    df = IRIS,
+    target_fields = fields,
+    sync = httptest_is_capture_enabled()
+  )
 
   ### target_fields have been taken into account
   df <- Dataset_query(ds)
-  expect_identical(names(df), c("species", "petal_width", "petal_length", "sepal_width", "sepal_length"))
+  expect_identical(
+    names(df),
+    c("species", "petal_width", "petal_length", "sepal_width", "sepal_length")
+  )
 
   ### check that fetch_next() uses the same meta data / format as its source
   df0 <- Dataset_query(ds, limit = 2)
@@ -32,7 +40,6 @@ test_that_with_edp_api("ds_custom_fields", {
   dfa <- fetch_all(df0)
   expect_equal(dfa, df, ignore_attr = TRUE)
 })
-
 
 
 test_that_with_edp_api("dataset_query", {
@@ -62,8 +69,15 @@ test_that_with_edp_api("dataset_query", {
   expect_equal(df3, df2)
 
   # more complex
-  df2 <- Dataset_query(ds, filters = filters('(Species = "virginica") AND (Sepal.Length >= 7)'))
-  expect_equal(df2, df[df$Species == "virginica" & df$Sepal.Length >= 7, ], ignore_attr = TRUE)
+  df2 <- Dataset_query(
+    ds,
+    filters = filters('(Species = "virginica") AND (Sepal.Length >= 7)')
+  )
+  expect_equal(
+    df2,
+    df[df$Species == "virginica" & df$Sepal.Length >= 7, ],
+    ignore_attr = TRUE
+  )
 
   ### all = TRUE
   df <- Dataset_query(ds, limit = 2)
@@ -85,12 +99,22 @@ test_that_with_edp_api("dataset_query", {
   expect_false(df2[1, 2] == df[1, 2])
 
   #
-  df_all <- Dataset_query(ds, filters = filters('Species = "virginica"'), limit = 2, all = TRUE)
+  df_all <- Dataset_query(
+    ds,
+    filters = filters('Species = "virginica"'),
+    limit = 2,
+    all = TRUE
+  )
   expect_equal(nrow(df_all), 7)
   expect_identical(unique(df_all$Species), "virginica")
 
   ### using offset
-  df3.2 <- Dataset_query(ds, filters = filters('Species = "virginica"'), limit = 2, offset = 3)
+  df3.2 <- Dataset_query(
+    ds,
+    filters = filters('Species = "virginica"'),
+    limit = 2,
+    offset = 3
+  )
   expect_equal(df3.2, df_all[4:5, ], ignore_attr = TRUE)
 
   ### fetch_all

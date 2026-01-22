@@ -9,7 +9,6 @@ Object.all <- function(env = get_connection(), ...) {
 }
 
 
-
 #' Object.retrieve
 #'
 #' Retrieves the metadata about a specific object on QuartzBio EDP.
@@ -25,7 +24,12 @@ Object.all <- function(env = get_connection(), ...) {
 #' @concept  quartzbio_api
 #' @export
 Object.retrieve <- function(id, env = get_connection()) {
-  deprecate_soft("1.0.0", "Object.retrieve()", "Object()", details = "To fetch a file or folder using id or full path use File() or Folder() respectively")
+  deprecate_soft(
+    "1.0.0",
+    "Object.retrieve()",
+    "Object()",
+    details = "To fetch a file or folder using id or full path use File() or Folder() respectively"
+  )
   if (missing(id)) {
     stop("A object ID is required.")
   }
@@ -81,8 +85,20 @@ Object.delete <- function(id, env = get_connection()) {
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
-Object.create <- function(vault_id, parent_object_id, object_type, filename, env = get_connection(), ...) {
-  deprecate_soft("1.0.0", "Object.create()", "Object_create()", details = "To create a file for folder in Quartzbio EDP use File_create() and Folder_create() respectively")
+Object.create <- function(
+  vault_id,
+  parent_object_id,
+  object_type,
+  filename,
+  env = get_connection(),
+  ...
+) {
+  deprecate_soft(
+    "1.0.0",
+    "Object.create()",
+    "Object_create()",
+    details = "To create a file for folder in Quartzbio EDP use File_create() and Folder_create() respectively"
+  )
   if (missing(vault_id)) {
     stop("A vault ID is required.")
   }
@@ -104,7 +120,13 @@ Object.create <- function(vault_id, parent_object_id, object_type, filename, env
     ...
   )
 
-  object <- .request("POST", path = "v2/objects", query = NULL, body = params, env = env)
+  object <- .request(
+    "POST",
+    path = "v2/objects",
+    query = NULL,
+    body = params,
+    env = env
+  )
 
   object
 }
@@ -168,7 +190,10 @@ Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
     stop(sprintf("Error: No object found with full path: %s\n", full_path))
   }
   if (response$total > 1) {
-    cat(sprintf("Warning: Multiple object found with full path: %s\n", full_path))
+    cat(sprintf(
+      "Warning: Multiple object found with full path: %s\n",
+      full_path
+    ))
   }
 
   response$data
@@ -225,7 +250,12 @@ Object.get_download_url <- function(id, env = get_connection()) {
   }
 
   path <- paste("v2/objects", paste(id), "download", sep = "/")
-  response <- .request("GET", path = path, query = list(redirect = NULL), env = env)
+  response <- .request(
+    "GET",
+    path = path,
+    query = list(redirect = NULL),
+    env = env
+  )
 
   response$download_url
 }
@@ -250,7 +280,13 @@ Object.get_download_url <- function(id, env = get_connection()) {
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
-Object.upload_file <- function(local_path, vault_id, vault_path, filename, env = get_connection()) {
+Object.upload_file <- function(
+  local_path,
+  vault_id,
+  vault_path,
+  filename,
+  env = get_connection()
+) {
   deprecate_soft("1.0.0", "Object.upload_file()", "File_upload()")
   if (missing(local_path) || !file.exists(local_path)) {
     stop("A valid path to a local file is required.")
@@ -263,11 +299,20 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
     filename <- basename(local_path)
   }
 
-  if (missing(vault_path) || is.null(vault_path) || vault_path == "/" || vault_path == "") {
+  if (
+    missing(vault_path) ||
+      is.null(vault_path) ||
+      vault_path == "/" ||
+      vault_path == ""
+  ) {
     parent_object_id <- NULL
   } else {
     # Create all folders as necessary in the vault path
-    parent_object <- Object.get_by_path(path = vault_path, vault_id = vault_id, env = env)
+    parent_object <- Object.get_by_path(
+      path = vault_path,
+      vault_id = vault_id,
+      env = env
+    )
     if (is.null(parent_object)) {
       parent_object <- Vault.create_folder(
         id = vault_id,
@@ -300,7 +345,6 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
     "Content-Type" = obj$mimetype,
     "Content-Length" = obj$size
   )
-
 
   res <- httr::PUT(
     obj$upload_url,
@@ -337,8 +381,19 @@ Object.upload_file <- function(local_path, vault_id, vault_path, filename, env =
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
-Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename, env = get_connection()) {
-  deprecate_soft("1.0.0", "Object.get_or_upload_file()", "File_upload()", details = "To fetch a file use by id or fullpath use File()")
+Object.get_or_upload_file <- function(
+  local_path,
+  vault_id,
+  vault_path,
+  filename,
+  env = get_connection()
+) {
+  deprecate_soft(
+    "1.0.0",
+    "Object.get_or_upload_file()",
+    "File_upload()",
+    details = "To fetch a file use by id or fullpath use File()"
+  )
   if (missing(local_path) || !file.exists(local_path)) {
     stop("A valid path to a local file is required.")
   }
@@ -355,10 +410,20 @@ Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename
   object_path <- paste(vault_path, filename, sep = "/")
   # Remove double slashes
   object_path <- sub("//", "/", object_path)
-  object <- Object.get_by_path(path = object_path, vault_id = vault_id, env = env)
+  object <- Object.get_by_path(
+    path = object_path,
+    vault_id = vault_id,
+    env = env
+  )
 
   if (is.null(object)) {
-    object <- Object.upload_file(local_path, vault_id, vault_path, filename, env = env)
+    object <- Object.upload_file(
+      local_path,
+      vault_id,
+      vault_path,
+      filename,
+      env = env
+    )
   }
 
   object
@@ -380,8 +445,17 @@ Object.get_or_upload_file <- function(local_path, vault_id, vault_path, filename
 #'
 #' @concept  quartzbio_api
 #' @export
-Object.data <- function(id, filters, col.names = NULL, env = get_connection(), ...) {
-  if (missing(id) || !(class(id) %in% c("Object", "numeric", "integer", "character"))) {
+Object.data <- function(
+  id,
+  filters,
+  col.names = NULL,
+  env = get_connection(),
+  ...
+) {
+  if (
+    missing(id) ||
+      !(class(id) %in% c("Object", "numeric", "integer", "character"))
+  ) {
     stop("An object ID is required.")
   }
   if (inherits(id, "Object")) {
@@ -397,7 +471,8 @@ Object.data <- function(id, filters, col.names = NULL, env = get_connection(), .
   if (!missing(filters) && !is.null(filters) && length(filters) > 0) {
     if (inherits(filters, "character")) {
       # Convert JSON string to an R structure
-      filters <- jsonlite::fromJSON(filters,
+      filters <- jsonlite::fromJSON(
+        filters,
         simplifyVector = FALSE,
         simplifyDataFrame = TRUE,
         simplifyMatrix = FALSE
@@ -463,7 +538,8 @@ Object.query <- function(id, paginate = FALSE, env = get_connection(), ...) {
   }
 
   if (!isTRUE(paginate) && is.null(total)) {
-    warning(paste("This call returned only the first page of records. To retrieve more pages automatically,",
+    warning(paste(
+      "This call returned only the first page of records. To retrieve more pages automatically,",
       "please set paginate=TRUE when calling Object.query().",
       call. = FALSE
     ))
@@ -520,7 +596,11 @@ Object.fields <- function(id, env = get_connection(), ...) {
 #'
 #' @concept  quartzbio_api
 #' @export
-Object.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = get_connection()) {
+Object.get_global_beacon_status <- function(
+  id,
+  raise_on_disabled = FALSE,
+  env = get_connection()
+) {
   if (missing(id)) {
     stop("A dataset ID is required.")
   }
@@ -589,6 +669,5 @@ Object.disable_global_beacon <- function(id, env = get_connection()) {
   path <- paste("v2/objects", paste(id), "beacon", sep = "/")
   .request("DELETE", path, query = NULL, body = NULL, env = env)
 }
-
 
 # nocov end

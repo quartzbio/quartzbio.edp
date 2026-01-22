@@ -10,9 +10,13 @@ test_that_with_edp_api("datasets", {
   expect_identical(ds$path, "/toto/titi/my_dataset")
 
   # all params
-  ds2 <- Dataset_create(v, "/toto/titi/my_dataset2",
+  ds2 <- Dataset_create(
+    v,
+    "/toto/titi/my_dataset2",
     description = "description",
-    metadata = list(DEV = TRUE), tags = list("QBP", "EDP"), storage_class = "Temporary",
+    metadata = list(DEV = TRUE),
+    tags = list("QBP", "EDP"),
+    storage_class = "Temporary",
     capacity = "small"
   )
 
@@ -54,7 +58,11 @@ test_that_with_edp_api("datasets", {
     list(gene = "BRCA2", importance = 1, sample_count = 1391),
     list(gene = "CLIC2", importance = 5, sample_count = 14)
   )
-  res <- Dataset_import(ds, records = records, sync = httptest_is_capture_enabled())
+  res <- Dataset_import(
+    ds,
+    records = records,
+    sync = httptest_is_capture_enabled()
+  )
 
   expect_s3_class(res, "DatasetImport")
   # check content
@@ -92,12 +100,13 @@ test_that_with_edp_api("datasets", {
   expect_identical(class(df$arbitrary), "character")
   df$arbitrary <- bless(df$arbitrary, "myclass")
   expect_equal(df, dfi, ignore_attr = TRUE)
-
 })
 
 test_that("dataset_load", {
   local_mocked_bindings(
-    dataset_export_to_parquet = function(id, full_path, ...) file.path("CAPTURES", "dataset_load", "userdata1.parquet")
+    dataset_export_to_parquet = function(id, full_path, ...) {
+      file.path("CAPTURES", "dataset_load", "userdata1.parquet")
+    }
   )
 
   # Dataset schema
@@ -130,15 +139,18 @@ test_that("dataset_load", {
   expect_equal(names(Dataset_schema(id = "1234567")), names(expect_schema))
 
   expect_equal(
-    names(Dataset_schema(parquet_path = file.path("CAPTURES", "dataset_load", "userdata1.parquet"))),
+    names(Dataset_schema(
+      parquet_path = file.path("CAPTURES", "dataset_load", "userdata1.parquet")
+    )),
     names(expect_schema)
   )
 
   expect_equal(
-    class(Dataset_schema(parquet_path = file.path("CAPTURES", "dataset_load", "userdata1.parquet"))),
+    class(Dataset_schema(
+      parquet_path = file.path("CAPTURES", "dataset_load", "userdata1.parquet")
+    )),
     class(expect_schema)
   )
-
 
   # Dataset load
   # Check the tibble returned
@@ -148,14 +160,25 @@ test_that("dataset_load", {
   expect_equal(ncol(user_data), 13)
 
   # select fields
-  selected_user_data <- Dataset_load(id = "1234567", col_select = c("first_name", "last_name", "country", "title"))
+  selected_user_data <- Dataset_load(
+    id = "1234567",
+    col_select = c("first_name", "last_name", "country", "title")
+  )
   # expect_equal(nrow(selected_user_data), 1000)
   expect_equal(ncol(selected_user_data), 4)
 
   # As arrow table
 
   arrow_table_data <- Dataset_load(
-    full_path = "vault_path/to/dataset", col_select = c("first_name", "last_name", "country", "title", "gender", "comments"),
+    full_path = "vault_path/to/dataset",
+    col_select = c(
+      "first_name",
+      "last_name",
+      "country",
+      "title",
+      "gender",
+      "comments"
+    ),
     as_data_frame = FALSE
   )
 
@@ -163,7 +186,10 @@ test_that("dataset_load", {
   expect_true("ArrowObject" %in% class(arrow_table_data))
 
   # Read data into dataframe with schema
-  user_data_result <- Dataset_load(full_path = "vault_path/to/dataset", get_schema = TRUE)
+  user_data_result <- Dataset_load(
+    full_path = "vault_path/to/dataset",
+    get_schema = TRUE
+  )
   expect_equal(nrow(user_data_result$df), 1000)
   expect_equal(ncol(user_data_result$df), 13)
 
@@ -171,7 +197,10 @@ test_that("dataset_load", {
   expect_equal(user_data_result$schema$types, expect_schema$types)
 
   # filter data via Arrow expressions
-  user_data_filter <- Dataset_load(id = "1234567", filter_expr = arrow::Expression$field_ref("first_name") == "Emily")
+  user_data_filter <- Dataset_load(
+    id = "1234567",
+    filter_expr = arrow::Expression$field_ref("first_name") == "Emily"
+  )
   expect_equal(nrow(user_data_filter), 4)
   expect_equal(ncol(user_data_filter), 13)
 })

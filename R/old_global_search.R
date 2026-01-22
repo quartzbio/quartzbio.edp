@@ -34,7 +34,14 @@ GlobalSearch.search <- function(paginate = FALSE, env = get_connection(), ...) {
   offset <- response$offset
 
   if (response$total > 100000 && isTRUE(paginate)) {
-    warning(paste("This query will retrieve ", response$total, " records, which may take some time..."), call. = FALSE)
+    warning(
+      paste(
+        "This query will retrieve ",
+        response$total,
+        " records, which may take some time..."
+      ),
+      call. = FALSE
+    )
   }
 
   # Continue to make requests for data if pagination is enabled and there are more records
@@ -46,7 +53,8 @@ GlobalSearch.search <- function(paginate = FALSE, env = get_connection(), ...) {
   }
 
   if (!isTRUE(paginate) && !is.null(offset)) {
-    warning(paste("This call returned only the first page of records. To retrieve more pages automatically,",
+    warning(paste(
+      "This call returned only the first page of records. To retrieve more pages automatically,",
       "please set paginate=TRUE when calling GlobalSearch.search().",
       call. = FALSE
     ))
@@ -78,7 +86,8 @@ GlobalSearch.facets <- function(facets, env = get_connection(), ...) {
   if (inherits(facets, "character")) {
     if (grepl("[[{]", facets)) {
       # If it looks like JSON, try to convert to an R structure
-      facets <- jsonlite::fromJSON(facets,
+      facets <- jsonlite::fromJSON(
+        facets,
         simplifyVector = FALSE,
         simplifyDataFrame = TRUE,
         simplifyMatrix = FALSE
@@ -189,7 +198,13 @@ GlobalSearch.subjects_count <- function(env = get_connection(), ...) {
 #'
 #' @concept  quartzbio_api
 #' @export
-GlobalSearch.request <- function(query = NULL, filters, entities, env = get_connection(), ...) {
+GlobalSearch.request <- function(
+  query = NULL,
+  filters,
+  entities,
+  env = get_connection(),
+  ...
+) {
   body <- list(...)
 
   # Advanced search query
@@ -199,7 +214,8 @@ GlobalSearch.request <- function(query = NULL, filters, entities, env = get_conn
   if (!missing(filters) && !is.null(filters) && length(filters) > 0) {
     if (inherits(filters, "character")) {
       # Convert JSON string to an R structure
-      filters <- jsonlite::fromJSON(filters,
+      filters <- jsonlite::fromJSON(
+        filters,
         simplifyVector = FALSE,
         simplifyDataFrame = TRUE,
         simplifyMatrix = FALSE
@@ -213,7 +229,8 @@ GlobalSearch.request <- function(query = NULL, filters, entities, env = get_conn
   if (!missing(entities) && !is.null(entities) && length(entities) > 0) {
     if (inherits(entities, "character")) {
       # Convert JSON string to an R structure
-      entities <- jsonlite::fromJSON(entities,
+      entities <- jsonlite::fromJSON(
+        entities,
         simplifyVector = FALSE,
         simplifyDataFrame = TRUE,
         simplifyMatrix = FALSE
@@ -222,7 +239,6 @@ GlobalSearch.request <- function(query = NULL, filters, entities, env = get_conn
     # Add entities to request body
     body <- modifyList(body, list(entities = entities))
   }
-
 
   tryCatch(
     {

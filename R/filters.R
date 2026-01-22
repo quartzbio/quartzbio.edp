@@ -54,10 +54,14 @@ filters <- function(x) {
     # assign(r_operator,  op, envir = env)
   }
 
-
   expr <- try(parse(text = fil), silent = TRUE)
 
-  .die_if(.is_error(expr), 'Syntax Error in the filter string <<%s>>: "%s"', x, .get_error_msg(expr))
+  .die_if(
+    .is_error(expr),
+    'Syntax Error in the filter string <<%s>>: "%s"',
+    x,
+    .get_error_msg(expr)
+  )
 
   lst <- code_to_list(expr)
   # lst2 <- substitute_operators(lst)
@@ -152,7 +156,9 @@ code_to_list <- function(code) {
     return(NULL)
   }
 
-  if (is.expression(code)) code <- as.call(code)[[1]]
+  if (is.expression(code)) {
+    code <- as.call(code)[[1]]
+  }
 
   # not recursive, i.e. just a symbol or litteral
   if ((!is.call(code) && !is.pairlist(code)) || is.symbol(code)) {
@@ -175,7 +181,9 @@ code_to_list_rec <- function(call) {
   for (i in seq_along(call)) {
     item <- call[[i]]
     # it may be missing, e.g in quote(x[])-> do not include it
-    if (missing(item)) next
+    if (missing(item)) {
+      next
+    }
     # test if scalar (i.e. not recursive)
     if (!(is.call(item) || is.pairlist(item))) {
       lst[[i]] <- item

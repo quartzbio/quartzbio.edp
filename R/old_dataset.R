@@ -30,7 +30,12 @@ Dataset.all <- function(env = get_connection(), ...) {
 #' @concept  quartzbio_api
 #' @export
 Dataset.retrieve <- function(id, env = get_connection()) {
-  deprecate_soft("1.0.0", "Dataset.retrieve()", "Dataset()", details = "Dataset() fetches a dataset using either id or the full path")
+  deprecate_soft(
+    "1.0.0",
+    "Dataset.retrieve()",
+    "Dataset()",
+    details = "Dataset() fetches a dataset using either id or the full path"
+  )
   if (missing(id)) {
     stop("A dataset ID is required.")
   }
@@ -101,7 +106,10 @@ Dataset.template <- function(id, env = get_connection()) {
 #' @concept  quartzbio_api
 #' @export
 Dataset.data <- function(id, filters, env = get_connection(), ...) {
-  if (missing(id) || !(class(id) %in% c("Dataset", "numeric", "integer", "character"))) {
+  if (
+    missing(id) ||
+      !(class(id) %in% c("Dataset", "numeric", "integer", "character"))
+  ) {
     stop("A dataset ID (or object) is required.")
   }
   if (inherits(id, "Dataset") || inherits(id, "Object")) {
@@ -112,7 +120,8 @@ Dataset.data <- function(id, filters, env = get_connection(), ...) {
   if (!missing(filters) && !is.null(filters) && length(filters) > 0) {
     if (inherits(filters, "character")) {
       # Convert JSON string to an R structure
-      filters <- jsonlite::fromJSON(filters,
+      filters <- jsonlite::fromJSON(
+        filters,
         simplifyVector = FALSE,
         simplifyDataFrame = TRUE,
         simplifyMatrix = FALSE
@@ -156,7 +165,13 @@ Dataset.data <- function(id, filters, env = get_connection(), ...) {
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
-Dataset.query <- function(id, paginate = FALSE, use_field_titles = TRUE, env = get_connection(), ...) {
+Dataset.query <- function(
+  id,
+  paginate = FALSE,
+  use_field_titles = TRUE,
+  env = get_connection(),
+  ...
+) {
   deprecate_soft("1.0.0", "Dataset.query()", "Dataset_query()")
   params <- list(...)
   params$id <- id
@@ -168,7 +183,14 @@ Dataset.query <- function(id, paginate = FALSE, use_field_titles = TRUE, env = g
   offset <- response$offset
 
   if (response$total > 100000 && isTRUE(paginate)) {
-    warning(paste("This query will retrieve ", response$total, " records, which may take some time..."), call. = FALSE)
+    warning(
+      paste(
+        "This query will retrieve ",
+        response$total,
+        " records, which may take some time..."
+      ),
+      call. = FALSE
+    )
   }
 
   # Continue to make requests for data if pagination is enabled and there are more records
@@ -180,7 +202,8 @@ Dataset.query <- function(id, paginate = FALSE, use_field_titles = TRUE, env = g
   }
 
   if (!isTRUE(paginate) && !is.null(offset)) {
-    warning(paste("This call returned only the first page of records. To retrieve more pages automatically,",
+    warning(paste(
+      "This call returned only the first page of records. To retrieve more pages automatically,",
       "please set paginate=TRUE when calling Dataset.query().",
       call. = FALSE
     ))
@@ -249,7 +272,8 @@ Dataset.facets <- function(id, facets, env = get_connection(), ...) {
   if (inherits(facets, "character")) {
     if (grepl("[[{]", facets)) {
       # If it looks like JSON, try to convert to an R structure
-      facets <- jsonlite::fromJSON(facets,
+      facets <- jsonlite::fromJSON(
+        facets,
         simplifyVector = FALSE,
         simplifyDataFrame = TRUE,
         simplifyMatrix = FALSE
@@ -314,7 +338,13 @@ Dataset.count <- function(id, env = get_connection(), ...) {
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
-Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_connection(), ...) {
+Dataset.create <- function(
+  vault_id,
+  vault_parent_object_id,
+  name,
+  env = get_connection(),
+  ...
+) {
   deprecate_soft("1.0.0", "Dataset.create()", "Dataset_create()")
   if (missing(vault_id)) {
     stop("A vault ID is required.")
@@ -334,7 +364,13 @@ Dataset.create <- function(vault_id, vault_parent_object_id, name, env = get_con
     ...
   )
 
-  dataset <- .request("POST", path = "v2/datasets", query = NULL, body = params, env = env)
+  dataset <- .request(
+    "POST",
+    path = "v2/datasets",
+    query = NULL,
+    body = params,
+    env = env
+  )
 
   dataset
 }
@@ -384,7 +420,12 @@ Dataset.update <- function(id, env = get_connection(), ...) {
 #' @concept  quartzbio_api
 #' @export
 Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
-  deprecate_soft("1.0.0", "Dataset.get_by_full_path()", "Dataset()", details = "Dataset() fetches a dataset using either id or the full path")
+  deprecate_soft(
+    "1.0.0",
+    "Dataset.get_by_full_path()",
+    "Dataset()",
+    details = "Dataset() fetches a dataset using either id or the full path"
+  )
   object <- Object.get_by_full_path(full_path, env = env)
 
   dataset <- do.call(Dataset.retrieve, list(id = object$dataset_id, env = env))
@@ -406,7 +447,11 @@ Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
 #'
 #' @concept  quartzbio_api
 #' @export
-Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
+Dataset.get_or_create_by_full_path <- function(
+  full_path,
+  env = get_connection(),
+  ...
+) {
   dataset <- NULL
   tryCatch(
     {
@@ -445,8 +490,15 @@ Dataset.get_or_create_by_full_path <- function(full_path, env = get_connection()
     parent_object_id <- NULL
   } else {
     # Get or create the parent folder
-    parent_object <- Object.get_by_path(path = parent_path, vault_id = vault$id, env = env)
-    if (is.null(parent_object) || (is.data.frame(parent_object) && nrow(parent_object) == 0)) {
+    parent_object <- Object.get_by_path(
+      path = parent_path,
+      vault_id = vault$id,
+      env = env
+    )
+    if (
+      is.null(parent_object) ||
+        (is.data.frame(parent_object) && nrow(parent_object) == 0)
+    ) {
       parent_object <- Vault.create_folder(
         id = vault$id,
         path = parent_path,
@@ -519,12 +571,20 @@ Dataset.activity <- function(id, follow = TRUE, env = get_connection()) {
 #'
 #' @concept  quartzbio_api
 #' @export
-Dataset.get_global_beacon_status <- function(id, raise_on_disabled = FALSE, env = get_connection()) {
+Dataset.get_global_beacon_status <- function(
+  id,
+  raise_on_disabled = FALSE,
+  env = get_connection()
+) {
   if (missing(id)) {
     stop("A dataset ID is required.")
   }
 
-  Object.get_global_beacon_status(id, raise_on_disabled = raise_on_disabled, env = env)
+  Object.get_global_beacon_status(
+    id,
+    raise_on_disabled = raise_on_disabled,
+    env = env
+  )
 }
 
 
@@ -570,7 +630,5 @@ Dataset.disable_global_beacon <- function(id, env = get_connection()) {
 
   Object.disable_global_beacon(id, env = env)
 }
-
-
 
 # nocov end

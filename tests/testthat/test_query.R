@@ -10,7 +10,8 @@ test_that("Query the dataset and check that titles are colnames in df", {
   fields <- DatasetFields(ds)
   fields_h <- as.list(sort(names(fields)))
   expect_warning(
-    query <- Dataset.query(ds$id,
+    query <- Dataset.query(
+      ds$id,
       fields = fields_h[1:2],
       use_field_titles = TRUE
     ),

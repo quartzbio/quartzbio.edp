@@ -109,7 +109,13 @@ BeaconSet.delete <- function(id, env = get_connection()) {
 #'
 #' @concept  quartzbio_api
 #' @export
-BeaconSet.create <- function(title, description, is_shared = FALSE, env = get_connection(), ...) {
+BeaconSet.create <- function(
+  title,
+  description,
+  is_shared = FALSE,
+  env = get_connection(),
+  ...
+) {
   if (missing(title)) {
     stop("A title is required.")
   }
@@ -124,7 +130,13 @@ BeaconSet.create <- function(title, description, is_shared = FALSE, env = get_co
     ...
   )
 
-  .request("POST", path = "v2/beacon_sets", query = NULL, body = params, env = env)
+  .request(
+    "POST",
+    path = "v2/beacon_sets",
+    query = NULL,
+    body = params,
+    env = env
+  )
 }
 
 
@@ -148,7 +160,13 @@ BeaconSet.create <- function(title, description, is_shared = FALSE, env = get_co
 #'
 #' @concept  quartzbio_api
 #' @export
-BeaconSet.query <- function(id, query, entity_type, env = get_connection(), ...) {
+BeaconSet.query <- function(
+  id,
+  query,
+  entity_type,
+  env = get_connection(),
+  ...
+) {
   if (missing(id)) {
     stop("A beacon set ID is required.")
   }

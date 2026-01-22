@@ -1,5 +1,7 @@
 bless <- function(o, ...) {
-  if (!length(o)) o <- data.frame()
+  if (!length(o)) {
+    o <- data.frame()
+  }
   class(o) <- c(list(...), class(o))
   o
 }
@@ -34,7 +36,6 @@ scalarize_list <- function(lst) {
 }
 
 
-
 # inspired by from wkb:::.hex2raw
 hex2raw <- function(hex) {
   msg <- "hex is not a valid hexadecimal representation"
@@ -42,7 +43,8 @@ hex2raw <- function(hex) {
 
   # sanitize
   hex <- gsub("[^0-9a-fA-F]", "", hex)
-  if (length(hex) == 1) { # single string, split it to a vector of strings
+  if (length(hex) == 1) {
+    # single string, split it to a vector of strings
     nb <- nchar(hex)
     .die_unless(nb > 0 && nb %% 2 == 0, msg)
     hex <- strsplit(hex, "")[[1]]
@@ -99,7 +101,6 @@ summary_string <- function(lst) {
 }
 
 
-
 # if x is a list with a scalar x$id item, it is returned
 # otherwise x is returned
 id <- function(x) {
@@ -128,10 +129,11 @@ msg <- function(...) {
 }
 
 build_httr_response <- function(
-    url,
-    code = 200L,
-    headers = list(`content-type` = "application/json"),
-    content = NULL) {
+  url,
+  code = 200L,
+  headers = list(`content-type` = "application/json"),
+  content = NULL
+) {
   structure(
     list(
       url = url,

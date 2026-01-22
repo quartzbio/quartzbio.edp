@@ -96,7 +96,12 @@ Application.delete <- function(client_id, env = get_connection()) {
 #'
 #' @concept  quartzbio_api
 #' @export
-Application.create <- function(name, redirect_uris, env = get_connection(), ...) {
+Application.create <- function(
+  name,
+  redirect_uris,
+  env = get_connection(),
+  ...
+) {
   if (missing(name)) {
     stop("A name is required.")
   }
@@ -110,6 +115,12 @@ Application.create <- function(name, redirect_uris, env = get_connection(), ...)
     ...
   )
 
-  .request("POST", path = "v2/applications", query = NULL, body = params, env = env)
+  .request(
+    "POST",
+    path = "v2/applications",
+    query = NULL,
+    body = params,
+    env = env
+  )
 }
 # nocov end

@@ -37,7 +37,6 @@ test_that_with_edp_api("vaultlist_methods", {
 })
 
 
-
 test_that_with_edp_api("fetch", {
   v <- get_test_vault()
 
@@ -52,7 +51,6 @@ test_that_with_edp_api("fetch", {
   v3 <- fetch(vault_id)
   expect_equal(v3, v)
 })
-
 
 
 test_that_with_edp_api("delete", {
@@ -73,15 +71,18 @@ test_that_with_edp_api("delete", {
 })
 
 
-
 test_that_with_edp_api("update", {
   v <- get_test_vault()
 
   ### Vault_update
   name <- paste0(v$name, "toto")
-  v2 <- Vault_update(v,
-    name = name, description = "desc",
-    metadata = list(meta1 = "toto"), storage_class = "Performance", tags = "A"
+  v2 <- Vault_update(
+    v,
+    name = name,
+    description = "desc",
+    metadata = list(meta1 = "toto"),
+    storage_class = "Performance",
+    tags = "A"
   )
 
   expect_identical(v2$name, name)
@@ -107,7 +108,6 @@ test_that_with_edp_api("update", {
 })
 
 
-
 test_that_with_edp_api("print", {
   ### print.Vaults
   vs <- Vaults(limit = 2)
@@ -124,19 +124,28 @@ test_that_with_edp_api("print", {
 })
 
 
-
 test_that_with_edp_api("vaults", {
   # create some vaults
   NAMES <- paste0("qb.edp.", LETTERS[1:3])
   .cleanup <- function() {
-    for (name in NAMES) ..delete_vault_by_name(name)
+    for (name in NAMES) {
+      ..delete_vault_by_name(name)
+    }
   }
   .cleanup()
 
   VS <- list(
-    Vault_create(NAMES[1], tags = c("A", "TEMP", "QBTEST"), storage_class = "Temporary"),
+    Vault_create(
+      NAMES[1],
+      tags = c("A", "TEMP", "QBTEST"),
+      storage_class = "Temporary"
+    ),
     Vault_create(NAMES[2], tags = c("B", "PROD", "QBTEST")),
-    Vault_create(NAMES[3], tags = c("C", "TEMP", "QBTEST"), storage_class = "Temporary")
+    Vault_create(
+      NAMES[3],
+      tags = c("C", "TEMP", "QBTEST"),
+      storage_class = "Temporary"
+    )
   )
   on.exit(.cleanup(), add = TRUE)
 
@@ -150,7 +159,10 @@ test_that_with_edp_api("vaults", {
   expect_equal(attr(vs, "total"), 3)
   expect_true(nzchar(attr(vs, "url")))
 
-  expect_equal(attr(vs, "connection"), as.environment(get_connection(auto = FALSE)))
+  expect_equal(
+    attr(vs, "connection"),
+    as.environment(get_connection(auto = FALSE))
+  )
   links <- attr(vs, "links")
   expect_equal(links, list(`next` = NULL, prev = NULL))
   # items
@@ -181,7 +193,6 @@ test_that_with_edp_api("vaults", {
   links <- attr(vs, "links")
   expect_true(nzchar(links$`next`))
   expect_true(nzchar(links$`prev`))
-
 
   ### by account_id
   vs <- Vaults(account_id = VS[[1]]$account_id, limit = 1)

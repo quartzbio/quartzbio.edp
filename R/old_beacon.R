@@ -82,7 +82,13 @@ Beacon.delete <- function(id, env = get_connection()) {
 #'
 #' @concept  quartzbio_api
 #' @export
-Beacon.create <- function(beacon_set_id, vault_object_id, title, env = get_connection(), ...) {
+Beacon.create <- function(
+  beacon_set_id,
+  vault_object_id,
+  title,
+  env = get_connection(),
+  ...
+) {
   if (missing(beacon_set_id)) {
     stop("A beacon set ID is required.")
   }

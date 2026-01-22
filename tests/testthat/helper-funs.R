@@ -3,11 +3,15 @@ setup_temp_dir <- function(chdir = TRUE, ...) {
   dir <- tempfile(...)
   dir.create(dir, recursive = TRUE)
   old_dir <- NULL
-  if (chdir) old_dir <- setwd(dir)
+  if (chdir) {
+    old_dir <- setwd(dir)
+  }
 
   # on one line because it not seen by the coverage
   cleanup <- bquote({
-    if (.(chdir)) setwd(.(old_dir))
+    if (.(chdir)) {
+      setwd(.(old_dir))
+    }
     unlink(.(dir), recursive = TRUE)
   })
 
@@ -20,7 +24,12 @@ add_on_exit <- function(expr, where = parent.frame()) {
   do.call("on.exit", list(substitute(expr), add = TRUE), envir = where)
 }
 
-fake_httr_response <- function(url, content, status_code = 200L, method = "GET") {
+fake_httr_response <- function(
+  url,
+  content,
+  status_code = 200L,
+  method = "GET"
+) {
   res <- list(
     url = url,
     status_code = status_code,
@@ -36,11 +45,23 @@ fake_httr_response <- function(url, content, status_code = 200L, method = "GET")
 }
 
 httptest_is_capture_enabled <- function() {
-  .is_nz_string(Sys.getenv("MOCK_API_CAPTURE", getOption("mock.api.capture", "")))
+  .is_nz_string(Sys.getenv(
+    "MOCK_API_CAPTURE",
+    getOption("mock.api.capture", "")
+  ))
 }
 
-httr_response_set_json_content_to_list <- function(res, lst, pretty = TRUE, auto_unbox = FALSE) {
-  res_json <- as.character(jsonlite::toJSON(lst, pretty = pretty, auto_unbox = auto_unbox))
+httr_response_set_json_content_to_list <- function(
+  res,
+  lst,
+  pretty = TRUE,
+  auto_unbox = FALSE
+) {
+  res_json <- as.character(jsonlite::toJSON(
+    lst,
+    pretty = pretty,
+    auto_unbox = auto_unbox
+  ))
   res$content <- charToRaw(res_json)
   res
 }
@@ -57,10 +78,12 @@ httptest_backup_capture_dir <- function(capture_dir) {
   file.path(dirname(capture_dir), paste0(".", basename(capture_dir)))
 }
 
-start_mock_api <- function(capture = httptest_is_capture_enabled(),
-                           capture_dir,
-                           requester,
-                           redactor) {
+start_mock_api <- function(
+  capture = httptest_is_capture_enabled(),
+  capture_dir,
+  requester,
+  redactor
+) {
   backup <- list()
   old <- httptest_set_mock_paths(capture_dir)
   backup$mock_paths <- old
@@ -84,7 +107,10 @@ start_mock_api <- function(capture = httptest_is_capture_enabled(),
         unlink(bak, recursive = TRUE)
       }
       # Rename
-      die_unless(file.rename(capture_dir, bak), 'could not rename "{capture_dir}" --> "{bak}"')
+      die_unless(
+        file.rename(capture_dir, bak),
+        'could not rename "{capture_dir}" --> "{bak}"'
+      )
     }
 
     # create capture dir

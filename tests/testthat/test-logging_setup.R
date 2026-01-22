@@ -1,12 +1,18 @@
 test_that("Configure logger without logger", {
   mockery::stub(configure_logger, "requireNamespace", function(...) FALSE)
-  expect_warning(configure_logger("log_file_test.log"), regexp = "The 'logger' package is not installed. Logging will be disabled.")
+  expect_warning(
+    configure_logger("log_file_test.log"),
+    regexp = "The 'logger' package is not installed. Logging will be disabled."
+  )
 })
 
 test_that("Configure logger test", {
   mockery::stub(configure_logger, "requireNamespace", function(...) TRUE)
   expect_equal(configure_logger("log_file_test.log"), "log_file_test.log")
-  expect_warning(configure_logger(NULL), regexp = "Invalid file path for log file. Defaulting to console logging")
+  expect_warning(
+    configure_logger(NULL),
+    regexp = "Invalid file path for log file. Defaulting to console logging"
+  )
   expect_equal(configure_logger(NULL), "console")
 })
 
@@ -37,9 +43,18 @@ test_that("log message", {
 test_that("log message without logger", {
   mockery::stub(log_message, "requireNamespace", function(...) FALSE)
 
-  expect_message(log_message("INFO", "This is a info log"), "INFO: This is a info log")
-  expect_message(log_message("DEBUG", "This is a debug message"), "DEBUG: This is a debug message")
-  expect_warning(log_message("WARN", "This is a warning"), "WARNING: This is a warning")
+  expect_message(
+    log_message("INFO", "This is a info log"),
+    "INFO: This is a info log"
+  )
+  expect_message(
+    log_message("DEBUG", "This is a debug message"),
+    "DEBUG: This is a debug message"
+  )
+  expect_warning(
+    log_message("WARN", "This is a warning"),
+    "WARNING: This is a warning"
+  )
 })
 
 test_that("edp_health_check", {

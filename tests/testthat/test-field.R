@@ -3,9 +3,13 @@ test_that_with_edp_api("datasetfields", {
   ds <- Dataset_create(v, "dummy.ds")
 
   #### DatasetField_create
-  field <- DatasetField_create(ds,
-    name = "name", title = "title", data_type = "float",
-    description = "description", ordering = 1
+  field <- DatasetField_create(
+    ds,
+    name = "name",
+    title = "title",
+    data_type = "float",
+    description = "description",
+    ordering = 1
   )
 
   expect_s3_class(field, "DatasetField")
@@ -16,7 +20,12 @@ test_that_with_edp_api("datasetfields", {
   expect_identical(field$description, "description")
 
   #
-  field2 <- DatasetField_create(ds, name = "name2", entity_type = "gene", data_type = "string")
+  field2 <- DatasetField_create(
+    ds,
+    name = "name2",
+    entity_type = "gene",
+    data_type = "string"
+  )
 
   expect_identical(field2$name, "name2")
   expect_identical(field2$title, "name2")
@@ -30,14 +39,14 @@ test_that_with_edp_api("datasetfields", {
 
   ### DatasetFields()
   # TODO: replace that bt a sync or a wait with tasks
-  if (httptest_is_capture_enabled()) Sys.sleep(30)
+  if (httptest_is_capture_enabled()) {
+    Sys.sleep(30)
+  }
   fields <- DatasetFields(ds, all = TRUE)
 
   expect_s3_class(fields, "DatasetFieldList")
   # NB: this includes the _commit field
   expect_length(fields, 6)
-
-
 
   ### DatasetField()
   field2bis <- DatasetField(field2)
@@ -55,7 +64,10 @@ test_that_with_edp_api("datasetfields", {
   expect_equal(field2ter, field2bis)
 
   expect_error(DatasetField("does_not_exist"), "not found")
-  expect_error(DatasetField(dataset_id = "does/not/exist", name = "bad"), "not found")
+  expect_error(
+    DatasetField(dataset_id = "does/not/exist", name = "bad"),
+    "not found"
+  )
 
   ### methods
   # as.data.frame.DatasetField
@@ -99,7 +111,10 @@ test_that_with_edp_api("datasetfields", {
 
   # pagination
   pagination <- attr(f1, "pagination")
-  expect_equal(pagination$page_index, list(index = 1, nb = 3, total = 6, size = 2))
+  expect_equal(
+    pagination$page_index,
+    list(index = 1, nb = 3, total = 6, size = 2)
+  )
 
   ### DatasetField_update
   field1 <- DatasetField_update(field, title = "NewTitle")
@@ -108,7 +123,6 @@ test_that_with_edp_api("datasetfields", {
   expect_identical(field1$id, field$id)
   expect_identical(field1$title, "NewTitle")
 })
-
 
 
 test_that("infer_fields_from_df", {
@@ -137,18 +151,28 @@ test_that("infer_fields_from_df", {
   expect_length(fields, ncol(df))
   expect_identical(names(fields), names(df))
   .test_field <- function(field) {
-    all(names(field) %in% c("name", "title", "data_type", "description", "ordering"))
+    all(
+      names(field) %in%
+        c("name", "title", "data_type", "description", "ordering")
+    )
   }
   expect_true(all(sapply(fields, .test_field)))
   expect_identical(
     unlist1(elts(fields, "data_type")),
     c(
-      "boolean", "string", "double", "integer", "string", "double",
-      "integer", "string", "date", "auto"
+      "boolean",
+      "string",
+      "double",
+      "integer",
+      "string",
+      "double",
+      "integer",
+      "string",
+      "date",
+      "auto"
     )
   )
 })
-
 
 
 test_that("create_model_df_from_fields_and_cie", {
@@ -156,13 +180,30 @@ test_that("create_model_df_from_fields_and_cie", {
 
   ### create a fields dummy list
   DATA_TYPES <- c(
-    "auto", "boolean", "date", "double", "float", "integer", "long", "object",
-    "string", "text", "blob"
+    "auto",
+    "boolean",
+    "date",
+    "double",
+    "float",
+    "integer",
+    "long",
+    "object",
+    "string",
+    "text",
+    "blob"
   )
-  .field <- function(name, title = toupper(name), ordering = NULL, description = "",
-                     data_type = DATA_TYPES) {
+  .field <- function(
+    name,
+    title = toupper(name),
+    ordering = NULL,
+    description = "",
+    data_type = DATA_TYPES
+  ) {
     list(
-      name = name, title = title, description = description, data_type = match.arg(data_type),
+      name = name,
+      title = title,
+      description = description,
+      data_type = match.arg(data_type),
       ordering = ordering
     )
   }
@@ -170,7 +211,12 @@ test_that("create_model_df_from_fields_and_cie", {
   .typefield <- function(type, ordering) {
     .field(name = type, data_type = type, ordering = ordering)
   }
-  fields <- mapply(.typefield, DATA_TYPES, seq_along(DATA_TYPES) - 1, SIMPLIFY = FALSE)
+  fields <- mapply(
+    .typefield,
+    DATA_TYPES,
+    seq_along(DATA_TYPES) - 1,
+    SIMPLIFY = FALSE
+  )
   # remove some ordering
   fields$date$ordering <- fields$long$ordering <- NULL
   # add entity type for one filed
@@ -185,8 +231,18 @@ test_that("create_model_df_from_fields_and_cie", {
   expect_identical(
     tolower(names(df)),
     c(
-      "auto", "boolean", "double", "float", "integer", "object", "string", "text", "blob",
-      "long", "date", "extra"
+      "auto",
+      "boolean",
+      "double",
+      "float",
+      "integer",
+      "object",
+      "string",
+      "text",
+      "blob",
+      "long",
+      "date",
+      "extra"
     )
   )
 
@@ -196,9 +252,17 @@ test_that("create_model_df_from_fields_and_cie", {
   expect_identical(
     classes,
     c(
-      auto = "character", boolean = "logical", double = "numeric",
-      float = "numeric", integer = "integer", object = "list", string = "character",
-      text = "character", blob = "character", long = "integer", date = "character",
+      auto = "character",
+      boolean = "logical",
+      double = "numeric",
+      float = "numeric",
+      integer = "integer",
+      object = "list",
+      string = "character",
+      text = "character",
+      blob = "character",
+      long = "integer",
+      date = "character",
       extra = "character"
     )
   )
@@ -237,12 +301,16 @@ test_that("create_model_df_from_fields_and_cie", {
 
   df <- .mkdf(cols, 5)
 
-  expect_warning(df2 <- format_df_like_model(df, model), "NAs introduced by coercion")
+  expect_warning(
+    df2 <- format_df_like_model(df, model),
+    "NAs introduced by coercion"
+  )
 
   # content
   expect_identical(dim(df2), dim(df))
   comparable_fields <- c("object", "string", "text", "date")
-  expect_true(all.equal(df2[, toupper(comparable_fields)],
+  expect_true(all.equal(
+    df2[, toupper(comparable_fields)],
     df[comparable_fields],
     check.attributes = FALSE
   ))
@@ -271,10 +339,18 @@ test_that("format_df_like_model works for list values", {
   ### create a fields dummy list
   DATA_TYPES <- c("string", "double", "integer", "long")
 
-  .field <- function(name, title = toupper(name), ordering = NULL, description = "",
-                     data_type = DATA_TYPES) {
+  .field <- function(
+    name,
+    title = toupper(name),
+    ordering = NULL,
+    description = "",
+    data_type = DATA_TYPES
+  ) {
     list(
-      name = name, title = title, description = description, data_type = match.arg(data_type),
+      name = name,
+      title = title,
+      description = description,
+      data_type = match.arg(data_type),
       ordering = ordering
     )
   }
@@ -282,7 +358,12 @@ test_that("format_df_like_model works for list values", {
   .typefield <- function(type, ordering) {
     .field(name = type, data_type = type, ordering = ordering)
   }
-  fields <- mapply(.typefield, DATA_TYPES, seq_along(DATA_TYPES) - 1, SIMPLIFY = FALSE)
+  fields <- mapply(
+    .typefield,
+    DATA_TYPES,
+    seq_along(DATA_TYPES) - 1,
+    SIMPLIFY = FALSE
+  )
   # remove some ordering
   fields$date$ordering <- fields$long$ordering <- NULL
   # add entity type for one filed
@@ -292,7 +373,8 @@ test_that("format_df_like_model works for list values", {
   model <- df
   create_rows <- function(col) {
     col <- toupper(col)
-    rows <- switch(col,
+    rows <- switch(
+      col,
       "STRING" = {
         list1 <- c("a1", "a2", "a3")
         list2 <- c("b1", "b2", "b3")
@@ -326,10 +408,7 @@ test_that("format_df_like_model works for list values", {
     names(column_rows) <- cols
 
     df <- data.frame(
-      matrix(NA,
-        nrow = length(column_rows[[1]]),
-        ncol = length(column_rows)
-      ),
+      matrix(NA, nrow = length(column_rows[[1]]), ncol = length(column_rows)),
       stringsAsFactors = FALSE
     )
     colnames(df) <- names(column_rows)
@@ -358,13 +437,30 @@ test_that("format_df_with_fields", {
   format_df_with_fields <- quartzbio.edp:::format_df_with_fields
 
   DATA_TYPES <- c(
-    "auto", "boolean", "date", "double", "float", "integer", "long", "object",
-    "string", "text", "blob"
+    "auto",
+    "boolean",
+    "date",
+    "double",
+    "float",
+    "integer",
+    "long",
+    "object",
+    "string",
+    "text",
+    "blob"
   )
-  .field <- function(name, title = toupper(name), ordering = NULL, description = NULL,
-                     data_type = DATA_TYPES) {
+  .field <- function(
+    name,
+    title = toupper(name),
+    ordering = NULL,
+    description = NULL,
+    data_type = DATA_TYPES
+  ) {
     list(
-      name = name, title = title, description = description, data_type = match.arg(data_type),
+      name = name,
+      title = title,
+      description = description,
+      data_type = match.arg(data_type),
       ordering = ordering
     )
   }
@@ -372,7 +468,12 @@ test_that("format_df_with_fields", {
   .typefield <- function(type, ordering) {
     .field(name = type, data_type = type, ordering = ordering)
   }
-  fields <- mapply(.typefield, DATA_TYPES, seq_along(DATA_TYPES) - 1, SIMPLIFY = FALSE)
+  fields <- mapply(
+    .typefield,
+    DATA_TYPES,
+    seq_along(DATA_TYPES) - 1,
+    SIMPLIFY = FALSE
+  )
   # remove some ordering
   fields$date$ordering <- fields$long$ordering <- NULL
 
@@ -395,15 +496,28 @@ test_that("format_df_with_fields", {
   attr(df, "preserved") <- TRUE
 
   # we coerce strings to numerics, booleans --> warnings
-  expect_warning(df2 <- format_df_with_fields(df, fields), "NAs introduced by coercion")
+  expect_warning(
+    df2 <- format_df_with_fields(df, fields),
+    "NAs introduced by coercion"
+  )
 
   # ordering: N.B: df is in the opposite order of DATA_TYPES.
   # the reordering has fixed that, except for date, long and extra, that have kept the original order
   expect_identical(
     tolower(names(df2)),
     c(
-      "auto", "boolean", "double", "float", "integer", "object", "string", "text", "blob",
-      "long", "date", "extra"
+      "auto",
+      "boolean",
+      "double",
+      "float",
+      "integer",
+      "object",
+      "string",
+      "text",
+      "blob",
+      "long",
+      "date",
+      "extra"
     )
   )
 
@@ -413,9 +527,17 @@ test_that("format_df_with_fields", {
   expect_identical(
     classes,
     c(
-      auto = "character", boolean = "logical", double = "numeric",
-      float = "numeric", integer = "integer", object = "list", string = "character",
-      text = "character", blob = "character", long = "integer", date = "character",
+      auto = "character",
+      boolean = "logical",
+      double = "numeric",
+      float = "numeric",
+      integer = "integer",
+      object = "list",
+      string = "character",
+      text = "character",
+      blob = "character",
+      long = "integer",
+      date = "character",
       extra = "character"
     )
   )

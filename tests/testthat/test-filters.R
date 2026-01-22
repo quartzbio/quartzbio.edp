@@ -12,38 +12,64 @@ test_that("eval_numeric_litterals", {
 })
 
 
-
 # .filters <- function()
 test_that("filters", {
   ### edge cases
   expect_identical(filters(NULL), list(NULL))
   # debugonce(quartzbio.edp:::lst2filter)
-  expect_identical(filters("list(1)"), list(quartzbio.edp:::code_to_list(quote(list(1)))))
+  expect_identical(
+    filters("list(1)"),
+    list(quartzbio.edp:::code_to_list(quote(list(1))))
+  )
 
   # unknown numeric litteral op
   expect_error(filters("LHS = ~0.1"), "do not know what to do with symbol")
 
   ### = --> special op that uses the EDP default
-  expect_identical(filters('Sepal.Length = "7"')[[1]], list("Sepal.Length", "7"))
+  expect_identical(
+    filters('Sepal.Length = "7"')[[1]],
+    list("Sepal.Length", "7")
+  )
   expect_identical(filters("Sepal.Length = 7")[[1]], list("Sepal.Length", 7))
-  expect_identical(filters("Sepal.Length = -1.2")[[1]], list("Sepal.Length", -1.2))
+  expect_identical(
+    filters("Sepal.Length = -1.2")[[1]],
+    list("Sepal.Length", -1.2)
+  )
   expect_identical(filters('LHS = ""')[[1]], list("LHS", ""))
 
   ### String filters
-  expect_identical(filters('LHS exact "litteral"')[[1]], list("LHS__exact", "litteral"))
-  expect_identical(filters('LHS iexact "litteral"')[[1]], list("LHS__iexact", "litteral"))
+  expect_identical(
+    filters('LHS exact "litteral"')[[1]],
+    list("LHS__exact", "litteral")
+  )
+  expect_identical(
+    filters('LHS iexact "litteral"')[[1]],
+    list("LHS__iexact", "litteral")
+  )
 
   expect_identical(filters('LHS in ("L1")')[[1]], list("LHS__in", list("L1")))
-  expect_identical(filters('LHS in ("L1", "L2")')[[1]], list("LHS__in", list("L1", "L2")))
+  expect_identical(
+    filters('LHS in ("L1", "L2")')[[1]],
+    list("LHS__in", list("L1", "L2"))
+  )
 
-  expect_identical(filters('LHS contains "litteral"')[[1]], list("LHS__contains", "litteral"))
-  expect_identical(filters('LHS regexp "litteral"')[[1]], list("LHS__regexp", "litteral"))
+  expect_identical(
+    filters('LHS contains "litteral"')[[1]],
+    list("LHS__contains", "litteral")
+  )
+  expect_identical(
+    filters('LHS regexp "litteral"')[[1]],
+    list("LHS__regexp", "litteral")
+  )
 
   ### numeric filters
   expect_identical(filters("LHS in (1)")[[1]], list("LHS__in", list(1)))
   expect_identical(filters("LHS in (1, -2)")[[1]], list("LHS__in", list(1, -2)))
 
-  expect_identical(filters("LHS range (-1, 3)")[[1]], list("LHS__range", list(-1, 3)))
+  expect_identical(
+    filters("LHS range (-1, 3)")[[1]],
+    list("LHS__range", list(-1, 3))
+  )
 
   expect_identical(filters("LHS gt 3.5")[[1]], list("LHS__gt", 3.5))
   expect_identical(filters("LHS > 3.5")[[1]], list("LHS__gt", 3.5))
@@ -67,11 +93,10 @@ test_that("filters", {
     filters(x),
     list(
       list(
-        and =
-          list(
-            list("LHS1__in", list("L1", "L2")),
-            list("LHS2__gte", -0.1)
-          )
+        and = list(
+          list("LHS1__in", list("L1", "L2")),
+          list("LHS2__gte", -0.1)
+        )
       )
     )
   )
@@ -82,17 +107,15 @@ test_that("filters", {
     filters(x),
     list(
       list(
-        or =
+        or = list(
           list(
-            list(
-              and =
-                list(
-                  list("LHS1__in", list("L1", "L2")),
-                  list("LHS2__gte", -0.1)
-                )
-            ),
-            list("LHS3__contains", "litteral")
-          )
+            and = list(
+              list("LHS1__in", list("L1", "L2")),
+              list("LHS2__gte", -0.1)
+            )
+          ),
+          list("LHS3__contains", "litteral")
+        )
       )
     )
   )
@@ -103,17 +126,15 @@ test_that("filters", {
     filters(x),
     list(
       list(
-        and =
+        and = list(
+          list("LHS1__in", list("L1", "L2")),
           list(
-            list("LHS1__in", list("L1", "L2")),
-            list(
-              or =
-                list(
-                  list("LHS2__gte", -0.1),
-                  list("LHS3__contains", "litteral")
-                )
+            or = list(
+              list("LHS2__gte", -0.1),
+              list("LHS3__contains", "litteral")
             )
           )
+        )
       )
     )
   )
@@ -123,25 +144,21 @@ test_that("filters", {
     filters(x),
     list(
       list(
-        and =
+        and = list(
+          list("LHS1__in", list("L1", "L2")),
           list(
-            list("LHS1__in", list("L1", "L2")),
-            list(
-              not =
-                list(
-                  or =
-                  list(
-                    list("LHS2__gte", -0.1),
-                    list("LHS3__contains", "litteral")
-                  )
-                )
+            not = list(
+              or = list(
+                list("LHS2__gte", -0.1),
+                list("LHS3__contains", "litteral")
+              )
             )
           )
+        )
       )
     )
   )
 })
-
 
 
 test_that("code_to_list", {
@@ -157,7 +174,6 @@ test_that("code_to_list", {
   expect_type(lst, "list")
   expect_length(lst, 1)
   expect_true(is.symbol(lst[[1]]))
-
 
   ### simple call
   lst <- code_to_list(quote(f()))
@@ -196,8 +212,21 @@ test_that("code_to_list", {
 
   tokens <- as.character(unlist(lst))
   expected <- c(
-    "`:`", "`{`", "`+`", "`<-`", "`for`", "`while`", "1", "3",
-    "f", "g", "i", "litteral", "x", "y", "z"
+    "`:`",
+    "`{`",
+    "`+`",
+    "`<-`",
+    "`for`",
+    "`while`",
+    "1",
+    "3",
+    "f",
+    "g",
+    "i",
+    "litteral",
+    "x",
+    "y",
+    "z"
   )
 
   expect_identical(sort(unique(tokens)), sort(expected))
@@ -220,7 +249,6 @@ test_that("code_to_list", {
   #  expect_true(attr(lst[[3]], 'call'))
   expect_identical(lst[[3]][[1]], as.symbol("list"))
   expect_identical(lst[[3]][[2]], 3)
-
 
   #### another missing case
   code <- quote(x[])

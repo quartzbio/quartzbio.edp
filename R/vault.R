@@ -3,17 +3,26 @@
 #' @inheritParams params
 #' @export
 Vaults <- function(
-    vault_type = NULL,
-    tags = NULL,
-    user_id = NULL,
-    storage_class = NULL,
-    account_id = NULL,
-    # exclude_group_id = NULL,
-    page = NULL,
-    limit = NULL,
-    conn = get_connection()) {
+  vault_type = NULL,
+  tags = NULL,
+  user_id = NULL,
+  storage_class = NULL,
+  account_id = NULL,
+  # exclude_group_id = NULL,
+  page = NULL,
+  limit = NULL,
+  conn = get_connection()
+) {
   by <- preprocess_api_params()
-  fetch_by("v2/vaults", by = by, limit = limit, page = page, all = TRUE, unique = FALSE, conn = conn)
+  fetch_by(
+    "v2/vaults",
+    by = by,
+    limit = limit,
+    page = page,
+    all = TRUE,
+    unique = FALSE,
+    conn = conn
+  )
 }
 
 #' fetches a vault
@@ -42,7 +51,12 @@ Vaults <- function(
 #' # by name
 #' v2 <- Vault(name = "Public")
 #' }
-Vault <- function(id = NULL, full_path = NULL, name = NULL, conn = get_connection()) {
+Vault <- function(
+  id = NULL,
+  full_path = NULL,
+  name = NULL,
+  conn = get_connection()
+) {
   id <- id(id)
   by <- list(id = id, full_path = full_path, name = name)
   # no arg ==> fetch personal vault
@@ -80,15 +94,21 @@ Vault <- function(id = NULL, full_path = NULL, name = NULL, conn = get_connectio
 #' )
 #' }
 Vault_create <- function(
-    name,
-    description = NULL,
-    metadata = NULL,
-    tags = NULL,
-    storage_class = NULL,
-    conn = get_connection()) {
+  name,
+  description = NULL,
+  metadata = NULL,
+  tags = NULL,
+  storage_class = NULL,
+  conn = get_connection()
+) {
   Vault_update(
-    id = NULL, name = name, description = description, metadata = metadata,
-    tags = tags, storage_class = storage_class, conn = conn
+    id = NULL,
+    name = name,
+    description = description,
+    metadata = metadata,
+    tags = tags,
+    storage_class = storage_class,
+    conn = conn
   )
 }
 
@@ -112,15 +132,18 @@ Vault_create <- function(
 #' v4 <- update(vault_id, tags = LETTERS[1:5])
 #' }
 Vault_update <- function(
-    id,
-    name = NULL,
-    description = NULL,
-    metadata = NULL,
-    tags = NULL,
-    storage_class = NULL,
-    conn = get_connection()) {
+  id,
+  name = NULL,
+  description = NULL,
+  metadata = NULL,
+  tags = NULL,
+  storage_class = NULL,
+  conn = get_connection()
+) {
   id <- id(id)
-  if (length(tags)) tags <- as.list(tags)
+  if (length(tags)) {
+    tags <- as.list(tags)
+  }
 
   params <- preprocess_api_params()
 
@@ -129,7 +152,12 @@ Vault_update <- function(
   params$storage_class <- NULL
 
   if (length(id)) {
-    request_edp_api("PUT", file.path("v2/vaults", id), conn = conn, params = params)
+    request_edp_api(
+      "PUT",
+      file.path("v2/vaults", id),
+      conn = conn,
+      params = params
+    )
   } else {
     request_edp_api("POST", "v2/vaults", conn = conn, params = params)
   }
@@ -170,7 +198,12 @@ print.Vault <- function(x, ...) {
   perms <- summary_string(x$permissions)
   msg <- .safe_sprintf(
     'Vault "%s" ("%s", %s, %s), @ "%s", updated at:%s',
-    x$full_path, x$description, x$vault_type, perms, x$user$full_name, x$updated_at
+    x$full_path,
+    x$description,
+    x$vault_type,
+    perms,
+    x$user$full_name,
+    x$updated_at
   )
   cat(msg, "\n")
 }
@@ -185,7 +218,6 @@ print.VaultList <- function(x, ...) {
 
   cols <- intersect(cols, names(df))
   df <- df[cols]
-
 
   print(df)
 }

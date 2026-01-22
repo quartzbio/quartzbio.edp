@@ -9,16 +9,29 @@
 #' @param base_url BASE URL
 #' @param create_logfile (logical) Create a file to log records. Default is set to FALSE. Log file name will be generated automatically.
 #' @export
-quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL, base_url, create_logfile = FALSE) {
+quartzbio_shiny_auth <- function(
+  input,
+  session,
+  client_id,
+  client_secret = NULL,
+  base_url,
+  create_logfile = FALSE
+) {
   .check_for_valid_conn <- function(session) {
     auth_env <- session$userData$solvebio_env
     tryCatch(
       {
         user <- User.retrieve(env = auth_env)
-        log_message("INFO", paste("Connected to Quartzbio EDP with user", user$full_name))
+        log_message(
+          "INFO",
+          paste("Connected to Quartzbio EDP with user", user$full_name)
+        )
       },
       error = function(e) {
-        log_message("ERROR", paste("Connection to Quartzbio EDP Failed:", e$message))
+        log_message(
+          "ERROR",
+          paste("Connection to Quartzbio EDP Failed:", e$message)
+        )
       }
     )
   }
@@ -56,7 +69,11 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
       url,
       base_url,
       utils::URLencode(client_id, reserved = TRUE, repeated = TRUE),
-      utils::URLencode(.makeRedirectURI(session), reserved = TRUE, repeated = TRUE)
+      utils::URLencode(
+        .makeRedirectURI(session),
+        reserved = TRUE,
+        repeated = TRUE
+      )
     )
   }
 
@@ -95,17 +112,27 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
           shinyjs::js$enableCookieAuth()
           TRUE
         } else {
-          log_message("WARN", "This app requires shinyjs to use cookies for token storage.")
+          log_message(
+            "WARN",
+            "This app requires shinyjs to use cookies for token storage."
+          )
           FALSE
         }
       },
       error = function(e) {
         # Cookie JS is not enabled, disable cookies
-        log_message("WARN", "This app has not been configured to use cookies for token storage.")
+        log_message(
+          "WARN",
+          "This app has not been configured to use cookies for token storage."
+        )
         FALSE
       }
     )
-    params <- gsub(pattern = "?", replacement = "", x = session$clientData$url_search)
+    params <- gsub(
+      pattern = "?",
+      replacement = "",
+      x = session$clientData$url_search
+    )
     parsed_params <- shiny::parseQueryString(params)
     if (!is.null(parsed_params$code)) {
       # Remove the code from the query params after parsing
@@ -127,7 +154,8 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
 
       oauth_data <- tryCatch(
         {
-          .request("POST",
+          .request(
+            "POST",
             path = "v1/oauth2/token",
             query = NULL,
             body = oauth_params,
@@ -136,7 +164,13 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
           )
         },
         error = function(e) {
-          log_message("ERROR", sprintf("ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n", e))
+          log_message(
+            "ERROR",
+            sprintf(
+              "ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n",
+              e
+            )
+          )
         }
       )
 
@@ -156,10 +190,14 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
 
     # Logging
     if (create_logfile) {
-      log_file <- paste("quartzbio_shiny_", format(Sys.time(), "%Y-%m-%d_%H%M%S"), ".log", sep = "")
+      log_file <- paste(
+        "quartzbio_shiny_",
+        format(Sys.time(), "%Y-%m-%d_%H%M%S"),
+        ".log",
+        sep = ""
+      )
       log_file <- configure_logger(log_file)
     }
-
 
     if (enable_cookie_auth) {
       # Setup token encryption using the secret key
@@ -172,7 +210,11 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
         .encryptToken <- function(token) {
           # Use iv = NULL to support restarts of the Shiny server
           # without deactivating existing encrypted keys.
-          encrypted_raw <- openssl::aes_cbc_encrypt(charToRaw(token), key = aes_key, iv = NULL)
+          encrypted_raw <- openssl::aes_cbc_encrypt(
+            charToRaw(token),
+            key = aes_key,
+            iv = NULL
+          )
           openssl::base64_encode(encrypted_raw)
         }
 
@@ -181,7 +223,10 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
           rawToChar(openssl::aes_cbc_decrypt(raw, key = aes_key))
         }
       } else {
-        log_message("WARN", "QuartzBio EDP OAuth2 tokens will not be encrypted in cookies. Set client_secret to encrypt tokens.")
+        log_message(
+          "WARN",
+          "QuartzBio EDP OAuth2 tokens will not be encrypted in cookies. Set client_secret to encrypt tokens."
+        )
       }
 
       shiny::observe({
@@ -194,7 +239,10 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
         tryCatch(
           {
             # Setup and test the auth token
-            .initializeSession(session, token = .decryptToken(input$tokenCookie))
+            .initializeSession(
+              session,
+              token = .decryptToken(input$tokenCookie)
+            )
             # Close the auth modal which will be opened by the code below
             shiny::removeModal()
             .check_for_valid_conn(session)
@@ -215,10 +263,14 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
       })
     } else {
       # warning("WARNING: QuartzBio EDP cookie-based token storage is disabled.")
-      log_message("INFO", "QuartzBio EDP cookie-based token storage is disabled.")
+      log_message(
+        "INFO",
+        "QuartzBio EDP cookie-based token storage is disabled."
+      )
     }
 
-    shiny::observeEvent(session$clientData$url_search,
+    shiny::observeEvent(
+      session$clientData$url_search,
       {
         # params <- gsub(pattern = "?", replacement = "", x = session$clientData$url_search)
         # parsed_params <- shiny::parseQueryString(params)
@@ -226,8 +278,12 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
         # This can be used for local development or automated tests to bypass
         # the login modal.
         if (.config$token != "") {
-          log_message("WARN", "Found credentials in global environment, will not show login modal.")
-          .initializeSession(session,
+          log_message(
+            "WARN",
+            "Found credentials in global environment, will not show login modal."
+          )
+          .initializeSession(
+            session,
             token = .config$token,
             token_type = .config$token_type
           )
@@ -265,7 +321,12 @@ quartzbio_shiny_auth <- function(input, session, client_id, client_secret = NULL
 #'
 #' @concept  quartzbio_api
 #' @export
-protectedServer <- function(server, client_id, client_secret = NULL, base_url = "https://my.solvebio.com") {
+protectedServer <- function(
+  server,
+  client_id,
+  client_secret = NULL,
+  base_url = "https://my.solvebio.com"
+) {
   if (!requireNamespace("shiny", quietly = TRUE)) {
     stop("Shiny is required to use quartzbio.edp::protectedServer()")
   }
@@ -305,7 +366,11 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
       url,
       base_url,
       utils::URLencode(client_id, reserved = TRUE, repeated = TRUE),
-      utils::URLencode(.makeRedirectURI(session), reserved = TRUE, repeated = TRUE)
+      utils::URLencode(
+        .makeRedirectURI(session),
+        reserved = TRUE,
+        repeated = TRUE
+      )
     )
   }
 
@@ -344,13 +409,17 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
           shinyjs::js$enableCookieAuth()
           TRUE
         } else {
-          warning("WARNING: This app requires shinyjs to use cookies for token storage.")
+          warning(
+            "WARNING: This app requires shinyjs to use cookies for token storage."
+          )
           FALSE
         }
       },
       error = function(e) {
         # Cookie JS is not enabled, disable cookies
-        warning("WARNING: This app has not been configured to use cookies for token storage.")
+        warning(
+          "WARNING: This app has not been configured to use cookies for token storage."
+        )
         FALSE
       }
     )
@@ -366,7 +435,11 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
         .encryptToken <- function(token) {
           # Use iv = NULL to support restarts of the Shiny server
           # without deactivating existing encrypted keys.
-          encrypted_raw <- openssl::aes_cbc_encrypt(charToRaw(token), key = aes_key, iv = NULL)
+          encrypted_raw <- openssl::aes_cbc_encrypt(
+            charToRaw(token),
+            key = aes_key,
+            iv = NULL
+          )
           openssl::base64_encode(encrypted_raw)
         }
 
@@ -375,7 +448,9 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
           rawToChar(openssl::aes_cbc_decrypt(raw, key = aes_key))
         }
       } else {
-        warning("WARNING: QuartzBio EDP OAuth2 tokens will not be encrypted in cookies. Set client_secret to encrypt tokens.")
+        warning(
+          "WARNING: QuartzBio EDP OAuth2 tokens will not be encrypted in cookies. Set client_secret to encrypt tokens."
+        )
       }
 
       shiny::observe({
@@ -388,7 +463,10 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
         tryCatch(
           {
             # Setup and test the auth token
-            .initializeSession(session, token = .decryptToken(input$tokenCookie))
+            .initializeSession(
+              session,
+              token = .decryptToken(input$tokenCookie)
+            )
             # Close the auth modal which will be opened by the code below
             shiny::removeModal()
           },
@@ -412,9 +490,14 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
       warning("WARNING: QuartzBio EDP cookie-based token storage is disabled.")
     }
 
-    shiny::observeEvent(session$clientData$url_search,
+    shiny::observeEvent(
+      session$clientData$url_search,
       {
-        params <- gsub(pattern = "?", replacement = "", x = session$clientData$url_search)
+        params <- gsub(
+          pattern = "?",
+          replacement = "",
+          x = session$clientData$url_search
+        )
         parsed_params <- shiny::parseQueryString(params)
 
         if (!is.null(parsed_params$code)) {
@@ -434,7 +517,8 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
           )
           oauth_data <- tryCatch(
             {
-              .request("POST",
+              .request(
+                "POST",
                 path = "v1/oauth2/token",
                 query = NULL,
                 body = oauth_params,
@@ -443,7 +527,10 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
               )
             },
             error = function(e) {
-              stop(sprintf("ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n", e))
+              stop(sprintf(
+                "ERROR: Unable to retrieve QuartzBio EDP OAuth2 token. Check your client_id and client_secret (if used). Error: %s\n",
+                e
+              ))
             }
           )
 
@@ -462,8 +549,11 @@ protectedServer <- function(server, client_id, client_secret = NULL, base_url = 
           # This can be used for local development or automated tests to bypass
           # the login modal.
           if (.config$token != "") {
-            warning("WARNING: Found credentials in global environment, will not show login modal.")
-            .initializeSession(session,
+            warning(
+              "WARNING: Found credentials in global environment, will not show login modal."
+            )
+            .initializeSession(
+              session,
               token = .config$token,
               token_type = .config$token_type
             )

@@ -42,8 +42,6 @@ Vault.retrieve <- function(id, env = get_connection()) {
 }
 
 
-
-
 #' Vault.delete
 #'
 #' Delete a specific vault from QuartzBio EDP. This operation cannot be undone.
@@ -92,7 +90,13 @@ Vault.create <- function(name, env = get_connection(), ...) {
     ...
   )
 
-  vault <- .request("POST", path = "v2/vaults", query = NULL, body = params, env = env)
+  vault <- .request(
+    "POST",
+    path = "v2/vaults",
+    query = NULL,
+    body = params,
+    env = env
+  )
 
   vault
 }
@@ -133,7 +137,6 @@ Vault.update <- function(id, env = get_connection(), ...) {
 # Vault Helpers
 #
 
-
 #' Vault.get_by_full_path
 #'
 #' Retrieves a specific vault by its full path (domain:vault).
@@ -149,7 +152,11 @@ Vault.update <- function(id, env = get_connection(), ...) {
 #' @importFrom lifecycle deprecate_soft
 #' @concept  quartzbio_api
 #' @export
-Vault.get_by_full_path <- function(full_path, verbose = TRUE, env = get_connection()) {
+Vault.get_by_full_path <- function(
+  full_path,
+  verbose = TRUE,
+  env = get_connection()
+) {
   deprecate_soft("1.0.0", "Vault.get_by_full_path()", "Vault()")
   if (missing(full_path)) {
     stop("A vault full path is required.")
@@ -167,11 +174,17 @@ Vault.get_by_full_path <- function(full_path, verbose = TRUE, env = get_connecti
 
   if (verbose) {
     if (response$total == 0) {
-      cat(sprintf("Warning: Could not find vault with full path: %s\n", full_path))
+      cat(sprintf(
+        "Warning: Could not find vault with full path: %s\n",
+        full_path
+      ))
     }
 
     if (response$total > 1) {
-      cat(sprintf("Error: Multiple vaults found with full path: %s\n", full_path))
+      cat(sprintf(
+        "Error: Multiple vaults found with full path: %s\n",
+        full_path
+      ))
     }
   }
 
@@ -193,7 +206,11 @@ Vault.get_by_full_path <- function(full_path, verbose = TRUE, env = get_connecti
 #'
 #' @concept  quartzbio_api
 #' @export
-Vault.get_or_create_by_full_path <- function(full_path, env = get_connection(), ...) {
+Vault.get_or_create_by_full_path <- function(
+  full_path,
+  env = get_connection(),
+  ...
+) {
   vault <- Vault.get_by_full_path(full_path, verbose = FALSE, env = env)
   if (!is.null(vault)) {
     # Return if exists
@@ -408,7 +425,13 @@ Vault.create_dataset <- function(id, path, name, env = get_connection(), ...) {
 #'
 #' @concept  quartzbio_api
 #' @export
-Vault.create_folder <- function(id, path, recursive = FALSE, env = get_connection(), ...) {
+Vault.create_folder <- function(
+  id,
+  path,
+  recursive = FALSE,
+  env = get_connection(),
+  ...
+) {
   if (missing(id) || is.null(id)) {
     stop("A vault ID is required.")
   }
@@ -441,7 +464,11 @@ Vault.create_folder <- function(id, path, recursive = FALSE, env = get_connectio
       }
 
       current_dir <- paste(current_dir, dir, sep = "/")
-      obj <- Object.get_by_path(path = current_dir, vault_id = vault$id, env = env)
+      obj <- Object.get_by_path(
+        path = current_dir,
+        vault_id = vault$id,
+        env = env
+      )
 
       if (is.null(obj) || (is.data.frame(obj) && nrow(obj) == 0)) {
         obj <- Object.create(
@@ -454,7 +481,10 @@ Vault.create_folder <- function(id, path, recursive = FALSE, env = get_connectio
       }
 
       if (obj$object_type != "folder") {
-        stop(sprintf("Invalid path: existing object at '%s' is not a folder\n", current_dir))
+        stop(sprintf(
+          "Invalid path: existing object at '%s' is not a folder\n",
+          current_dir
+        ))
       }
 
       parent_object_id <- obj$id
@@ -465,9 +495,16 @@ Vault.create_folder <- function(id, path, recursive = FALSE, env = get_connectio
     if (parent_path == "") {
       parent_object_id <- NULL
     } else {
-      parent_object <- Object.get_by_path(parent_path, vault_id = vault$id, env = env)
+      parent_object <- Object.get_by_path(
+        parent_path,
+        vault_id = vault$id,
+        env = env
+      )
       if (is.null(parent_object) || parent_object$object_type != "folder") {
-        stop(sprintf("Invalid path: existing object at '%s' is not a folder\n", parent_object))
+        stop(sprintf(
+          "Invalid path: existing object at '%s' is not a folder\n",
+          parent_object
+        ))
       }
       parent_object_id <- parent_object$id
     }
