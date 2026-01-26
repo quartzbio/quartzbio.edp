@@ -30,6 +30,10 @@
   `Shortcut`, `Shortcut_create`, `is_shortcut` and
   `Shortcut_get_target`.
 
+- Deprecated the API key option from the EDP login function
+  [`connect()`](https://quartzbio.github.io/quartzbio.edp/reference/connect.md)
+  as API Keys is no longer supported by the EDP platform.
+
 **Improvements**
 
 - add GitHub workflows to run R CMD check.
