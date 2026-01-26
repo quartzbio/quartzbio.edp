@@ -189,7 +189,7 @@ test_that("read_save_connection_from_file", {
 
     ### standard
     conn <- list(secret = strrep("X", 30), host = "host")
-    save_connection_profile(conn)
+    save_connection_profile(conn, overwrite = TRUE)
 
     expect_identical(read_connection_profile(), conn)
 

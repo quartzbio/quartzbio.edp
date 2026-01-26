@@ -22,3 +22,4 @@ examples
 ^\.lintr$
 ^public$
 ^coverage\.xml$
+^sonar-project\.properties$
