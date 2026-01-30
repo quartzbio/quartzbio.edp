@@ -31,7 +31,7 @@ Dataset.all <- function(env = get_connection(), ...) {
 #' @export
 Dataset.retrieve <- function(id, env = get_connection()) {
   deprecate_soft(
-    "1.0.0",
+    "1.1.0",
     "Dataset.retrieve()",
     "Dataset()",
     details = "Dataset() fetches a dataset using either id or the full path"
@@ -172,7 +172,7 @@ Dataset.query <- function(
   env = get_connection(),
   ...
 ) {
-  deprecate_soft("1.0.0", "Dataset.query()", "Dataset_query()")
+  deprecate_soft("1.1.0", "Dataset.query()", "Dataset_query()")
   params <- list(...)
   params$id <- id
   params$env <- env
@@ -231,7 +231,7 @@ Dataset.query <- function(
 #' @concept  quartzbio_api
 #' @export
 Dataset.fields <- function(id, env = get_connection(), ...) {
-  deprecate_soft("1.0.0", "Dataset.fields()", "DatasetFields()")
+  deprecate_soft("1.1.0", "Dataset.fields()", "DatasetFields()")
   if (inherits(id, "numeric")) {
     warning("Please use string IDs instead of numeric IDs.")
   }
@@ -345,7 +345,7 @@ Dataset.create <- function(
   env = get_connection(),
   ...
 ) {
-  deprecate_soft("1.0.0", "Dataset.create()", "Dataset_create()")
+  deprecate_soft("1.1.0", "Dataset.create()", "Dataset_create()")
   if (missing(vault_id)) {
     stop("A vault ID is required.")
   }
@@ -421,7 +421,7 @@ Dataset.update <- function(id, env = get_connection(), ...) {
 #' @export
 Dataset.get_by_full_path <- function(full_path, env = get_connection()) {
   deprecate_soft(
-    "1.0.0",
+    "1.1.0",
     "Dataset.get_by_full_path()",
     "Dataset()",
     details = "Dataset() fetches a dataset using either id or the full path"

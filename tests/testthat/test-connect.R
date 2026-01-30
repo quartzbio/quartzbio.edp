@@ -105,9 +105,10 @@ test_that("autoconnect", {
     })
 
     # EDP_CONFIG
-    config <- file.path(getwd(), ".qb/toto.json")
-    file.rename(file.path(getwd(), ".qb/edp.json"), config)
-    we(c(EDP_PROFILE = "toto", EDP_CONFIG = config), {
+    tmp_config <- tempfile(fileext = ".json")
+    save_connection_profile(conn, profile = "toto", path = tmp_config)
+    withr::defer(unlink(tmp_config, recursive = TRUE, force = TRUE))
+    we(c(EDP_PROFILE = "toto", EDP_CONFIG = tmp_config), {
       expect_identical(autoconnect(check = FALSE), conn)
     })
   })
@@ -176,11 +177,11 @@ test_that("looks_like_api_token", {
 
 
 test_that("read_save_connection_from_file", {
-  tmp <- setup_temp_dir()
 
-  withr::with_envvar(c(HOME = tmp, USERPROFILE = tmp), {
+  withr::with_envvar(c(HOME = getwd(), USERPROFILE = getwd()), {
     ### nothing saved yet
-    expect_error(read_connection_profile(), "no such profile")
+    tmp <- withr::local_tempfile(fileext = ".json", .local_envir = environment())
+    expect_error(read_connection_profile(tmp), "no such profile")
     expect_error(read_connection_profile("toto.json"), "no such profile")
     expect_error(
       read_connection_profile("toto.json", profile = "titi"),

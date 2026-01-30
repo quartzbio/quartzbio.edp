@@ -32,7 +32,7 @@ DatasetField.all <- function(env = get_connection(), ...) {
 #' @concept  quartzbio_api
 #' @export
 DatasetField.retrieve <- function(id, env = get_connection()) {
-  deprecate_soft("1.0.0", "DatasetField.retrieve()", "DatasetField()")
+  deprecate_soft("1.1.0", "DatasetField.retrieve()", "DatasetField()")
   if (missing(id)) {
     stop("A dataset field ID is required.")
   }
@@ -95,7 +95,7 @@ DatasetField.create <- function(
   env = get_connection(),
   ...
 ) {
-  deprecate_soft("1.0.0", "DatasetField.create()", "DatasetField_create()")
+  deprecate_soft("1.1.0", "DatasetField.create()", "DatasetField_create()")
   if (missing(dataset_id)) {
     stop("A dataset ID is required.")
   }
@@ -141,7 +141,7 @@ DatasetField.create <- function(
 #' @concept  quartzbio_api
 #' @export
 DatasetField.update <- function(id, env = get_connection(), ...) {
-  deprecate_soft("1.0.0", "DatasetField.update()", "DatasetField_update()")
+  deprecate_soft("1.1.0", "DatasetField.update()", "DatasetField_update()")
   if (missing(id)) {
     stop("A dataset field ID is required.")
   }

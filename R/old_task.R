@@ -31,7 +31,7 @@ Task.all <- function(env = get_connection(), ...) {
 #' @concept  quartzbio_api
 #' @export
 Task.retrieve <- function(id, env = get_connection()) {
-  deprecate_soft("1.0.0", "Task.retrieve()", "Task()")
+  deprecate_soft("1.1.0", "Task.retrieve()", "Task()")
   if (missing(id)) {
     stop("A task ID is required.")
   }
