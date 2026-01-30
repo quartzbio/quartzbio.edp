@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">quartzbio.edp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,15 +35,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.0" id="version-100">version 1.0.0<a class="anchor" aria-label="anchor" href="#version-100"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="version-110">version 1.1.0<a class="anchor" aria-label="anchor" href="#version-110"></a></h2>
 <p><strong>New Features</strong></p>
 <ul><li><p>Multipart upload functionality. The maximum file upload size has been increased to 100 GB. <code>File_upload</code> automatically uses multipart upload for files with size larger than the multipart_threshold.</p></li>
 <li><p>To improve developer experience in shiny applications users can add verbose logs in log file by leveraging <code>logger</code> package. Users can create log file and set the log-level using <code>configure_logger</code> and add logs using <code>log_message</code> functions.</p></li>
-<li><p>EDP Health Check. Perform a quick check to test your EDP credentials, connection, user details and vaults using <code>edp_health_check</code> function.</p></li>
+<li><p>Add support for EDP Shortcut objects. Adds new functions: <code>Shortcuts</code>, <code>Shortcut</code>, <code>Shortcut_create</code>, <code>is_shortcut</code> and <code>Shortcut_get_target</code>.</p></li>
+</ul><p><strong>Deprecations</strong></p>
+<ul><li>Deprecated the API key option from the EDP login function <code><a href="../reference/connect.html">connect()</a></code> as API Keys is no longer supported by the EDP platform.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.0" id="version-100">version 1.0.0<a class="anchor" aria-label="anchor" href="#version-100"></a></h2>
+<p><strong>New Features</strong></p>
+<ul><li><p>EDP Health Check. Perform a quick check to test your EDP credentials, connection, user details and vaults using <code>edp_health_check</code> function.</p></li>
 <li><p>Dataset Export to parquet file format. Export the EDP Datasets into parquet file and load the data into R dataframe using <code><a href="../reference/Dataset_load.html">Dataset_load()</a></code> function. This function leverages <code><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html" class="external-link">arrow::read_parquet</a></code> function.</p></li>
 <li><p>Refactored login flow for EDP Shiny application to support component based authorization using the <code>quartzbio_shiny_auth</code> function.</p></li>
-<li><p>Add support for EDP Shortcut objects. Adds new functions: <code>Shortcuts</code>, <code>Shortcut</code>, <code>Shortcut_create</code>, <code>is_shortcut</code> and <code>Shortcut_get_target</code>.</p></li>
-<li><p>Deprecated the API key option from the EDP login function <code><a href="../reference/connect.html">connect()</a></code> as API Keys is no longer supported by the EDP platform.</p></li>
 </ul><p><strong>Improvements</strong></p>
 <ul><li>add GitHub workflows to run R CMD check.</li>
 </ul><p><strong>Bug Fixes</strong></p>
@@ -113,7 +118,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 26-Jan-2026 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Last modified: 30-Jan-2026 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
