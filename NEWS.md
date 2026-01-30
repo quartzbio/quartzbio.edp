@@ -1,4 +1,4 @@
-# version 1.0.0
+# version 1.1.0
 
 **New Features**
 
@@ -6,15 +6,21 @@
 
 -   To improve developer experience in shiny applications users can add verbose logs in log file by leveraging `logger` package. Users can create log file and set the log-level using `configure_logger` and add logs using `log_message` functions.
 
+-   Add support for EDP Shortcut objects. Adds new functions: `Shortcuts`, `Shortcut`, `Shortcut_create`, `is_shortcut` and `Shortcut_get_target`.
+
+**Deprecations**
+
+-   Deprecated the API key option from the EDP login function `connect()` as API Keys is no longer supported by the EDP platform.
+
+# version 1.0.0
+
+**New Features**
+
 -   EDP Health Check. Perform a quick check to test your EDP credentials, connection, user details and vaults using `edp_health_check` function.
 
 -   Dataset Export to parquet file format. Export the EDP Datasets into parquet file and load the data into R dataframe using `Dataset_load()` function. This function leverages `arrow::read_parquet` function.
 
 -   Refactored login flow for EDP Shiny application to support component based authorization using the `quartzbio_shiny_auth` function.
-
--   Add support for EDP Shortcut objects. Adds new functions: `Shortcuts`, `Shortcut`, `Shortcut_create`, `is_shortcut` and `Shortcut_get_target`.
-
--   Deprecated the API key option from the EDP login function `connect()` as API Keys is no longer supported by the EDP platform.
 
 **Improvements**
 

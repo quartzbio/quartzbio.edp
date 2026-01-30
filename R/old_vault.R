@@ -14,7 +14,7 @@
 #' @concept  quartzbio_api
 #' @export
 Vault.all <- function(..., env = get_connection()) {
-  deprecate_soft("1.0.0", "Vault.all()", "Vaults()")
+  deprecate_soft("1.1.0", "Vault.all()", "Vaults()")
   .request("GET", "v2/vaults", query = list(...), env = env)
 }
 
@@ -79,7 +79,7 @@ Vault.delete <- function(id, env = get_connection()) {
 #' @concept  quartzbio_api
 #' @export
 Vault.create <- function(name, env = get_connection(), ...) {
-  deprecate_soft("1.0.0", "Vault.create()", "Vault_create()")
+  deprecate_soft("1.1.0", "Vault.create()", "Vault_create()")
   # TODO
   if (missing(name)) {
     stop("A name is required.")
@@ -121,7 +121,7 @@ Vault.create <- function(name, env = get_connection(), ...) {
 #' @concept  quartzbio_api
 #' @export
 Vault.update <- function(id, env = get_connection(), ...) {
-  deprecate_soft("1.0.0", "Vault.update()", "Vault_update()")
+  deprecate_soft("1.1.0", "Vault.update()", "Vault_update()")
   if (missing(id)) {
     stop("A vault ID is required.")
   }
@@ -157,7 +157,7 @@ Vault.get_by_full_path <- function(
   verbose = TRUE,
   env = get_connection()
 ) {
-  deprecate_soft("1.0.0", "Vault.get_by_full_path()", "Vault()")
+  deprecate_soft("1.1.0", "Vault.get_by_full_path()", "Vault()")
   if (missing(full_path)) {
     stop("A vault full path is required.")
   }

@@ -5,7 +5,7 @@
 #' @importFrom lifecycle deprecate_soft
 #' @export
 User.retrieve <- function(env = get_connection()) {
-  deprecate_soft("1.0.0", "User.retrieve()", "User()")
+  deprecate_soft("1.1.0", "User.retrieve()", "User()")
   User(conn = env)
 }
 # nocov end

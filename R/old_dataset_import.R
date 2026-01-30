@@ -85,7 +85,7 @@ DatasetImport.create <- function(
   env = get_connection(),
   ...
 ) {
-  deprecate_soft("1.0.0", "DatasetImport.create()", "Dataset_import()")
+  deprecate_soft("1.1.0", "DatasetImport.create()", "Dataset_import()")
   if (missing(dataset_id)) {
     stop("A dataset ID is required.")
   }

@@ -25,7 +25,7 @@ Object.all <- function(env = get_connection(), ...) {
 #' @export
 Object.retrieve <- function(id, env = get_connection()) {
   deprecate_soft(
-    "1.0.0",
+    "1.1.0",
     "Object.retrieve()",
     "Object()",
     details = "To fetch a file or folder using id or full path use File() or Folder() respectively"
@@ -94,7 +94,7 @@ Object.create <- function(
   ...
 ) {
   deprecate_soft(
-    "1.0.0",
+    "1.1.0",
     "Object.create()",
     "Object_create()",
     details = "To create a file for folder in Quartzbio EDP use File_create() and Folder_create() respectively"
@@ -151,7 +151,7 @@ Object.create <- function(
 #' @concept  quartzbio_api
 #' @export
 Object.update <- function(id, env = get_connection(), ...) {
-  deprecate_soft("1.0.0", "Object.update()", "Object_update()")
+  deprecate_soft("1.1.0", "Object.update()", "Object_update()")
   if (missing(id)) {
     stop("An object ID is required.")
   }
@@ -179,7 +179,7 @@ Object.update <- function(id, env = get_connection(), ...) {
 #' @concept  quartzbio_api
 #' @export
 Object.get_by_full_path <- function(full_path, env = get_connection(), ...) {
-  deprecate_soft("1.0.0", "Object.get_by_full_path()", "Object()")
+  deprecate_soft("1.1.0", "Object.get_by_full_path()", "Object()")
   params <- list(
     full_path = full_path,
     ...
@@ -287,7 +287,7 @@ Object.upload_file <- function(
   filename,
   env = get_connection()
 ) {
-  deprecate_soft("1.0.0", "Object.upload_file()", "File_upload()")
+  deprecate_soft("1.1.0", "Object.upload_file()", "File_upload()")
   if (missing(local_path) || !file.exists(local_path)) {
     stop("A valid path to a local file is required.")
   }
@@ -389,7 +389,7 @@ Object.get_or_upload_file <- function(
   env = get_connection()
 ) {
   deprecate_soft(
-    "1.0.0",
+    "1.1.0",
     "Object.get_or_upload_file()",
     "File_upload()",
     details = "To fetch a file use by id or fullpath use File()"
@@ -514,7 +514,7 @@ Object.data <- function(
 #' @concept  quartzbio_api
 #' @export
 Object.query <- function(id, paginate = FALSE, env = get_connection(), ...) {
-  deprecate_soft("1.0.0", "Object.query()", "File_query()")
+  deprecate_soft("1.1.0", "Object.query()", "File_query()")
   params <- list(...)
   params$id <- id
   params$env <- env

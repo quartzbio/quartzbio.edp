@@ -28,7 +28,7 @@ login <- function(
   api_token = Sys.getenv("QUARTZBIO_ACCESS_TOKEN"),
   api_host = Sys.getenv("QUARTZBIO_API_HOST")
 ) {
-  deprecate_soft("1.0.0", "login()", "connect()")
+  deprecate_soft("1.1.0", "login()", "connect()")
   secret <- api_token
 
   set_connection(connect(secret, api_host), check = FALSE)
