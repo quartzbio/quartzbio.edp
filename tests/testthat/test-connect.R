@@ -177,10 +177,12 @@ test_that("looks_like_api_token", {
 
 
 test_that("read_save_connection_from_file", {
-
   withr::with_envvar(c(HOME = getwd(), USERPROFILE = getwd()), {
     ### nothing saved yet
-    tmp <- withr::local_tempfile(fileext = ".json", .local_envir = environment())
+    tmp <- withr::local_tempfile(
+      fileext = ".json",
+      .local_envir = environment()
+    )
     expect_error(read_connection_profile(tmp), "no such profile")
     expect_error(read_connection_profile("toto.json"), "no such profile")
     expect_error(
