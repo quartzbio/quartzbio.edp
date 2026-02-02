@@ -57,9 +57,7 @@ DatasetField.retrieve <- function(id, env = get_connection()) {
 #' @concept  quartzbio_api
 #' @export
 DatasetField.facets <- function(id, env = get_connection(), ...) {
-  if (
-    missing(id) | !(class(id) %in% c("DatasetField", "numeric", "character"))
-  ) {
+  if (missing(id) | !(class(id) %in% c("DatasetField", "numeric", "character"))) {
     stop("A dataset field ID is required.")
   }
   if (inherits(id, "DatasetField")) {

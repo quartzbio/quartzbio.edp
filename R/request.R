@@ -119,9 +119,7 @@ send_request <- function(
 ) {
   res <- if (length(fake_response)) fake_response else httr::VERB(...)
 
-  if (
-    !length(res) || !"status_code" %in% names(res) || res$status_code != 429
-  ) {
+  if (!length(res) || !"status_code" %in% names(res) || res$status_code != 429) {
     return(res)
   }
 

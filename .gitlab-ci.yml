@@ -1,6 +1,6 @@
 default:
   tags: [docker]
-  image: rocker/r-ver:4.4
+  image: rocker/r-ver:4.5
 
 variables:
   GIT_DEPTH: 10
@@ -19,7 +19,7 @@ stages:
   - build
   - coverage
   - tests
-  - lintr
+  - lint
   - build_vignettes
   - document_package
 
@@ -91,29 +91,18 @@ coverage:
         coverage_format: cobertura
         path: coverage.xml
 
-lintr:
-  stage: lintr
+lint:
+  stage: lint
   needs: []
   rules:
     - if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS'
       when: never
     - when: always
   script:
-    - echo "options(crayon.enabled=TRUE);" >> .Rprofile
-    - echo 'options(repos = c(RSPM = "https://p3m.dev/cran/__linux__/noble/latest", CRAN = "https://p3m.dev/cran/latest"));' >> .Rprofile
-    - cat /etc/os-release
-    - Rscript --vanilla -e "sessionInfo()"
-    - if [[ $CI_DEFAULT_BRANCH == "master" || $CI_DEFAULT_BRANCH = "main" ]]; then echo "OK - Default branch is master or main"; else echo "Default branch is not master or main; please add yours ($CI_DEFAULT_BRANCH) where needed, as well as in the present line of code" ; exit 1; fi
-    - echo "Library path for packages :" $R_LIBS_USER
-    - mkdir -p $R_LIBS_USER
-    - apt update; apt install qpdf -y
-    - Rscript -e 'Sys.getenv("R_LIBS_USER");dir.exists(Sys.getenv("R_LIBS_USER"))'
-    - Rscript -e 'Sys.getenv("R_LIBS")'
-    - Rscript -e '.libPaths()'
-    - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
-    - Rscript -e 'pak::pkg_install(".", upgrade = TRUE)'
-    - Rscript -e 'pak::pkg_install("lintr", upgrade = TRUE); print(paste("lintr version:", packageVersion("lintr")))'
-    - Rscript -e 'Sys.setenv("LINTR_ERROR_ON_LINT" = TRUE); lintr::lint_package()'
+    - apt-get update && apt-get install -y curl tar
+    - curl -L -o air.tar.gz https://github.com/posit-dev/air/releases/download/0.8.1/air-x86_64-unknown-linux-gnu.tar.gz
+    - tar -xvf air.tar.gz
+    - air-x86_64-unknown-linux-gnu/air format . --check
 
 build_vignettes:
   stage: build_vignettes
