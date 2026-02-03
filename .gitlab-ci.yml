@@ -179,6 +179,7 @@ document_package:
 build-sonar:
   tags: [shell_with_docker]
   stage: build-sonar
+  needs: []
   cache:
     policy: pull-push
     key: "sonar-cache-$CI_COMMIT_REF_SLUG"
@@ -199,6 +200,7 @@ build-sonar:
 sonarqube-vulnerability-report:
   tags: [shell_with_docker]
   stage: sonarqube-vulnerability-report
+  needs: [build-sonar]
   script:
     - 'curl -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/gitlab_sast_export?projectKey=pipelines_us_projects_data_syncer_154d103d-d199-40f2-8838-637bae5b21fb&branch=${CI_COMMIT_BRANCH}&pullRequest=${CI_MERGE_REQUEST_IID}" -o gl-sast-sonar-report.json'
   allow_failure: true
