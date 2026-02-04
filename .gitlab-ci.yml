@@ -14,10 +14,10 @@ cache:
       - ${R_LIBS_USER}
 
 stages:
-  - build-sonar
-  - sonarqube-vulnerability-report
   - build
   - coverage
+  - build-sonar
+  - sonarqube-vulnerability-report
   - tests
   - lint
   - build_vignettes
@@ -83,13 +83,17 @@ coverage:
     - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE, dependencies = TRUE)'
     - Rscript -e 'pak::pkg_install(pkg = c("covr", "DT", "xml2"), upgrade = TRUE)'
     - Rscript -e 'options(crayon.enabled=FALSE); covr::gitlab(quiet = FALSE)' # crayon is disabled as it causes issues with coverage reading
-    - Rscript -e 'covr::to_cobertura(covr::package_coverage(), "coverage.xml")'
+    - Rscript -e 'covr::to_cobertura(covr::package_coverage(), "coverage-cobertura.xml")'
+    - Rscript scripts/coverage_to_sonar.R
   coverage: '/Coverage: \d+\.\d+/'
   artifacts:
+    paths:
+      - coverage.xml
+      - coverage-cobertura.xml
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: coverage.xml
+        path: coverage-cobertura.xml
 
 lint:
   stage: lint
@@ -179,7 +183,10 @@ document_package:
 build-sonar:
   tags: [shell_with_docker]
   stage: build-sonar
-  needs: []
+  needs:
+    - job: coverage
+      artifacts: true
+      optional: true
   cache:
     policy: pull-push
     key: "sonar-cache-$CI_COMMIT_REF_SLUG"
