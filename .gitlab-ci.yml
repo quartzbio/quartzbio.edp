@@ -194,9 +194,15 @@ build-sonar:
       - "${SONAR_USER_HOME}/cache"
       - sonar-scanner/
   script:
+    - echo "=== Verifying source files ==="
+    - ls -la R/ | head -20
+    - echo "Total R files:" && find R/ -name "*.R" | wc -l
+    - echo "Coverage file exists:" && ls -la coverage.xml || echo "coverage.xml not found"
+    - echo "=== SonarQube configuration ==="
+    - cat sonar-project.properties
     - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.3.0.5189-linux-x64.zip -O sonar-scanner.zip
     - unzip -o -d sonar-scanner sonar-scanner.zip
-    - ./sonar-scanner/sonar-scanner-7.3.0.5189-linux-x64/bin/sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}"
+    - ./sonar-scanner/sonar-scanner-7.3.0.5189-linux-x64/bin/sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.verbose=true
   allow_failure: true
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
