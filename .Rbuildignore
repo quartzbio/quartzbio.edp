@@ -7,6 +7,7 @@
 ^.*\.gz$
 ^\.Rd2pdf.*$
 ^\.travis\.yml$
+^air\.toml$
 ^qbr
 ^etc
 Makefile
@@ -23,3 +24,4 @@ examples
 ^public$
 ^coverage\.xml$
 ^sonar-project\.properties$
+^scripts$
