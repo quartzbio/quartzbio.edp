@@ -135,6 +135,7 @@ connect <- function(
   if (check) {
     test_connection(conn)
   }
+  set_connection(conn, check = FALSE)
 
   conn
 }
