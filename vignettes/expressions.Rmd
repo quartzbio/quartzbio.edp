@@ -27,7 +27,7 @@ Expressions can use the built-in library of expression functions in EDP. The exp
 
 Expressions can be a simple static value, such as a number or string:
 
-```
+```         
 # Numeric expression
 1 + (2 * 3)
 # output: 7
@@ -43,7 +43,7 @@ Depending on when an expression is evaluated, it may also include "context varia
 
 For example, expressions can reference context values provided during evaluation or annotation, such as record:
 
-```
+```         
 # String expression with context: {"record": {"a": "hello"}}
 record["a"] + " world"
 # output: "hello world"
@@ -63,11 +63,11 @@ The following context variables may be referenced:
 
 The following example shows how these variables can be used during annotation (i.e. when importing or migrating datasets), along with a built-in expression function such as "split":
 
-If the current record is:
-`{"message": "hello"}`
+If the current record is: `{"message": "hello"}`
 
 The following fields have valid expressions:
-```
+
+```         
 {
     # Replace the value of `message` with "hello world"
     "message": {
@@ -89,10 +89,9 @@ The output would be:
 
 `{"message": "hello world", "split_message": ["hello", "world"]}`
 
-
 As well as split, users can also use several other built-in Python functions such as len, min, max, sum, round, range, and a wide range of EDP-specific functions to perform analysis on datasets.In addition, users can wrap functions in other functions, and iterate through lists. This makes it possible to construct advanced expressions that pull and manipulate data from one or more datasets:
 
-```
+```         
 # Numeric expression using built-in functions
 sum(i for i in range(100))
 # output: 4950
@@ -107,7 +106,7 @@ dataset_field_stats("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37", 
 Expressions always have a return value. The value's data type depends on the expression, but can be one of the following:
 
 | Data Type        | Description                                                                            |
-|------------------|------------------------------------------------------|
+|-------------------|-----------------------------------------------------|
 | string (default) | A valid UTF-8 string with up to 32,766 characters.                                     |
 | text             | A valid UTF-8 string of any length.                                                    |
 | blob             | A valid UTF-8 string of any length (this data type is not indexed for search).         |
@@ -240,9 +239,9 @@ There are two endpoints that can be used to run expressions in real-time: annota
 Methods do not accept URL parameters or request bodies unless specified. Please note that if your EDP endpoint is sponsor.edp.aws.quartz.bio, you would use sponsor.api.edp.aws.quartz.bio.
 
 |  Method  |               HTTP Request                |                  Description                   |               Authorization               |                                                                      Response                                                                      |
-|:-----------:|:-----------:|:-----------:|:-----------:|:--------------------:|
-| annotate | POST <https://><EDP_API_HOST>/v1/annotate |  Annotate a list of records with expressions.  | This request requires an authorized user. | The response contains a list of annotated records and an object containing the number of records with errors and the number of fields with errors. |
-| evaluate | POST <https://><EDP_API_HOST>/v1/evaluate | Run a single expression with a custom context. | This request requires an authorized user. |                                                  The response contains the evaluated expression.                                                   |
+|:------------:|:------------:|:------------:|:------------:|:---------------:|
+| annotate | POST `https://<EDP_API_HOST>/v1/annotate` |  Annotate a list of records with expressions.  | This request requires an authorized user. | The response contains a list of annotated records and an object containing the number of records with errors and the number of fields with errors. |
+| evaluate | POST `https://<EDP_API_HOST>/v1/evaluate` | Run a single expression with a custom context. | This request requires an authorized user. |                                                  The response contains the evaluated expression.                                                   |
 
 ### Annotate
 
@@ -253,8 +252,8 @@ Run a set of expressions on a list of records in real-time.
 In the request body, provide the following properties:
 
 |          Property          |    Value     |                                                      Description                                                      |
-|:-------------:|:-------------:|:----------------------------------------:|
-|           fields           | DatasetField |                       A list of [dataset field objects.](creating_and_migrating_datasets.html)                       |
+|:---------------:|:---------------:|:-------------------------------------:|
+|           fields           | DatasetField |                       A list of [dataset field objects.](creating_and_migrating_datasets.html)                        |
 |       include_errors       |   boolean    | If True, a new field (\_errors) will be added to each record containing expression evaluation errors (default: True). |
 |          records           |   objects    |                                             An arbitrary list of records.                                             |
 | pre_annotation_expression  |    string    |   An arbitrary expression that will be applied before the annotation, e.g. 'explode(record, fields=["mutations"])'    |
@@ -269,7 +268,7 @@ Evaluate a single expression with a custom context.
 In the request body, provide the following properties:
 
 |  Property  |  Value  |                           Description                           |
-|:-------------:|:-------------:|:----------------------------------------:|
+|:---------------:|:---------------:|:-------------------------------------:|
 |   fields   | object  |  An object containing variables referenced in the expression.   |
 | data_type  | string  |            A valid data type to cast the result to.             |
 | expression | string  |                       A valid expression.                       |

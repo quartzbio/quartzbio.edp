@@ -36,7 +36,7 @@ The user should [authenticate their R session](r_authentication.html) using thei
 
 To create an app, users can enter the following R commands. Doing so will create the app and allow the user to view its client ID:
 
-```{r}
+```{r, eval=FALSE}
 library(quartzbio.edp)
 # The redirect URL (protocol, host, and port) must exactly match
 # the local development URL.
@@ -159,7 +159,7 @@ Users who want to test their Shiny apps using a public server can use Shinyapps.
 
 The [Example R/EDP Shiny App](https://github.com/solvebio/solvebio-r/tree/master/examples/secure_shiny_app) is a simple Shiny app wrapped by EDP's "protected server", requiring users to authorize the app with their QuartzBio account via OAuth2. The app presents the user with a list of datasets in their personal vault.
 
-In order to run the app, two environment variables are required: - CLIENT_ID: The client ID of the user's EDP application - APP_URL: The full URL (host, port, and path if necessary) of the user's app once it is deployed (defaults to <http://127.0.0.1:3838>)
+In order to run the app, two environment variables are required: - CLIENT_ID: The client ID of the user's EDP application - APP_URL: The full URL (host, port, and path if necessary) of the user's app once it is deployed (defaults to `http://127.0.0.1:3838`)
 
 ## Running Locally
 
@@ -181,7 +181,7 @@ To run the app locally, the user can run the code through RStudio or run the fol
 R -e "shiny::runApp(port=3838)"
 ```
 
-After running the command, the user can open <http://127.0.0.1:3838> in their web browser to open the app.
+After running the command, the user can open `http://127.0.0.1:3838` in their web browser to open the app.
 
 ## Deploying to ShinyApps.io
 
@@ -236,10 +236,10 @@ This API reference is organized by resource type and endpoint. Each resource typ
 
 | Method |                 HTTP Request                  |      Description       |                                    Authorization                                     |                       Response                       |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| create | POST <https://><EDP_API_HOST>/v2/applications | Create an application. | This request requires an authorized user with permission to create new applications. | The response contains a single Application resource. |
+| create | POST `https://<EDP_API_HOST>/v2/applications` | Create an application. | This request requires an authorized user with permission to create new applications. | The response contains a single Application resource. |
 
 |   Property    |     Value     |                              Description                              |
-|:---------------:|:---------------:|:------------------------------------:|
+|:-----------------:|:-----------------:|:---------------------------------:|
 |     name      |    string     |              (required) A user-visible name for the app.              |
 | redirect_uris |    string     | (required) A list of space-separated valid redirection endpoint URIs. |
 |  description  |    string     |                A user-friendly description of the app.                |
@@ -251,12 +251,12 @@ This API reference is organized by resource type and endpoint. Each resource typ
 
 | Method |                        HTTP Request                         |      Description       |                                       Authorization                                        |                      Response                       |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| delete | DELETE <https://><EDP_API_HOST>/v2/applications/{CLIENT_ID} | Delete an application. | This request requires an authorized user with permission to modify the target application. | The response returns "HTTP 200 OK" when successful. |
+| delete | DELETE `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}` | Delete an application. | This request requires an authorized user with permission to modify the target application. | The response returns "HTTP 200 OK" when successful. |
 
 | Method |                       HTTP Request                       |               Description               |                                      Authorization                                       |                    Response                    |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-|  get   | GET <https://><EDP_API_HOST>/v2/applications/{CLIENT_ID} | Retrieve metadata about an application. | This request requires an authorized user with permission to view the target application. | The response contains an Application resource. |
+|  get   | GET `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}` | Retrieve metadata about an application. | This request requires an authorized user with permission to view the target application. | The response contains an Application resource. |
 
 | Method |                          HTTP Request                           |              Description              |                                             Authorization                                             |                                         Response                                          |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| secret | GET <https://><EDP_API_HOST>/v2/applications/{CLIENT_ID}/secret | Retrieve an application's secret key. | This request requires an authorized user with permission to view the target application's secret key. | The response contains an Application resource with an additional client_secret attribute. |
+| secret | GET `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}/secret` | Retrieve an application's secret key. | This request requires an authorized user with permission to view the target application's secret key. | The response contains an Application resource with an additional client_secret attribute. |

@@ -18,10 +18,8 @@ knitr::opts_chunk$set(
 EDP supports programmatic access via R. To get started, users will need to authenticate their session using a Personal Access Token.
 
 ### Personal Access Tokens
-Clients can authenticate with Personal Access Tokens.
-Create a new Personal Access Token by clicking "Generate New Token" on the Personal Access Tokens page  (https://DOMAIN.edp.aws.quartz.bio/settings/tokens).
-Without valid credentials, API endpoints may return `403 Forbidden`, or `401 Not Authorized`.
 
+Clients can authenticate with Personal Access Tokens. Create a new Personal Access Token by clicking "Generate New Token" on the Personal Access Tokens page (`https://DOMAIN.edp.aws.quartz.bio/settings/tokens`). Without valid credentials, API endpoints may return `403 Forbidden`, or `401 Not Authorized`.
 
 ## Pre-Requisites
 
@@ -111,7 +109,6 @@ Vaults()
 Folders()
 ```
 
-
 ## EDP Health Check
 
 To perform a quick check to test your credentials and EDP connection use `edp_health_check` function. This provides a situation report which checks if their token and domain are valid and EDP connection is established successfully. It provides the user details if the EDP connection is successful.
@@ -121,6 +118,7 @@ edp_health_check()
 ```
 
 The health check function can retrieve the list of vaults created by the user by setting `get_vault_list` parameter to TRUE
+
 ```{r}
 edp_health_check(get_vault_list = TRUE)
 ```

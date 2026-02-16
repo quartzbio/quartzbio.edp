@@ -71,7 +71,7 @@ By default, new fields are automatically detected by the import system when tran
 Dataset fields have the following properties:
 
 | Property        | Value           | Description                                                                                                                                                                                  |
-|---------------|---------------|------------------------------------------|
+|------------------|------------------|------------------------------------|
 | name (required) | string          | The "low-level" field name, is used in JSON-formatted records.                                                                                                                               |
 | data_type       | string          | A valid data type.                                                                                                                                                                           |
 | description     | string          | Free text that describes the contents of the field.                                                                                                                                          |
@@ -123,8 +123,7 @@ DatasetField.create(
 
 ## URL Template
 
-If users add a url_template value to the dataset field, the dataset table will show the value as a link in the EDP UI. This is useful for linking to other sources/websites. 
-
+If users add a url_template value to the dataset field, the dataset table will show the value as a link in the EDP UI. This is useful for linking to other sources/websites.
 
 ## Migrating Datasets
 
@@ -241,13 +240,13 @@ Methods do not accept URL parameters or request bodies unless specified. Please 
 ### Datasets
 
 | Method |               HTTP Request                |    Description    |                                  Authorization                                   |                     Response                     |
-|:------------:|:------------:|:------------:|:----------------:|:------------:|
-| create | POST <https://><EDP_API_HOST>/v2/datasets | Create a dataset. | This request requires an authorized user with permission to create new datasets. | The response contains a single Dataset resource. |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| create | POST `https://<EDP_API_HOST>/v2/datasets` | Create a dataset. | This request requires an authorized user with permission to create new datasets. | The response contains a single Dataset resource. |
 
 Request Body:
 
 |        Property        |     Value      |                                Description                                |
-|:---------------:|:---------------:|:-------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 |          name          |     string     |            The unique name within the vault for this dataset.             |
 |        vault_id        |    integer     |             The vault version in which to create the dataset.             |
 | vault_parent_object_id |    integer     | The folder ID in which to create the dataset. Use 'null' to place at '/'. |
@@ -258,23 +257,23 @@ Request Body:
 |     storage_class      |     string     |                   (Optional) The dataset storage class.                   |
 
 | Method |                       HTTP Request                       |    Description    |                                     Authorization                                      |                      Response                       |
-|:------------:|:------------:|:------------:|:---------------:|:------------:|
-| delete | DELETE <https://><EDP_API_HOST>/v2/datasets/{DATASET_ID} | Delete a dataset. | This request requires an authorized user with permission to modify the target dataset. | The response returns "HTTP 200 OK" when successful. |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| delete | DELETE `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}` | Delete a dataset. | This request requires an authorized user with permission to modify the target dataset. | The response returns "HTTP 200 OK" when successful. |
 
 | Method |                     HTTP Request                      |            Description             |                                    Authorization                                     |                 Response                  |
-|:------------:|:------------:|:------------:|:---------------:|:------------:|
-|  get   | GET <https://><EDP_API_HOST>/v2/datasets/{DATASET_ID} | Retrieve metadata about a dataset. | This request requires an authorized user with permission to view the target dataset. | The response contains a Dataset resource. |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+|  get   | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}` | Retrieve metadata about a dataset. | This request requires an authorized user with permission to view the target dataset. | The response contains a Dataset resource. |
 
 ### Dataset Fields
 
 | Method |                  HTTP Request                   |       Description       |                                 Authorization                                  |                       Response                        |
-|:------------:|:------------:|:------------:|:---------------:|:------------:|
-| create | POST <https://><EDP_API_HOST>/v2/dataset_fields | Create a dataset field. | This request requires an authorized user with write permission on the dataset. | The response contains a single DatasetField resource. |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| create | POST `https://<EDP_API_HOST>/v2/dataset_fields` | Create a dataset field. | This request requires an authorized user with write permission on the dataset. | The response contains a single DatasetField resource. |
 
 Request Body: In the request body, provide an object with the following properties:
 
 |   Property   |  Value  |                                                                         Description                                                                         |
-|:-----------:|:-----------:|:-------------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 |  data_type   | string  |                                                               A valid data type (see below).                                                                |
 | description  | string  |                                                            Describes the contents of the field.                                                             |
 | entity_type  | string  |                                                                    A valid entity type.                                                                     |
@@ -289,7 +288,7 @@ Request Body: In the request body, provide an object with the following properti
 #### Data Types:
 
 |   Data Type    |                                       Description                                        |
-|:---------------:|:-----------------------------------------------------:|
+|:--------------------:|:------------------------------------------------:|
 | auto (default) |           Attempt to automatically detect the data type upon the first import.           |
 |    boolean     |                               Either True, False, or null.                               |
 |      date      |             A string in ISO 8601 format, for example: "2017-03-29T14:52:01".             |
@@ -303,12 +302,12 @@ Request Body: In the request body, provide an object with the following properti
 |      blob      |               A valid UTF-8 string of any length, not indexed for search.                |
 
 | Method |                    HTTP Request                     |        Description        |                                 Authorization                                 |                    Response                    |
-|:------------:|:------------:|:------------:|:---------------:|:------------:|
-|  get   | GET <https://><EDP_API_HOST>/v2/dataset_fields/{ID} | Retrieve a dataset field. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetField resource. |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+|  get   | GET `https://<EDP_API_HOST>/v2/dataset_fields/{ID}` | Retrieve a dataset field. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetField resource. |
 
 | Method |                         HTTP Request                         |                   Description                   |                                 Authorization                                 |                        Response                         |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-|  list  | GET <https://><EDP_API_HOST>/v2/datasets/{DATASET_ID}/fields | Retrieve a set of dataset fields for a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetField resources. |
+|  list  | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/fields` | Retrieve a set of dataset fields for a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetField resources. |
 
 Parameters:
 
@@ -318,19 +317,19 @@ Parameters:
 |  offset  | integer | The offset within the list of available objects. |
 
 | Method |                    HTTP Request                     |       Description       |                                 Authorization                                  |                         Response                         |
-|:------------:|:------------:|:------------:|:--------------:|:------------:|
-| update | PUT <https://><EDP_API_HOST>/v2/dataset_fields/{ID} | Update a dataset field. | This request requires an authorized user with write permission on the dataset. | The response contains the updated DatasetField resource. |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| update | PUT `https://<EDP_API_HOST>/v2/dataset_fields/{ID}` | Update a dataset field. | This request requires an authorized user with write permission on the dataset. | The response contains the updated DatasetField resource. |
 
 Request Body In the request body, provide a valid DatasetField object (see create above).
 
 #### Dataset Migrations
 
 | Method |                    HTTP Request                     |         Description         |                                                            Authorization                                                             |                        Response                        |
-|:-----------:|:-----------:|:-----------:|:------------------:|:-----------:|
-| create | POST <https://><EDP_API_HOST>/v2/dataset_migrations | Create a dataset migration. | This request requires an authorized user with read permissions from the source dataset, and write permissions to the target dataset. | The response contains a new DatasetMigration resource. |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| create | POST `https://<EDP_API_HOST>/v2/dataset_migrations` | Create a dataset migration. | This request requires an authorized user with read permissions from the source dataset, and write permissions to the target dataset. | The response contains a new DatasetMigration resource. |
 
 |     Property      |  Value  |                                                      Description                                                      |
-|:--------------:|:--------------:|:---------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 |    commit_mode    | string  |                                                 A valid commit mode.                                                  |
 |  include_errors   | boolean | If True, a new field (\_errors) will be added to each record containing expression evaluation errors (default: True). |
 |     source_id     | integer |                                         The ID of a valid, queryable dataset.                                         |
@@ -345,7 +344,7 @@ Request Body In the request body, provide a valid DatasetField object (see creat
 The following query parameters (source_params property) are supported for migrations:
 
 |    Property    |  Value  |                        Description                        |
-|:--------------:|:--------------:|:---------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 |     limit      | integer | The number of records to migrate from the source dataset. |
 |    filters     | objects |                  A valid filter object.                   |
 |     fields     | string  |   A list of fields to include from the source dataset.    |
@@ -354,15 +353,15 @@ The following query parameters (source_params property) are supported for migrat
 
 | Method |                        HTTP Request                        |         Description         |                          Authorization                           |                      Response                       |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| delete | DELETE <https://><EDP_API_HOST>/v2/dataset_migrations/{ID} | Delete a dataset migration. | This request requires an authorized user with write permissions. | The response returns "HTTP 200 OK" when successful. |
+| delete | DELETE `https://<EDP_API_HOST>/v2/dataset_migrations/{ID}` | Delete a dataset migration. | This request requires an authorized user with write permissions. | The response returns "HTTP 200 OK" when successful. |
 
 | Method |                      HTTP Request                       |                 Description                  |                       Authorization                       |                      Response                      |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-|  get   | GET <https://><EDP_API_HOST>/v2/dataset_migrations/{ID} | Retrieve metadata about a dataset migration. | This request requires an authorized user with permission. | The response contains a DatasetMigration resource. |
+|  get   | GET `https://<EDP_API_HOST>/v2/dataset_migrations/{ID}` | Retrieve metadata about a dataset migration. | This request requires an authorized user with permission. | The response contains a DatasetMigration resource. |
 
 | Method |                          HTTP Request                           |                     Description                      |                         Authorization                          |                                           Response                                            |
-|:------------:|:------------:|:------------:|:------------:|:--------------:|
-|  list  | GET <https://><EDP_API_HOST>/v2/dataset/{DATASET_ID}/migrations | Retrieve a list of dataset migrations for a dataset. | This request requires an authorized user with read permission. | The response contains a list of DatasetMigration resources from the specified source dataset. |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+|  list  | GET `https://<EDP_API_HOST>/v2/dataset/{DATASET_ID}/migrations` | Retrieve a list of dataset migrations for a dataset. | This request requires an authorized user with read permission. | The response contains a list of DatasetMigration resources from the specified source dataset. |
 
 Parameters: This request accepts the following parameters:
 
@@ -373,6 +372,6 @@ Parameters: This request accepts the following parameters:
 
 | Method |                          HTTP Request                           |         Description         |                                 Authorization                                 |                                    Response                                     |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| cancel | PUT <https://><EDP_API_HOST>/v2/datasets_migrations/{ID}/cancel | Cancel a dataset migration. | This request requires an authorized user with read permission on the dataset. | The response will contain a DatasetMigration resource with the status canceled. |
+| cancel | PUT `https://<EDP_API_HOST>/v2/datasets_migrations/{ID}/cancel` | Cancel a dataset migration. | This request requires an authorized user with read permission on the dataset. | The response will contain a DatasetMigration resource with the status canceled. |
 
 Request Body: In the request body, provide a valid DatasetMigration object (see create above) with status = canceled.
