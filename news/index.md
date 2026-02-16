@@ -1,5 +1,11 @@
 # Changelog
 
+## version 1.1.1
+
+**Bug Fixes**
+
+- Fixed invalid URLs from documentation.
+
 ## version 1.1.0
 
 **New Features**
