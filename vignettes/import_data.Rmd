@@ -26,7 +26,7 @@ The EDP's import system automates the traditional ETL (Extract, Transform, Load)
 The following file formats and extensions are supported:
 
 | Name                                              | File Extension | Previewable in EDP? | Transformable into a Dataset? |
-|---------------------|-----------------|-----------------|-----------------|
+|-------------------|------------------|------------------|------------------|
 | Comma Separated Values                            | .csv           | Y                   | Y                             |
 | General Feature Format                            | .gff3.gz       | Y                   | Y                             |
 | Gene Transfer Format                              | .gtf           | Y                   | Y                             |
@@ -300,14 +300,14 @@ Methods do not accept URL parameters or request bodies unless specified. Please 
 
 | Method | HTTP Request                                     | Description                            | Authorization                                                                  | Response                                                                                        |
 |---------------|---------------|---------------|---------------|---------------|
-| create | POST <https://><EDP_API_HOST>/v2/dataset_imports | Create a dataset import for a dataset. | This request requires an authorized user with write permission on the dataset. | The response returns "HTTP 201 Created", along with the DatasetImport resource when successful. |
+| create | POST `https://<EDP_API_HOST>/v2/dataset_imports` | Create a dataset import for a dataset. | This request requires an authorized user with write permission on the dataset. | The response returns "HTTP 201 Created", along with the DatasetImport resource when successful. |
 
 Request Body:
 
 In the request body, provide an object with the following properties:
 
 |     Property      |  Value  |                                                      Description                                                      |
-|:-----------------:|:-----------------:|:---------------------------------:|
+|:-----------------:|:-----------------:|:--------------------------------:|
 |    commit_mode    | string  |                                                 A valid commit mode.                                                  |
 |    dataset_id     | integer |                                    (Optional) The ID of an existing object on EDP.                                    |
 |     object_id     | integer |                                        (Optional) A file manifest (see below).                                        |
@@ -341,7 +341,7 @@ When creating a new import, either manifest, object_id or data_records must be p
 Manifests can include the following parameters:
 
 |     Property      | Value  |                                                          Description                                                          |
-|:-----------------:|:-----------------:|:---------------------------------:|
+|:-----------------:|:-----------------:|:--------------------------------:|
 |        url        | string |             A publicly accessible URL pointing to a file to import into EDP. You must pass a URL or an object_id.             |
 |     object_id     |  long  |                           The ID of an existing object on EDP. You must pass an object_id or a URL.                           |
 |       name        | string |                   (Optional) The name of the file. If not passed, EDP will take it from the URL or object.                    |
@@ -353,21 +353,21 @@ Manifests can include the following parameters:
 
 | Method | HTTP Request                                            | Description              | Authorization                                                                  | Response                                            |
 |---------------|---------------|---------------|---------------|---------------|
-| delete | DELETE <https://><EDP_API_HOST>/v2/dataset_imports/{ID} | Delete a dataset import. | This request requires an authorized user with write permission on the dataset. | The response returns "HTTP 200 OK" when successful. |
+| delete | DELETE `https://<EDP_API_HOST>/v2/dataset_imports/{ID}` | Delete a dataset import. | This request requires an authorized user with write permission on the dataset. | The response returns "HTTP 200 OK" when successful. |
 
 Deleting dataset imports is not recommended as data provenance will be lost.
 
 | Method | HTTP Request                                         | Description                        | Authorization                                                                 | Response                                        |
 |---------------|---------------|---------------|---------------|---------------|
-| get    | GET <https://><EDP_API_HOST>/v2/dataset_imports/{ID} | Retrieve metadata about an import. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetImport resource. |
+| get    | GET `https://<EDP_API_HOST>/v2/dataset_imports/{ID}` | Retrieve metadata about an import. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetImport resource. |
 
 | Method | HTTP Request                                                  | Description                                 | Authorization                                                                 | Response                                                 |
 |---------------|---------------|---------------|---------------|---------------|
-| list   | GET <https://><EDP_API_HOST>/v2/datasets/{DATASET_ID}/imports | List the imports associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetImport resources. |
+| list   | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/imports` | List the imports associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetImport resources. |
 
 | Method | HTTP Request                                                | Description              | Authorization                                                                  | Response                                                                    |
 |---------------|---------------|---------------|---------------|---------------|
-| cancel | PUT <https://><EDP_API_HOST>/v2/dataset_imports/{IMPORT_ID} | Cancel a dataset import. | This request requires an authorized user with write permission on the dataset. | The response will contain a DatasetImport resource with the status canceled |
+| cancel | PUT `https://<EDP_API_HOST>/v2/dataset_imports/{IMPORT_ID}` | Cancel a dataset import. | This request requires an authorized user with write permission on the dataset. | The response will contain a DatasetImport resource with the status canceled |
 
 Request Body
 

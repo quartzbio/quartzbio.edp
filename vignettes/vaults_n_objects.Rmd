@@ -21,7 +21,6 @@ Vaults are similar to filesystems in that they provide a unified directory struc
 
 Vaults also have an advanced permission model that provides three different levels of access: read, write, and admin. Vaults can be shared and permissions can be set via the EDP UI; for more information about working with vaults on the web interface as well as vault basics such as vault types, users can refer to the Vaults via UI documentation.
 
-
 ## Creating Vaults
 
 Users can create a vault as long as it has a unique name within their account domain. Vault and object names are case-insensitive. Once users create a vault, they'll be able to add folders, upload files, and create datasets. To be safe, a special method is provided to retrieve the vault by name if it already exists:
@@ -35,7 +34,6 @@ vault_x <- Vault.get_or_create_by_full_path("Vault X")
 # Create a vault (updates the vault if already exists)
 vault_x <- Vault_create(name = "Vault X")
 ```
-
 
 ## Retrieving Vaults
 
@@ -63,7 +61,6 @@ public_vault <- Vault.retrieve("19")
 specific_user_vaults <- Vault.all(query = "user:john")
 ```
 
-
 ## Creating Folders
 
 Folders can only be created within a vault for which the user has write-level permission. Folder names are case-insensitive. If a user attempts to create a folder with a duplicate name, the vault will add an incrementing number to the name (i.e. folder, folder-1, folder-2, ...).
@@ -77,7 +74,6 @@ vault <- Vault()
 # Create the folder at the root of the vault
 folder <- Object_create(vault$id, "new-folder", object_type = "folder")
 ```
-
 
 ## Uploading Files
 
@@ -98,7 +94,6 @@ File_upload(vault_id = vault$id, local_path = "local/path/data.csv", vault_path 
 # You can also specify a new filename for the uploaded file:
 File_upload(vault$id, "local/path/data.tsv", "/data_with_a_description.csv")
 ```
-
 
 ## Downloading Files
 
@@ -130,7 +125,6 @@ for (i in 1:nrow(files)) {
 }
 ```
 
-
 ## Searching within Vaults
 
 Users can search for files, folders, and datasets within any vault by name or other attributes.
@@ -157,7 +151,6 @@ data_objects <- Vault.objects(vault$id, filename = "data.csv")
 public <- Vault.get_by_full_path("quartzbio:public")
 ```
 
-
 ## Advanced Search
 
 Users can list all objects within a vault that match a specific pattern (i.e. find all the files within a certain folder) by providing a case-insensitive regular expression to the regex parameter. It is highly recommended to use Object.search() instead of searching by regular expression, unless it is absolutely necessary.
@@ -170,7 +163,6 @@ library(quartzbio.edp)
 public <- Vault.get_by_full_path("quartzbio:public")
 all_clinvar_datasets <- Vault.datasets(public$id, regex = "/ClinVar/.*")
 ```
-
 
 ## Move Files Between Folders
 
@@ -193,7 +185,6 @@ for (i in 1:nrow(files)) {
 }
 ```
 
-
 ## Deleting Vaults and Objects
 
 Users can delete any vault or object (file, folder, or dataset) that they have admin-level permissions on. Deleting a vault or folder will automatically delete all its contents.
@@ -209,20 +200,17 @@ folder <- Vault.create_folder(vault$id, "/test-delete-folder")
 Object.delete(folder$id)
 ```
 
-
 ## API Endpoints
 
 Methods do not accept URL parameters or request bodies unless specified. Please note that if your EDP endpoint is sponsor.edp.aws.quartz.bio, you would use sponsor.api.edp.aws.quartz.bio.
 
 ### Vaults
 
-
 | Method | HTTP Request                            | Description     | Authorization                    | Response                                       |
 |---------------|---------------|---------------|---------------|---------------|
-| create | POST <https://><EDP_API_HOST>/v2/vaults | Create a vault. | All users can create new vaults. | The response contains a single Vault resource. |
+| create | POST `https://<EDP_API_HOST>/v2/vaults` | Create a vault. | All users can create new vaults. | The response contains a single Vault resource. |
 
 #### Request Body:
-
 
 | Property              | Value  | Description                                                        |
 |------------------------|------------------------|------------------------|
@@ -232,28 +220,22 @@ Methods do not accept URL parameters or request bodies unless specified. Please 
 | tags                  | object | (Optional) A list of strings to organize the vault.                |
 | default_storage_class | string | (Optional) A list of strings to organize the vault.                |
 
-
-
 | Method | HTTP Request                           | Description                | Authorization                                                                                                                                                                 | Response                                                             |
 |---------------|---------------|---------------|---------------|---------------|
-| list   | GET <https://><EDP_API_HOST>/v2/vaults | List all available vaults. | All public vaults are included in this response. If the request is sent by an authenticated user, vaults which the user has "read" permission or higher on are also returned. | The response returns a list of vaults matching the provided filters. |
-
-
+| list   | GET `https://<EDP_API_HOST>/v2/vaults` | List all available vaults. | All public vaults are included in this response. If the request is sent by an authenticated user, vaults which the user has "read" permission or higher on are also returned. | The response returns a list of vaults matching the provided filters. |
 
 | Method | HTTP Request                                | Description     | Authorization                                                                            | Response                                          |
 |---------------|---------------|---------------|---------------|---------------|
-| update | PUT <https://><EDP_API_HOST>/v2/vaults/{ID} | Update a vault. | This request requires an authorized user with "write" permission or higher on the vault. | The response contains the updated Vault resource. |
+| update | PUT `https://<EDP_API_HOST>/v2/vaults/{ID}` | Update a vault. | This request requires an authorized user with "write" permission or higher on the vault. | The response contains the updated Vault resource. |
 
 ### Request Body
 
 In the request body, provide a valid Vault object (see create above).
 
-
 | Method | HTTP Request                                   | Description     | Authorization                                                                  | Response                                            |
-|---------------|---------------|---------------|---------------|---------------|
-| delete | DELETE <https://><EDP_API_HOST>/v2/vaults/{ID} | Delete a vault. | This request requires an authorized user with "admin" permission on the vault. | The response returns "HTTP 200 OK" when successful. |
-
+|---------------|------------------|---------------|---------------|---------------|
+| delete | DELETE `https://<EDP_API_HOST>/v2/vaults/{ID}` | Delete a vault. | This request requires an authorized user with "admin" permission on the vault. | The response returns "HTTP 200 OK" when successful. |
 
 | Method | HTTP Request                                | Description                  | Authorization                                                                           | Response                                |
 |---------------|---------------|---------------|---------------|---------------|
-| get    | GET <https://><EDP_API_HOST>/v2/vaults/{ID} | Retrieve a vault's metadata. | This request requires an authorized user with "read" permission or higher on the vault. | The response contains a Vault resource. |
+| get    | GET `https://<EDP_API_HOST>/v2/vaults/{ID}` | Retrieve a vault's metadata. | This request requires an authorized user with "read" permission or higher on the vault. | The response contains a Vault resource. |
