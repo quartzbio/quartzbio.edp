@@ -3,7 +3,7 @@
 **Bug Fixes**
 
 -   Fixed invalid URLs from documentation.
-
+-   Fixed `connect()` to cache a sucessfully created connection object discoverable by `get_connection()`.
 
 # version 1.1.0
 

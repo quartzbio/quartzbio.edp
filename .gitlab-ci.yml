@@ -154,7 +154,7 @@ tests:
     - Rscript -e 'pak::pak(pkg = ".", upgrade = TRUE, dependencies = TRUE)'
     - Rscript --vanilla -e 'pak::pkg_install(pkg = "devtools", upgrade = TRUE)'
     # we should consider changing it to stop_on_warning = TRUE
-    - Rscript --vanilla -e 'devtools::test(stop_on_error = TRUE)'
+    - Rscript --vanilla -e 'devtools::test(stop_on_failure = TRUE)'
 
 document_package:
   stage: document_package

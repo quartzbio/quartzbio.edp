@@ -234,10 +234,23 @@ test_that("connect", {
   key <- strrep("X", 40)
   token <- strrep("Y", 30)
 
+  # Connection is not set initially:
+  set_connection(NULL, check = FALSE)
+  expect_null(get_connection(auto = FALSE))
+
+  # Can connect:
+  conn <- list(secret = token, host = "host")
   expect_identical(
     connect(token, "host", check = FALSE),
-    list(secret = token, host = "host")
+    conn
   )
+  # and the connection is cached and discoverable:
+  expect_identical(
+    get_connection(auto = FALSE),
+    conn
+  )
+
+  # Invalid credentials:
   expect_error(connect(key, "host", check = FALSE))
 
   ### test env vars: KEY
