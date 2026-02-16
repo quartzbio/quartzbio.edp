@@ -1,3 +1,10 @@
+# version 1.1.1
+
+**Bug Fixes**
+
+-   Fixed invalid URLs from documentation.
+
+
 # version 1.1.0
 
 **New Features**
@@ -11,6 +18,7 @@
 **Deprecations**
 
 -   Deprecated the API key option from the EDP login function `connect()` as API Keys is no longer supported by the EDP platform.
+
 
 # version 1.0.0
 

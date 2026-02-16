@@ -1,7 +1,7 @@
 Type: Package
 Package: quartzbio.edp
 Title: The Official QuartzBio EDP API Client
-Version: 1.1.0
+Version: 1.1.1
 Maintainer: Tobi Guennel <tobi.guennel@precisionformedicine.com>
 Authors@R: c(
     person("Tobi", "Guennel", email = "tobi.guennel@precisionformedicine.com", role = c("aut", "cre")),
