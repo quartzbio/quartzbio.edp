@@ -5,6 +5,10 @@
 **Bug Fixes**
 
 - Fixed invalid URLs from documentation.
+- Fixed
+  [`connect()`](https://quartzbio.github.io/quartzbio.edp/reference/connect.md)
+  to cache a sucessfully created connection object discoverable by
+  [`get_connection()`](https://quartzbio.github.io/quartzbio.edp/reference/get_connection.md).
 
 ## version 1.1.0
 
