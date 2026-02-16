@@ -305,10 +305,10 @@ Methods do not accept URL parameters or request bodies unless specified.
 Please note that if your EDP endpoint is sponsor.edp.aws.quartz.bio, you
 would use sponsor.api.edp.aws.quartz.bio.
 
-|  Method  |        HTTP Request         |                  Description                   |               Authorization               |                                                                      Response                                                                      |
-|:--------:|:---------------------------:|:----------------------------------------------:|:-----------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------:|
-| annotate | POST <https://>/v1/annotate |  Annotate a list of records with expressions.  | This request requires an authorized user. | The response contains a list of annotated records and an object containing the number of records with errors and the number of fields with errors. |
-| evaluate | POST <https://>/v1/evaluate | Run a single expression with a custom context. | This request requires an authorized user. |                                                  The response contains the evaluated expression.                                                   |
+|  Method  |               HTTP Request                |                  Description                   |               Authorization               |                                                                      Response                                                                      |
+|:--------:|:-----------------------------------------:|:----------------------------------------------:|:-----------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------:|
+| annotate | POST `https://<EDP_API_HOST>/v1/annotate` |  Annotate a list of records with expressions.  | This request requires an authorized user. | The response contains a list of annotated records and an object containing the number of records with errors and the number of fields with errors. |
+| evaluate | POST `https://<EDP_API_HOST>/v1/evaluate` | Run a single expression with a custom context. | This request requires an authorized user. |                                                  The response contains the evaluated expression.                                                   |
 
 ### Annotate
 

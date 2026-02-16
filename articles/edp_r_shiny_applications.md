@@ -203,7 +203,7 @@ app presents the user with a list of datasets in their personal vault.
 In order to run the app, two environment variables are required: -
 CLIENT_ID: The client ID of the user’s EDP application - APP_URL: The
 full URL (host, port, and path if necessary) of the user’s app once it
-is deployed (defaults to <http://127.0.0.1:3838>)
+is deployed (defaults to `http://127.0.0.1:3838`)
 
 ## Running Locally
 
@@ -222,7 +222,7 @@ the following command in their shell:
 
     R -e "shiny::runApp(port=3838)"
 
-After running the command, the user can open <http://127.0.0.1:3838> in
+After running the command, the user can open `http://127.0.0.1:3838` in
 their web browser to open the app.
 
 ## Deploying to ShinyApps.io
@@ -281,9 +281,9 @@ specified. Please note that if your EDP endpoint is
 sponsor.edp.aws.quartz.bio, you would use
 sponsor.api.edp.aws.quartz.bio.
 
-| Method |          HTTP Request           |      Description       |                                    Authorization                                     |                       Response                       |
-|:------:|:-------------------------------:|:----------------------:|:------------------------------------------------------------------------------------:|:----------------------------------------------------:|
-| create | POST <https://>/v2/applications | Create an application. | This request requires an authorized user with permission to create new applications. | The response contains a single Application resource. |
+| Method |                 HTTP Request                  |      Description       |                                    Authorization                                     |                       Response                       |
+|:------:|:---------------------------------------------:|:----------------------:|:------------------------------------------------------------------------------------:|:----------------------------------------------------:|
+| create | POST `https://<EDP_API_HOST>/v2/applications` | Create an application. | This request requires an authorized user with permission to create new applications. | The response contains a single Application resource. |
 
 |   Property    |     Value     |                              Description                              |
 |:-------------:|:-------------:|:---------------------------------------------------------------------:|
@@ -296,14 +296,14 @@ sponsor.api.edp.aws.quartz.bio.
 |     tags      | string (list) |            A list of arbitrary tags to categorize the app.            |
 |    web_url    |    string     |            The URL where the app can be accessed by users.            |
 
-| Method |                 HTTP Request                  |      Description       |                                       Authorization                                        |                      Response                       |
-|:------:|:---------------------------------------------:|:----------------------:|:------------------------------------------------------------------------------------------:|:---------------------------------------------------:|
-| delete | DELETE <https://>/v2/applications/{CLIENT_ID} | Delete an application. | This request requires an authorized user with permission to modify the target application. | The response returns “HTTP 200 OK” when successful. |
+| Method |                        HTTP Request                         |      Description       |                                       Authorization                                        |                      Response                       |
+|:------:|:-----------------------------------------------------------:|:----------------------:|:------------------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| delete | DELETE `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}` | Delete an application. | This request requires an authorized user with permission to modify the target application. | The response returns “HTTP 200 OK” when successful. |
 
-| Method |                HTTP Request                |               Description               |                                      Authorization                                       |                    Response                    |
-|:------:|:------------------------------------------:|:---------------------------------------:|:----------------------------------------------------------------------------------------:|:----------------------------------------------:|
-|  get   | GET <https://>/v2/applications/{CLIENT_ID} | Retrieve metadata about an application. | This request requires an authorized user with permission to view the target application. | The response contains an Application resource. |
+| Method |                       HTTP Request                       |               Description               |                                      Authorization                                       |                    Response                    |
+|:------:|:--------------------------------------------------------:|:---------------------------------------:|:----------------------------------------------------------------------------------------:|:----------------------------------------------:|
+|  get   | GET `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}` | Retrieve metadata about an application. | This request requires an authorized user with permission to view the target application. | The response contains an Application resource. |
 
-| Method |                   HTTP Request                    |              Description              |                                             Authorization                                             |                                         Response                                          |
-|:------:|:-------------------------------------------------:|:-------------------------------------:|:-----------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------:|
-| secret | GET <https://>/v2/applications/{CLIENT_ID}/secret | Retrieve an application’s secret key. | This request requires an authorized user with permission to view the target application’s secret key. | The response contains an Application resource with an additional client_secret attribute. |
+| Method |                          HTTP Request                           |              Description              |                                             Authorization                                             |                                         Response                                          |
+|:------:|:---------------------------------------------------------------:|:-------------------------------------:|:-----------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------:|
+| secret | GET `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}/secret` | Retrieve an application’s secret key. | This request requires an authorized user with permission to view the target application’s secret key. | The response contains an Application resource with an additional client_secret attribute. |

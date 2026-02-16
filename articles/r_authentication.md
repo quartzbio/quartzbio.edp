@@ -8,7 +8,7 @@ to authenticate their session using a Personal Access Token.
 Clients can authenticate with Personal Access Tokens. Create a new
 Personal Access Token by clicking “Generate New Token” on the Personal
 Access Tokens page
-(<https://DOMAIN.edp.aws.quartz.bio/settings/tokens>). Without valid
+(`https://DOMAIN.edp.aws.quartz.bio/settings/tokens`). Without valid
 credentials, API endpoints may return `403 Forbidden`, or
 `401 Not Authorized`.
 

@@ -370,9 +370,9 @@ would use sponsor.api.edp.aws.quartz.bio.
 
 #### Dataset Imports
 
-| Method | HTTP Request                       | Description                            | Authorization                                                                  | Response                                                                                        |
-|--------|------------------------------------|----------------------------------------|--------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| create | POST <https://>/v2/dataset_imports | Create a dataset import for a dataset. | This request requires an authorized user with write permission on the dataset. | The response returns “HTTP 201 Created”, along with the DatasetImport resource when successful. |
+| Method | HTTP Request                                     | Description                            | Authorization                                                                  | Response                                                                                        |
+|--------|--------------------------------------------------|----------------------------------------|--------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| create | POST `https://<EDP_API_HOST>/v2/dataset_imports` | Create a dataset import for a dataset. | This request requires an authorized user with write permission on the dataset. | The response returns “HTTP 201 Created”, along with the DatasetImport resource when successful. |
 
 Request Body:
 
@@ -423,24 +423,24 @@ Manifests can include the following parameters:
 |   reader_params   | object |                                       (Optional) Configuration parameters for readers.                                        |
 | validation_params | object |                                      (Optional) Configuration parameters for validation.                                      |
 
-| Method | HTTP Request                              | Description              | Authorization                                                                  | Response                                            |
-|--------|-------------------------------------------|--------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------|
-| delete | DELETE <https://>/v2/dataset_imports/{ID} | Delete a dataset import. | This request requires an authorized user with write permission on the dataset. | The response returns “HTTP 200 OK” when successful. |
+| Method | HTTP Request                                            | Description              | Authorization                                                                  | Response                                            |
+|--------|---------------------------------------------------------|--------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------|
+| delete | DELETE `https://<EDP_API_HOST>/v2/dataset_imports/{ID}` | Delete a dataset import. | This request requires an authorized user with write permission on the dataset. | The response returns “HTTP 200 OK” when successful. |
 
 Deleting dataset imports is not recommended as data provenance will be
 lost.
 
-| Method | HTTP Request                           | Description                        | Authorization                                                                 | Response                                        |
-|--------|----------------------------------------|------------------------------------|-------------------------------------------------------------------------------|-------------------------------------------------|
-| get    | GET <https://>/v2/dataset_imports/{ID} | Retrieve metadata about an import. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetImport resource. |
+| Method | HTTP Request                                         | Description                        | Authorization                                                                 | Response                                        |
+|--------|------------------------------------------------------|------------------------------------|-------------------------------------------------------------------------------|-------------------------------------------------|
+| get    | GET `https://<EDP_API_HOST>/v2/dataset_imports/{ID}` | Retrieve metadata about an import. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetImport resource. |
 
-| Method | HTTP Request                                    | Description                                 | Authorization                                                                 | Response                                                 |
-|--------|-------------------------------------------------|---------------------------------------------|-------------------------------------------------------------------------------|----------------------------------------------------------|
-| list   | GET <https://>/v2/datasets/{DATASET_ID}/imports | List the imports associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetImport resources. |
+| Method | HTTP Request                                                  | Description                                 | Authorization                                                                 | Response                                                 |
+|--------|---------------------------------------------------------------|---------------------------------------------|-------------------------------------------------------------------------------|----------------------------------------------------------|
+| list   | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/imports` | List the imports associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetImport resources. |
 
-| Method | HTTP Request                                  | Description              | Authorization                                                                  | Response                                                                    |
-|--------|-----------------------------------------------|--------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| cancel | PUT <https://>/v2/dataset_imports/{IMPORT_ID} | Cancel a dataset import. | This request requires an authorized user with write permission on the dataset. | The response will contain a DatasetImport resource with the status canceled |
+| Method | HTTP Request                                                | Description              | Authorization                                                                  | Response                                                                    |
+|--------|-------------------------------------------------------------|--------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| cancel | PUT `https://<EDP_API_HOST>/v2/dataset_imports/{IMPORT_ID}` | Cancel a dataset import. | This request requires an authorized user with write permission on the dataset. | The response will contain a DatasetImport resource with the status canceled |
 
 Request Body
 

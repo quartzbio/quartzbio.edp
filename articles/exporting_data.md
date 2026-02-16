@@ -185,9 +185,9 @@ would use sponsor.api.edp.aws.quartz.bio.
 
 ### Dataset Exports
 
-| Method |            HTTP Request            |              Description               |                                 Authorization                                  |                        Response                        |
-|:------:|:----------------------------------:|:--------------------------------------:|:------------------------------------------------------------------------------:|:------------------------------------------------------:|
-| create | POST <https://>/v2/dataset_exports | Create a dataset export for a dataset. | This request requires an authorized user with read permission for the dataset. | The response contains a single DatasetExport resource. |
+| Method |                   HTTP Request                   |              Description               |                                 Authorization                                  |                        Response                        |
+|:------:|:------------------------------------------------:|:--------------------------------------:|:------------------------------------------------------------------------------:|:------------------------------------------------------:|
+| create | POST `https://<EDP_API_HOST>/v2/dataset_exports` | Create a dataset export for a dataset. | This request requires an authorized user with read permission for the dataset. | The response contains a single DatasetExport resource. |
 
 Request Body:
 
@@ -228,13 +228,13 @@ exports:
 | exclude_fields | string  |        A list of fields to exclude in the results.         |
 |     query      | string  |                   A valid query string.                    |
 
-| Method |               HTTP Request                |       Description        |                                  Authorization                                  |                      Response                       |
-|:------:|:-----------------------------------------:|:------------------------:|:-------------------------------------------------------------------------------:|:---------------------------------------------------:|
-| delete | DELETE <https://>/v2/dataset_exports/{ID} | Delete a dataset export. | This request requires an authorized user with write permissions on the dataset. | The response returns “HTTP 200 OK” when successful. |
+| Method |                      HTTP Request                       |       Description        |                                  Authorization                                  |                      Response                       |
+|:------:|:-------------------------------------------------------:|:------------------------:|:-------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| delete | DELETE `https://<EDP_API_HOST>/v2/dataset_exports/{ID}` | Delete a dataset export. | This request requires an authorized user with write permissions on the dataset. | The response returns “HTTP 200 OK” when successful. |
 
-|  Method  |                  HTTP Request                   |        Description         |                                 Authorization                                  |                                                     Response                                                     |
-|:--------:|:-----------------------------------------------:|:--------------------------:|:------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
-| download | GET <https://>/v2/dataset_exports/{ID}/download | Download a dataset export. | This request requires an authorized user with read permissions on the dataset. | The default response is a 302 redirect. When redirect mode is disabled, the response contains a URL to the file. |
+|  Method  |                         HTTP Request                          |        Description         |                                 Authorization                                  |                                                     Response                                                     |
+|:--------:|:-------------------------------------------------------------:|:--------------------------:|:------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
+| download | GET `https://<EDP_API_HOST>/v2/dataset_exports/{ID}/download` | Download a dataset export. | This request requires an authorized user with read permissions on the dataset. | The default response is a 302 redirect. When redirect mode is disabled, the response contains a URL to the file. |
 
 Parameters
 
@@ -247,14 +247,14 @@ This request accepts the following parameter:
 Dataset exports may expire after 24 hours, after which the download URL
 will not work. Please re-run the export if necessary.
 
-| Method |              HTTP Request              |            Description             |                                 Authorization                                  |                    Response                     |
-|:------:|:--------------------------------------:|:----------------------------------:|:------------------------------------------------------------------------------:|:-----------------------------------------------:|
-|  get   | GET <https://>/v2/dataset_exports/{ID} | Retrieve metadata about an export. | This request requires an authorized user with read permissions on the dataset. | The response contains a DatasetExport resource. |
+| Method |                     HTTP Request                     |            Description             |                                 Authorization                                  |                    Response                     |
+|:------:|:----------------------------------------------------:|:----------------------------------:|:------------------------------------------------------------------------------:|:-----------------------------------------------:|
+|  get   | GET `https://<EDP_API_HOST>/v2/dataset_exports/{ID}` | Retrieve metadata about an export. | This request requires an authorized user with read permissions on the dataset. | The response contains a DatasetExport resource. |
 
-| Method |                  HTTP Request                   |                 Description                 |                                 Authorization                                  |                         Response                         |
-|:------:|:-----------------------------------------------:|:-------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------:|
-|  list  | GET <https://>/v2/datasets/{DATASET_ID}/exports | List the exports associated with a dataset. | This request requires an authorized user with read permissions on the dataset. | The response contains a list of DatasetExport resources. |
+| Method |                         HTTP Request                          |                 Description                 |                                 Authorization                                  |                         Response                         |
+|:------:|:-------------------------------------------------------------:|:-------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------:|
+|  list  | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/exports` | List the exports associated with a dataset. | This request requires an authorized user with read permissions on the dataset. | The response contains a list of DatasetExport resources. |
 
-| Method |                  HTTP Request                  |                 Description                 |                                 Authorization                                  |                                   Response                                   |
-|:------:|:----------------------------------------------:|:-------------------------------------------:|:------------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|
-| cancel | PUT <https://>/v2/datasets_exports/{ID}/cancel | List the exports associated with a dataset. | This request requires an authorized user with read permissions on the dataset. | The response will contain a DatasetExport resource with the status canceled. |
+| Method |                         HTTP Request                         |                 Description                 |                                 Authorization                                  |                                   Response                                   |
+|:------:|:------------------------------------------------------------:|:-------------------------------------------:|:------------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|
+| cancel | PUT `https://<EDP_API_HOST>/v2/datasets_exports/{ID}/cancel` | List the exports associated with a dataset. | This request requires an authorized user with read permissions on the dataset. | The response will contain a DatasetExport resource with the status canceled. |

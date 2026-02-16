@@ -173,8 +173,8 @@ dataset_field_stats("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37", 
 on the expression, but can be one of the following:</p>
 <table class="table">
 <colgroup>
-<col width="25%">
-<col width="75%">
+<col width="26%">
+<col width="73%">
 </colgroup>
 <thead><tr class="header">
 <th>Data Type</th>
@@ -499,11 +499,11 @@ sponsor.edp.aws.quartz.bio, you would use
 sponsor.api.edp.aws.quartz.bio.</p>
 <table class="table">
 <colgroup>
-<col width="17%">
-<col width="17%">
-<col width="17%">
-<col width="17%">
-<col width="29%">
+<col width="19%">
+<col width="19%">
+<col width="19%">
+<col width="19%">
+<col width="23%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">Method</th>
@@ -515,7 +515,8 @@ sponsor.api.edp.aws.quartz.bio.</p>
 <tbody>
 <tr class="odd">
 <td align="center">annotate</td>
-<td align="center">POST <a href="https://" class="external-link uri">https://</a><edp_api_host>/v1/annotate</edp_api_host>
+<td align="center">POST
+<code>https://&lt;EDP_API_HOST&gt;/v1/annotate</code>
 </td>
 <td align="center">Annotate a list of records with expressions.</td>
 <td align="center">This request requires an authorized user.</td>
@@ -525,7 +526,8 @@ fields with errors.</td>
 </tr>
 <tr class="even">
 <td align="center">evaluate</td>
-<td align="center">POST <a href="https://" class="external-link uri">https://</a><edp_api_host>/v1/evaluate</edp_api_host>
+<td align="center">POST
+<code>https://&lt;EDP_API_HOST&gt;/v1/evaluate</code>
 </td>
 <td align="center">Run a single expression with a custom context.</td>
 <td align="center">This request requires an authorized user.</td>
@@ -543,9 +545,9 @@ fields with errors.</td>
 <p>In the request body, provide the following properties:</p>
 <table class="table">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="58%">
+<col width="23%">
+<col width="23%">
+<col width="53%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">Property</th>
@@ -597,9 +599,9 @@ the annotation, e.g. ‘melt(record,fields=[“gene”, “chromosome”])’</
 <p>In the request body, provide the following properties:</p>
 <table class="table">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="58%">
+<col width="23%">
+<col width="23%">
+<col width="53%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">Property</th>
@@ -670,7 +672,7 @@ value will always be cast to a list.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last modified: 11-Feb-2026 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Last modified: 16-Feb-2026 Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

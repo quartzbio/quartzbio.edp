@@ -229,9 +229,9 @@ would use sponsor.api.edp.aws.quartz.bio.
 
 ### Vaults
 
-| Method | HTTP Request              | Description     | Authorization                    | Response                                       |
-|--------|---------------------------|-----------------|----------------------------------|------------------------------------------------|
-| create | POST <https://>/v2/vaults | Create a vault. | All users can create new vaults. | The response contains a single Vault resource. |
+| Method | HTTP Request                            | Description     | Authorization                    | Response                                       |
+|--------|-----------------------------------------|-----------------|----------------------------------|------------------------------------------------|
+| create | POST `https://<EDP_API_HOST>/v2/vaults` | Create a vault. | All users can create new vaults. | The response contains a single Vault resource. |
 
 #### Request Body:
 
@@ -243,22 +243,22 @@ would use sponsor.api.edp.aws.quartz.bio.
 | tags                  | object | (Optional) A list of strings to organize the vault.                |
 | default_storage_class | string | (Optional) A list of strings to organize the vault.                |
 
-| Method | HTTP Request             | Description                | Authorization                                                                                                                                                                 | Response                                                             |
-|--------|--------------------------|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
-| list   | GET <https://>/v2/vaults | List all available vaults. | All public vaults are included in this response. If the request is sent by an authenticated user, vaults which the user has “read” permission or higher on are also returned. | The response returns a list of vaults matching the provided filters. |
+| Method | HTTP Request                           | Description                | Authorization                                                                                                                                                                 | Response                                                             |
+|--------|----------------------------------------|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| list   | GET `https://<EDP_API_HOST>/v2/vaults` | List all available vaults. | All public vaults are included in this response. If the request is sent by an authenticated user, vaults which the user has “read” permission or higher on are also returned. | The response returns a list of vaults matching the provided filters. |
 
-| Method | HTTP Request                  | Description     | Authorization                                                                            | Response                                          |
-|--------|-------------------------------|-----------------|------------------------------------------------------------------------------------------|---------------------------------------------------|
-| update | PUT <https://>/v2/vaults/{ID} | Update a vault. | This request requires an authorized user with “write” permission or higher on the vault. | The response contains the updated Vault resource. |
+| Method | HTTP Request                                | Description     | Authorization                                                                            | Response                                          |
+|--------|---------------------------------------------|-----------------|------------------------------------------------------------------------------------------|---------------------------------------------------|
+| update | PUT `https://<EDP_API_HOST>/v2/vaults/{ID}` | Update a vault. | This request requires an authorized user with “write” permission or higher on the vault. | The response contains the updated Vault resource. |
 
 ### Request Body
 
 In the request body, provide a valid Vault object (see create above).
 
-| Method | HTTP Request                     | Description     | Authorization                                                                  | Response                                            |
-|--------|----------------------------------|-----------------|--------------------------------------------------------------------------------|-----------------------------------------------------|
-| delete | DELETE <https://>/v2/vaults/{ID} | Delete a vault. | This request requires an authorized user with “admin” permission on the vault. | The response returns “HTTP 200 OK” when successful. |
+| Method | HTTP Request                                   | Description     | Authorization                                                                  | Response                                            |
+|--------|------------------------------------------------|-----------------|--------------------------------------------------------------------------------|-----------------------------------------------------|
+| delete | DELETE `https://<EDP_API_HOST>/v2/vaults/{ID}` | Delete a vault. | This request requires an authorized user with “admin” permission on the vault. | The response returns “HTTP 200 OK” when successful. |
 
-| Method | HTTP Request                  | Description                  | Authorization                                                                           | Response                                |
-|--------|-------------------------------|------------------------------|-----------------------------------------------------------------------------------------|-----------------------------------------|
-| get    | GET <https://>/v2/vaults/{ID} | Retrieve a vault’s metadata. | This request requires an authorized user with “read” permission or higher on the vault. | The response contains a Vault resource. |
+| Method | HTTP Request                                | Description                  | Authorization                                                                           | Response                                |
+|--------|---------------------------------------------|------------------------------|-----------------------------------------------------------------------------------------|-----------------------------------------|
+| get    | GET `https://<EDP_API_HOST>/v2/vaults/{ID}` | Retrieve a vault’s metadata. | This request requires an authorized user with “read” permission or higher on the vault. | The response contains a Vault resource. |
