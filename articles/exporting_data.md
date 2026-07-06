@@ -60,6 +60,7 @@ directly into a vault (with target_full_path keyword argument) and
 accessed from there.
 
 ``` r
+
 library(quartzbio.edp)
 
 dataset <- Dataset.get_or_create_by_full_path("quartzbio:Public:/HGNC/3.3.1-2021-08-25/HGNC")
@@ -105,6 +106,7 @@ Users can leverage the dataset filtering system to export a slice of a
 dataset:
 
 ``` r
+
 library(quartzbio.edp)
 
 dataset <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20221105/Variants-GRCH37")
@@ -137,6 +139,7 @@ Export Dataset into parquet and read the records using `Dataset_load`
 function.
 
 ``` r
+
 # Export the whole dataset into parquet and read into a dataframe.
 # Datset ID or dataset full path can be provided
 
@@ -185,22 +188,22 @@ would use sponsor.api.edp.aws.quartz.bio.
 
 ### Dataset Exports
 
-| Method |                   HTTP Request                   |              Description               |                                 Authorization                                  |                        Response                        |
-|:------:|:------------------------------------------------:|:--------------------------------------:|:------------------------------------------------------------------------------:|:------------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | create | POST `https://<EDP_API_HOST>/v2/dataset_exports` | Create a dataset export for a dataset. | This request requires an authorized user with read permission for the dataset. | The response contains a single DatasetExport resource. |
 
 Request Body:
 
 In the request body, provide an object with the following properties:
 
-|         Property         |  Value  |                                    Description                                     |
-|:------------------------:|:-------:|:----------------------------------------------------------------------------------:|
-|        dataset_id        | integer |                                A valid dataset ID.                                 |
-|          format          | string  |                              The export file format.                               |
-|          params          | object  |                             Dataset query parameters.                              |
-|     target_full_path     | string  | (Optional) A vault location to store the export output (must be an EDP full path). |
-|         priority         | integer |                   (Optional) A priority to assign to this task.                    |
-| send_email_on_completion | boolean |       (Optional) An email is sent when the export is ready (default: false)        |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| dataset_id | integer | A valid dataset ID. |
+| format | string | The export file format. |
+| params | object | Dataset query parameters. |
+| target_full_path | string | (Optional) A vault location to store the export output (must be an EDP full path). |
+| priority | integer | (Optional) A priority to assign to this task. |
+| send_email_on_completion | boolean | (Optional) An email is sent when the export is ready (default: false) |
 
 The following export formats (format property) are available:
 
@@ -220,41 +223,41 @@ natively support list within columns.
 The following query parameters (params property) are supported for
 exports:
 
-|    Property    |  Value  |                        Description                         |
-|:--------------:|:-------:|:----------------------------------------------------------:|
-|     limit      | integer | The number of records to export (between 1 and 1,000,000). |
-|    filters     | objects |                   A valid filter object.                   |
-|     fields     | string  |        A list of fields to include in the results.         |
-| exclude_fields | string  |        A list of fields to exclude in the results.         |
-|     query      | string  |                   A valid query string.                    |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| limit | integer | The number of records to export (between 1 and 1,000,000). |
+| filters | objects | A valid filter object. |
+| fields | string | A list of fields to include in the results. |
+| exclude_fields | string | A list of fields to exclude in the results. |
+| query | string | A valid query string. |
 
-| Method |                      HTTP Request                       |       Description        |                                  Authorization                                  |                      Response                       |
-|:------:|:-------------------------------------------------------:|:------------------------:|:-------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | delete | DELETE `https://<EDP_API_HOST>/v2/dataset_exports/{ID}` | Delete a dataset export. | This request requires an authorized user with write permissions on the dataset. | The response returns “HTTP 200 OK” when successful. |
 
-|  Method  |                         HTTP Request                          |        Description         |                                 Authorization                                  |                                                     Response                                                     |
-|:--------:|:-------------------------------------------------------------:|:--------------------------:|:------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | download | GET `https://<EDP_API_HOST>/v2/dataset_exports/{ID}/download` | Download a dataset export. | This request requires an authorized user with read permissions on the dataset. | The default response is a 302 redirect. When redirect mode is disabled, the response contains a URL to the file. |
 
 Parameters
 
 This request accepts the following parameter:
 
-| Property |  Value  |                           Description                           |
-|:--------:|:-------:|:---------------------------------------------------------------:|
+| Property | Value | Description |
+|:--:|:--:|:--:|
 | redirect | boolean | Return a 302 redirect to the download location (default: true). |
 
 Dataset exports may expire after 24 hours, after which the download URL
 will not work. Please re-run the export if necessary.
 
-| Method |                     HTTP Request                     |            Description             |                                 Authorization                                  |                    Response                     |
-|:------:|:----------------------------------------------------:|:----------------------------------:|:------------------------------------------------------------------------------:|:-----------------------------------------------:|
-|  get   | GET `https://<EDP_API_HOST>/v2/dataset_exports/{ID}` | Retrieve metadata about an export. | This request requires an authorized user with read permissions on the dataset. | The response contains a DatasetExport resource. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| get | GET `https://<EDP_API_HOST>/v2/dataset_exports/{ID}` | Retrieve metadata about an export. | This request requires an authorized user with read permissions on the dataset. | The response contains a DatasetExport resource. |
 
-| Method |                         HTTP Request                          |                 Description                 |                                 Authorization                                  |                         Response                         |
-|:------:|:-------------------------------------------------------------:|:-------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------:|
-|  list  | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/exports` | List the exports associated with a dataset. | This request requires an authorized user with read permissions on the dataset. | The response contains a list of DatasetExport resources. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| list | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/exports` | List the exports associated with a dataset. | This request requires an authorized user with read permissions on the dataset. | The response contains a list of DatasetExport resources. |
 
-| Method |                         HTTP Request                         |                 Description                 |                                 Authorization                                  |                                   Response                                   |
-|:------:|:------------------------------------------------------------:|:-------------------------------------------:|:------------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | cancel | PUT `https://<EDP_API_HOST>/v2/datasets_exports/{ID}/cancel` | List the exports associated with a dataset. | This request requires an authorized user with read permissions on the dataset. | The response will contain a DatasetExport resource with the status canceled. |

@@ -23,20 +23,20 @@ detection, validation, and annotation.
 
 The following file formats and extensions are supported:
 
-| Name                                              | File Extension | Previewable in EDP? | Transformable into a Dataset? |
-|---------------------------------------------------|----------------|---------------------|-------------------------------|
-| Comma Separated Values                            | .csv           | Y                   | Y                             |
-| General Feature Format                            | .gff3.gz       | Y                   | Y                             |
-| Gene Transfer Format                              | .gtf           | Y                   | Y                             |
-| Hyper Text Markup Language                        | .html          | Y                   | N                             |
-| JavaScript Object Notation (in JSON Lines format) | .json          | Y                   | Y                             |
-| Mutation Annotation Format                        | .maf           | Y                   | Y                             |
-| Portable Document Format                          | .pdf           | Y                   | N                             |
-| Tab Separated Values                              | .tsv           | Y                   | Y                             |
-| Unformatted text file                             | .txt           | Y                   | Y                             |
-| Variant Call Format                               | .vcf           | Y                   | Y                             |
-| Extensible Markup Language                        | .xml           | Y                   | Y (requires a template)       |
-| Excel                                             | .xlsx/.xsl     | Y                   | Y                             |
+| Name | File Extension | Previewable in EDP? | Transformable into a Dataset? |
+|----|----|----|----|
+| Comma Separated Values | .csv | Y | Y |
+| General Feature Format | .gff3.gz | Y | Y |
+| Gene Transfer Format | .gtf | Y | Y |
+| Hyper Text Markup Language | .html | Y | N |
+| JavaScript Object Notation (in JSON Lines format) | .json | Y | Y |
+| Mutation Annotation Format | .maf | Y | Y |
+| Portable Document Format | .pdf | Y | N |
+| Tab Separated Values | .tsv | Y | Y |
+| Unformatted text file | .txt | Y | Y |
+| Variant Call Format | .vcf | Y | Y |
+| Extensible Markup Language | .xml | Y | Y (requires a template) |
+| Excel | .xlsx/.xsl | Y | Y |
 
 ## Reader Parameters
 
@@ -75,6 +75,7 @@ The first step to getting data onto EDP is by uploading files into a
 vault. Users can refer to the Vaults documentation for more information.
 
 ``` r
+
 library(quartzbio.edp)
 vault <- Vault.get_personal_vault()
 uploaded_file <- File_upload(vault$id, "local/path/file.vcf.gz", "/")
@@ -91,6 +92,7 @@ has been launched, it is possible to track the progress through the API
 on the web interface through the Activity tab.
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -117,6 +119,7 @@ imported using a manifest. A manifest is simply a list of files (URLs
 and other attributes) to import:
 
 ``` r
+
 source_url <- "https://s3.amazonaws.com/downloads.solvebio.com/demo/interesting-variants.json.gz"
 
 manifest <- list(
@@ -133,6 +136,7 @@ input. Once the import has been launched it is available to track the
 progress through the API or on the web.
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -163,6 +167,7 @@ edits to datasets. For larger imports and transforms, users are
 recommended to import from compressed JSONL files.
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -195,6 +200,7 @@ The following example imports a list of records and transforms the
 contents in a single step:
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -274,6 +280,7 @@ The following example fails an import as soon as invalid data is
 detected:
 
 ``` r
+
 imp <- DatasetImport.create(
   dataset_id = dataset$id,
   object_id = uploaded_file$id,
@@ -287,6 +294,7 @@ The following example disables validation from running, which can
 improve import performance.
 
 ``` r
+
 imp <- DatasetImport.create(
   dataset_id = dataset$id,
   object_id = uploaded_file$id,
@@ -370,29 +378,29 @@ would use sponsor.api.edp.aws.quartz.bio.
 
 #### Dataset Imports
 
-| Method | HTTP Request                                     | Description                            | Authorization                                                                  | Response                                                                                        |
-|--------|--------------------------------------------------|----------------------------------------|--------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| Method | HTTP Request | Description | Authorization | Response |
+|----|----|----|----|----|
 | create | POST `https://<EDP_API_HOST>/v2/dataset_imports` | Create a dataset import for a dataset. | This request requires an authorized user with write permission on the dataset. | The response returns “HTTP 201 Created”, along with the DatasetImport resource when successful. |
 
 Request Body:
 
 In the request body, provide an object with the following properties:
 
-|     Property      |  Value  |                                                      Description                                                      |
-|:-----------------:|:-------:|:---------------------------------------------------------------------------------------------------------------------:|
-|    commit_mode    | string  |                                                 A valid commit mode.                                                  |
-|    dataset_id     | integer |                                    (Optional) The ID of an existing object on EDP.                                    |
-|     object_id     | integer |                                        (Optional) A file manifest (see below).                                        |
-|     manifest      | object  |                  (Optional) A vault location to store the export output (must be an EDP full path).                   |
-|   data_records    | objects |                                 (Optional) A list of records to import synchronously.                                 |
-|    description    | string  |                                       (Optional) A description of this import.                                        |
-|   entity_params   | object  |                               (Optional) Configuration parameters for entity detection.                               |
-|   reader_params   | object  |                                   (Optional) Configuration parameters for readers.                                    |
-| validation_params | object  |                                  (Optional) Configuration parameters for validation.                                  |
-| annotator_params  | object  |                                (Optional) Configuration parameters for the Annotator.                                 |
-|  include_errors   | boolean | If True, a new field (\_errors) will be added to each record containing expression evaluation errors (default: True). |
-|   target_fields   | objects |                          A list of valid dataset fields to create or override in the import.                          |
-|     priority      | integer |                                           A priority to assign to this task                                           |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| commit_mode | string | A valid commit mode. |
+| dataset_id | integer | (Optional) The ID of an existing object on EDP. |
+| object_id | integer | (Optional) A file manifest (see below). |
+| manifest | object | (Optional) A vault location to store the export output (must be an EDP full path). |
+| data_records | objects | (Optional) A list of records to import synchronously. |
+| description | string | (Optional) A description of this import. |
+| entity_params | object | (Optional) Configuration parameters for entity detection. |
+| reader_params | object | (Optional) Configuration parameters for readers. |
+| validation_params | object | (Optional) Configuration parameters for validation. |
+| annotator_params | object | (Optional) Configuration parameters for the Annotator. |
+| include_errors | boolean | If True, a new field (\_errors) will be added to each record containing expression evaluation errors (default: True). |
+| target_fields | objects | A list of valid dataset fields to create or override in the import. |
+| priority | integer | A priority to assign to this task |
 
 When creating a new import, either manifest, object_id or data_records
 must be provided. Using a manifest allows you to import a remote file
@@ -412,34 +420,34 @@ accessible by HTTP(S), for example:
 
 Manifests can include the following parameters:
 
-|     Property      | Value  |                                                          Description                                                          |
-|:-----------------:|:------:|:-----------------------------------------------------------------------------------------------------------------------------:|
-|        url        | string |             A publicly accessible URL pointing to a file to import into EDP. You must pass a URL or an object_id.             |
-|     object_id     |  long  |                           The ID of an existing object on EDP. You must pass an object_id or a URL.                           |
-|       name        | string |                   (Optional) The name of the file. If not passed, EDP will take it from the URL or object.                    |
-|      format       | string |                (Optional) The file format of the file. If not passed, EDP will take it from the URL or object.                |
-|        md5        | string | (Optional) The md5 hash of the file contents. If passed, EDP will validate the file after downloading and fail if mismatched. |
-|   entity_params   | object |                                   (Optional) Configuration parameters for entity detection.                                   |
-|   reader_params   | object |                                       (Optional) Configuration parameters for readers.                                        |
-| validation_params | object |                                      (Optional) Configuration parameters for validation.                                      |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| url | string | A publicly accessible URL pointing to a file to import into EDP. You must pass a URL or an object_id. |
+| object_id | long | The ID of an existing object on EDP. You must pass an object_id or a URL. |
+| name | string | (Optional) The name of the file. If not passed, EDP will take it from the URL or object. |
+| format | string | (Optional) The file format of the file. If not passed, EDP will take it from the URL or object. |
+| md5 | string | (Optional) The md5 hash of the file contents. If passed, EDP will validate the file after downloading and fail if mismatched. |
+| entity_params | object | (Optional) Configuration parameters for entity detection. |
+| reader_params | object | (Optional) Configuration parameters for readers. |
+| validation_params | object | (Optional) Configuration parameters for validation. |
 
-| Method | HTTP Request                                            | Description              | Authorization                                                                  | Response                                            |
-|--------|---------------------------------------------------------|--------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------|
+| Method | HTTP Request | Description | Authorization | Response |
+|----|----|----|----|----|
 | delete | DELETE `https://<EDP_API_HOST>/v2/dataset_imports/{ID}` | Delete a dataset import. | This request requires an authorized user with write permission on the dataset. | The response returns “HTTP 200 OK” when successful. |
 
 Deleting dataset imports is not recommended as data provenance will be
 lost.
 
-| Method | HTTP Request                                         | Description                        | Authorization                                                                 | Response                                        |
-|--------|------------------------------------------------------|------------------------------------|-------------------------------------------------------------------------------|-------------------------------------------------|
-| get    | GET `https://<EDP_API_HOST>/v2/dataset_imports/{ID}` | Retrieve metadata about an import. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetImport resource. |
+| Method | HTTP Request | Description | Authorization | Response |
+|----|----|----|----|----|
+| get | GET `https://<EDP_API_HOST>/v2/dataset_imports/{ID}` | Retrieve metadata about an import. | This request requires an authorized user with read permission on the dataset. | The response contains a DatasetImport resource. |
 
-| Method | HTTP Request                                                  | Description                                 | Authorization                                                                 | Response                                                 |
-|--------|---------------------------------------------------------------|---------------------------------------------|-------------------------------------------------------------------------------|----------------------------------------------------------|
-| list   | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/imports` | List the imports associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetImport resources. |
+| Method | HTTP Request | Description | Authorization | Response |
+|----|----|----|----|----|
+| list | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/imports` | List the imports associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetImport resources. |
 
-| Method | HTTP Request                                                | Description              | Authorization                                                                  | Response                                                                    |
-|--------|-------------------------------------------------------------|--------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| Method | HTTP Request | Description | Authorization | Response |
+|----|----|----|----|----|
 | cancel | PUT `https://<EDP_API_HOST>/v2/dataset_imports/{IMPORT_ID}` | Cancel a dataset import. | This request requires an authorized user with write permission on the dataset. | The response will contain a DatasetImport resource with the status canceled |
 
 Request Body

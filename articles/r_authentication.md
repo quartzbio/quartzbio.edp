@@ -22,6 +22,7 @@ Regardless of environment, all users should first insure that they have
 installed the EDP R package as shown below:
 
 ``` r
+
 remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE, ref = "main")
 ```
 
@@ -47,6 +48,7 @@ by default, look for the \$EDP_API_SECRET and \$EDP_API_HOST or
 \$QUARTZBIO_ACCESS_TOKEN and \$QUARTZBIO_API_HOST environment variables.
 
 ``` r
+
 Sys.setenv(EDP_API_SECRET = "TOKEN")
 Sys.setenv(EDP_API_HOST = "https://DOMAIN.api.edp.aws.quartz.bio")
 ```
@@ -59,6 +61,7 @@ are loaded appropriately by loading the package and then using the
 function:
 
 ``` r
+
 library(quartzbio.edp)
 
 # Load your token from the environment variable
@@ -70,6 +73,7 @@ After which, the user credentials should be retrievable within a block
 of R code as follows:
 
 ``` r
+
 # Load your credentials from $EDP_API_SECRET
 
 quartzbio.edp::connect()
@@ -98,6 +102,7 @@ function. This creates and saves the **default** connection profile to
 `~/.qb/edp.json`
 
 ``` r
+
 conn <- quartzbio.edp::connect()
 quartzbio.edp::save_connection_profile(conn)
 ```
@@ -106,6 +111,7 @@ Connect to the QuartzBio EDP API using a saved profile in
 `~/.qb/edp.json` using `connect_with_profile` function:
 
 ``` r
+
 quartzbio.edp::connect_with_profile()
 ```
 
@@ -113,6 +119,7 @@ The package functions will use this default profile by default if you do
 not use an explicit configuration. For example:
 
 ``` r
+
 library(quartzbio.edp)
 User()
 Vaults()
@@ -128,6 +135,7 @@ established successfully. It provides the user details if the EDP
 connection is successful.
 
 ``` r
+
 edp_health_check()
 ```
 
@@ -135,5 +143,6 @@ The health check function can retrieve the list of vaults created by the
 user by setting `get_vault_list` parameter to TRUE
 
 ``` r
+
 edp_health_check(get_vault_list = TRUE)
 ```

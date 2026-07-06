@@ -35,6 +35,7 @@ for full-text search. Terms facets are also disabled for \_id fields.
 ### Examples in R:
 
 ``` r
+
 library(quartzbio.edp)
 
 # Load ClinVar
@@ -91,6 +92,7 @@ histograms, and percentiles. The following facet types are supported:
 ### Examples in R:
 
 ``` r
+
 library(quartzbio.edp)
 
 # Get ClinVar dataset
@@ -134,6 +136,7 @@ The following example yields the top ten genes associated with each
 disease in the public TCGA somatic mutations dataset:
 
 ``` r
+
 library(quartzbio.edp)
 
 # Retrieve the TCGA Somatic Mutations dataset

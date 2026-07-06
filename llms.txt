@@ -28,6 +28,7 @@ Installing this package requires an installed R environment.
 ### installation from GitHub
 
 ``` r
+
 remotes::install_github("quartzbio/quartzbio.edp", dependencies = TRUE, ref = "main")
 ```
 
@@ -101,6 +102,7 @@ The package functions will use this default profile by default if you do
 not use an explicit configuration. For example:
 
 ``` r
+
 library(quartzbio.edp)
 User()
 Vaults()

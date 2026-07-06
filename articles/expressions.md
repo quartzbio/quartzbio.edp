@@ -120,18 +120,18 @@ manipulate data from one or more datasets:
 Expressions always have a return value. The value’s data type depends on
 the expression, but can be one of the following:
 
-| Data Type        | Description                                                                            |
-|------------------|----------------------------------------------------------------------------------------|
-| string (default) | A valid UTF-8 string with up to 32,766 characters.                                     |
-| text             | A valid UTF-8 string of any length.                                                    |
-| blob             | A valid UTF-8 string of any length (this data type is not indexed for search).         |
-| date             | A string in ISO 8601 format, for example: “2017-03-29T14:52:01”.                       |
-| integer          | A signed 32-bit integer with a minimum value of -231 and a maximum value of 231-1.     |
-| long             | A signed 64-bit integer with a minimum value of -263 and a maximum value of 263-1.     |
-| float            | single-precision 32-bit IEEE 754 floating point.                                       |
-| double           | A double-precision 64-bit IEEE 754 floating point.                                     |
-| boolean          | Casts the result to a boolean: True or False. Uses Python’s truth value testing rules. |
-| object           | A key/value, JSON-like object, similar to a Python dictionary.                         |
+| Data Type | Description |
+|----|----|
+| string (default) | A valid UTF-8 string with up to 32,766 characters. |
+| text | A valid UTF-8 string of any length. |
+| blob | A valid UTF-8 string of any length (this data type is not indexed for search). |
+| date | A string in ISO 8601 format, for example: “2017-03-29T14:52:01”. |
+| integer | A signed 32-bit integer with a minimum value of -231 and a maximum value of 231-1. |
+| long | A signed 64-bit integer with a minimum value of -263 and a maximum value of 263-1. |
+| float | single-precision 32-bit IEEE 754 floating point. |
+| double | A double-precision 64-bit IEEE 754 floating point. |
+| boolean | Casts the result to a boolean: True or False. Uses Python’s truth value testing rules. |
+| object | A key/value, JSON-like object, similar to a Python dictionary. |
 
 Expressions can be set up to return a single value (default) or a list
 of values. Enabling list mode will cause the expression to always cast
@@ -193,6 +193,7 @@ can provide a custom dictionary of context variables through the data
 parameter.
 
 ``` r
+
 require(quartzbio.edp)
 
 # Static expression
@@ -218,6 +219,7 @@ Datasets](https://quartzbio.github.io/quartzbio.edp/articles/transforming_datase
 ### Examples:
 
 ``` r
+
 require(quartzbio.edp)
 records <- list(list(gene = "BRCA1"), list(gene = "BRCA2"), list(gene = "BRAF"), list(gene = "TTN"), list(gene = "TP53"))
 # Define the fields to annotate
@@ -305,10 +307,10 @@ Methods do not accept URL parameters or request bodies unless specified.
 Please note that if your EDP endpoint is sponsor.edp.aws.quartz.bio, you
 would use sponsor.api.edp.aws.quartz.bio.
 
-|  Method  |               HTTP Request                |                  Description                   |               Authorization               |                                                                      Response                                                                      |
-|:--------:|:-----------------------------------------:|:----------------------------------------------:|:-----------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------:|
-| annotate | POST `https://<EDP_API_HOST>/v1/annotate` |  Annotate a list of records with expressions.  | This request requires an authorized user. | The response contains a list of annotated records and an object containing the number of records with errors and the number of fields with errors. |
-| evaluate | POST `https://<EDP_API_HOST>/v1/evaluate` | Run a single expression with a custom context. | This request requires an authorized user. |                                                  The response contains the evaluated expression.                                                   |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| annotate | POST `https://<EDP_API_HOST>/v1/annotate` | Annotate a list of records with expressions. | This request requires an authorized user. | The response contains a list of annotated records and an object containing the number of records with errors and the number of fields with errors. |
+| evaluate | POST `https://<EDP_API_HOST>/v1/evaluate` | Run a single expression with a custom context. | This request requires an authorized user. | The response contains the evaluated expression. |
 
 ### Annotate
 
@@ -318,13 +320,13 @@ Run a set of expressions on a list of records in real-time.
 
 In the request body, provide the following properties:
 
-|          Property          |    Value     |                                                        Description                                                        |
-|:--------------------------:|:------------:|:-------------------------------------------------------------------------------------------------------------------------:|
-|           fields           | DatasetField | A list of [dataset field objects.](https://quartzbio.github.io/quartzbio.edp/articles/creating_and_migrating_datasets.md) |
-|       include_errors       |   boolean    |   If True, a new field (\_errors) will be added to each record containing expression evaluation errors (default: True).   |
-|          records           |   objects    |                                               An arbitrary list of records.                                               |
-| pre_annotation_expression  |    string    |    An arbitrary expression that will be applied before the annotation, e.g. ‘explode(record, fields=\[“mutations”\])’     |
-| post_annotation_expression |    string    |  An arbitrary expression that will be applied after the annotation, e.g. ‘melt(record,fields=\[“gene”, “chromosome”\])’   |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| fields | DatasetField | A list of [dataset field objects.](https://quartzbio.github.io/quartzbio.edp/articles/creating_and_migrating_datasets.md) |
+| include_errors | boolean | If True, a new field (\_errors) will be added to each record containing expression evaluation errors (default: True). |
+| records | objects | An arbitrary list of records. |
+| pre_annotation_expression | string | An arbitrary expression that will be applied before the annotation, e.g. ‘explode(record, fields=\[“mutations”\])’ |
+| post_annotation_expression | string | An arbitrary expression that will be applied after the annotation, e.g. ‘melt(record,fields=\[“gene”, “chromosome”\])’ |
 
 ### Evaluate
 
@@ -334,12 +336,12 @@ Evaluate a single expression with a custom context.
 
 In the request body, provide the following properties:
 
-|  Property  |  Value  |                           Description                           |
-|:----------:|:-------:|:---------------------------------------------------------------:|
-|   fields   | object  |  An object containing variables referenced in the expression.   |
-| data_type  | string  |            A valid data type to cast the result to.             |
-| expression | string  |                       A valid expression.                       |
-|  is_list   | boolean | True if the result should be a list of values (default: False). |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| fields | object | An object containing variables referenced in the expression. |
+| data_type | string | A valid data type to cast the result to. |
+| expression | string | A valid expression. |
+| is_list | boolean | True if the result should be a list of values (default: False). |
 
 ### Common Issues
 

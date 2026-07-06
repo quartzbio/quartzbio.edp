@@ -40,6 +40,7 @@ In the following example, a new field will be added to a dataset
 “in-place”, using the upsert commit mode:
 
 ``` r
+
 library(quartzbio.edp)
 
 # Retrieve the source dataset
@@ -97,6 +98,7 @@ the
 documentation.
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -137,6 +139,7 @@ overwrite records in the target dataset.
 The example follows from the previous one:
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -179,6 +182,7 @@ records, leaving the variant IDs and dbSNP rsIDs in the resulting
 dataset:
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -248,6 +252,7 @@ In the following example, a few records will be imported and then
 edited:
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -295,6 +300,7 @@ Similar to the example above, in the following example a few records
 will be imported and then edited:
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -345,6 +351,7 @@ dataset query.
 The following provides an example of Delete via Import:
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()
@@ -392,6 +399,7 @@ Dataset.query(id = dataset$id, fields = list("name"))
 The following provides an example of Delete via Migration:
 
 ``` r
+
 library(quartzbio.edp)
 
 vault <- Vault.get_personal_vault()

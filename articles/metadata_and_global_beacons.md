@@ -20,6 +20,7 @@ Tags are case-insensitive lists of strings. Tags can be used to filter
 and search for objects.
 
 ``` r
+
 library(quartzbio.edp)
 
 # Upload a file
@@ -36,6 +37,7 @@ Metadata is represented by key/value pairs. While nested value pairs are
 allowed, users are recommended to use a flat metadata structure.
 
 ``` r
+
 library(quartzbio.edp)
 
 # Upload a file
@@ -86,6 +88,7 @@ that dataset. A dataset is available for Global Beacon Search when the
 `progress_percent` is 100 and the `status` is completed.
 
 ``` r
+
 library(quartzbio.edp)
 
 # Turn on Global Beacon on the dataset

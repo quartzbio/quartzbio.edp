@@ -19,6 +19,7 @@ package (note: currently named quartzbio.edp) and install the shiny R
 package and can also opt to install the shinyjs R package.
 
 ``` r
+
 # Install the EDP R package
 install.packages("quartzbio.edp")
 # Install Shiny
@@ -39,6 +40,7 @@ To create an app, users can enter the following R commands. Doing so
 will create the app and allow the user to view its client ID:
 
 ``` r
+
 library(quartzbio.edp)
 # The redirect URL (protocol, host, and port) must exactly match
 # the local development URL.
@@ -69,6 +71,7 @@ Protected Server R function
 in their app.R file:
 
 ``` r
+
 library(shiny)
 library(shinyjs)
 library(quartzbio.edp)
@@ -123,6 +126,7 @@ EDP. This function supports component based authorization for
 applications where EDP may not be the only data source.
 
 ``` r
+
 library(shiny)
 library(quartzbio.edp)
 
@@ -156,6 +160,7 @@ needed, such as when moving from a local development environment to a
 production environment:
 
 ``` r
+
 library(quartzbio.edp)
 
 # Retrieves app (the first that matches the name, owned by the current user)
@@ -172,6 +177,7 @@ Deleting the application in this way will revoke the relevant
 authentication credentials and client ID.
 
 ``` r
+
 library(quartzbio.edp)
 
 # Retrieves app (the first that matches the name, owned by the current user)
@@ -281,29 +287,29 @@ specified. Please note that if your EDP endpoint is
 sponsor.edp.aws.quartz.bio, you would use
 sponsor.api.edp.aws.quartz.bio.
 
-| Method |                 HTTP Request                  |      Description       |                                    Authorization                                     |                       Response                       |
-|:------:|:---------------------------------------------:|:----------------------:|:------------------------------------------------------------------------------------:|:----------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | create | POST `https://<EDP_API_HOST>/v2/applications` | Create an application. | This request requires an authorized user with permission to create new applications. | The response contains a single Application resource. |
 
-|   Property    |     Value     |                              Description                              |
-|:-------------:|:-------------:|:---------------------------------------------------------------------:|
-|     name      |    string     |              (required) A user-visible name for the app.              |
-| redirect_uris |    string     | (required) A list of space-separated valid redirection endpoint URIs. |
-|  description  |    string     |                A user-friendly description of the app.                |
-|   help_url    |    string     |        The URL where documentation about the app can be found.        |
-|    scopes     |    string     |    OAuth2 scopes are required to use the app (read or read write).    |
-|  source_url   |    string     |           The URL where the app’s source code can be found.           |
-|     tags      | string (list) |            A list of arbitrary tags to categorize the app.            |
-|    web_url    |    string     |            The URL where the app can be accessed by users.            |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| name | string | (required) A user-visible name for the app. |
+| redirect_uris | string | (required) A list of space-separated valid redirection endpoint URIs. |
+| description | string | A user-friendly description of the app. |
+| help_url | string | The URL where documentation about the app can be found. |
+| scopes | string | OAuth2 scopes are required to use the app (read or read write). |
+| source_url | string | The URL where the app’s source code can be found. |
+| tags | string (list) | A list of arbitrary tags to categorize the app. |
+| web_url | string | The URL where the app can be accessed by users. |
 
-| Method |                        HTTP Request                         |      Description       |                                       Authorization                                        |                      Response                       |
-|:------:|:-----------------------------------------------------------:|:----------------------:|:------------------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | delete | DELETE `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}` | Delete an application. | This request requires an authorized user with permission to modify the target application. | The response returns “HTTP 200 OK” when successful. |
 
-| Method |                       HTTP Request                       |               Description               |                                      Authorization                                       |                    Response                    |
-|:------:|:--------------------------------------------------------:|:---------------------------------------:|:----------------------------------------------------------------------------------------:|:----------------------------------------------:|
-|  get   | GET `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}` | Retrieve metadata about an application. | This request requires an authorized user with permission to view the target application. | The response contains an Application resource. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| get | GET `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}` | Retrieve metadata about an application. | This request requires an authorized user with permission to view the target application. | The response contains an Application resource. |
 
-| Method |                          HTTP Request                           |              Description              |                                             Authorization                                             |                                         Response                                          |
-|:------:|:---------------------------------------------------------------:|:-------------------------------------:|:-----------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | secret | GET `https://<EDP_API_HOST>/v2/applications/{CLIENT_ID}/secret` | Retrieve an application’s secret key. | This request requires an authorized user with permission to view the target application’s secret key. | The response contains an Application resource with an additional client_secret attribute. |

@@ -11,6 +11,7 @@ the API or in the EDP UI by visiting the Activity tab of a dataset.
 This example is a fast way to check for any activity on a dataset.
 
 ``` r
+
 status <- paste("running", "queued", "pending", sep = ",")
 tasks <- Task.all(target_object_id = "<DATASET ID>", status = status, limit = 1)$total
 if (tasks) {
@@ -33,6 +34,7 @@ dataset is idle.
 The function sleeps for 3 seconds in between each check for activity.
 
 ``` r
+
 Dataset.activity("<DATASET ID>", follow = TRUE)
 ```
 
@@ -63,12 +65,12 @@ the current state of the dataset and storing those records in a file.
 This file is stored with the commit object and used when creating a
 rollback commit.
 
-| Commit Mode | Description                                                                                    |
-|-------------|------------------------------------------------------------------------------------------------|
-| append      | Reverts by deleting all records containing parent \_commit ID                                  |
-| delete      | Reverts by indexing the records deleted (stored in the rollback file)                          |
-| overwrite   | Reverts by deleting all records containing parent \_commit ID. Then indexing the rollback file |
-| upsert      | Same as overwriting commit mode                                                                |
+| Commit Mode | Description |
+|----|----|
+| append | Reverts by deleting all records containing parent \_commit ID |
+| delete | Reverts by indexing the records deleted (stored in the rollback file) |
+| overwrite | Reverts by deleting all records containing parent \_commit ID. Then indexing the rollback file |
+| upsert | Same as overwriting commit mode |
 
 ### Checking the Ability to Rollback
 
@@ -142,6 +144,7 @@ A Dataset can be archived by changing the storage class to “Archive”
 within the R client.
 
 ``` r
+
 require(quartzbio.edp)
 
 # Set storage class to archive
@@ -154,6 +157,7 @@ Restoring the archived dataset can be done by changing the storage class
 to “Standard” within the R client.
 
 ``` r
+
 require(quartzbio.edp)
 
 # Restore the dataset by setting the storage class to standard
@@ -165,6 +169,7 @@ Object_update("DATASET ID", storage_class = "Standard")
 Storage classes can be modified from the R client as follows:
 
 ``` r
+
 require(quartzbio.edp)
 
 # Set storage class to archive
@@ -186,6 +191,7 @@ resources now contain the “availability” parameter which returns
 See examples below:
 
 ``` r
+
 # Explicitly check availability
 dataset <- Dataset.get_by_full_path("quartzbio:public:/ClinVar/3.7.4-2017-01-30/Variants-GRCh37")
 if (dataset$availability != "available") {
@@ -215,28 +221,28 @@ would use sponsor.api.edp.aws.quartz.bio.
 Dataset commits cannot be directly created. Commits are generated only
 from dataset imports.
 
-| Method |                      HTTP Request                       |                                              Description                                              |                                  Authorization                                  |                      Response                       |
-|:------:|:-------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | delete | DELETE `https://<EDP_API_HOST>/v2/dataset_commits/{ID}` | Delete a dataset commit. Deleting dataset commits is not recommended as data provenance will be lost. | This request requires an authorized user with write permissions on the dataset. | The response returns “HTTP 200 OK” when successful. |
 
-| Method |                     HTTP Request                     |                Description                |                       Authorization                       |                    Response                     |     |
-|:------:|:----------------------------------------------------:|:-----------------------------------------:|:---------------------------------------------------------:|:-----------------------------------------------:|-----|
-|  get   | GET `https://<EDP_API_HOST>/v2/dataset_commits/{ID}` | Retrieve metadata about a dataset commit. | This request requires an authorized user with permission. | The response contains a DatasetCommit resource. |     |
+| Method | HTTP Request | Description | Authorization | Response |  |
+|:--:|:--:|:--:|:--:|:--:|----|
+| get | GET `https://<EDP_API_HOST>/v2/dataset_commits/{ID}` | Retrieve metadata about a dataset commit. | This request requires an authorized user with permission. | The response contains a DatasetCommit resource. |  |
 
-| Method |                         HTTP Request                          |                          Description                          |                                 Authorization                                 |                         Response                         |
-|:------:|:-------------------------------------------------------------:|:-------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:--------------------------------------------------------:|
-|  list  | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/commits` | Retrieve a list of dataset commits associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetCommit resources. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| list | GET `https://<EDP_API_HOST>/v2/datasets/{DATASET_ID}/commits` | Retrieve a list of dataset commits associated with a dataset. | This request requires an authorized user with read permission on the dataset. | The response contains a list of DatasetCommit resources. |
 
-|    Method     |                         HTTP Request                          |                                                    Description                                                     |                                  Authorization                                  |                                                                            Response                                                                             |
-|:-------------:|:-------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | revert status | GET `https://<EDP_API_HOST>/v2/dataset_commits/{ID}/rollback` | Returns whether or not a commit can be reverted and returns a reason why along with any commits that are blocking. | This request requires an authorized user with write permissions on the dataset. | Returns a boolean is_blocked and a detail string explaining why. If there are blocking commits blocking_commits will contain a list of DatasetCommit resources. |
 
-| Method |                          HTTP Request                          |                    Description                    |                                 Authorization                                  |                                                                                  Response                                                                                  |
-|:------:|:--------------------------------------------------------------:|:-------------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | revert | POST `https://<EDP_API_HOST>/v2/dataset_commits/{ID}/rollback` | Revert a completed commit by creating a rollback. | This request requires an authorized user with write permission on the dataset. | If a rollback cannot be created, the status code will be 400 Bad Request. Otherwise, the response will contain a DatasetCommit resource, representing the rollback commit. |
 
-| Method |                         HTTP Request                         |       Description        |                                 Authorization                                 |                                   Response                                   |
-|:------:|:------------------------------------------------------------:|:------------------------:|:-----------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | cancel | PUT `https://<EDP_API_HOST>/v2/datasets_commits/{ID}/cancel` | Cancel a dataset commit. | This request requires an authorized user with read permission on the dataset. | The response will contain a DatasetCommit resource with the status canceled. |
 
 Request Body: In the request body, provide a valid DatasetCommit object
@@ -244,23 +250,23 @@ with status = canceled.
 
 ### Dataset Restore Tasks
 
-| Method |                              HTTP Request                               |                   Description                   |                                    Authorization                                    |                       Response                       |
-|:------:|:-----------------------------------------------------------------------:|:-----------------------------------------------:|:-----------------------------------------------------------------------------------:|:----------------------------------------------------:|
-|  get   | GET `https://<EDP_API_HOST>/v2/dataset_restore_tasks/{RESTORE_TASK_ID}` | Retrieve metadata about a dataset restore task. | This request requires an authorized user with read permission for the restore task. | The response contains a DatasetRestoreTask resource. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| get | GET `https://<EDP_API_HOST>/v2/dataset_restore_tasks/{RESTORE_TASK_ID}` | Retrieve metadata about a dataset restore task. | This request requires an authorized user with read permission for the restore task. | The response contains a DatasetRestoreTask resource. |
 
-| Method |                     HTTP Request                      |                     Description                     |                                    Authorization                                     |                           Response                            |
-|:------:|:-----------------------------------------------------:|:---------------------------------------------------:|:------------------------------------------------------------------------------------:|:-------------------------------------------------------------:|
-|  list  | GET `https://<EDP_API_HOST>/v2/dataset_restore_tasks` | Retrieve a list of available dataset restore tasks. | This request requires an authorized user with read permission for the restore tasks. | The response contains a list of DatasetRestoreTask resources. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| list | GET `https://<EDP_API_HOST>/v2/dataset_restore_tasks` | Retrieve a list of available dataset restore tasks. | This request requires an authorized user with read permission for the restore tasks. | The response contains a list of DatasetRestoreTask resources. |
 
 ### Dataset Snapshot Tasks
 
 Dataset snapshot tasks can not be created directly. They are created
 when a dataset’s storage class is set to Archive.
 
-| Method |                               HTTP Request                                |                   Description                    |                                    Authorization                                     |                       Response                        |
-|:------:|:-------------------------------------------------------------------------:|:------------------------------------------------:|:------------------------------------------------------------------------------------:|:-----------------------------------------------------:|
-|  get   | GET `https://<EDP_API_HOST>/v2/dataset_snapshot_tasks/{SNAPSHOT_TASK_ID}` | Retrieve metadata about a dataset snapshot task. | This request requires an authorized user with read permission for the snapshot task. | The response contains a DatasetSnapshotTask resource. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| get | GET `https://<EDP_API_HOST>/v2/dataset_snapshot_tasks/{SNAPSHOT_TASK_ID}` | Retrieve metadata about a dataset snapshot task. | This request requires an authorized user with read permission for the snapshot task. | The response contains a DatasetSnapshotTask resource. |
 
-| Method |                      HTTP Request                      |                     Description                      |                                     Authorization                                     |                            Response                            |
-|:------:|:------------------------------------------------------:|:----------------------------------------------------:|:-------------------------------------------------------------------------------------:|:--------------------------------------------------------------:|
-|  list  | GET `https://<EDP_API_HOST>/v2/dataset_snapshot_tasks` | Retrieve a list of available dataset snapshot tasks. | This request requires an authorized user with read permission for the snapshot tasks. | The response contains a list of DatasetSnapshotTask resources. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| list | GET `https://<EDP_API_HOST>/v2/dataset_snapshot_tasks` | Retrieve a list of available dataset snapshot tasks. | This request requires an authorized user with read permission for the snapshot tasks. | The response contains a list of DatasetSnapshotTask resources. |

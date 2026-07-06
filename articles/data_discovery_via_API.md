@@ -17,6 +17,7 @@ parameters (filters, entities, query, limit, ordering, etc.):
 - limit: Maximum number of query results to return
 
 ``` r
+
 library("quartzbio.edp")
 
 # By default it limits the number of objects in search result to 100
@@ -37,6 +38,7 @@ objects:
 Similar to the web application, users can apply filters with R client:
 
 ``` r
+
 library("quartzbio.edp")
 
 # Searching only for vaults
@@ -52,6 +54,7 @@ Users can write their own queries the using R client by providing query
 parameters:
 
 ``` r
+
 library("quartzbio.edp")
 
 # Advanced search (using keyword argument)
@@ -70,6 +73,7 @@ subjects or samples, users should also set the vault_scope parameter to
 “any”.
 
 ``` r
+
 # Entity search example
 GlobalSearch.search(entities = '[["gene","BRCA2"]]')
 
@@ -83,6 +87,7 @@ GlobalSearch.search(entities = '[["sample","A00001"]]', vault_scope = "any")
 ## Retrieving Subjects with Global Search
 
 ``` r
+
 # Getting the subjects
 GlobalSearch.subjects(entities = '[["gene","BRCA2"]]')
 ```

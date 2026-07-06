@@ -28,21 +28,22 @@ allows users to retrieve a maximum of 10,000 records in a single
 request. Additionally, the query function accepts the following
 parameters:
 
-|   Parameter    |  Value  |                                                                                                                                  Description                                                                                                                                  |
-|:--------------:|:-------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|    filters     | objects |                                                                                                                            A valid filter object.                                                                                                                             |
-|     facets     | objects |                                                                                                                             A valid facets object                                                                                                                             |
-|     fields     | string  |                                                                                                                  A list of fields to include in the results.                                                                                                                  |
-| exclude_fields | string  |                                                                                                                  A list of fields to exclude in the results.                                                                                                                  |
-|    ordering    | string  |                                                                                                                     A list of fields to order results by.                                                                                                                     |
-|     query      | string  |                                                                                                                             A valid query string.                                                                                                                             |
-|     limit      | integer |                                                                                                                   The number of results to return per-page.                                                                                                                   |
-|     offset     | integer |                                                                                                                     The record offset in the result-set.                                                                                                                      |
-|    paginate    | boolean |                                                                                                                If True, returns all records. Default is False.                                                                                                                |
-|   page_size    | integer | The internal batch size per request. Default is 100, with a maximum size of 10,000. Increasing the page_size can increase the speed of the query, but large numbers can in some cases cause requests to fail due to the large amount of data coming out in a single response. |
-| output_format  | string  |                                                                                                 The output format of the query (‘csv’, ‘tsv’, or ‘json’). Default is ‘json’.                                                                                                  |
+| Parameter | Value | Description |
+|:--:|:--:|:--:|
+| filters | objects | A valid filter object. |
+| facets | objects | A valid facets object |
+| fields | string | A list of fields to include in the results. |
+| exclude_fields | string | A list of fields to exclude in the results. |
+| ordering | string | A list of fields to order results by. |
+| query | string | A valid query string. |
+| limit | integer | The number of results to return per-page. |
+| offset | integer | The record offset in the result-set. |
+| paginate | boolean | If True, returns all records. Default is False. |
+| page_size | integer | The internal batch size per request. Default is 100, with a maximum size of 10,000. Increasing the page_size can increase the speed of the query, but large numbers can in some cases cause requests to fail due to the large amount of data coming out in a single response. |
+| output_format | string | The output format of the query (‘csv’, ‘tsv’, or ‘json’). Default is ‘json’. |
 
 ``` r
+
 # Users can set how many records they want to retrieve with the "limit" parameter
 clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37")
 
@@ -88,6 +89,7 @@ To retrieve Saved Queries that apply to a dataset, or all those
 available:
 
 ``` r
+
 dataset_queries <- SavedQuery.all(dataset = "<DATASET_ID>")
 
 all_saved_queries <- SavedQuery.all()
@@ -97,6 +99,7 @@ To use a saved query, users can retrieve the SavedQuery object and then
 apply the parameters.
 
 ``` r
+
 saved_query <- SavedQuery.retrieve("SAVED_QUERY_ID")
 
 results <- Dataset_query("<DATASET_ID>", filters = saved_query$params$filters)
@@ -106,6 +109,7 @@ To create a SavedQuery, users can define the query parameters and
 provide a valid dataset, as well as give it a name and description.
 
 ``` r
+
 params <- list(
   entities = list(list("gene", "MTOR"), list("gene", "BRCA2"), list("gene", "CFTR"))
 )
@@ -140,6 +144,7 @@ logic considers the first row from the file as the header. A basic query
 returns a page of results from the specified file object:
 
 ``` r
+
 clinvar <- Object.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/ClinVar-5-2-0-20210110-Variants-GRCH37-1425664822266145048-20221110194518.json.gz")
 Object.query(id = clinvar$id)
 ```
@@ -148,6 +153,7 @@ Users can retrieve a specified number of records from the file by
 setting the `limit` query parameter:
 
 ``` r
+
 clinvar <- Object.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/ClinVar-5-2-0-20210110-Variants-GRCH37-1425664822266145048-20221110194518.json.gz")
 Object.query(id = clinvar$id, limit = 50)
 ```
@@ -156,6 +162,7 @@ All fields from the file can be retrieved by calling the `fields`
 method:
 
 ``` r
+
 clinvar <- Object.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/ClinVar-5-2-0-20210110-Variants-GRCH37-1425664822266145048-20221110194518.json.gz")
 fields <- Object.fields(id = clinvar$id)
 ```
@@ -164,6 +171,7 @@ Users can also use the download_url() method to load files into readers
 such as pandas:
 
 ``` r
+
 # Get file using ID or full path
 file_id <- Object.get_by_full_path("vault/path/to/file.csv")
 
@@ -191,15 +199,16 @@ The only supported encoding is UTF-8.
 The output format of the query can be provided by using the
 output_format parameter which can be one of the following:
 
-| Output Format  | Description                                                              |
-|----------------|--------------------------------------------------------------------------|
-| json (default) | applicable to all file extensions                                        |
-| csv            | applicable only to **csv**, **txt**, **tsv**, or **bed** file extensions |
-| tsv            | applicable only to **csv**, **txt**, **tsv**, or **bed** file extensions |
+| Output Format | Description |
+|----|----|
+| json (default) | applicable to all file extensions |
+| csv | applicable only to **csv**, **txt**, **tsv**, or **bed** file extensions |
+| tsv | applicable only to **csv**, **txt**, **tsv**, or **bed** file extensions |
 
 ### Example:
 
 ``` r
+
 clinvar <- Object.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/ClinVar-5-2-0-20210110-Variants-GRCH37-1425664822266145048-20221110194518.json.gz")
 Object.query(id = clinvar$id, output_format = "json")
 ```
@@ -212,22 +221,22 @@ would use sponsor.api.edp.aws.quartz.bio.
 
 ### Dataset Query
 
-| Method |             HTTP Request             |   Description    |                                     Authorization                                     |                         Response                          |
-|:------:|:------------------------------------:|:----------------:|:-------------------------------------------------------------------------------------:|:---------------------------------------------------------:|
-| query  | POST /v2/datasets/{DATASET_ID}/query | Query a dataset. | This request requires an authorized user with permission to query the target dataset. | The dataset query response has a structure defined below. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| query | POST /v2/datasets/{DATASET_ID}/query | Query a dataset. | This request requires an authorized user with permission to query the target dataset. | The dataset query response has a structure defined below. |
 
 Request Body: The request body should contain valid query parameters:
 
-|    Property    |  Value  |                                             Description                                             |
-|:--------------:|:-------:|:---------------------------------------------------------------------------------------------------:|
-|    filters     | objects |                                       A valid filter object.                                        |
-|     facets     | objects | A valid [facets](https://quartzbio.github.io/quartzbio.edp/articles/aggregating_datasets.md) object |
-|     fields     | string  |                             A list of fields to include in the results.                             |
-| exclude_fields | string  |                             A list of fields to exclude in the results.                             |
-|    ordering    | string  |                                A list of fields to order results by.                                |
-|     query      | string  |                                        A valid query string.                                        |
-|     limit      | integer |                              The number of results to return per-page.                              |
-|     offset     | integer |                                The record offset in the result-set.                                 |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| filters | objects | A valid filter object. |
+| facets | objects | A valid [facets](https://quartzbio.github.io/quartzbio.edp/articles/aggregating_datasets.md) object |
+| fields | string | A list of fields to include in the results. |
+| exclude_fields | string | A list of fields to exclude in the results. |
+| ordering | string | A list of fields to order results by. |
+| query | string | A valid query string. |
+| limit | integer | The number of results to return per-page. |
+| offset | integer | The record offset in the result-set. |
 
 Users can refer to the [Filters
 documentation](https://quartzbio.github.io/quartzbio.edp/articles/filters.md)
@@ -247,28 +256,28 @@ The dataset query response has the following structure:
 
 ### Saved Queries
 
-| Method |                    HTTP Request                    |       Description       |                       Authorization                       |                   Response                   |
-|:------:|:--------------------------------------------------:|:-----------------------:|:---------------------------------------------------------:|:--------------------------------------------:|
-|  get   | GET `https://<EDP_API_HOST>/v2/saved_queries/{ID}` | Retrieve a Saved Query. | This request requires an authorized user with permission. | The response contains a SavedQuery resource. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| get | GET `https://<EDP_API_HOST>/v2/saved_queries/{ID}` | Retrieve a Saved Query. | This request requires an authorized user with permission. | The response contains a SavedQuery resource. |
 
-| Method |                  HTTP Request                  |        Description        |                             Authorization                              |                      Response                      |
-|:------:|:----------------------------------------------:|:-------------------------:|:----------------------------------------------------------------------:|:--------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | create | POST `https://<EDP_API_HOST>/v2/saved_queries` | Create a new Saved Query. | This request requires an authorized user with appropriate permissions. | The response contains the new SavedQuery resource. |
 
 Request Body:
 
-|  Property   |  Value  |                                                                Description                                                                 |
-|:-----------:|:-------:|:------------------------------------------------------------------------------------------------------------------------------------------:|
-|    name     | string  |                                                     A short name for the Saved Query.                                                      |
-| description | string  |                                                     A description for the Saved Query.                                                     |
-|   dataset   | string  | The ID or full_path of a dataset to validate this query parameters against. This is needed on initial creation to ensure valid parameters. |
-|   params    | objects |                                    The query parameters (see query parameters above for query method).                                     |
-|  is_shared  | boolean |                                 If True, this query will be shared with other members of you organization                                  |
+| Property | Value | Description |
+|:--:|:--:|:--:|
+| name | string | A short name for the Saved Query. |
+| description | string | A description for the Saved Query. |
+| dataset | string | The ID or full_path of a dataset to validate this query parameters against. This is needed on initial creation to ensure valid parameters. |
+| params | objects | The query parameters (see query parameters above for query method). |
+| is_shared | boolean | If True, this query will be shared with other members of you organization |
 
-| Method |                     HTTP Request                      |      Description      |                                  Authorization                                   |                      Response                       |
-|:------:|:-----------------------------------------------------:|:---------------------:|:--------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
 | delete | DELETE `https://<EDP_API_HOST>/v2/saved_queries/{ID}` | Delete a Saved Query. | This request requires an authorized user with write permissions on the resource. | The response returns “HTTP 200 OK” when successful. |
 
-| Method |                 HTTP Request                  |                   Description                    |               Authorization               |                       Response                        |
-|:------:|:---------------------------------------------:|:------------------------------------------------:|:-----------------------------------------:|:-----------------------------------------------------:|
-|  list  | GET `https://<EDP_API_HOST>/v2/saved_queries` | Retrieves all Saved Queries available to a user. | This request requires an authorized user. | The response contains a list of SavedQuery resources. |
+| Method | HTTP Request | Description | Authorization | Response |
+|:--:|:--:|:--:|:--:|:--:|
+| list | GET `https://<EDP_API_HOST>/v2/saved_queries` | Retrieves all Saved Queries available to a user. | This request requires an authorized user. | The response contains a list of SavedQuery resources. |

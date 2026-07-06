@@ -12,6 +12,7 @@ For more information about Global Beacons, please review the Global
 Beacons Overview article.
 
 ``` r
+
 library("quartzbio.edp")
 connect(secret = "TOKEN")
 ```
@@ -19,6 +20,7 @@ connect(secret = "TOKEN")
 First, let’s start with enabling Global Beacon on the dataset:
 
 ``` r
+
 # Dataset ID
 dataset_id <- "1658666726768179211"
 
@@ -30,6 +32,7 @@ Object.enable_global_beacon(dataset_id)
 Let’s check now the status of Global Beacon indexing for the datasets:
 
 ``` r
+
 # Waiting a minute until indexing is complete
 Sys.sleep(60)
 
@@ -44,6 +47,7 @@ Similarly to enabling Global Beacon for the datasets, you may also
 disable it using the disable_global_beacon function:
 
 ``` r
+
 Object.disable_global_beacon("1676139881237207342")
 ```
 
@@ -72,6 +76,7 @@ from API response. For a full list of results set paginate attribute to
 TRUE:
 
 ``` r
+
 GlobalSearch.search(filters = '[{"and":[["type__in",["dataset"]]]}]')
 GlobalSearch.search(query = "fuji")
 GlobalSearch.search(query = "fuji", paginate = TRUE)
@@ -84,6 +89,7 @@ results in the form of an R data frame. The returned data frame contains
 subjects:
 
 ``` r
+
 GlobalSearch.subjects(entities = '[["gene","BRCA2"]]')
 ```
 
@@ -109,6 +115,7 @@ arguments: filters, entities, query (advanced search query), limit, and
 offset:
 
 ``` r
+
 GlobalSearch.request(query = "fuji", limit = 200)
 GlobalSearch.request(entities = '[["gene","BRCA2"]]')
 GlobalSearch.request(entities = '[["gene","BRCA2"]]', filters = '[{"and":[{"and":[["created_at__range",["2021-11-28","2021-12-28"]]]},["type__in",["dataset"]]]}]')
@@ -127,6 +134,7 @@ As we previously indexed the dataset, we should be able to perform an
 entity search and see that dataset in the results.
 
 ``` r
+
 results <- GlobalSearch.search(entities = '[["gene","BRCA2"]]')
 results
 ```
@@ -134,6 +142,7 @@ results
 Each result object has the following attributes:
 
 ``` r
+
 names(results)
 ```
 
@@ -142,6 +151,7 @@ names(results)
 Search only for vaults:
 
 ``` r
+
 response <- GlobalSearch.search(filters = '[{"and":[["type__in",["vault"]]]}]')
 response
 ```
@@ -149,6 +159,7 @@ response
 Search based on the date created:
 
 ``` r
+
 response <- GlobalSearch.search(filters = '[{"and":[{"and":[["created_at__range",["2021-11-21","2021-12-28"]]]}]}]')
 response
 ```
@@ -164,6 +175,7 @@ are returned and you may see the reason for that in the following output
 message:
 
 ``` r
+
 # Advanced search
 response <- GlobalSearch.search(query = "fuji")
 
@@ -175,6 +187,7 @@ We can perform a request function call to get the full API response and
 see how many results we have in total:
 
 ``` r
+
 response <- GlobalSearch.request(query = "fuji")
 response$total
 ```
@@ -184,6 +197,7 @@ default. In order to get all the results you may use parameter paginate
 = TRUE (please note that retrieving all objects may take a while):
 
 ``` r
+
 results <- GlobalSearch.search(query = "fuji", paginate = TRUE)
 print(dim(results))
 ```
@@ -192,6 +206,7 @@ Alternatively, instead of using paginate parameter, you may use the
 limit parameter instead. Here we’re setting a limit to 500 objects:
 
 ``` r
+
 results <- GlobalSearch.search(query = "fuji", limit = 500)
 print(dim(results))
 ```
@@ -203,6 +218,7 @@ sections, we can use the subjects function to get a data frame
 containing only subjects:
 
 ``` r
+
 GlobalSearch.subjects(entities = '[["gene","BRCA2"]]')
 ```
 

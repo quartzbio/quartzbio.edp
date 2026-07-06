@@ -15,6 +15,7 @@ applied using 3 syntaxes:
 - API syntax in R data structure
 
 ``` r
+
 # Filter ClinVar dataset to pathogenic variants
 
 clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37")
@@ -47,18 +48,18 @@ it to the field name when building a filter:
     <field>__<action> 
     #For example, date__gte for filtering by dates greater or equal to the input
 
-|    **Action**    |                                                               **Description**                                                                |
-|:----------------:|:--------------------------------------------------------------------------------------------------------------------------------------------:|
+| **Action** | **Description** |
+|:--:|:--:|
 | iexact (default) | Field is equal to value (case-insensitive). If the field’s value is a list, this will match values within the list, not the list as a whole. |
-|      exact       |                              Field is an exact match to value. Useful for case-sensitive string field queries.                               |
-|        in        |                                    Field is “one of” a list of values. (similar to Python’s in operator).                                    |
-|      range       |                                  Field is a number within two values. Ranges are inclusive (fully closed).                                   |
-|        gt        |                                                    Field is a number greater than value.                                                     |
-|        lt        |                                                      Field is a number less than value.                                                      |
-|       gte        |                                              Field is a number greater than or equal to value.                                               |
-|       lte        |                                                Field is a number less than or equal to value.                                                |
-|     contains     |                                                      Field contains this string value.                                                       |
-|      regexp      |                     Field value matches this regular expression. (**Note: The action is only compatible with datasets**)                     |
+| exact | Field is an exact match to value. Useful for case-sensitive string field queries. |
+| in | Field is “one of” a list of values. (similar to Python’s in operator). |
+| range | Field is a number within two values. Ranges are inclusive (fully closed). |
+| gt | Field is a number greater than value. |
+| lt | Field is a number less than value. |
+| gte | Field is a number greater than or equal to value. |
+| lte | Field is a number less than or equal to value. |
+| contains | Field contains this string value. |
+| regexp | Field value matches this regular expression. (**Note: The action is only compatible with datasets**) |
 
 Some filter actions (range, gt, lt, gte, lte) may only be used on
 numeric and date fields.
@@ -78,6 +79,7 @@ using the “in” filter. By default, filters on string fields use the
 “equals” match.
 
 ``` r
+
 # Filtering dataset using JSON syntax
 # Query Dataset
 clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37")
@@ -128,6 +130,7 @@ Results that match the search term are brought back in the order of
 relevance.
 
 ``` r
+
 # Contains match for text fields
 MedLine <- Dataset.get_by_full_path("quartzbio:Public:/MEDLINE/2.3.4-2018/MEDLINE-sample")
 
@@ -148,6 +151,7 @@ list (in), half-open range match (range), and standard operators (gt,
 lt, gte, lte). Dates are in the format YYYY-MM-DD.
 
 ``` r
+
 # Equals match
 clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37'")
 
@@ -177,6 +181,7 @@ exact field name that the Entity resides in. The entity filters are only
 compatible with datasets.
 
 ``` r
+
 clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37'")
 
 # Gene entity query
@@ -196,6 +201,7 @@ When manually writing queries, users can combine and nest filters using
 boolean operators (‘and’, ‘or’, ‘not’).
 
 ``` r
+
 clinvar <- Dataset.get_by_full_path("quartzbio:Public:/ClinVar/5.2.0-20210110/Variants-GRCH37")
 
 # Combining filters with boolean operaters with different syntaxes
@@ -330,6 +336,7 @@ Users can also compose filters and apply these filters via R, Python, or
 the EDP UI:
 
 ``` r
+
 # Contains match for text fields
 dataset <- Dataset.get_by_full_path("quartzbio:Public:/MEDLINE/2.3.4-2018/MEDLINE-sample")
 
@@ -377,21 +384,21 @@ fields automatically use the “contains” filter action instead.
 
 String and text actions include:
 
-| **Action** |                                                                         **Description**                                                                         |
-|:----------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|   iexact   | (default for string/text) Field is equal to value (case-insensitive). If the field’s value is a list, matches a value within the list, not the list as a whole. |
-|   exact    |                                           Field is an exact match to value. Useful for longer string and text fields.                                           |
-|     in     |                                                               Field is “one of” a list of values.                                                               |
-|  contains  |                                                                Field contains this string value.                                                                |
-|   regexp   |                                Field value matches this regular expression. (Note: The action is only compatible with datasets)                                 |
+| **Action** | **Description** |
+|:--:|:--:|
+| iexact | (default for string/text) Field is equal to value (case-insensitive). If the field’s value is a list, matches a value within the list, not the list as a whole. |
+| exact | Field is an exact match to value. Useful for longer string and text fields. |
+| in | Field is “one of” a list of values. |
+| contains | Field contains this string value. |
+| regexp | Field value matches this regular expression. (Note: The action is only compatible with datasets) |
 
 Numeric and date field actions include:
 
-| **Action** |                             **Description**                              |
-|:----------:|:------------------------------------------------------------------------:|
-|   exact    |       (default for numeric/date) Field is an exact match to value.       |
-|   range    | Field is a number within two within two values (inclusive/fully-closed). |
-|     gt     |                  Field is a number greater than value.                   |
-|     lt     |                    Field is a number less than value.                    |
-|    gte     |            Field is a number greater than or equal to value.             |
-|    lte     |              Field is a number less than or equal to value.              |
+| **Action** | **Description** |
+|:--:|:--:|
+| exact | (default for numeric/date) Field is an exact match to value. |
+| range | Field is a number within two within two values (inclusive/fully-closed). |
+| gt | Field is a number greater than value. |
+| lt | Field is a number less than value. |
+| gte | Field is a number greater than or equal to value. |
+| lte | Field is a number less than or equal to value. |
