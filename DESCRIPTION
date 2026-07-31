@@ -2,12 +2,12 @@ Type: Package
 Package: quartzbio.edp
 Title: The Official QuartzBio EDP API Client
 Version: 1.1.1
-Maintainer: Tobi Guennel <tobi.guennel@precisionformedicine.com>
+Maintainer: Tobi Guennel <tobi.guennel@quartz.bio>
 Authors@R: c(
-    person("Tobi", "Guennel", email = "tobi.guennel@precisionformedicine.com", role = c("aut", "cre")),
-    person("Vidya", "Iyer", , email = "vidya.iyer@precisionformedicine.com", role = "aut"),
-    person("Jakub", "Stepniak", email = "jakub.stepniak@precisionformedicine.com", role = "aut"),
-    person("Dragoș", "Moldovan-Grünfeld" , email = "dragos.grunfeld@precisionformedicine.com", role = "ctb"),
+    person("Tobi", "Guennel", email = "tobi.guennel@quartz.bio", role = c("aut", "cre")),
+    person("Vidya", "Iyer", , email = "vidya.iyer@quartz.bio", role = "aut"),
+    person("Tim", "Fry", email = "tim.fry@quartz.bio", role = "aut"),
+    person("Sergey", "Korkhov" , email = "sergey.korkhov@quartz.bio", role = "aut"),
     person("QuartzBio", role = c("cph", "fnd"))
   )
 Description: R client for QuartzBio EDP API.

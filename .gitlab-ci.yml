@@ -129,6 +129,7 @@ build_vignettes:
     - Rscript -e '.libPaths()'
     - Rscript -e 'if(!requireNamespace("pak", quietly = TRUE)) {install.packages("pak")}'
     - Rscript -e 'pak::pkg_install(pkg = c("devtools", "remotes"), upgrade = TRUE)'
+    - Rscript -e 'remotes::install_deps(dependencies = TRUE)'
     - Rscript --vanilla -e 'devtools::build()'
 
 tests:
