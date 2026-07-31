@@ -6,9 +6,9 @@
 
 - **Vidya Iyer**. Author.
 
-- **Jakub Stepniak**. Author.
+- **Tim Fry**. Author.
 
-- **Dragoș Moldovan-Grünfeld**. Contributor.
+- **Sergey Korkhov**. Author.
 
 - **QuartzBio**. Copyright holder, funder.
 
@@ -17,13 +17,13 @@
 Source:
 [`DESCRIPTION`](https://github.com/quartzbio/quartzbio.edp/blob/main/DESCRIPTION)
 
-Guennel T, Iyer V, Stepniak J (2026). *quartzbio.edp: The Official
+Guennel T, Iyer V, Fry T, Korkhov S (2026). *quartzbio.edp: The Official
 QuartzBio EDP API Client*. R package version 1.1.1,
 <https://quartzbio.github.io/quartzbio.edp/>.
 
     @Manual{,
       title = {quartzbio.edp: The Official QuartzBio EDP API Client},
-      author = {Tobi Guennel and Vidya Iyer and Jakub Stepniak},
+      author = {Tobi Guennel and Vidya Iyer and Tim Fry and Sergey Korkhov},
       year = {2026},
       note = {R package version 1.1.1},
       url = {https://quartzbio.github.io/quartzbio.edp/},
