@@ -100,3 +100,5 @@ Folders()
 * David Caplan
 * Karl Forner
 * Marc Lamarine
+* Jakub Stepniak
+* Dragoș Moldovan-Grünfeld
