@@ -1,5 +1,21 @@
 # Changelog
 
+## version 1.1.2
+
+**Bug Fixes** - Securing
+[`Dataset_query()`](https://quartzbio.github.io/quartzbio.edp/reference/Dataset_query.md)
+so returned objects dont have the connection attribute. Using
+[`get_connection()`](https://quartzbio.github.io/quartzbio.edp/reference/get_connection.md)
+to retrieve the current conn object. - As a result,
+[`delete()`](https://quartzbio.github.io/quartzbio.edp/reference/generics.md),
+[`fetch()`](https://quartzbio.github.io/quartzbio.edp/reference/generics.md),
+[`update()`](https://rdrr.io/r/stats/update.html), and the pagination
+helpers always use the currently active connection
+([`get_connection()`](https://quartzbio.github.io/quartzbio.edp/reference/get_connection.md))
+at call time, not the connection active when the object was originally
+fetched. When working with multiple connections/profiles in one session,
+switch to the correct connection.
+
 ## version 1.1.1
 
 **Bug Fixes**

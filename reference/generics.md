@@ -9,11 +9,11 @@ fetches the vault related to an object
 ## Usage
 
 ``` r
-delete(x, conn = attr(x, "connection"))
+delete(x, conn = get_connection())
 
-fetch(x, conn = attr(x, "connection"))
+fetch(x, conn = get_connection())
 
-fetch_vaults(x, conn = attr(x, "connection"))
+fetch_vaults(x, conn = get_connection())
 ```
 
 ## Arguments
