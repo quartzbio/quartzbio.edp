@@ -8,11 +8,11 @@
 \alias{fetch_vaults}
 \title{deletes an object from EDP}
 \usage{
-delete(x, conn = attr(x, "connection"))
+delete(x, conn = get_connection())
 
-fetch(x, conn = attr(x, "connection"))
+fetch(x, conn = get_connection())
 
-fetch_vaults(x, conn = attr(x, "connection"))
+fetch_vaults(x, conn = get_connection())
 }
 \arguments{
 \item{x}{the object to delete}

@@ -79,14 +79,6 @@ convert_edp_list_to_df <- function(lst) {
   df
 }
 
-retrieve_connection <- function(x) {
-  conn <- attr(x, "connection")
-  if (!length(conn)) {
-    conn <- get_connection()
-  }
-
-  conn
-}
 
 # intended for permissions
 summary_string <- function(lst) {

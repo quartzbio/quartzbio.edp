@@ -174,22 +174,22 @@ Vault_fetch_personal <- function(conn = get_connection()) {
 ###
 
 #' @export
-update.Vault <- function(object, conn = retrieve_connection(object), ...) {
+update.Vault <- function(object, conn = get_connection(), ...) {
   Vault_update(object$id, conn = conn, ...)
 }
 
 #' @export
-update.VaultId <- function(object, conn = retrieve_connection(object), ...) {
+update.VaultId <- function(object, conn = get_connection(), ...) {
   Vault_update(unclass(object), conn = conn, ...)
 }
 
 #' @export
-delete.Vault <- function(x, conn = retrieve_connection(x)) {
+delete.Vault <- function(x, conn = get_connection()) {
   delete.VaultId(x$id, conn = conn)
 }
 
 #' @export
-delete.VaultId <- function(x, conn = retrieve_connection(x)) {
+delete.VaultId <- function(x, conn = get_connection()) {
   request_edp_api("DELETE", file.path("v2/vaults", x), conn = conn)
 }
 
@@ -223,11 +223,11 @@ print.VaultList <- function(x, ...) {
 }
 
 #' @export
-fetch.VaultId <- function(x, conn = retrieve_connection(x)) {
+fetch.VaultId <- function(x, conn = get_connection()) {
   Vault(unclass(x), conn = conn)
 }
 
 #' @export
-fetch.Vault <- function(x, conn = retrieve_connection(x)) {
+fetch.Vault <- function(x, conn = get_connection()) {
   Vault(x, conn = conn)
 }

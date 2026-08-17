@@ -16,6 +16,10 @@ page_to_offset <- function(page, size) {
 #' @export
 fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
   model <- head(x, 1)
+  # future::multisession workers are separate processes which need their own connection
+  # cannot use get_connection() on their own.
+  # pass conn explicitly to each of the workers without attaching to the returned object's attributes.
+  conn <- get_connection()
   if (parallel) {
     workers <- min(workers, 4) # hard-limit for now
     old_plan <- future::plan(future::multisession, workers = workers)
@@ -55,10 +59,10 @@ fetch_all <- function(x, ..., parallel = FALSE, workers = 4, verbose = FALSE) {
 
     request_page <- utils::getFromNamespace("request_page", "quartzbio.edp")
 
-    request_page(model, pagination, page, verbose = verbose)
+    request_page(model, pagination, page, conn = conn, verbose = verbose)
   }
 
-  globals <- list(model = model, p = p, pagination = pagination)
+  globals <- list(model = model, p = p, pagination = pagination, conn = conn)
 
   # if in dev internal mode, qbdev must be loaded by future_lapply()
   future_packages <- NULL
