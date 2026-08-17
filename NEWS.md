@@ -1,3 +1,9 @@
+# version 1.1.2
+**Bug Fixes**
+-   Securing `Dataset_query()` so returned objects dont have the connection attribute. Using `get_connection()` to retrieve the current conn object.
+-   As a result, `delete()`, `fetch()`, `update()`, and the pagination helpers always use the currently active connection (`get_connection()`) at call time, not the connection active when the
+    object was originally fetched. When working with multiple connections/profiles in one session, switch to the correct connection.
+
 # version 1.1.1
 
 **Bug Fixes**

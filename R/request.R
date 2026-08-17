@@ -219,21 +219,28 @@ request_edp_api <- function(
   nb_pages <- ceiling(total / size)
   page_index <- list(index = index, nb = nb_pages, total = total, size = size)
 
-  ### store pagination info as attribute
+  # conn is NOT stored here
+  # request_page() re-resolves it fresh via get_connection() instead
   attr(res, "pagination") <- list(
     method = method,
     api = api,
     params = params,
     options = options,
-    page_index = page_index,
-    conn = conn
+    page_index = page_index
   )
 
   res
 }
 
 
-request_page <- function(previous, request_args, index, verbose = NA) {
+# conn defaults to get_connection()
+request_page <- function(
+  previous,
+  request_args,
+  index,
+  conn = get_connection(),
+  verbose = NA
+) {
   params <- request_args$params
   options <- request_args$options
   if (!is.na(verbose)) {
@@ -256,7 +263,7 @@ request_page <- function(previous, request_args, index, verbose = NA) {
     request_args$api,
     params = params,
     options = options,
-    conn = request_args$conn
+    conn = conn
   )
 
   .die_unless(

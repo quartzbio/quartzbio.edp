@@ -55,8 +55,6 @@ postprocess_df <- function(res, key, conn) {
     attr(df, attr) <- value
   }
 
-  attr(df, "connection") <- as.environment(conn)
-
   df
 }
 
@@ -97,7 +95,6 @@ postprocess_response <- function(res, is_df, conn, call = NULL) {
 postprocess_single_entity <- function(res, conn) {
   res <- classify_entity(res)
   res <- apply_class_to_ids(res, detect_ids(res))
-  attr(res, "connection") <- as.environment(conn)
 
   res
 }
@@ -128,12 +125,6 @@ postprocess_entity_list <- function(res, key, conn) {
   items <- setdiff(names(res), c(key, "class", "class_name"))
   for (attr in items) {
     attr(lst, attr) <- res[[attr]]
-  }
-
-  conn <- as.environment(conn)
-  attr(lst, "connection") <- conn
-  for (i in seq_along(lst)) {
-    attr(lst[[i]], "connection") <- conn
   }
 
   lst

@@ -159,10 +159,8 @@ test_that_with_edp_api("vaults", {
   expect_equal(attr(vs, "total"), 3)
   expect_true(nzchar(attr(vs, "url")))
 
-  expect_equal(
-    attr(vs, "connection"),
-    as.environment(get_connection(auto = FALSE))
-  )
+  # connection is no longer attached to returned objects
+  expect_null(attr(vs, "connection"))
   links <- attr(vs, "links")
   expect_equal(links, list(`next` = NULL, prev = NULL))
   # items
