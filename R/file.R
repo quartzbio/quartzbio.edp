@@ -57,6 +57,11 @@ File_upload <- function(
   force(mimetype)
   md5 <- tools::md5sum(local_path)[[1]]
 
+  # Check if file name is present in vault path
+  if (endsWith(vault_path, "/") || !nzchar(tools::file_ext(vault_path))) {
+    vault_path <- file.path(sub("/+$", "", vault_path), basename(local_path))
+  }
+
   obj <- File_create(
     vault_id,
     vault_path,
@@ -115,6 +120,7 @@ File_create <- function(
 ) {
   vault_id <- id(vault_id)
   vault_path <- path_make_absolute(vault_path)
+
   filename <- basename(vault_path)
   .die_unless(.is_nz_string(filename), 'bad vault_path "%s"', vault_path)
 

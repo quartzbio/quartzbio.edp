@@ -89,7 +89,7 @@ request_options <- function(
   verbose = getOption("quartzbio.edp.verbose", TRUE),
   parse_fast = getOption(
     "quartzbio.edp.use_fast_parser",
-    requireNamespace("RcppSimdJson")
+    requireNamespace("RcppSimdJson", quietly = TRUE)
   ),
   parse_as_df = FALSE,
   retries = 3,
@@ -378,7 +378,7 @@ request_edp_api_no_pager <- function(
     return(ret)
   }
 
-  use_rcpp_simdjson <- options$parse_fast && requireNamespace("RcppSimdJson")
+  use_rcpp_simdjson <- options$parse_fast && requireNamespace("RcppSimdJson", quietly = TRUE)
   content <- if (use_rcpp_simdjson) {
     max_simplify_lvl <- if (options$parse_as_df) "data_frame" else "list"
     RcppSimdJson::fparse(
