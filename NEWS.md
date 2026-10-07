@@ -1,8 +1,11 @@
 # version 1.1.2
+
 **Bug Fixes**
 -   Securing `Dataset_query()` so returned objects dont have the connection attribute. Using `get_connection()` to retrieve the current conn object.
 -   As a result, `delete()`, `fetch()`, `update()`, and the pagination helpers always use the currently active connection (`get_connection()`) at call time, not the connection active when the
     object was originally fetched. When working with multiple connections/profiles in one session, switch to the correct connection.
+-   Changes made to have vault_path handled differently in `File_upload()`. The user can put a path to a directory  and the file will be uploaded with the same filename kept as it is in local.
+-   Suppress the fatal-sounding message `Failed with error: 'there is no package called RcppSimdJson'` in when package {RcppSimdJson} is not available.
 
 # version 1.1.1
 
